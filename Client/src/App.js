@@ -1,7 +1,7 @@
 import React from 'react';
 import AllRoutes from './routes';
 
-// it work fine
+// it work fine from abdul
 
 function App() {
   return (
