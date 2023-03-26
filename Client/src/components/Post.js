@@ -1,5 +1,6 @@
+import { memo  } from "react"
+function Post ({ post }) {
 
-export default function Post ({ post }) {
     return(
         <>
             <div>
@@ -9,3 +10,4 @@ export default function Post ({ post }) {
         </>
     )
 }
+export default memo(Post);

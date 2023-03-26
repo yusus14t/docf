@@ -1,12 +1,15 @@
-import React from 'react';
 import AllRoutes from './routes';
-
-// it work fine from abdul
+import './assets/css/style.css';
+import './assets/css/bootstrap.min.css';
+import './assets/css/jquery-ui.min.css';
+import { BrowserRouter as Router } from 'react-router-dom'
 
 function App() {
   return (
     <div className="App">
-      <AllRoutes />
+      <Router>
+          <AllRoutes />
+      </Router>
     </div>
   );
 }

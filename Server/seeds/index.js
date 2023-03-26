@@ -3,8 +3,8 @@ const UserSeed = require('../seeds/user-seed');
 
 // Database Connection
 mongoose.set('strictQuery', false)
-const DB_URL = process.env.DATABASE_URL
-mongoose.connect(DB_URL);
+
+mongoose.connect(process.env.DATABASE_URL);
 const database = mongoose.connection
 database.once('connected', () => console.log('Database Connected') )
 
@@ -15,15 +15,16 @@ const seeds = [
 
 let args = process.argv.slice(2)
 
-( async () => {
+const Seeding = async () => {
     seeds.map( seed => {
         if( !args.length || args.includes(seed.name) ){
             console.log(`Seeding ${ seed.name } ....`)
             seed.function()
         }
     })
-})();
+}
 
+Seeding();
 
 
 

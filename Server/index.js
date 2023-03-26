@@ -6,11 +6,11 @@ const env = require('dotenv/config');
 const middleware = require('./middlewares/common-middleware');
 const mongoose = require('mongoose');
 
-
 //  Data Base Connection
 mongoose.set('strictQuery', false)
-const DB_URL = process.env.DATABASE_URL
-mongoose.connect(DB_URL);
+
+mongoose.connect(process.env.DATABASE_URL);
+
 const database = mongoose.connection
 database.on('error', (error) => console.log(error) )
 database.once('connected', () => console.log('Database Connected') )
