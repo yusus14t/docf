@@ -1,6 +1,6 @@
 import React from 'react';
-import Logo from '../assets/img/medboard-logo-216x62.png';
-import Doctor from '../assets/img/dashboard/doctor-3.jpg';
+import Logo from '../assets.app/img/medboard-logo-216x62.png';
+import Doctor from '../assets.app/img/dashboard/doctor-3.jpg';
 import { Link } from 'react-router-dom'
 
 function Sidebar() {
@@ -10,7 +10,7 @@ function Sidebar() {
                 {/* <!-- Logo --> */}
                 <div className="logo-sn ms-d-block-lg">
                 <a className="ps-0 ms-0 text-center" href="index.html"> <img src={Logo} alt="logo" /> </a>
-                <a href="#" className="text-center ms-logo-img-link"> <img src={Doctor} alt="logo" /></a>
+                <a href="/" className="text-center ms-logo-img-link"> <img src={Doctor} alt="logo" /></a>
                 <h5 className="text-center text-white mt-2">Dr.Samuel</h5>
                 <h6 className="text-center text-white mb-3">Admin</h6>
                 </div>
