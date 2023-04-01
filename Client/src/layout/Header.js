@@ -20,19 +20,19 @@ const Header = () => {
                 <ul className="ms-nav-list ms-inline mb-0" id="ms-nav-options">
 
                     <li className="ms-nav-item  ms-d-none">
-                    <a href="#mymodal" className="text-white" data-bs-toggle="modal"><i className="flaticon-spreadsheet me-2"></i> Make an appointment</a>
+                    <a href="/" className="text-white" data-bs-toggle="modal"><i className="flaticon-spreadsheet me-2"></i> Make an appointment</a>
                     </li>
 
                     <li className="ms-nav-item ms-d-none">
-                    <a href="#prescription" className="text-white" data-bs-toggle="modal"><i className="flaticon-pencil me-2"></i> Write a prescription</a>
+                    <a href="/" className="text-white" data-bs-toggle="modal"><i className="flaticon-pencil me-2"></i> Write a prescription</a>
                     </li>
 
                     <li className="ms-nav-item ms-d-none">
-                    <a href="#report1" className="text-white" data-bs-toggle="modal"><i className="flaticon-list me-2"></i> Generate Report</a>
+                    <a href="/" className="text-white" data-bs-toggle="modal"><i className="flaticon-list me-2"></i> Generate Report</a>
                     </li>
 
                     <li className="ms-nav-item dropdown">
-                    <a href="#" className="text-disabled ms-has-notification" id="notificationDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="flaticon-bell"></i></a>
+                    <a href="/" className="text-disabled ms-has-notification" id="notificationDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="flaticon-bell"></i></a>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
                         <li className="dropdown-menu-header">
                         <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Notifications</span></h6>
@@ -40,25 +40,25 @@ const Header = () => {
                         </li>
                         <li className="dropdown-divider"></li>
                         <li className="ms-scrollable ms-dropdown-list ps">
-                        <a className="media p-2" href="#">
+                        <a className="media p-2" href="/">
                             <div className="media-body">
                             <span>12 ways to improve your crypto dashboard</span>
                             <p className="fs-10 my-1 text-disabled"><i className="material-icons">access_time</i> 30 seconds ago</p>
                             </div>
                         </a>
-                        <a className="media p-2" href="#">
+                        <a className="media p-2" href="/">
                             <div className="media-body">
                             <span>You have newly registered users</span>
                             <p className="fs-10 my-1 text-disabled"><i className="material-icons">access_time</i> 45 minutes ago</p>
                             </div>
                         </a>
-                        <a className="media p-2" href="#">
+                        <a className="media p-2" href="/">
                             <div className="media-body">
                             <span>Your account was logged in from an unauthorized IP</span>
                             <p className="fs-10 my-1 text-disabled"><i className="material-icons">access_time</i> 2 hours ago</p>
                             </div>
                         </a>
-                        <a className="media p-2" href="#">
+                        <a className="media p-2" href="/">
                             <div className="media-body">
                             <span>An application form has been submitted</span>
                             <p className="fs-10 my-1 text-disabled"><i className="material-icons">access_time</i> 1 day ago</p>
@@ -67,12 +67,12 @@ const Header = () => {
                         <div className="ps__rail-x" ><div className="ps__thumb-x" tabIndex="0" ></div></div><div className="ps__rail-y" ><div className="ps__thumb-y" tabIndex="0" ></div></div></li>
                         <li className="dropdown-divider"></li>
                         <li className="dropdown-menu-footer text-center">
-                        <a href="#">View all Notifications</a>
+                        <a href="/">View all Notifications</a>
                         </li>
                     </ul>
                     </li>
                     <li className="ms-nav-item ms-nav-user dropdown">
-                    <a href="#" id="userDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className=""> 
+                    <a href="/" id="userDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className=""> 
                     <img className="ms-user-img ms-img-round float-end" src={Avatar} alt="people" /> </a>
                     <ul className="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="userDropdown">
                         <li className="dropdown-menu-header">
