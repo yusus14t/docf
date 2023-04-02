@@ -4,6 +4,7 @@ import { Suspense } from "react";
 
 
 import WebLayout from "../layout/weblayout/WebLayout";
+import LogIn from "../components/authentication/LogIn";
 
 
 const SignUp = lazy(() => import("../components/authentication/SignUp"));
@@ -69,6 +70,13 @@ const COMMON_ROUTE = [
     id: "Signup",
     exact: true,
     element: <SignUp />,
+  },
+  {
+    path: "/login",
+    title: "Homepage",
+    id: "HOMEPAGE",
+    exact: true,
+    element: <LogIn/>,
   },
   {
     path: "/*",
