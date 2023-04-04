@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { Error } = require('../constants/utils')
+const { Error, Success } = require('../constants/utils')
 const UserModel = require('../models/user-model')
 
 // function pattern 
@@ -8,7 +8,7 @@ const UserModel = require('../models/user-model')
 
 //     } catch(error){ 
 //         console.log(error) 
-//         return Error({ message: 'Something went wrong!' })
+//         return Error();
 //     }
 // }
 
@@ -17,7 +17,7 @@ const checkDuplicateEmail = async ( body ) => {
         //
     } catch(error){ 
         console.log(error) 
-        return Error({ message: 'Something went wrong!' })
+        return Error();
     }
 }
 
@@ -26,7 +26,7 @@ const createOrganization = async ( body ) => {
         //
     } catch(error){ 
         console.log(error) 
-        return Error({ message: 'Something went wrong!' })
+        return Error();
     }
 }
 
@@ -40,11 +40,10 @@ const signUp = async ( body ) => {
 
         await UserModel({ ...body }).save()
 
-        return { message: 'Account created successfully' } ;
+        return Success({ message: 'Account created successfully', code: 201 }) ;
     } catch ( error ) { 
         console.log(error) 
-        let c = Error();
-        return 
+        return Error();
     }
 }
 
@@ -53,7 +52,7 @@ const logIn = async ( body ) => {
         //
     } catch(error){ 
         console.log(error) 
-        return Error({ message: 'Something went wrong!' })
+        return Error();
     }
 }
 

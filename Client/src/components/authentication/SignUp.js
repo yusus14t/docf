@@ -2,16 +2,11 @@ import React from "react";
 import { useForm } from 'react-hook-form';
 import { axiosInstance } from '../../constants/utils'
 
-// import "../../assets/css/style.css";
-// import "../../assets/css/bootstrap.min.css"
-// import "../../assets.app/css/jquery-ui.min.css";
 
 function SignUp(props) {
   const { register, handleSubmit } = useForm({ onChange: true })
 
   const submit = async ( data ) => {
-    //
-
     let result = await axiosInstance.post('/signup', data );
     console.log('====',data, result)
   }
