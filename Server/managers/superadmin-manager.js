@@ -1,10 +1,9 @@
-const { posts } = require('../constants/post')
 
 const getProfile = async ( body ) => {
     try {
         console.log('Manager Call');
         let data = 'Profile Detail'
-        return { data: posts } ;
+        return { data } ;
     } catch ( error ) { console.log(error) }
 }
 

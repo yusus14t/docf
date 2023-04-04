@@ -16,12 +16,15 @@ database.on('error', (error) => console.log(error) )
 database.once('connected', () => console.log('Database Connected') )
 
 
-app.use(cors())
 app.use(express.json());
 
 
-// Landing Page Route
-app.get('/', (req, res) => res.send('Hello AcadTech'));
+app.use(cors({ origin: '*' }))
+
+// app.use(( req, res, next)=>{
+//     res.header("","*");
+//     next();
+// })
 
 // All Routes
 app.use('/api', middleware.apiMiddleware, routes);

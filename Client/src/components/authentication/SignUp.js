@@ -1,76 +1,140 @@
 import React from "react";
+import { useForm } from 'react-hook-form';
+import { axiosInstance } from '../../constants/utils'
+
 // import "../../assets/css/style.css";
 // import "../../assets/css/bootstrap.min.css"
-import "../../assets.app/css/jquery-ui.min.css";
+// import "../../assets.app/css/jquery-ui.min.css";
 
 function SignUp(props) {
+  const { register, handleSubmit } = useForm({ onChange: true })
+
+  const submit = async ( data ) => {
+    //
+
+    let result = await axiosInstance.post('/signup', data );
+    console.log('====',data, result)
+  }
+
   return (
-    <>
-      <main class="body-content">
-         {/* <!-- Navigation Bar --> */}
-         
-         {/* <!-- Body Content Wrapper --> */}
-         <div class="ms-content-wrapper ms-auth">
-            <div class="ms-auth-container">
-               <div class="ms-auth-col">
-                  <div class="ms-auth-bg"></div>
-               </div>
-               <div class="ms-auth-col">
-                  <div class="ms-auth-form">
-                     <form class="needs-validation" novalidate="">
-                        <h1>Create Account</h1>
-                        <p>Please enter personal information to continue</p>
-                        <div class="row">
-                           <div class="col-md-6 ">
-                              <label for="validationCustom01">First name</label>
-                              <div class="input-group">
-                                 <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="John" required=""/>
-                                 
-                              </div>
-                           </div>
-                           <div class="col-md-6 ">
-                              <label for="validationCustom02">Last name</label>
-                              <div class="input-group">
-                                 <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Doe" required=""/>
-                                 
-                              </div>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-md-12 ">
-                              <label for="validationCustom03">Email Address</label>
-                              <div class="input-group">
-                                 <input type="email" class="form-control" id="validationCustom03" placeholder="Email Address" required=""/>
-                                 
-                              </div>
-                           </div>
-                           <div class="col-md-12 ">
-                              <label for="validationCustom04">Password</label>
-                              <div class="input-group">
-                                 <input type="password" class="form-control" id="validationCustom04" placeholder="Password" required=""/>
-                                 
-                              </div>
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form-check ps-0">
-                              <label class="ms-checkbox-wrap">
-                              <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required=""/>
-                              <i class="ms-checkbox-check"></i>
-                              </label>
-                              <span> Agree to terms and conditions </span>
-                           </div>
-                        </div>
-                        <button class="btn btn-primary mt-4 d-block w-100" type="submit">Create Account</button>
+    <div>
+      <main className="body-content">
+        {/* <!-- Body Content Wrapper --> */}
+        <div className="ms-content-wrapper ms-auth   ">
+          <div className="ms-auth-container d-flex">
+            <div className="ms-auth-col">
+              <div className="ms-auth-bg"></div>
+            </div>
+            <div className="ms-auth-col col-6 justify-content-center">
+              <div className="ms-auth-form ">
+                <form onSubmit={handleSubmit(submit)}>
+                  <h1>Create Account</h1>
+                  <p>Please enter personal information to continue</p>
+                  <div className="row">
+                    <div className="col-md-6 ">
+                      <label htmlFor="/">First name</label>
+                      <div className="input-group">
+                        <input
+                          {...register('firstName', {
+                            required: "First name is required."
+                          })}
+                          className="form-control"
+                          placeholder="First name"
+                        />
+                      </div>
+                    </div>
+                    {/* { errors } */}
+                    <div className="col-md-6 ">
+                      <label htmlFor="/">Last name</label>
+                      <div className="input-group">
+                      <input
+                          {...register('lastName', {
+                            required: "last name is required."
+                          })}
+                          className="form-control"
+                          placeholder="Last name"
+                        />
                         
-                        <p class="mb-0 mt-3 text-center">Already have an account? <a class="btn-link" href="default-login.html">Login</a> </p>
-                     </form>
+                      </div>
+                    </div>
                   </div>
-               </div>
+                  <div className="row">
+                    <div className="col-md-12 ">
+                      <label htmlFor="/">Email Address</label>
+                      <div className="input-group">
+                      <input
+                          {...register('email', {
+                            required: "Email is required."
+                          })}
+                          type="email"
+                          className="form-control"
+                          placeholder="Email"
+                        />
+
+                      </div>
+                    </div>
+                    <div className="col-md-6 ">
+                      <label htmlFor="/">Password</label>
+                      <div className="input-group">
+                        <input
+                          {...register('password', {
+                            required: "Password is required."
+                          })}
+                          type={"password"}
+                          className="form-control"
+                          placeholder="Password"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6 ">
+                      <label htmlFor="/">Confirm Password</label>
+                      <div className="input-group">
+                        <input
+                          {...register('confirmPassword', {
+                            required: "Confirm Password is required."
+                          })}
+                          type={"password"}
+                          className="form-control"
+                          placeholder="Confirm Password"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="form-check ps-0">
+                      <label className="ms-checkbox-wrap">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value=""
+                          required=""
+                        />
+                        <i className="ms-checkbox-check"></i>
+                      </label>
+                      <span> Agree to terms and conditions </span>
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-primary mt-4 d-block w-100"
+                    type="submit"
+                  >
+                    Create Account
+                  </button>
+                  <span className="d-block text-center my-4">Or</span>
+
+                  <p className="mb-0 mt-3 text-center">
+                    Already have an account?{" "}
+                    <a className="btn-link" href="default-login.html">
+                      Login
+                    </a>{" "}
+                  </p>
+                </form>
+              </div>
             </div>
          </div>
+        </div>
       </main>
-    </>
+    </div>
   );
 }
 
