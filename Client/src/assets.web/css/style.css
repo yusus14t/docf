@@ -1139,7 +1139,9 @@ textarea,
   letter-spacing: 0.1em;
   background-color: #fff;
   border: 1px solid var(--thm-border);
-  border-radius: 0;
+  border-radius: 0
+  
+  ;
   transition: all 300ms ease;
   font-family: var(--thm-b-font);
   font-size: 14px;
@@ -4335,6 +4337,64 @@ background-color: var(--thm-border);
 .sigma_info.style-26 .sigma_info-title .sigma_info-icon i{
   font-size: 24px;
 }
+/* default login and sign up */
+.ms-content-wrapper.ms-auth {
+  padding: 0;
+  background-color: #fff;
+  height: 100vh;
+}
+
+.ms-auth-container {
+  display: flex;
+}
+
+.ms-auth-col {
+  flex: 1 1 auto;
+  height: 100vh;
+}
+
+.ms-content-wrapper.ms-auth .ms-auth-col h1 {
+  font-size: 24px;
+}
+
+.ms-auth-bg {
+  position: relative;
+  height: 100%;
+  background-image: url('../../assets.app/img/default-login-1000x700.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  /* margin-top: 69.5px */
+}
+
+.ms-auth-form {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 3rem 1rem;
+}
+
+.ms-auth-form form {
+  width: 60%;
+}
+
+.ms-auth-form .btn-social-login span {
+  width: 150px;
+  display: inline-block;
+  text-align: left;
+}
+
+.ms-auth-form .btn-social-login img {
+  width: 20px;
+  margin-right: 15px;
+}
+
+.ms-auth-form .btn-social-login {
+  background-color: #f6f6f6;
+}
+
 
 /*-------------- Category --------------------------- */
 /* Category style 1 */
@@ -12696,6 +12756,7 @@ video{
   background-position: center;
   position: relative;
   z-index: 1;
+  margin-top: 100px;
 }
 
 /* style 1 */
@@ -16662,6 +16723,8 @@ ul.theme-ul li img {
   .sigma_footer .sigma_footer-top>div:not(:first-of-type):not(:last-of-type) {
     margin: 25px 0;
   }
+  
+  
 }
 
 @media (max-width: 576px) {
@@ -18355,6 +18418,7 @@ td.remove button span {
   border-bottom: 2px solid #fff;
 }
 }
+
 
 @media(max-width: 767px) {
   .sigma_quick-view-modal .sigma_product-single-content {

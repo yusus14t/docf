@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    line-height: 1.5;
+}
+input{
+    border-radius: 12px;
+}
+
+.box{
+    height: 82px;
+    width: 100%;
+}
+.ab{
+    padding: 0;
+    display: inline-block;
+    width: 45%;
+
+}
+.abl{
+    margin-left: 28px;
+}
+@media (max-width : 767px){
+    .ab{
+
+    display: inline-block;
+    width: 45%;
+}
+  .ms-auth-form form {
+  width: 90%;
+  }
+  .ms-auth-bg{
+    display: none;
+  }
+} 
+
+
+.ms-auth-form input{
+    height: 35px;
+    border-radius: 6px  !important;
+}
+.ms-auth-form label{
+    margin-top: 20px;
+    margin-bottom: 0px;
+}

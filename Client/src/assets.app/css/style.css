@@ -2138,6 +2138,7 @@ a.ms-confirm-trigger:hover {
   padding: 0.25rem 0.75rem;
 }
 
+
 .ms-infographics-widget.has-graph .ms-card-body+p {
   margin: 1rem;
   margin-top: 0;
@@ -5698,62 +5699,6 @@ table.data-table7 a:hover {
 }
 
 /* Default Login and Signup */
-.ms-content-wrapper.ms-auth {
-  padding: 0;
-  background-color: #fff;
-  height: 100vh;
-}
-
-.ms-auth-container {
-  display: flex;
-}
-
-.ms-auth-col {
-  flex: 1 1 auto;
-  height: 100vh;
-}
-
-.ms-content-wrapper.ms-auth .ms-auth-col h1 {
-  font-size: 24px;
-}
-
-.ms-auth-bg {
-  position: relative;
-  height: 100%;
-  background-image: url('../img/default-login-1000x700.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  margin-top: 69.5px
-}
-
-.ms-auth-form {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 3rem 1rem;
-}
-
-.ms-auth-form form {
-  width: 40%;
-}
-
-.ms-auth-form .btn-social-login span {
-  width: 150px;
-  display: inline-block;
-  text-align: left;
-}
-
-.ms-auth-form .btn-social-login img {
-  width: 20px;
-  margin-right: 15px;
-}
-
-.ms-auth-form .btn-social-login {
-  background-color: #f6f6f6;
-}
 
 /* Modal Login and Signup */
 .modal-auth.modal-dialog {
