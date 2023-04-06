@@ -5,11 +5,14 @@ import { Suspense } from "react";
 
 import WebLayout from "../layout/weblayout/WebLayout";
 import LogIn from "../components/authentication/LogIn";
+import Appointment from "../components/dashcomponents/Appointment";
+import ClinicGrid from "../components/ClinicGrid";
 
 
 const SignUp = lazy(() => import("../components/authentication/SignUp"));
 const Layout = lazy(() => import("../layout/Index"));
 const Detail = lazy(() => import('../components/Detail'))
+const Clinic_Detail = lazy(() => import('../components/Clinic_Details'))
 const DoctorsList = lazy(() => import('../components/DoctorsList'))
 
 const USER_ROUTE = {
@@ -39,6 +42,13 @@ const ROUTE = {
       exact: true,
       element: <h1>user</h1>,
     },
+    {
+      path: "/appointment",
+      title: "appointment",
+      id: "appointment",
+      exact: true,
+      element: <Appointment/>,
+    },
   ],
 };
 
@@ -65,12 +75,27 @@ const COMMON_ROUTE = [
     element: <DoctorsList />,
   },
   {
+    path: "/clinic-detail",
+    title: "Clinic Details",
+    id: "Clinic_DETAIL",
+    exact: true,
+    element: < Clinic_Detail />,
+  },
+  {
+    path: "/clinic",
+    title: "Clinic",
+    id: "Clinic",
+    exact: true,
+    element: <ClinicGrid/>,
+  },
+  {
     path: "/signup",
     title: "Signup",
     id: "Signup",
     exact: true,
     element: <SignUp />,
   },
+  
   {
     path: "/login",
     title: "Homepage",
