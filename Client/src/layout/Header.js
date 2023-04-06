@@ -13,7 +13,8 @@ const Header = () => {
                 </div>
                 <div className="docfind-logo d-none d-xl-block">
                     <a className="sigma_logo" href="../index-2.html">
-                    <img src={Logo} alt="logo" />
+                    {/* <img src={Logo} alt="logo" /> */}
+                    <h2>Doctor Dekho</h2>
                     </a>
                 </div>
                 

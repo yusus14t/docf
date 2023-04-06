@@ -1819,6 +1819,12 @@ table img {
 
 .navbar {
   padding: 0;
+  border: 2px solid #00acb1;
+  border-radius: 12px;
+  
+}
+.container-fluid{
+  background-color: transparent;
 }
 
 .sigma_header .sigma_logo-wrapper {
