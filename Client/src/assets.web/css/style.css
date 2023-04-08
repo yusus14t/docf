@@ -1819,8 +1819,9 @@ table img {
 
 .navbar {
   padding: 0;
-  border: 2px solid #00acb1;
-  border-radius: 12px;
+  /* border: 2px solid black;
+  background-color: rgba(66, 66, 54, 0.442);
+  border-radius: 12px; */
   
 }
 .container-fluid{

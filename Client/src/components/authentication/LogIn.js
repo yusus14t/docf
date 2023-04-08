@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form'
 const LogIn = () => {
    const { register, handleSubmit } = useForm({ onChange: true })
   return (
-    <div><div class="ms-content-wrapper ms-auth">
+    <div>
+      <div className="box"></div>
+      <div class="ms-content-wrapper ms-auth">
             <div class="ms-auth-container">
                <div class="ms-auth-col">
                   <div class="ms-auth-bg"></div>

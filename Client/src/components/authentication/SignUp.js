@@ -1,10 +1,10 @@
 import React from "react";
 import { useForm } from 'react-hook-form';
-import { axiosInstance } from '../../constants/utils'
+import { axiosInstance, emailPattern, numberValidator } from '../../constants/utils'
 
 
 function SignUp(props) {
-  const { register, handleSubmit } = useForm({ onChange: true })
+  const { register, handleSubmit, formState:{ errors } } = useForm({ onChange: true })
 
   const submit = async ( data ) => {
     await axiosInstance.post('/signup', data );
@@ -22,13 +22,13 @@ function SignUp(props) {
           </div>
 
           <div className="ms-auth-form ">
-            <form onSubmit={handleSubmit(submit)}>
+            <form onSubmit={handleSubmit((data) => console.log(data))}>
               <h1>Create Account</h1>
               <p>Please enter personal information to continue</p>
               <div className="row">
-              <div className="col-lg-12 col-sm-6">
-                <div className="md-3 ">
-                  <label htmlFor="/">First name</label>
+ 
+                <div className="md-3 col-6">
+                  <label htmlFor="/">First name<span className="text-danger"> *</span></label>
                   <div className="input-group">
                     <input
                       {...register("firstName", {
@@ -38,11 +38,12 @@ function SignUp(props) {
                       placeholder="First name"
                     />
                   </div>
+                  { errors?.firstName && <div className="text-danger">{errors?.firstName.message}</div>}
                 </div>
                 
                 {/* { errors } */}
-                <div className="md-3 ">
-                  <label htmlFor="/">Last name</label>
+                <div className="md-3 col-6">
+                  <label htmlFor="/">Last name<span className="text-danger"> *</span></label>
                   <div className="input-group">
                     <input
                       {...register("lastName", {
@@ -52,61 +53,71 @@ function SignUp(props) {
                       placeholder="Last name"
                     />
                   </div>
+                  { errors?.lastName && <div className="text-danger">{errors?.lastName.message}</div>}
                 </div>
+
               </div>
-              </div>
-              <div className="md-6 ">
-                <label htmlFor="/">Mobile Number</label>
+              <div className="md-6">
+                <label htmlFor="/">Mobile Number<span className="text-danger"> *</span></label>
                 <div className="input-group">
                   <input
                     {...register("mobileNumber", {
                       required: "Mobile Number is required.",
                     })}
+                    onChange={(event) => numberValidator(event)}
+                    type="number"
                     className="form-control"
                     placeholder="Mobile Number"
                   />
                 </div>
+                { errors?.mobileNumber && <div className="text-danger">{errors?.mobileNumber.message}</div>}
               </div>
-              <div className="md-6 sm-3 ">
-                <label htmlFor="/">Age</label>
-                <div className="input-group">
-                  <input
-                    {...register("Age", {
-                      required: "Age Number is required.",
-                    })}
-                    className="form-control"
-                    placeholder="Age"
-                  />
+              <div className="row">
+                <div className="md-3 col-6 ">
+                  <label htmlFor="/">Age<span className="text-danger"> *</span></label>
+                  <div className="input-group">
+                    <input
+                      {...register("age", {
+                        required: "Age Number is required.",
+                      })}
+                      className="form-control"
+                      placeholder="Age"
+                    />
+                  </div>
+                  { errors?.age && <div className="text-danger">{errors?.age.message}</div>}
                 </div>
-              </div>
-              <div className="md-6 sm-3 ">
-                <label htmlFor="/">Gender</label>
-                <div className="input-group">
-                  <input
-                    {...register("Gender", {
-                      required: "Gender is required.",
-                    })}
-                    className="form-control"
-                    placeholder="Gender"
-                  />
+                <div className="md-3 col-6 ">
+                  <label htmlFor="/">Gender<span className="text-danger"> *</span></label>
+                  <div className="input-group">
+                    <input
+                      {...register("gender", {
+                        required: "Gender is required.",
+                      })}
+                      className="form-control"
+                      placeholder="Gender"
+                    />
+                  </div>
+                  { errors?.gender && <div className="text-danger">{errors?.gender.message}</div>}
                 </div>
               </div>
               <div className="row">
                 <div className="md-12 ">
-                  <label htmlFor="/">Email Address</label>
+                  <label htmlFor="/">Email Address<span className="text-danger"> *</span></label>
                   <div className="input-group">
                     <input
                       {...register("email", {
                         required: "Email is required.",
+                        pattern: emailPattern,
                       })}
                       type="email"
                       className="form-control"
                       placeholder="Email"
                     />
                   </div>
+                  { errors?.email && <div className="text-danger">{errors?.email.message}</div>}
                 </div>
-                <div className="col-md-6 ">
-                  <label htmlFor="/">Password</label>
+                <div className="col-6 ">
+                  <label htmlFor="/">Password<span className="text-danger"> *</span></label>
                   <div className="input-group">
                     <input
                       {...register("password", {
@@ -117,19 +128,21 @@ function SignUp(props) {
                       placeholder="Password"
                     />
                   </div>
+                  { errors?.password && <div className="text-danger">{errors?.password.message}</div>}
                 </div>
-                <div className="col-md-6 ">
-                  <label htmlFor="/">Confirm Password</label>
+                <div className="col-6 ">
+                  <label htmlFor="/">Confirm Password<span className="text-danger"> *</span></label>
                   <div className="input-group">
                     <input
                       {...register("confirmPassword", {
                         required: "Confirm Password is required.",
                       })}
-                      type={"password"}
+                      type={"confirmPassword"}
                       className="form-control"
                       placeholder="Confirm Password"
                     />
                   </div>
+                  { errors?.confirmPassword && <div className="text-danger">{errors?.confirmPassword.message}</div>}
                 </div>
               </div>
               <div className="form-group">
