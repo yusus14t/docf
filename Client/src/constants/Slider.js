@@ -4,7 +4,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 function Slider() {
     return (
-        <Carousel autoPlay={true}  interval={false}>
+        <Carousel autoPlay={true}  interval={true}>
             <div className='slide'>
                 <img src='https://tvline.com/wp-content/uploads/2021/10/AEWCMPunk.jpg?w=620'/>
                 <p> Cmpunk In AEWCMPunk

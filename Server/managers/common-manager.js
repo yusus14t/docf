@@ -1,4 +1,4 @@
-const { Error, Success, encryptPassword } = require('../constants/utils')
+const { Error, Success, encryptPassword, comparePassword, createToken } = require('../constants/utils')
 const UserModel = require('../models/user-model')
 
 // function pattern 
@@ -31,7 +31,6 @@ const createOrganization = async ( body ) => {
 
 const signUp = async ( body ) => {
     try {
-        // salt $2b$10$sXjk6shioL8PMiiqII09tO
         if( body.password === body.confirmPassword ) body.password = await encryptPassword(body.password)
         else return Error({ message: 'Incorrect confirm password' })
 
@@ -44,18 +43,8 @@ const signUp = async ( body ) => {
     }
 }
 
-const logIn = async ( body ) => {
-    try{ 
-        //
-    } catch(error){ 
-        console.log(error) 
-        return Error();
-    }
-}
-
 module.exports = {
     signUp,
     createOrganization,
     checkDuplicateEmail,
-    logIn,
 }
