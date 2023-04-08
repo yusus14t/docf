@@ -1,7 +1,13 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { axiosInstance } from '../../constants/utils'
+
 const LogIn = () => {
    const { register, handleSubmit } = useForm({ onChange: true })
+
+   const submit = async (formData) => {
+      let data = await axiosInstance.post('/login', formData)
+   }
   return (
     <div>
       <div className="box"></div>
@@ -17,7 +23,7 @@ const LogIn = () => {
                </div> */}
                <div class="ms-auth-col">
                   <div class="ms-auth-form">
-                     <form onSubmit={handleSubmit(data => console.log('========>>>>>>',data))} >
+                     <form onSubmit={handleSubmit(submit)} >
                         <h1>Login to Account</h1>
                         <p>Please enter your email and password to continue</p>
                         <div class="mb-3">

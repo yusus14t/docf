@@ -7,7 +7,7 @@ function SignUp(props) {
   const { register, handleSubmit, formState:{ errors } } = useForm({ onChange: true })
 
   const submit = async ( data ) => {
-    await axiosInstance.post('/signup', data );
+    let check = await axiosInstance.post('/signup', data );
   }
 
   return (
@@ -22,7 +22,7 @@ function SignUp(props) {
           </div>
 
           <div className="ms-auth-form ">
-            <form onSubmit={handleSubmit((data) => console.log(data))}>
+            <form onSubmit={handleSubmit(submit)}>
               <h1>Create Account</h1>
               <p>Please enter personal information to continue</p>
               <div className="row">
