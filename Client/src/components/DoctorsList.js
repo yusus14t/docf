@@ -8,10 +8,10 @@ function DoctorsList(props) {
         <div>
             <Banner title={'Doctors List'} />
             <div className='section section-padding'>
-                <div className='container'>
+                <div className='container mwidth'>
                     <div className='row'>
                         <div className='col-12'>
-                            <div className='row'>
+                            <div className='row '>
                                 <DoctorListCard doctors={doctors} />  
                             </div>
                         </div>

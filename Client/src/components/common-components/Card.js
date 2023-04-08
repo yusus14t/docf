@@ -45,7 +45,7 @@ export function DoctorInfoCard(props) {
 
 export function DoctorListCard({ doctors }) {
   return doctors.map((doctor, key) => (
-    <div className="col-lg-4 col-md-4" key={key}>
+    <div className="col-lg-4 col-md-4 mcard" key={key}>
       <div className="sigma_team style-16">
         <div className="sigma_team-thumb">
           <img src={Photo} alt="team" />
@@ -67,7 +67,7 @@ export function DoctorListCard({ doctors }) {
           <div className="sigma_team-info">
             <span>
               <i className="fal fa-map-marker-alt"></i>
-              Hong Kong
+              Aligarh
             </span>
           </div>
           <Link to={'/doctor-detail'} className="sigma_btn btn-block btn-sm"> View Detail </Link>

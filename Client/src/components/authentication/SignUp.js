@@ -7,8 +7,7 @@ function SignUp(props) {
   const { register, handleSubmit } = useForm({ onChange: true })
 
   const submit = async ( data ) => {
-    let result = await axiosInstance.post('/signup', data );
-    console.log('====',data, result)
+    await axiosInstance.post('/signup', data );
   }
 
   return (

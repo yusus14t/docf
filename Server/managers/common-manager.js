@@ -1,5 +1,4 @@
-const bcrypt = require('bcrypt');
-const { Error, Success } = require('../constants/utils')
+const { Error, Success, encryptPassword } = require('../constants/utils')
 const UserModel = require('../models/user-model')
 
 // function pattern 
@@ -33,9 +32,7 @@ const createOrganization = async ( body ) => {
 const signUp = async ( body ) => {
     try {
         // salt $2b$10$sXjk6shioL8PMiiqII09tO
-        const salt = await bcrypt.genSalt(10)
-
-        if( body.password === body.confirmPassword ) body.password = await bcrypt.hash( body.password, salt )
+        if( body.password === body.confirmPassword ) body.password = await encryptPassword(body.password)
         else return Error({ message: 'Incorrect confirm password' })
 
         await UserModel({ ...body }).save()

@@ -8,7 +8,7 @@ import LogIn from "../components/authentication/LogIn";
 
 
 const SignUp = lazy(() => import("../components/authentication/SignUp"));
-const Layout = lazy(() => import("../layout/Index"));
+const AppLayout = lazy(() => import("../layout/Index"));
 const Detail = lazy(() => import('../components/Detail'))
 const DoctorsList = lazy(() => import('../components/DoctorsList'))
 
@@ -78,33 +78,31 @@ const COMMON_ROUTE = [
     exact: true,
     element: <LogIn/>,
   },
-  {
-    path: "/*",
-    title: "Page Not Found",
-    id: "PAGE_NOT_FOUND",
-    exact: true,
-    element: <h1>Route Not Found</h1>,
-  },
+  // {
+  //   path: "/*",
+  //   title: "Page Not Found",
+  //   id: "PAGE_NOT_FOUND",
+  //   exact: true,
+  //   element: <h1>Route Not Found</h1>,
+  // },
 ];
 
 const AppRoutes = () => {
   let user = "SA";
   return (
-    <Layout>
-      <Routes>
-        {ROUTE[USER_ROUTE[user].id].map((l, j) => (
-          <Route
-            exact
-            key={l.j}
-            path={`${USER_ROUTE[user].path}${l.path}`}
-            element={
-              <Suspense fallback={<h1>Loading...</h1>}>{l.element}</Suspense>
-            }
-          />
-        ))}
-        <Route exact path="/*" element={<h1>Route Not found</h1>} />
+    <Routes>
+      {/* <Route exact path={`${USER_ROUTE[user].id}`} element={<h1>hgfdsdfgh</h1>}> */}
+                    <AppLayout>
+                      {ROUTE[USER_ROUTE[user].id].map((l, j) => (
+                        <Route exact key={l.j}
+                          path={`${l.path}`}
+                          element={`${l.element}`}
+                        />
+                      ))}
+                      <Route exact path="/*" element={<h1>Route Not found</h1>} />
+                    </AppLayout>
+              {/* </Route> */}
       </Routes>
-    </Layout>
   );
 };
 
@@ -128,19 +126,12 @@ const WebRoute = () => {
 };
 
 export default function AllRoutes() {
-  const isLogin = false;
+  // const isLogin = false;
   // let user = "SA";
   return (
     <>
-      {/* <Routes exact path={USER_ROUTE[user].path} >
-        <Routes exact path={'/'} element={<h1>work</h1>} />
-        <AppRoutes />
-      </Routes>
-      <Routes exact path={'/'} >
-        <WebRoute />
-      </Routes> */}
-      {!isLogin && <WebRoute />}
-      {isLogin && <AppRoutes />}
+      <WebRoute />
+     {/* <AppRoutes /> */}
     </>
   );
 }

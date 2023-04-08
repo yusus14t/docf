@@ -34,8 +34,30 @@ input{
   .ms-auth-bg{
     display: none;
   }
+  .mcard{
+    width: 50% !important;
+  }
+  .sigma_team-body{
+    padding: 10px 4px 10px 8px !important;
+  }
+  .sigma_team.style-16:hover .sigma_team-body {
+    padding-bottom: 100px !important;
+    margin-top: -70px !important;
+  }
+  .sigma_team-body h5{
+    font-size: 1rem !important;
+}
+.sigma_team-categories{
+    font-size: 0.75rem !important;
+}
+  
 } 
+@media (min-width: 576px){
+.mwidth {
+  max-width: 100% !important;
+}
 
+}
 
 .ms-auth-form input{
     height: 35px;
