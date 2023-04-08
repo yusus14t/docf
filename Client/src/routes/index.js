@@ -6,14 +6,15 @@ import { Suspense } from "react";
 import WebLayout from "../layout/weblayout/WebLayout";
 import LogIn from "../components/authentication/LogIn";
 import Appointment from "../components/dashcomponents/Appointment";
-import ClinicGrid from "../components/ClinicGrid";
+import ClinicGrid from "../components/webcomponents/ClinicGrid";
+import Home from "../components/webcomponents/Home.js";
 
 
 const SignUp = lazy(() => import("../components/authentication/SignUp"));
 const AppLayout = lazy(() => import("../layout/Index"));
-const Detail = lazy(() => import('../components/Detail'))
-const Clinic_Detail = lazy(() => import('../components/Clinic_Details'))
-const DoctorsList = lazy(() => import('../components/DoctorsList'))
+const Detail = lazy(() => import('../components/webcomponents/Detail'))
+const Clinic_Detail = lazy(() => import('../components/webcomponents/Clinic_Details'))
+const DoctorsList = lazy(() => import('../components/webcomponents/DoctorsList'))
 
 const USER_ROUTE = {
   SA: { path: "/super-admin", id: "SUPER_ADMIN" },
@@ -58,7 +59,7 @@ const COMMON_ROUTE = [
     title: "Homepage",
     id: "HOMEPAGE",
     exact: true,
-    element: <h1>HOMEPAGE</h1>,
+    element: <Home/>,
   },
   {
     path: "/doctor-detail",

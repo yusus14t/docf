@@ -45,7 +45,7 @@ export function ClinicInfoCard(props) {
 
 export function ClinicListCard({ clinics }) {
   return clinics.map((clinic, key) => (
-    <div className="col-lg-4 col-md-4" key={key}>
+    <div className="col-lg-4 col-md-4 mcard" key={key}>
       <div className="sigma_team style-16">
         <div className="sigma_team-thumb">
           <img src={clinicPhoto2} alt="team" />
@@ -67,7 +67,7 @@ export function ClinicListCard({ clinics }) {
           <div className="sigma_team-info">
             <span>
               <i className="fal fa-map-marker-alt"></i>
-              Hong Kong
+              Aligarh
             </span>
           </div>
           <Link to={'/clinic-detail'} className="sigma_btn btn-block btn-sm"> View Detail </Link>

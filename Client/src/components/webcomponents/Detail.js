@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { DoctorInfoCard } from './common-components/Card';
-import PatientList from './common-components/PatientList';
-import Banner from './common-components/Banner';
+import { DoctorInfoCard } from '../common-components/Card';
+import PatientList from '../common-components/PatientList';
+import Banner from '../common-components/Banner';
 
 function Detail() {
     const [ patients ] = useState([1,2,3,4,5]);
