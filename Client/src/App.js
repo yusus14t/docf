@@ -1,4 +1,4 @@
-import AllRoutes from './routes';
+import { AllRoutes } from './routes';
 import './assets.app/css/bootstrap.min.css';
 import { BrowserRouter as Router } from 'react-router-dom'
 

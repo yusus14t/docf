@@ -3,8 +3,7 @@ function Home() {
     return(
         <>
         <div className="box"></div>
-        <Slider/>
-
+            <Slider/>
         </>
     )
         
