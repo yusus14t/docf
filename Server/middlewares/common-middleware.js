@@ -1,8 +1,17 @@
-const apiMiddleware = ( req, res, next ) => {
-    // console.log('This middleware call to all apis.......')
-    next();
+const jwt = require('jsonwebtoken');
+const userModel = require('../models/user-model');
+
+const jwt_verify = async ( req, res, next ) => {
+    try{
+        console.log('===>', req.originalUrl)
+        let verify = jwt.verify(req.header('auth-token'), process.env.JWT_SECRET )
+        let user = await userModel.findOne({_id: verify._id}).lean();
+        req.user = user
+        req.userId = verify._id
+        next();
+     } catch(error){ res.status(400).send('Invalid Token') }
 }
 
 module.exports = {
-    apiMiddleware,
+    jwt_verify,
 }

@@ -1,4 +1,4 @@
-const { Error, Success, encryptPassword, comparePassword, createToken } = require('../constants/utils')
+const { Error, Success, encryptPassword, comparePassword, createToken } = require('../constants/utils');
 const UserModel = require('../models/user-model')
 
 // function pattern 
@@ -43,7 +43,25 @@ const signUp = async ( body ) => {
     }
 }
 
+const logIn = async ( body, user1, userId ) => {
+    try{
+        let user = await UserModel.findOne({ email: body.email })
+
+        if(!user) return Error(message = ' User not found')
+
+        let isValid = await comparePassword(body.password, user.password)
+        if(!isValid) return Error({message: 'Invalid Password'})
+
+        let token = createToken(user._id)
+        return Success({message: 'Successfull', token, user })
+    } catch(error){ 
+        console.log(error) 
+        return Error();
+    }
+}
+
 module.exports = {
+    logIn,
     signUp,
     createOrganization,
     checkDuplicateEmail,
