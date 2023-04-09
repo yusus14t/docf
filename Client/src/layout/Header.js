@@ -1,5 +1,5 @@
 import { memo  } from "react"
-import Logo from '../assets.app/img/docfind-logo.png'
+// import Logo from '../assets.app/img/docfind-logo.png'
 import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 
 const Header = () => {

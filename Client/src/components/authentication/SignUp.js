@@ -1,10 +1,11 @@
 import React from "react";
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { CustomInput } from "../../constants/customs";
 import { axiosInstance, emailPattern, numberValidator } from '../../constants/utils'
 
 
 function SignUp(props) {
-  const { register, handleSubmit, formState:{ errors } } = useForm({ onChange: true })
+  const { register, handleSubmit, formState:{ errors }, control } = useForm({ onChange: true })
 
   const submit = async ( data ) => {
     let check = await axiosInstance.post('/signup', data );
@@ -27,7 +28,7 @@ function SignUp(props) {
               <p>Please enter personal information to continue</p>
               <div className="row">
  
-                <div className="md-3 col-6">
+                <div className=" col-6">
                   <label htmlFor="/">First name<span className="text-danger"> *</span></label>
                   <div className="input-group">
                     <input
@@ -104,7 +105,7 @@ function SignUp(props) {
                 <div className="md-12 ">
                   <label htmlFor="/">Email Address<span className="text-danger"> *</span></label>
                   <div className="input-group">
-                    <input
+                    {/* <input
                       {...register("email", {
                         required: "Email is required.",
                         pattern: emailPattern,
@@ -112,7 +113,22 @@ function SignUp(props) {
                       type="email"
                       className="form-control"
                       placeholder="Email"
-                    />
+                    /> */}
+                    <Controller
+                          name={`email`}
+                          control={control}
+                          rules={{
+                              required:"Email is required",
+                              pattern: emailPattern,
+                          }}
+                          render={(field) => (
+                              <CustomInput className="champ-form__cm-input" placeholder="Enter Email"
+                                  {...field}
+                                  errors={errors}
+                  
+                              />
+                          )}
+                      />
                   </div>
                   { errors?.email && <div className="text-danger">{errors?.email.message}</div>}
                 </div>
