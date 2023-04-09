@@ -14,4 +14,9 @@ export const emailPattern = {
 export const numberValidator = (value) => {
     if(value.target.value.length <= 11 ) return value.target.value = value.target.value.slice(0,10)
 }
+
+export const getAuthHeader = () => {
+    let token = JSON.parse(localStorage.getItem('session'))
+    return { headers: {'auth-token': token} }
+}
  

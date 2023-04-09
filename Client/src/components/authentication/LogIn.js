@@ -1,12 +1,19 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { axiosInstance } from '../../constants/utils'
+import {  axiosInstance, getAuthHeader } from '../../constants/utils'
+// import Store from '../../redux/Store';
+
 
 const LogIn = () => {
    const { register, handleSubmit } = useForm({ onChange: true })
 
    const submit = async (formData) => {
-      let data = await axiosInstance.post('/login', formData)
+      try{
+         let { data } = await axiosInstance.post('/login', formData, getAuthHeader())
+         // Store.dispatch({ type: 'SET_SESSION', payload: 'ITS WORK'})
+         localStorage.setItem('user', JSON.stringify(data.user))
+         localStorage.setItem('session', JSON.stringify(data.token))
+      } catch(error){ console.log(error)}
    }
   return (
     <div>

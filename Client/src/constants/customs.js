@@ -1,4 +1,4 @@
-import { NumberFormat } from 'react-number-format'
+import { NumericFormat } from 'react-number-format'
 
 export const CustomInput = ({ field, onChange, errors, ...rest }) => {
 	// const getError = () => _.get(errors, field?.name);
@@ -36,7 +36,7 @@ export const CustomInputMask = ({ field, errors, onChange, format, ...rest }) =>
 
 	return (
 		<>
-			<NumberFormat
+			<NumericFormat
 				format={format || "(###) ###-####"}
 				className="champ-form__cm-input"
 				{...field}
