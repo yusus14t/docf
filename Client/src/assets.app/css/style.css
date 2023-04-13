@@ -1021,10 +1021,13 @@ button > .material-icons{
 
 /* Navbar */
 .navbar {
+  position: fixed;
+  width: 100%;
   border-radius: 0;
   background: #236B71;
   border-bottom: 1px solid rgba(0, 0, 0, .1);
   padding: 0 30px;
+  z-index: 900;
 }
 
 .navbar .navbar-nav li a:hover {
@@ -1038,6 +1041,7 @@ button > .material-icons{
 
 .ms-aside-toggler,
 .ms-nav-toggler {
+  display: none;
   padding: .25rem .75rem;
   font-size: 1.25rem;
   line-height: 1;
@@ -1202,6 +1206,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar {
 
 .fixed,
 .side-nav.fixed {
+  top: 80.5px;
   position: fixed;
   left: 0;
 }

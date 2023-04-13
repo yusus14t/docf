@@ -1,4 +1,9 @@
 import React from 'react';
+import Logo from '../../assets.web/img/Doctor.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import {faTwitter, faFaceboo}   from '@fortawesome/free-solid-svg-icons'
+import {faTwitter, faInstagram, faFacebook, faLinkedin, faGoogle} from '@fortawesome/free-brands-svg-icons'
+
 
 function WebFooter() {
     return (
@@ -55,28 +60,30 @@ function WebFooter() {
                 <div className="col-lg-4">
                     <div className="sigma_footer-widget">
                     <div className="sigma_footer-logo mb-4">
-                        <img src="assets/img/logo.png" alt="logo" />
+                        <img src={Logo} alt="logo" />
                     </div>
                     <div className="row">
                         <div className="col-sm-9">
                         <p className="mb-0">It is a long established fact that a reader will be distracted by the readable.</p>
                         </div>
                     </div>
-                    <ul className="sigma_social-icons has-border mt-4 justify-content-start">
+                    <ul className="sigma_social-icons has-border mt-4 ">
                         <li>
-                        <a href="/"><i className="fab fa-facebook-f"></i></a>
+                        <a href="/"><FontAwesomeIcon className='brandicon' icon={faInstagram} />
+                        </a>
                         </li>
                         <li>
-                        <a href="/"><i className="fab fa-twitter"></i></a>
+                        <a href="/"><FontAwesomeIcon className='brandicon' icon={faTwitter} />
+                        </a>
                         </li>
                         <li>
-                        <a href="/"><i className="fab fa-instagram"></i></a>
+                        <a href="/"><FontAwesomeIcon className='brandicon' icon={faFacebook} /></a>
                         </li>
                         <li>
-                        <a href="/"><i className="fab fa-linkedin"></i></a>
+                        <a href="/"><FontAwesomeIcon className='brandicon' icon={faLinkedin} /></a>
                         </li>
                         <li>
-                        <a href="/"><i className="fab fa-google"></i></a>
+                        <a href="/"><FontAwesomeIcon className='brandicon' icon={faGoogle} /></a>
                         </li>
                     </ul>
                     </div>

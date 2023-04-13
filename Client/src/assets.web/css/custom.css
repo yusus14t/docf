@@ -4,11 +4,32 @@
 }
 body{
     line-height: 1.5;
+    /* background-color:rgba(0, 0, 0, 0.607) !important; */
 }
 input{
     border-radius: 12px;
 }
-
+.icon{
+  font-size: 70px;
+  color: rgba(0, 225, 255, 0.71);
+  padding: 20px;
+}
+.arrowIcon{
+  font-size: 30px;
+  padding-left:8px ;
+}
+.brandicon{
+  font-size: 18px;
+}
+.whyicon{
+  font-size: 30px;
+  color: white;
+  margin-right: 15px;
+}
+.sigma_social-icons{
+  margin-left: 30px;
+  color: white !important;
+}
 .box{
     height: 82px;
     width: 100%;
@@ -27,14 +48,51 @@ input{
 }
 .slide{
   width: 100%;
-  height: 500px;
+  height: 100vh;
 }
-@media (max-width : 767px){
-    .ab{
 
-    display: inline-block;
-    width: 45%;
+
+
+/* =================================aside=========================== */
+aside{
+  position: fixed;
+  top: 165px;
+  margin-top: 0;
+  z-index: 1;
+
+  
 }
+.asidebox{
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 100vh;
+  width: 500px;
+}
+aside .container{
+  left: 10px;
+  margin-left: 15px;  
+  width: 350px;
+
+  height: 100vh;
+  background-color: rgb(6, 6, 6);
+}
+.aaside{
+  display: flex;
+  margin-top: 10px;
+  padding: 0 !important;
+}
+
+/* =================================aside end======================= */
+
+
+@media (max-width : 767px){
+    aside {
+
+    display: none !important;
+    }
+    .asidebox{
+      display: none !important;
+    }
   .ms-auth-form form {
   width: 90%;
   }
@@ -65,7 +123,7 @@ input{
 .mwidth {
   max-width: 100% !important;
 }
-
+ 
 }
 
 .ms-auth-form input{
@@ -76,3 +134,11 @@ input{
     margin-top: 20px;
     margin-bottom: 0px;
 }
+/* fotter */
+.row ul{
+  justify-content: center;
+}
+.row a{
+  text-decoration: none;
+}
+/* ============fotter */

@@ -72,7 +72,7 @@ const AUTHENTICATE_REDIRECT_ROUTE = [
 ]
 
 export const AllRoutes = () => {
-  let user = getUserType()
+  let user = getUserType() || 'SA'
   let userRoute = USER_ROUTES[user]
 
   if( user ) COMMON_ROUTE = [...COMMON_ROUTE, ...AUTHENTICATE_REDIRECT_ROUTE]

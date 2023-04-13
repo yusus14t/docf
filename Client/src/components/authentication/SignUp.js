@@ -35,6 +35,7 @@ function SignUp(props) {
                       {...register("firstName", {
                         required: "First name is required.",
                       })}
+                      type="text"
                       className="form-control an"
                       placeholder="First name"
                     />
@@ -50,6 +51,7 @@ function SignUp(props) {
                       {...register("lastName", {
                         required: "last name is required.",
                       })}
+                      type="text"
                       className="form-control"
                       placeholder="Last name"
                     />
@@ -81,6 +83,7 @@ function SignUp(props) {
                       {...register("age", {
                         required: "Age Number is required.",
                       })}
+                      type="number"
                       className="form-control"
                       placeholder="Age"
                     />
@@ -94,6 +97,7 @@ function SignUp(props) {
                       {...register("gender", {
                         required: "Gender is required.",
                       })}
+                      type="text"
                       className="form-control"
                       placeholder="Gender"
                     />
@@ -153,7 +157,7 @@ function SignUp(props) {
                       {...register("confirmPassword", {
                         required: "Confirm Password is required.",
                       })}
-                      type={"confirmPassword"}
+                      type={"password"}
                       className="form-control"
                       placeholder="Confirm Password"
                     />

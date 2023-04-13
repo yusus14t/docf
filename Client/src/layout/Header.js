@@ -1,5 +1,5 @@
 import { memo  } from "react"
-// import Logo from '../assets.app/img/docfind-logo.png'
+import Logo from '../assets.web/img/Doctor.png'
 import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 
 const Header = () => {
@@ -13,8 +13,7 @@ const Header = () => {
                 </div>
                 <div className="docfind-logo d-none d-xl-block">
                     <a className="sigma_logo" href="../index-2.html">
-                    {/* <img src={Logo} alt="logo" /> */}
-                    <h2>Doctor Dekho</h2>
+                    <img src={Logo} alt="logo" />
                     </a>
                 </div>
                 

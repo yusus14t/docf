@@ -1236,6 +1236,7 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="tel"]:focus,
 input[type="url"]:focus,
+
 input[type="search"]:focus,
 select:focus,
 textarea:focus,
@@ -2870,6 +2871,25 @@ body .sigma_header.style-5 .sigma_header-top-contacts .sigma_header-top-nav li a
   position: relative;
   overflow: hidden;
   z-index: 1;
+}
+.sigma_subheader2 {
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 4rem;
+  text-align: center;
+  position: fixed;
+
+  overflow: hidden;
+  z-index: 900;
+  background-image: url('../../assets.web/img/banner2.jpg');
+}
+.sigma_subheader2 img{
+  width: 100%;
+}
+.sigma_subheader2 .b2Heading{
+  margin-top: 9px;
+  padding:0 50px ;
+  color: white;
 }
 
 .sigma_subheader .br{
@@ -12683,7 +12703,7 @@ video{
 }
 
 .sigma_banner-info.style-2{
-    margin-top: -85px;
+    margin-top: -50px;
 }
 
 .sigma_banner.style-8 .banner-slider-inner{
@@ -12757,7 +12777,7 @@ video{
 }
 /*-------------- Footer Sections --------------------------- */
 .sigma_footer {
-  background-color: #FCF7FF;
+  background-color: rgb(153,153,153);
   padding: 80px 0;
   background-size: cover;
   background-position: center;
@@ -16405,6 +16425,12 @@ ul.theme-ul li img {
 }
 
 @media (min-width: 991px) {
+
+  .col-lg-4 {
+    flex: 0 0 auto;
+    width: 25% !important;
+}
+
   .sigma_about.style-2 .sigma_about-image-1 {
     transform: translateX(-120px);
   }
@@ -16417,6 +16443,8 @@ ul.theme-ul li img {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
+
+
 }
 
 @media (max-width: 767px) {
@@ -16424,6 +16452,9 @@ ul.theme-ul li img {
   /* utility classes */
   h4 {
     font-size: 22px;
+  }
+  .sigma_subheader2{
+    display: none;
   }
 
   .section-title .title{
