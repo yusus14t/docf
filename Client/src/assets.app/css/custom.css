@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* .main-content{
+
+    
+    position: relative;
+    width: 83%;
+    margin: 0 260px;
+}
+@media (max-width: 767px){
+    .main-content{
+
+        width: 100%;
+        margin: 0;
+    }
+} */
+
+.box{
+    /* width: 250px; */
+    width: 17%;
+}
+.box2{
+    height: 80px;
+    width: 100%;
+}
+.main-content{
+    
+        display: flex;
+        flex-direction: row;
+
+    
+}

@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from '../../assets.web/img/Doctor.png'
+
 
 const WebHeader = () => {
   return (
@@ -10,14 +12,13 @@ const WebHeader = () => {
             <div className="navbar">
               <div className="sigma_logo-wrapper">
                 <a className="sigma_logo" href="index-2.html">
-                  <img src="assets/img/logo-light.png" alt="logo" />
+                  <img src={logo} alt="logo" />
                 </a>
               </div>
               <ul className="navbar-nav">
                 <li className="menu-item menu-item-has-children">
-                  <span className="list-tag">New</span>
-                  <a href="/">Home</a>
-                  <ul className="sub-menu">
+                  <Link to={"/"}>Home</Link>
+                  {/* <ul className="sub-menu">
                     <li className="menu-item">
                       <a href="index-2.html">Directory Landing</a>
                     </li>
@@ -54,196 +55,43 @@ const WebHeader = () => {
                         Laboratory<span className="new-badge">New</span>
                       </a>
                     </li>
-                  </ul>
+                  </ul> */}
                 </li>
+
                 <li className="menu-item menu-item-has-children">
-                  <span className="list-tag update">Updates</span>
-                  <a href="/">Blog</a>
-                  <ul className="sub-menu">
-                    <li className="menu-item">
-                      <a href="blog-standard.html">Blog standard</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="blog-grid.html">Blog grid</a>
-                    </li>
-                    <li className="menu-item menu-item-has-children">
-                      <a href="/">
-                        Blog detail Styles<span className="new-badge">New</span>
-                      </a>
-                      <ul className="sub-menu">
-                        <li className="menu-item">
-                          <a href="blog-details-audio.html">
-                            Blog Details Audio
-                          </a>
-                        </li>
-                        <li className="menu-item">
-                          <a href="blog-details-gallery.html">
-                            Blog Details Gallery
-                          </a>
-                        </li>
-                        <li className="menu-item">
-                          <a href="blog-details-Link.html">Blog Details Link</a>
-                        </li>
-                        <li className="menu-item">
-                          <a href="blog-details-quote.html">
-                            Blog Details Quote
-                          </a>
-                        </li>
-                        <li className="menu-item">
-                          <a href="blog-details-video.html">
-                            Blog Details Video
-                          </a>
-                        </li>
-                        <li className="menu-item">
-                          <a href="blog-details-left-sidebar.html">
-                            Blog Details Left Sidebar
-                          </a>
-                        </li>
-                        <li className="menu-item">
-                          <a href="blog-details.html">Blog Details</a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
+                  <Link to={"/hospitals"}>Hostpitals</Link>
+                  
                 </li>
+                
                 <li className="menu-item menu-item-has-children">
-                  <a href="/">Pages</a>
-                  <ul className="sub-menu">
-                    <li className="menu-item">
-                      <a href="about-us.html">About us</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="services.html">Services</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="service-details.html">Service Details</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="service-details-left-sidebar.html">
-                        Service Details Left
-                        <span className="new-badge">New</span>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="pricing.html">
-                        Pricing<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="faq.html">Faq</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="book-apppointment.html">Book apppointment</a>
-                    </li>
-                  </ul>
+                  <Link to={"/clinic"}>Clinics</Link>
+                  
                 </li>
-                <li className="menu-item menu-item-has-children">
-                  <a href="/">Clinics</a>
-                  <ul className="sub-menu">
-                    <li className="menu-item">
-                      <a href="clinic-list.html">Clinic list</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="clinic-details.html">Clinic details</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="clinic-grid.html">Clinic grid</a>
-                    </li>
-                  </ul>
-                </li>
+
+
                 <li className="menu-item menu-item-has-children">
                   <Link to={"/doctors"}>Doctors</Link>
                 </li>
+
                 <li className="menu-item menu-item-has-children">
-                  <span className="list-tag">New</span>
-                  <a href="/">Shop</a>
-                  <ul className="sub-menu">
-                    <li className="menu-item">
-                      <a href="shop-left-sidebar.html">
-                        Shop Left Sidebar<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="shop-right-sidebar.html">
-                        Shop Right Sidebar<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="shop-grid.html">
-                        Shop Grid<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="product-details.html">
-                        Product Details<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="cart.html">
-                        Cart<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="checkout.html">
-                        Checkout<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="wishlist.html">
-                        Wishlist<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                  </ul>
+                  <Link to={"/about-us"}>About Us</Link>
                 </li>
+
+                
                 <li className="menu-item menu-item-has-children">
-                  <span className="list-tag">New</span>
                   <a href="/">Contact Us</a>
-                  <ul className="sub-menu">
-                    <li className="menu-item">
-                      <a href="contact-us.html">Contact Style 1</a>
-                    </li>
-                    <li className="menu-item">
-                      <a href="contact-us-style-2.html">
-                        Contact Style 2<span className="new-badge">New</span>
-                      </a>
-                    </li>
-                  </ul>
+                  
                 </li>
               </ul>
               <div className="sigma_header-controls style-2">
                 <ul className="sigma_header-controls-inner">
-                  <li className="search-trigger header-controls-item d-none d-sm-block">
-                    <a
-                      className="sigma_header-control-search bg-transparent border-0"
-                      title="Search"
-                      href="/"
-                    >
-                      <i className="far fa-search"></i>
-                    </a>
-                  </li>
-                  <li className="cart-trigger header-controls-item d-none d-sm-block ms-0">
-                    <a
-                      className="sigma_header-control-cart bg-transparent border-0"
-                      title="Your Cart"
-                      href="cart.html"
-                    >
-                      <i className="far fa-shopping-basket"></i>
-                    </a>
-                  </li>
-                  <li className="wishlist-trigger header-controls-item d-none d-sm-block ms-0">
-                    <a
-                      className="sigma_header-control-cart bg-transparent border-0"
-                      title="Your Cart"
-                      href="wishlist.html"
-                    >
-                      <i className="far fa-heart"></i>
-                    </a>
-                  </li>
+                  
                   <li className="contact-btn">
-                    <a href="contact-us.html" className="sigma_btn btn-sm">
-                      Get a Quote
+                    
+                    <Link className="sigma_btn btn-sm" to={"/signup"}>
+                      Login/Signup
                       <i className="fal fa-arrow-right"></i>
-                    </a>
+                  </Link>
                   </li>
                   <li className="aside-toggle aside-trigger">
                     <span></span>

@@ -22,11 +22,11 @@ function Sidebar() {
                         <span>Dashboard </span>
                     </Link>
                 </li>
-                <li className="menu-item">
+                {[1,2,3,4,5,6,7,8,9,1,2].map((e, k) => <li className="menu-item" key={k}>
                     <Link to={'/super-admin/user'} className="has-chevron" >
                         <span>User </span>
                     </Link>
-                </li>
+                </li>)}
                 </ul>
                 <div className="ps__rail-x" style={{left:0, bottom: 0}}>
                     <div className="ps__thumb-x" tabindex="0" style={{left: 0, width: 0}}>

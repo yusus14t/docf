@@ -7,7 +7,7 @@ import LogIn from "../components/authentication/LogIn";
 import Appointment from "../components/dashcomponents/Appointment";
 import ClinicGrid from "../components/webcomponents/ClinicGrid";
 import Home from "../components/webcomponents/Home.js";
-import { userRoutes } from "../constants/constant";
+// import { userRoutes } from "../constants/constant";
 
 
 const SignUp = lazy(() => import("../components/authentication/SignUp"));
@@ -65,15 +65,19 @@ const AUTHENTICATE_REDIRECT_ROUTE = [
 ]
 
 export const AllRoutes = () => {
-  let user = getUserType()
+  let user = getUserType() || 'SA'
   let userRoute = USER_ROUTES[user]
   let localData = localStorage.getItem('session')
   if( localData ) COMMON_ROUTE = [...COMMON_ROUTE, ...AUTHENTICATE_REDIRECT_ROUTE]
   else COMMON_ROUTE = [...COMMON_ROUTE, ...AUTHENTICATE_ROUTE]
 
+
+  let appRoutes = []
+  user && appRoutes.push({ path: `/${userRoute.path}`, element: <AppLayout />, children: userRoute.id }) 
+
   let routes = useRoutes([
     { path: "/", element: <WebLayout />, children: COMMON_ROUTE },
-    { path: `/${userRoute.path}`, element: <AppLayout />, children: userRoute.id },
+    ...appRoutes
   ]);
 
   return(
