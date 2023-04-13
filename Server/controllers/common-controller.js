@@ -21,6 +21,12 @@ const logIn = async ( req, res ) =>
     commonManager.logIn( req.body, req.user, req.userId )
         .then( result => res.status(result.code).send(result) )
         .catch( err => res.status(500).send(err.data) )
+
+const getAllDoctors = async ( req, res ) => {
+    commonManager.getAllDoctors( req.body, req.user, req.userId )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
     
         
 module.exports = {
@@ -28,4 +34,5 @@ module.exports = {
     logIn,
     createOrganization,
     checkDuplicateEmail,
+    getAllDoctors,
 }

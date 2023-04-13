@@ -4,7 +4,7 @@ const UserSeed = require('../seeds/user-seed');
 // Database Connection
 mongoose.set('strictQuery', false)
 
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect(process.env.DATABASE_URL || 'mongodb://0.0.0.0:27017/AcadTech');
 const database = mongoose.connection
 database.once('connected', () => console.log('Database Connected') )
 

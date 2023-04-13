@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
     return (
-        <body class="ms-body ms-primary-theme ms-logged-out">
+        <body className="ms-body ms-primary-theme ms-logged-out">
             <main className="body-content">
                 <Sidebar /> 
                 <Header />

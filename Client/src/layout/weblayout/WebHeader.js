@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Store from "../../redux/Store";
+
 
 const WebHeader = () => {
+  const [ isLogin ] = useState(Boolean(localStorage.getItem('session')))
+  console.log(isLogin)
   return (
     <div className="sigma_header-absolute">
       <header className="sigma_header header-absolute style-5 other can-sticky">
@@ -240,10 +244,10 @@ const WebHeader = () => {
                     </a>
                   </li>
                   <li className="contact-btn">
-                    <a href="contact-us.html" className="sigma_btn btn-sm">
-                      Get a Quote
+                    <Link to={'/login'} className="sigma_btn btn-sm">
+                      { isLogin ? 'Account' : 'Log In/Sign Up' }
                       <i className="fal fa-arrow-right"></i>
-                    </a>
+                    </Link>
                   </li>
                   <li className="aside-toggle aside-trigger">
                     <span></span>

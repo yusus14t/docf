@@ -1,9 +1,11 @@
 import React from 'react';
 import Logo from '../assets.app/img/medboard-logo-216x62.png';
 import Doctor from '../assets.app/img/dashboard/doctor-3.jpg';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
 
 function Sidebar() {
+    const location = useLocation();
+    const path = location.pathname.split("/")[1]
     return (
         <div>
             <aside id="ms-side-nav" className="side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ">
@@ -18,12 +20,12 @@ function Sidebar() {
                 <ul className="accordion ms-main-aside fs-14" id="side-nav-accordion">
                 {/* <!-- Dashboard --> */}
                 <li className="menu-item">
-                    <Link to={'/super-admin/profile'} className="has-chevron" >
+                    <Link to={`/${path}/profile`} className="has-chevron" >
                         <span>Dashboard </span>
                     </Link>
                 </li>
                 <li className="menu-item">
-                    <Link to={'/super-admin/user'} className="has-chevron" >
+                    <Link to={`/${path}/user`} className="has-chevron" >
                         <span>User </span>
                     </Link>
                 </li>

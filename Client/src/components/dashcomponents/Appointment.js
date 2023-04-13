@@ -10,12 +10,12 @@ const Appointment = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb ps-0">
                   <li className="breadcrumb-item">
-                    <a href="#">
+                    <a href="/">
                       <i className="material-icons">home</i> Home
                     </a>
                   </li>
                   <li className="breadcrumb-item">
-                    <a href="#">Appointment</a>
+                    <a href="/">Appointment</a>
                   </li>
                   <li className="breadcrumb-item active" aria-current="page">
                     Add Appointment

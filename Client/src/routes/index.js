@@ -7,7 +7,6 @@ import LogIn from "../components/authentication/LogIn";
 import Appointment from "../components/dashcomponents/Appointment";
 import ClinicGrid from "../components/webcomponents/ClinicGrid";
 import Home from "../components/webcomponents/Home.js";
-import { userRoutes } from "../constants/constant";
 
 
 const SignUp = lazy(() => import("../components/authentication/SignUp"));
@@ -48,9 +47,17 @@ const PATIENT = [
   { path: "/patient/appointment", element: <Appointment/> },
 ]
 
+const DOCTOR = [
+  { path: "/doctor", element: <h1>Dashbaord</h1> },
+  { path: "/doctor/profile", element: <h1>Profile</h1> },
+  { path: "/doctor/user", element: <h1>user</h1> },
+  { path: "/doctor/appointment", element: <Appointment/> },
+]
+
 const USER_ROUTES = {
   SA: { path: "/super-admin", id: SUPER_ADMIN },
-  PA: { path: "/patient", id: PATIENT },
+  PT: { path: "/patient", id: PATIENT },
+  DR: { path: "/doctor", id: DOCTOR}
 };
 
 const AUTHENTICATE_ROUTE = [
@@ -61,20 +68,20 @@ const AUTHENTICATE_ROUTE = [
 const AUTHENTICATE_REDIRECT_ROUTE = [
   { path: "/signup", element: <Navigate to={`/patient`} /> },
   { path: "/login",  element: <Navigate to={`/patient`} /> },// workon
-  { path: '/logout', element: <Logout />}
+  { path: '/logout', element: <Logout /> }
 ]
 
 export const AllRoutes = () => {
   let user = getUserType()
   let userRoute = USER_ROUTES[user]
-  let localData = localStorage.getItem('session')
-  if( localData ) COMMON_ROUTE = [...COMMON_ROUTE, ...AUTHENTICATE_REDIRECT_ROUTE]
+
+  if( user ) COMMON_ROUTE = [...COMMON_ROUTE, ...AUTHENTICATE_REDIRECT_ROUTE]
   else COMMON_ROUTE = [...COMMON_ROUTE, ...AUTHENTICATE_ROUTE]
 
-  let routes = useRoutes([
-    { path: "/", element: <WebLayout />, children: COMMON_ROUTE },
-    { path: `/${userRoute.path}`, element: <AppLayout />, children: userRoute.id },
-  ]);
+  let allUseRoutes = [{ path: "/", element: <WebLayout />, children: COMMON_ROUTE },]
+  user && allUseRoutes.push({ path: `/${userRoute.path}`, element: <AppLayout />, children: userRoute.id })
+  
+  let routes = useRoutes(allUseRoutes);
 
   return(
     <Suspense fallback={<h1>Loading....</h1>} >{routes}</Suspense>

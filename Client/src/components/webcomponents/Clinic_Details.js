@@ -24,7 +24,7 @@ function Detail() {
                       <div className="col-md-8">
                         <div className="sigma_team-body">
                           <h5>
-                            <a href="#">Delta Medical College &amp; Hospital</a>
+                            <a href="/">Delta Medical College &amp; Hospital</a>
                           </h5>
                           <div className="sigma_rating">
                             <i className="fas fa-star" />
@@ -35,7 +35,7 @@ function Detail() {
                             <span className="ms-3">(38)</span>
                           </div>
                           <div className="sigma_team-categories">
-                            <a href="#" className="sigma_team-category">Obstetrics &amp; Gynaecology</a>
+                            <a href="/" className="sigma_team-category">Obstetrics &amp; Gynaecology</a>
                           </div>
                           <div className="sigma_team-info mt-4">
                             <span>
@@ -59,17 +59,17 @@ function Detail() {
                     <div className="row g-0">
                       <div className="col-md-4">
                         <div className="menu nav-item">
-                          <a href="#overview" className="nav-link active p-0">Overview</a>
+                          <a href="/overview" className="nav-link active p-0">Overview</a>
                         </div>
                       </div>
                       <div className="col-md-4">
                         <div className="menu nav-item">
-                          <a href="#contact" className="nav-link p-0">Location &amp; Contact</a>
+                          <a href="/contact" className="nav-link p-0">Location &amp; Contact</a>
                         </div>
                       </div>
                       <div className="col-md-4">
                         <div className="menu nav-item border-0">
-                          <a href="#reviews" className="nav-link p-0">Review</a>
+                          <a href="/reviews" className="nav-link p-0">Review</a>
                         </div>
                       </div>
                     </div>
@@ -128,9 +128,9 @@ function Detail() {
                   <div id="reviews">
                     <h4>Patient Experience</h4>
                         <PatientList patients={patients} />
-                        <a href="/" class="sigma_btn">
+                        <a href="/" className="sigma_btn">
                         See More
-                        <i class="fal fa-arrow-right"></i>
+                        <i className="fal fa-arrow-right"></i>
                         </a>
                  </div>
                   <div className="spacer">
@@ -258,7 +258,7 @@ function Detail() {
                         <p>"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."</p>
                       </div>
                     </div>
-                    <a href="#" className="sigma_btn">
+                    <a href="/" className="sigma_btn">
                       See More
                       <i className="fal fa-arrow-right" />
                     </a>
@@ -278,22 +278,22 @@ function Detail() {
                     <p className="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporincididunt.</p>
                     <ul className="sigma_sm justify-content-center">
                       <li>
-                        <a href="#">
+                        <a href="/">
                           <i className="fab fa-facebook-f" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a href="/">
                           <i className="fab fa-linkedin-in" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a href="/">
                           <i className="fab fa-twitter" />
                         </a>
                       </li>
                       <li>
-                        <a href="#">
+                        <a href="/">
                           <i className="fab fa-youtube" />
                         </a>
                       </li>
@@ -316,7 +316,7 @@ function Detail() {
                       <div className="form-group">
                         <textarea name="message" rows={5} placeholder="Message" defaultValue={""} />
                       </div>
-                      <a href="#" className="sigma_btn btn-block btn-sm">
+                      <a href="/" className="sigma_btn btn-block btn-sm">
                         Send Message
                         <i className="fal fa-arrow-right ms-3" />
                       </a>

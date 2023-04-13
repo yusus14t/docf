@@ -60,9 +60,20 @@ const logIn = async ( body, user1, userId ) => {
     }
 }
 
+const getAllDoctors = async () => {
+    try{ 
+        let doctors = await UserModel.find({ userType: 'DR', isActive: true }) 
+        return Success({ doctors })
+    } catch(error){ 
+        console.log(error) 
+        return Error();
+    }
+}
+
 module.exports = {
     logIn,
     signUp,
     createOrganization,
     checkDuplicateEmail,
+    getAllDoctors,
 }

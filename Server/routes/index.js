@@ -16,9 +16,11 @@ router.get('/', (req, res) => res.send('Hello AcadTech'));
 router.post('/checkDuplicateEmail', jwt_verify, commonController.checkDuplicateEmail);
 router.post('/createOrganization', jwt_verify, commonController.createOrganization);
 
+
 // Un verify routes
 router.post('/signup', commonController.signUp);
 router.post('/login', commonController.logIn);
+router.get('/allDoctors', commonController.getAllDoctors);
 
 // Module Export 
 module.exports = router;

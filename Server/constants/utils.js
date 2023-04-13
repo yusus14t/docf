@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
   return { message, code, status, ...args } 
 }
 
- const Success = ({message = 'Successfully..', code = 201, status = 'OK', ...args}) => { 
+ const Success = ({message = 'Successfully..', code = 200, status = 'OK', ...args}) => { 
   return { message, code, status, ...args } 
 }
 

@@ -9,10 +9,12 @@ const userSchema = new Schema({
     address: { type: String },
     gender: { type: String },
     Nationalty: { type: String },
-    phone: { type: Number, min: 10, max: 12 },
+    phone: { type: String,  },
     photo: { type: String, default: null },
     password: { type: String, default: null },
+    userType: { type: String, default: 'PT', enum: ['PT', 'MR', 'AN', 'DR'] },
     organizationId: { type: Schema.Types.ObjectId,  ref: 'organization' },
+    isActive: { type: Boolean, default: false },
     relation:[
         {
             relationType: { type: String },

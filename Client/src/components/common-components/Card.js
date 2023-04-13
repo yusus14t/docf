@@ -15,10 +15,10 @@ export function DoctorInfoCard(props) {
         <div className="col-md-8">
           <div className="sigma_team-body">
             <h5>
-              <a href="/">Delta Medical College &amp; Hospital</a>
+              <a href="">Delta Medical College &amp; Hospital</a>
             </h5>
             <div className="sigma_team-categories">
-              <a href="/" className="sigma_team-category">
+              <a href="" className="sigma_team-category">
                 Obstetrics &amp; Gynaecology
               </a>
             </div>
@@ -50,24 +50,24 @@ export function DoctorListCard({ doctors }) {
         <div className="sigma_team-thumb">
           <img src={Photo} alt="team" />
           <div className="sigma_team-controls">
-            <a href="/">
+            <a href="">
               <i className="fal fa-heart"></i>
             </a>
           </div>
         </div>
         <div className="sigma_team-body">
           <h5>
-            <a href="doctor-details.html">Matthew Reyes</a>
+            <a href="doctor-details.html">{ `${doctor?.firstName || "" } ${ doctor?.lastName || ""}` }</a>
           </h5>
           <div className="sigma_team-categories">
-            <a href="/" className="sigma_team-category">
+            <a href="" className="sigma_team-category">
               Obstetrics &amp; Gynaecology
             </a>
           </div>
           <div className="sigma_team-info">
             <span>
               <i className="fal fa-map-marker-alt"></i>
-              Aligarh
+              { doctor?.address || "-"}
             </span>
           </div>
           <Link to={'/doctor-detail'} className="sigma_btn btn-block btn-sm"> View Detail </Link>

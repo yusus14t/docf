@@ -10,7 +10,7 @@ const organizationSchema = new Schema({
     phone: { type: Number, min: 10, max: 12 },
     workPhone: { type: Number, min: 10, max: 12 },
     address: { type: String },
-
+    organizationType: { type: String, default: 'CL', enum: [ 'CL', 'HL' ] },
     photo: { type: String, default: null },
     additionalDoctors: [
         { type: Schema.Types.ObjectId }
