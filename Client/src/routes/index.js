@@ -3,7 +3,7 @@ import { Suspense, lazy } from "react";
 
 
 import WebLayout from "../layout/weblayout/WebLayout";
-import LogIn from "../components/authentication/LogIn";
+// import LogIn from "../components/authentication/LogIn";
 import Appointment from "../components/dashcomponents/Appointment";
 import ClinicGrid from "../components/webcomponents/ClinicGrid";
 import Home from "../components/webcomponents/Home.js";
@@ -38,6 +38,7 @@ const SUPER_ADMIN = [
     { path: "/super-admin/profile", element: <h1>Profile</h1> },
     { path: "/super-admin/user", element: <h1>user</h1> },
     { path: "/super-admin/appointment", element: <Appointment/> },
+    { path: "/super-admin/*", element: <Navigate to={'/super-admin'} /> },
 ]
 
 const PATIENT = [
@@ -45,6 +46,7 @@ const PATIENT = [
   { path: "/patient/profile", element: <h1>Profile</h1> },
   { path: "/patient/user", element: <h1>user</h1> },
   { path: "/patient/appointment", element: <Appointment/> },
+  { path: "/patient/*", element: <Navigate to={'/patient'} /> },
 ]
 
 const DOCTOR = [
@@ -62,7 +64,7 @@ const USER_ROUTES = {
 
 const AUTHENTICATE_ROUTE = [
   { path: "/signup", element: <SignUp /> },
-  { path: "/login", element: <LogIn/> },
+  { path: "/login", element: lazy(() => import('../components/authentication/LogIn')) },
 ]
 
 const AUTHENTICATE_REDIRECT_ROUTE = [
@@ -72,7 +74,7 @@ const AUTHENTICATE_REDIRECT_ROUTE = [
 ]
 
 export const AllRoutes = () => {
-  let user = getUserType() || 'SA'
+  let user = getUserType()
   let userRoute = USER_ROUTES[user]
 
   if( user ) COMMON_ROUTE = [...COMMON_ROUTE, ...AUTHENTICATE_REDIRECT_ROUTE]
@@ -81,7 +83,7 @@ export const AllRoutes = () => {
   let allUseRoutes = [{ path: "/", element: <WebLayout />, children: COMMON_ROUTE },]
   user && allUseRoutes.push({ path: `/${userRoute.path}`, element: <AppLayout />, children: userRoute.id })
   
-  let routes = useRoutes(allUseRoutes);
+  let routes = useRoutes(allUseRoutes); 
 
   return(
     <Suspense fallback={<h1>Loading....</h1>} >{routes}</Suspense>
