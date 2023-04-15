@@ -5,8 +5,8 @@ import logo from '../../assets.web/img/Doctor.png'
 
 
 const WebHeader = () => {
-  const [ isLogin ] = useState(Boolean(localStorage.getItem('session')))
-  console.log(isLogin)
+  const userInfo = JSON.parse(localStorage.getItem('user'))
+  const [ isLogin ] = useState(Boolean(userInfo))
   return (
     <div className="sigma_header-absolute">
       <header className="sigma_header header-absolute style-5 other can-sticky">

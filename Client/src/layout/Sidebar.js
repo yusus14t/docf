@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../assets.app/img/medboard-logo-216x62.png';
 import Doctor from '../assets.app/img/dashboard/doctor-3.jpg';
 import { Link, useLocation } from 'react-router-dom';
@@ -6,8 +6,14 @@ import { MODULES,userRoutes } from '../constants/constant';
 
 function Sidebar() {
     const location = useLocation();
-    const path = location.pathname.split("/")[1]
+    const pathname = location.pathname.split("/")
     const userInfo = JSON.parse(localStorage.getItem('user'))
+    const [activeNav, setActiveNav] = useState(null)
+
+    useEffect(() => {
+        setActiveNav(pathname[2])
+    }, [pathname, ])
+
     return (
         <div>
             <aside id="ms-side-nav" className="side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ">
@@ -27,8 +33,8 @@ function Sidebar() {
     
                 <ul className="accordion ms-main-aside fs-14 overflow-auto">
   
-                    {MODULES.map( (module, key) => <li className="menu-item" key={key}>
-                        <Link to={`/${path}${module.pathname}`} className="has-chevron" >
+                    {MODULES.filter((m) => m.access.includes(userInfo.userType)).map( (module, key) => <li className={`menu-item ${activeNav === module.id && 'nav-link-active'}`} key={key}>
+                        <Link to={`/${pathname[1]}${module.pathname}`} className="has-chevron"  >
                             <span>{module.title}</span>
                         </Link>
                     </li>)}

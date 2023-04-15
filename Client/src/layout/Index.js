@@ -10,14 +10,12 @@ const Layout = () => {
     return (
         <body className="ms-body ms-primary-theme ms-logged-out">
             <main className="body-content">
-                
                 <Header />
-                 <div className="box2"></div>
-
                 <div className='main-content'>
-                    <Sidebar /> 
-                    <div className="box"></div>
-                    <Outlet />
+                    <Sidebar />
+                    <div style={{marginLeft:'255px', marginTop:'80px'}}>
+                        <Outlet />
+                    </div> 
                 </div>
             </main>
         </body>

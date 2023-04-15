@@ -1,18 +1,24 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
+import {userRoutes} from '../../constants/constant'
 // import Store from '../../redux/Store';
 
 
 const LogIn = () => {
    const { register, handleSubmit } = useForm({ onChange: true })
+   const navigate = useNavigate();
 
    const submit = async (formData) => {
       try{
          let { data } = await axiosInstance.post('/login', formData, getAuthHeader())
-         // Store.dispatch({ type: 'SET_SESSION', payload: 'ITS WORK'})
+
          localStorage.setItem('user', JSON.stringify(data.user))
          localStorage.setItem('session', JSON.stringify(data.token))
+
+         // humphreywarner@kinetica.co
+         navigate(`${userRoutes[data.user.userType].path}`)
       } catch(error){ console.log(error)}
    }
   return (

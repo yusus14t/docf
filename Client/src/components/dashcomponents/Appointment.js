@@ -32,15 +32,14 @@ const Appointment = () => {
                   </a>
                 </div>
                 <div className="ms-panel-body">
-                  <form className="needs-validation" noValidate>
+                  <form className="" >
                     <div className="row">
                       <div className="col-md-6 mb-3">
-                        <label htmlFor="validationCustom001">First Name</label>
+                        <label>First Name</label>
                         <div className="input-group">
                           <input
                             type="text"
                             className="form-control"
-                            id="validationCustom001"
                             placeholder="Enter First Name"
                             required
                           />

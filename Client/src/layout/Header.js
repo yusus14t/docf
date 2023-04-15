@@ -1,8 +1,18 @@
-import { memo  } from "react"
+import { memo, useState  } from "react"
 import Logo from '../assets.web/img/Doctor.png'
 import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
+import { useNavigate } from "react-router-dom"
+// import Logout from "../components/authentication/Logout"
 
 const Header = () => {
+    const [dropdownOpen, setDropdownOpen] = useState(false)
+    const navigate = useNavigate();
+
+    const Logout = () => {
+        localStorage.clear()
+        navigate('/login')
+    }
+
     return(
         <>
             <nav className="navbar ms-navbar">
@@ -11,7 +21,7 @@ const Header = () => {
                     <span className="ms-toggler-bar bg-white"></span>
                     <span className="ms-toggler-bar bg-white"></span>
                 </div>
-                <div className="docfind-logo d-none d-xl-block">
+                <div className="docfind-logo">
                     <a className="sigma_logo" href="../index-2.html">
                     <img src={Logo} alt="logo" />
                     </a>
@@ -72,9 +82,8 @@ const Header = () => {
                     </ul>
                     </li>
                     <li className="ms-nav-item ms-nav-user dropdown">
-                    <a href="/" id="userDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className=""> 
-                    <img className="ms-user-img ms-img-round float-end" src={Avatar} alt="people" /> </a>
-                    <ul className="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="userDropdown">
+                    <img className="ms-user-img ms-img-round float-end" src={Avatar} alt="people" onClick={() => setDropdownOpen(!dropdownOpen)} /> 
+                    <ul className={`dropdown-menu dropdown-menu-end user-dropdown ${ dropdownOpen ? 'show' : '' }`}>
                         <li className="dropdown-menu-header">
                         <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Welcome, Dr Samuel Deo</span></h6>
                         </li>
@@ -89,7 +98,7 @@ const Header = () => {
                         <a className="media fs-14 p-2" href="pages/prebuilt-pages/lock-screen.html"> <span><i className="flaticon-security me-2"></i> Lock</span> </a>
                         </li>
                         <li className="dropdown-menu-footer">
-                        <a className="media fs-14 p-2" href="pages/prebuilt-pages/default-login.html"> <span><i className="flaticon-shut-down me-2"></i> Logout</span> </a>
+                        <div className="media fs-14 p-2 cursor-poitner" onClick={() => Logout()}> <span><i className="flaticon-shut-down me-2"></i> Logout</span> </div>
                         </li>
                     </ul>
                     </li>

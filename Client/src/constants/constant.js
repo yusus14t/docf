@@ -5,23 +5,23 @@ export const userRoutes = {
     SA: {path: '/super-admin', title: 'Super Admin'},
     MA: {path: '/master-admin', title: 'Master Admin'},
     MR: {path: '/mr', title: 'MR'},
+    DR: {path: '/doctor', title: 'Doctor'}
 } 
 
 export const MODULES = [
-    {id: 'user', title: 'User', pathname: '/user'},
-    {id: 'appointment', title: 'Appointment', pathname: '/appointment'},
-    {id: 'clinics', title: 'Clinics', pathname: '/clinics'},
-    {id: 'doctors', title: 'Doctors', pathname: '/doctors'},
-    {id: 'setting', title: 'Setting', pathname: '/setting'},
-    {id: 'setting', title: 'Setting', pathname: '/setting'},
-    {id: 'setting', title: 'Setting', pathname: '/setting'},
-    {id: 'setting', title: 'Setting', pathname: '/setting'},
-    {id: 'setting', title: 'Setting', pathname: '/setting'},
-
-    {id: 'setting', title: 'Setting', pathname: '/setting'},
-
-    {id: 'setting', title: 'Setting', pathname: '/setting'},
-
-    {id: 'setting', title: 'Setting', pathname: '/setting'},
+    {id: 'dashboard', title: 'Dashboard', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'user', title: 'User', pathname: '/user', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'clinics', title: 'Clinics', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
 
 ]
