@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
 import {userRoutes} from '../../constants/constant'
+import { Link } from 'react-router-dom'
 // import Store from '../../redux/Store';
 
 
@@ -23,7 +24,7 @@ const LogIn = () => {
    }
   return (
     <div>
-      <div className="box"></div>
+      <div className="parent">
       <div className="ms-content-wrapper ms-auth">
             <div className="ms-auth-container">
                <div className="ms-auth-col">
@@ -73,11 +74,11 @@ const LogIn = () => {
                            <i className="ms-checkbox-check"></i>
                            </label>
                            <span>Remember Password </span>
-                           <label className="d-block mt-3"><a href="/" className="btn-link" data-bs-toggle="modal" data-bs-target="/modal-12">Forgot Password?</a></label>
+                           <label className="d-block mt-3"><Link to="/" className="btn-link" data-bs-toggle="modal" data-bs-target="/modal-12">Forgot Password?</Link></label>
                         </div>
                         <button className="btn btn-primary mt-4 d-block w-100 spinner spinner-7" type="submit">Sign In</button>
                         
-                        <p className="mb-0 mt-3 text-center">Don't have an account? <a className="btn-link" href="default-register.html">Create Account</a> </p>
+                        <p className="mb-0 mt-3 text-center">Don't have an account? <Link className="btn-link" to="/signup">Create Account</Link> </p>
                      </form>
                   </div>
                </div>
@@ -103,7 +104,7 @@ const LogIn = () => {
                </div>
             </div>
          </div>
-
+      </div>
     </div>
   )
 }

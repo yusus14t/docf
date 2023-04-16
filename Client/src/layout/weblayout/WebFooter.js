@@ -60,7 +60,7 @@ function WebFooter() {
                 <div className="col-lg-4">
                     <div className="sigma_footer-widget">
                     <div className="sigma_footer-logo mb-4">
-                        <img src={Logo} alt="logo" />
+                        <img className='footerLogo' src={Logo} alt="logo" />
                     </div>
                     <div className="row">
                         <div className="col-sm-9">
@@ -91,7 +91,7 @@ function WebFooter() {
                 <div className="col-lg-3 col-sm-3">
                     <div className="sigma_footer-widget">
                     <h5 className="widget-title">Services</h5>
-                    <ul className="sigma_footer-links">
+                    <ul className="sigma_footer-links fotterUl">
                         <li>
                         <a href="/">Conditions</a>
                         </li>
@@ -148,12 +148,12 @@ function WebFooter() {
             <div className="container">
             <div className="sigma_footer-bottom d-block d-sm-flex align-items-center justify-content-between">
                 <div className="sigma_footer-copyright mt-0 mb-3 mb-sm-0">
-                <p className="mb-0">© Docfind
-                    <a href="/">2022</a>
+                <p className="mb-0">© Doctor Time <span>  </span>
+                    <a href="/">2023</a>
                     | All Rights Reserved
                 </p>
                 </div>
-                <ul className="sigma_footer-links">
+                <ul className="sigma_footer-links leastFooter">
                 <li>
                     <a href="/">Privacy</a>
                 </li>

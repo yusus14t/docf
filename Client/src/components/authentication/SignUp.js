@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Controller, useForm } from 'react-hook-form';
 import { CustomInput } from "../../constants/customs";
 import { axiosInstance, emailPattern, numberValidator } from '../../constants/utils'
@@ -12,15 +13,16 @@ function SignUp(props) {
   }
 
   return (
-    <div>
+    <div className="parent">
       {/* <!-- Body Content Wrapper --> */}
       <div className="box"></div>
 
       <div className="ms-content-wrapper ms-auth   ">
         <div className="ms-auth-container ">
-          <div className="ms-auth-col">
+          <div className="ms-auth-col ">
             <div className="ms-auth-bg"></div>
           </div>
+          <div className="ms-auth-col bg-form">
 
           <div className="ms-auth-form ">
             <form onSubmit={handleSubmit(submit)}>
@@ -126,7 +128,7 @@ function SignUp(props) {
                               pattern: emailPattern,
                           }}
                           render={(field) => (
-                              <CustomInput className="champ-form__cm-input" placeholder="Enter Email"
+                              <CustomInput className="champ-form__cm-input form-control" placeholder="Enter Email"
                                   {...field}
                                   errors={errors}
                   
@@ -189,11 +191,12 @@ function SignUp(props) {
 
               <p className="mb-0 mt-3 text-center">
                 Already have an account?{" "}
-                <a className="btn-link" href="default-login.html">
+                <Link className="btn-link" to={'/login'}>
                   Login
-                </a>{" "}
+                </Link>{" "}
               </p>
             </form>
+          </div>
           </div>
         </div>
       </div>

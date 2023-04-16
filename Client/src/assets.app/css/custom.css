@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+.parent{
+    position: relative;
+    top: 82px;
+}
 
 /* .main-content{
 
@@ -41,3 +45,30 @@
     border-color: #112C2F;
     box-shadow: 0 0 0 .03rem #112C2F;
 }
+/* ---------------header--------------- */
+.navbar{
+    height: 82px;
+    display: flex;
+    justify-content: space-between;
+}
+.logo{
+    width: 100%;
+    height: 50px;
+}
+.avatar{
+    width: 100%;
+    height: 50px;
+}
+.login_button{
+    background-color: #ffffff78;
+    padding: 10px;
+    border-radius:8px ;
+    cursor: pointer;
+    }
+
+.login_button a{
+    color: white;
+
+}
+
+/* ---------------------navbar ends-------------- */
