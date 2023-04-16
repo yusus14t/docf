@@ -1,5 +1,4 @@
 import Header from "./Header";
-import Sidebar from "./Sidebar";
 import "../assets.app/css/style.css"
 import "../assets.app/css/custom.css"
 
@@ -12,8 +11,7 @@ const Layout = () => {
             <main className="body-content">
                 <Header />
                 <div className='main-content'>
-                    <Sidebar />
-                    <div style={{marginLeft:'255px', marginTop:'80px'}}>
+                    <div id="main-content" className="ml255 mt80" style={{ width: '100%'}}>
                         <Outlet />
                     </div> 
                 </div>
