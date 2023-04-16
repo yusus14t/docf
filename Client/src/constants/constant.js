@@ -23,5 +23,4 @@ export const MODULES = [
     {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
-
 ]

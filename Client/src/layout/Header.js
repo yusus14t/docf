@@ -2,10 +2,12 @@ import { memo, useState  } from "react"
 import Logo from '../assets.web/img/Doctor.png'
 import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 import { useNavigate } from "react-router-dom"
-// import Logout from "../components/authentication/Logout"
+import Sidebar from "./Sidebar"
 
 const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false)
+    const mobileView = window.screen.availWidth <= 767
+    const [isSidebarOpen, setIsSidebarOpen] = useState( mobileView ? false : true)
     const navigate = useNavigate();
 
     const Logout = () => {
@@ -15,6 +17,7 @@ const Header = () => {
 
     return(
         <>
+            <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} mobileView={mobileView} />
             <nav className="navbar ms-navbar">
                 <div className="ms-aside-toggler ms-toggler ps-0" data-bs-target="#ms-side-nav" data-bs-toggle="slideLeft">
                     <span className="ms-toggler-bar bg-white"></span>
@@ -103,7 +106,7 @@ const Header = () => {
                     </ul>
                     </li>
                 </ul>
-                <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" data-bs-toggle="slideDown" data-bs-target="#ms-nav-options">
+                <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" onClick={() => setIsSidebarOpen((old) => !old)}>
                     <span className="ms-toggler-bar bg-white"></span>
                     <span className="ms-toggler-bar bg-white"></span>
                     <span className="ms-toggler-bar bg-white"></span>

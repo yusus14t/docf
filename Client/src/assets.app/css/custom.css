@@ -15,13 +15,7 @@
     width: 83%;
     margin: 0 260px;
 }
-@media (max-width: 767px){
-    .main-content{
-
-        width: 100%;
-        margin: 0;
-    }
-} */
+*/
 
 .main-content{
     display: flex;
@@ -72,3 +66,20 @@
 }
 
 /* ---------------------navbar ends-------------- */
+
+.ml255 {
+    margin-left: 255px;
+}
+
+.mt80 {
+    margin-top: 80px;
+}
+
+@media (max-width: 767px){
+    .ml255 {
+        margin-left: 0;
+    }
+    .navbar {
+        height: 75px;
+    }
+} 

@@ -1751,9 +1751,6 @@ a.ms-confirm-trigger:hover {
     padding: 1.5rem 15px;
   }
 
-  .ms-d-block-lg {
-    display: none;
-  }
 
   .ms-d-block-sm {
     display: block;
@@ -8907,7 +8904,7 @@ body:not(.ms-settings-open) .ms-settings-toggle:hover {
 
 .ms-card.card-gradient-custom {
     background-color: #ffffff;
-    background-image: linear-gradient(to right, rgba(35 107 113), #ffffff);
+    background-image: linear-gradient(to right, rgb(17, 44, 47), #ffffff);
 }
 
 .ms-card .ms-card-body>.media span i{
