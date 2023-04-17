@@ -10,7 +10,7 @@ export const userRoutes = {
 
 export const MODULES = [
     {id: 'dashboard', title: 'Dashboard', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
-    {id: 'user', title: 'User', pathname: '/user', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
+    {id: 'patient', title: 'patient', pathname: '/patient', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
     {id: 'clinics', title: 'Clinics', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
