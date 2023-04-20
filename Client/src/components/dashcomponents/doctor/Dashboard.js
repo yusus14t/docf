@@ -1,5 +1,5 @@
 import React from 'react';
-
+import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
 const Dashbaord = () => {
     return (
         <div className='ms-content-wrapper'>
@@ -56,8 +56,33 @@ const Dashbaord = () => {
                         </div>
                     </a>
                 </div>
+                <div class="col-xl-6 col-md-6">
+                    <div class="ms-panel ms-panel-fh ms-widget">
+                        <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
+                            <div>
+                                <h6>Patients List</h6>
+                            </div>
+                            <div className="">
+                                <button className="btn btn-info btn-md" >Add Appointment</button>
+                            </div>
+                        </div>
+                        <div class="ms-panel-body p-0">
+                            <ul class="ms-followers ms-list ms-scrollable ps">
+                                {[1,2,3,4,5,6,7,8].map((e, i) => <li class="ms-list-item media">
+                                    <img src={image} class="ms-img-small ms-img-round" alt="people" />
+                                    <div class="media-body mt-1">
+                                        <h4>Micheal</h4>
+                                        <span class="fs-12">MBBS, MD</span>
+                                    </div>
+                                    <button type="button" class="ms-btn-icon btn-success" name="button"> </button>
+                                </li>)}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     )
 }
 export default Dashbaord;
