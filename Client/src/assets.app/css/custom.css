@@ -66,7 +66,82 @@
 }
 
 /* ---------------------navbar ends-------------- */
+/* ==================Mobile navbar=============== */
 
+.m-title{
+    text-align: center;
+    color: white;
+    font-size: large;
+}
+.m-menu{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.m-menu-item{
+    margin-bottom: 10px;
+}
+.m-menu-item a{
+    
+    font-size: 1.5rem;
+    margin:0  5px 5px 30px ;
+    
+}
+.underline{
+    width: 188px;
+    border-bottom: 2px solid rgba(255, 255, 0, 0.529);
+    margin: 0;
+}
+.m-icon{
+font-size: 15px;
+}
+.m-container{
+    height: 100vh;
+}
+.m-footer{
+    text-align: center;
+}
+.m-login{
+    position: relative;
+    
+    width: 120px;
+    padding:10px 20px !important;
+    margin:0 auto 15px auto;
+    color: white;
+    border-radius: 6px;
+    font-size: large;
+    width: 70%;
+    border: 1px solid rgba(197, 197, 189, 0.529);
+}
+
+.m-login a{
+    padding: 10px !important;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+    margin-top: 15px;
+}
+.tabName{
+
+    font-style:30px;
+}
+.ms-form-wizard ul[role="tablist"] li {
+    padding: 10px;
+}
+/* ==================mobile navbar end ================ */
+
+
+/* ===============Registration form================= */
+
+.reg-form{
+      margin: 0 15px;
+
+}
+.clearfix{
+    margin: 0 15px 10px 15px;
+}
+/* =============Registration form end====================== */
 .ml255 {
     margin-left: 255px;
 }
@@ -81,5 +156,11 @@
     }
     .navbar {
         height: 75px;
+    }
+    .login_button{
+        display: none;
+    }
+    .side-nav .logo-sn a{
+        padding: 0;
     }
 } 
