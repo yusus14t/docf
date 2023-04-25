@@ -13,7 +13,7 @@ function Home() {
             <Slider/>
              <div className="sigma_banner-info style-2">
         <div className="container">
-          <div className="sigma_cta style-13">
+          <div className="sigma_cta style-13 searchHome">
             <form method="post">
               <div className="row g-0">
                 <div className="col-lg-6">

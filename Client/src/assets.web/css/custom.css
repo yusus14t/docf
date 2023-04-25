@@ -6,9 +6,7 @@ body{
     line-height: 1.5;
     /* background-color:rgba(0, 0, 0, 0.607) !important; */
 }
-input{
-    border-radius: 12px;
-}
+
 .icon{
   font-size: 70px;
   color: rgba(0, 225, 255, 0.71);
