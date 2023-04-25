@@ -9,7 +9,7 @@ const ClinicRegistartion = () => {
             <ul role="tablist">
               <li onClick={()=>setTab("BASIC")} role="tab" className={`${tab==="BASIC" ? "current": "disabled"} cursor-pointer`} aria-disabled="false" aria-selected="False"><span className="current-info audible tabName ">Step 1 </span></li>
               <li onClick={()=>setTab("PAYMENT")} role="tab" className={`${tab==="PAYMENT" ? "current": "disabled"} cursor-pointer`} aria-disabled="true"> <span className='tabName'>Step 2</span> </li>
-              <li onClick={()=>setTab("PROCEED")} role="tab" className={`${tab==="PROCEED" ? "current": "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 3</span></li>
+              <li onClick={()=>setTab("ADD-DOCTORS")} role="tab" className={`${tab==="ADD-DOCTORS" ? "current": "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 3</span></li>
               <li onClick={()=>setTab("FINAL")} role="tab" className={`${tab==="FINAL" ? "current": "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 4</span></li>
               </ul>
               </div>
@@ -119,7 +119,66 @@ const ClinicRegistartion = () => {
                 </div>
               </form>
               </div>}
-             {tab==="PROCEED" && <div>PROCEED</div>}
+             {tab==="ADD-DOCTORS" && <div>
+              <form className="ms-form-wizard style1-wizard wizard clearfix" id="default-wizard" role="application">
+                <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label >First Name</label>
+                  <div className="input-group">
+                    <input type="text" className="form-control " placeholder="JOHN"  />
+                  </div>
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label className='reg-form'>Last Name</label>
+                  <div className="input-group">
+                    <input type="text" className="form-control" placeholder="DEE"  />
+                  </div>
+                </div>
+                </div>
+                <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label >Email ID</label>
+                  <div className="input-group">
+                    <input type="email" className="form-control " placeholder="Eg. example@gmail.com "  />
+                  </div>
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label className='reg-form'>Mobile Number</label>
+                  <div className="input-group">
+                    <input type="number" className="form-control" placeholder="2222555558" />
+                  </div>
+                </div>
+                </div>
+                <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label >Qualifications</label>
+                  <div className="input-group">
+                    <textarea type="text" className="form-control " placeholder="Eg.: MBBS from RUSSIA"  />
+                  </div>
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label className='reg-form'>Specialization</label>
+                  <div className="input-group">
+                    <input type="text" className="form-control" placeholder="Eg: Neurologist"  />
+                  </div>
+                </div>
+                </div>
+                <div className="row">
+                <div className="col-md-6 mb-3">
+                  <label >Experiance</label>
+                  <div className="input-group">
+                    <input type="text" className="form-control " placeholder="Eg: 10 Years"  />
+                  </div>
+                </div>
+                <div className="col-md-6 mb-3">
+                  <label className='reg-form'>Blank</label>
+                  <div className="input-group">
+                    <input type="email" className="form-control" placeholder="Ex: Hamdard nagar 'A' jamalpur Aligarh "  />
+                  </div>
+                </div>
+                </div>
+              </form>
+              </div>}
              {tab==="FINAL" && <div>FINAL</div>}
 
 
@@ -127,7 +186,13 @@ const ClinicRegistartion = () => {
            
           </div>
           <div className="actions clearfix">
-            <ul role="menu" aria-label="Pagination"><li className="disabled" aria-disabled="true"><a href="#previous" role="menuitem">Back</a></li><li aria-hidden="false" aria-disabled="false"><a href="#next" role="menuitem">Next</a></li><li aria-hidden="true" style={{display: 'none'}}><a href="#finish" role="menuitem">Submit</a></li></ul></div></form>
+            <ul role="menu" aria-label="Pagination">
+              <li className="disabled" aria-disabled="true"><a href="#previous" role="menuitem">Back</a></li>
+              <li aria-hidden="false" aria-disabled="false"><a href="#next" role="menuitem">Next</a></li>
+              <li aria-hidden="true" style={{display: 'none'}}><a href="#finish" role="menuitem">Submit</a></li>
+            </ul>
+          </div>
+        </form>
       </div>
     </div>
   )

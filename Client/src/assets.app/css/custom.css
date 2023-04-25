@@ -167,6 +167,64 @@ font-size: 15px;
     border-bottom: 5px solid;
 }
 
+/* --------------------home page=--------------- */
+
+.icon{
+  font-size: 70px;
+  color: rgba(0, 225, 255, 0.71);
+  padding: 20px;
+}
+.arrowIcon{
+  font-size: 30px;
+  padding-left:8px ;
+}
+.brandicon{
+  font-size: 18px;
+}
+.whyicon{
+  font-size: 30px;
+  color: white;
+  margin-right: 15px;
+}
+.sigma_social-icons{
+  margin-left: 30px;
+  color: white !important;
+}
+.box{
+    height: 82px;
+    width: 100%;
+}
+.ab{
+    padding: 0;
+    display: inline-block;
+    width: 45%;
+
+}
+.abl{
+    margin-left: 28px;
+}
+.hmbg{
+  background-image: url(../../assets.web/img/home-1/1920x1280-1.jpg);
+}
+.slide{
+  width: 100%;
+  height: 100vh;
+}
+
+.searchHome{
+    border-top: 10px solid var(--thm-base);
+    padding: 30px 40px 20px;
+    box-shadow: 0px 10px 24px rgb(0 0 0 / 4%);
+    text-align: left;
+    background-color: #fff;
+}
+.sigma_cta {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* -----------------home page------------------- */
 @media (max-width: 767px){
     .ml255 {
         margin-left: 0;
@@ -179,5 +237,8 @@ font-size: 15px;
     }
     .side-nav .logo-sn a{
         padding: 0;
+    }
+    .d-profile{
+        display: none !important;
     }
 } 

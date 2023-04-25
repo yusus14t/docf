@@ -102,8 +102,8 @@ const WebHeader = () => {
                       </ul>
                       </div>
                   
-                  {isLogin ? <div className="ms-nav-item ms-nav-user dropdown">
-                    <img className="ms-user-img ms-img-round float-end avatar" src={Avatar} alt="people" onClick={() => setDropdownOpen(!dropdownOpen)} /> 
+                  {isLogin ? <div className="ms-nav-item ms-nav-user dropdown d-profile">
+                    <img className="ms-user-img ms-img-round float-end avatar " src={Avatar} alt="people" onClick={() => setDropdownOpen(!dropdownOpen)} /> 
                       <ul className={`dropdown-menu dropdown-menu-end user-dropdown ${ dropdownOpen ? 'show' : '' }`}>
                           <li className="dropdown-menu-header">
                           <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Welcome, Dr Samuel Deo</span></h6>
