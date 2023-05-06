@@ -16,7 +16,9 @@ const userSchema = new Schema({
     isActive: { type: Boolean, default: false },
     qualification:{ type: String },
     experience: { type: String },
+    specialization: { type: String },
     isPortal: { type: Boolean, default: false },
+    createdBy: { type: Schema.Types.ObjectId, ref: 'user' },
     relation: [
         {
             relationType: { type: String },

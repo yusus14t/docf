@@ -3,9 +3,15 @@
     padding: 0;
     box-sizing: border-box;
 }
+.fs-07{
+    font-size: 0.7rem !important;
+}
 .parent{
     position: relative;
     top: 82px;
+}
+.ms-main-aside{
+    height: inherit;
 }
 
 /* .main-content{

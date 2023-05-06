@@ -2231,7 +2231,7 @@ textarea {
   position: relative;
   display: block;
   margin: 20px 0;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .ms-form-group,
@@ -3402,10 +3402,6 @@ input:checked+.ms-switch-slider.ms-switch-dark {
   position: relative;
   padding: 1rem;
   font-size: 14px;
-}
-
-.ms-card-body h6 {
-  margin-bottom: 1rem;
 }
 
 .ms-card-body p {

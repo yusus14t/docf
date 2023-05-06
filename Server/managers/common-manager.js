@@ -53,8 +53,9 @@ const createClinic = async ( body, userInfo ) => {
             return Success({ messsage: 'Successfully updated', tab: body.tab })
 
         } else if( body?.tab === 'STEP3' ){
-            for( let i=0 ; i < parseInt(body.doctors); i++ ){
-                let check = await UserModel({...body.doctor[i], organizationId: body.organizationId }).save()
+            for( let i=1 ; i <= parseInt(body.doctors); i++ ){
+                console.log({...body, organizationId: body.organizationId })
+                await UserModel({...body.doctor[i], organizationId: body.organizationId }).save()
             }
         }
 
@@ -95,10 +96,62 @@ const logIn = async ( body, user1, userId ) => {
     }
 }
 
-const getAllDoctors = async () => {
+const getAllDoctors = async (body, user) => {
     try{ 
-        let doctors = await UserModel.find({ userType: 'DR', isActive: true }) 
+        let query = {}
+
+        // if( body?.source === 'dashboard' && user ){
+        //     query['createdBy'] = user._id
+        // }
+
+        let doctors = await UserModel.aggregate([
+            {
+                $match: { userType: 'DR', isActive: true, ...query },
+            },
+            {
+                $lookup: {
+                    from: 'organizations',
+                    localField: 'organizationId',
+                    foreignField: '_id',
+                    as: 'clinic',
+                    pipeline: [
+                        {
+                            $project: {
+                                name:  '$name'
+                            },
+                        }
+                    ]
+                }
+            },
+            {
+                $project: {
+                    fullName: {
+                        $concat: ['$firstName', ' ', '$lastName']
+                    },
+                    clinic: { $first: '$clinic.name' },
+                    specialization: '$specialization',
+                    phone: 1,
+                    photo: 1,
+                    organizationId: 1,
+                }
+            }
+        ])
+
         return Success({ doctors })
+    } catch(error){ 
+        console.log(error) 
+        return Error();
+    }
+}
+
+const deleteDoctor = async ( body, user ) => {
+    try{
+        let doctor = await UserModel.findOne({ _id: body._id })
+        if(user.userType === 'SA' || doctor.createdBy.toString() === user._id.toString() ){
+            await UserModel.deleteOne({ _id: body._id })
+            return Success({ message: 'Successfull delete doctor' })
+        }
+
     } catch(error){ 
         console.log(error) 
         return Error();
@@ -111,4 +164,5 @@ module.exports = {
     createClinic,
     checkDuplicateEmail,
     getAllDoctors,
+    deleteDoctor
 }

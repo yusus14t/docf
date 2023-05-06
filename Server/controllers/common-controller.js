@@ -23,7 +23,13 @@ const logIn = async ( req, res ) =>
         .catch( err => res.status(500).send(err.data) )
 
 const getAllDoctors = async ( req, res ) => {
-    commonManager.getAllDoctors( req.body, req.user, req.userId )
+    commonManager.getAllDoctors( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const deleteDoctor = async ( req, res ) => {
+    commonManager.deleteDoctor( req.body, req.user )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -35,4 +41,5 @@ module.exports = {
     createClinic,
     checkDuplicateEmail,
     getAllDoctors,
+    deleteDoctor,
 }
