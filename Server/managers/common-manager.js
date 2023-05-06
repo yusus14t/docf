@@ -1,5 +1,8 @@
 const { Error, Success, encryptPassword, comparePassword, createToken } = require('../constants/utils');
-const UserModel = require('../models/user-model')
+const UserModel = require('../models/user-model');
+const OrganizationModel = require('../models/organization-model');
+const { Mongoose } = require('mongoose');
+
 
 // function pattern 
 // const createOrganization = async () => {
@@ -20,9 +23,41 @@ const checkDuplicateEmail = async ( body ) => {
     }
 }
 
-const createOrganization = async ( body ) => {
+const createClinic = async ( body, userInfo ) => {
     try{ 
-        //
+        if( body?.tab === 'STEP1' ){
+            let doctor  = await UserModel.findOne({ email: body.email }).lean();
+
+            if( !doctor ){
+                let clinic = await OrganizationModel({ 
+                    ...body,
+                    organzationtype: 'CL',
+                    tab: { step: body.tab, isComplete: true }
+                }).save()
+                
+                doctor = await UserModel({
+                    ...body,
+                    password: body.password === body.confirmPassword ? await encryptPassword(body.password) : "",
+                    userType: 'DR',
+                    organizationId: clinic?._id,
+                    isActive: true,
+                    isPortal: true,
+                }).save()
+            }
+            
+            delete(doctor.password)
+            return Success({ messsage: 'Successfully created', doctor, tab: body.tab })
+
+        } else if( body?.tab === 'STEP2' ){
+            await OrganizationModel.updateOne({ _id: body?.organizationId }, {...body, tab: { step: body.tab, isComplete: true }})
+            return Success({ messsage: 'Successfully updated', tab: body.tab })
+
+        } else if( body?.tab === 'STEP3' ){
+            for( let i=0 ; i < parseInt(body.doctors); i++ ){
+                let check = await UserModel({...body.doctor[i], organizationId: body.organizationId }).save()
+            }
+        }
+
     } catch(error){ 
         console.log(error) 
         return Error();
@@ -73,7 +108,7 @@ const getAllDoctors = async () => {
 module.exports = {
     logIn,
     signUp,
-    createOrganization,
+    createClinic,
     checkDuplicateEmail,
     getAllDoctors,
 }

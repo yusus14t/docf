@@ -7,8 +7,8 @@ const signUp = async ( req, res ) =>
         .catch( err => res.status(500).send(err.data) )
 
 
-const createOrganization = async ( req, res ) =>
-commonManager.signUp( req.body )
+const createClinic = async ( req, res ) =>
+commonManager.createClinic( req.body, req.user )
     .then( data => res.status(200).send(data) )
     .catch( err => res.status(500).send(err.data) )
 
@@ -32,7 +32,7 @@ const getAllDoctors = async ( req, res ) => {
 module.exports = {
     signUp,
     logIn,
-    createOrganization,
+    createClinic,
     checkDuplicateEmail,
     getAllDoctors,
 }

@@ -14,7 +14,7 @@ modules.map( route => router.use(`/${route.path}`,jwt_verify, require(`./${ rout
 // Use Custom Route
 router.get('/', (req, res) => res.send('Hello AcadTech'));
 router.post('/checkDuplicateEmail', jwt_verify, commonController.checkDuplicateEmail);
-router.post('/createOrganization', jwt_verify, commonController.createOrganization);
+router.post('/create-clinic', jwt_verify, commonController.createClinic);
 
 
 // Un verify routes

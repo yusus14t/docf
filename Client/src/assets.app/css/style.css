@@ -2301,9 +2301,9 @@ select.form-control{
   background-color:#112C2F;
 }
 
-.input-group {
+/* .input-group {
   margin-bottom: 1rem;
-}
+} */
 
 .custom-file-label {
   color: #778087;
@@ -3588,7 +3588,7 @@ input:checked+.ms-switch-slider.ms-switch-dark {
   outline: none;
   padding: 0.625rem 1rem;
   min-width: 120px;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   display: inline-flex;
   align-items: center;
   justify-content: center;

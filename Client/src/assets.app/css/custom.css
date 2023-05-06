@@ -151,7 +151,7 @@ font-size: 15px;
 }
 
 .ms-panel-body {
-    height: 20rem;
+    /* height: 20rem; */
     overflow: scroll;
 }
 .ms-panel-header {
@@ -160,9 +160,9 @@ font-size: 15px;
     border-radius: 4px;
     padding: 13px;
 }
-.btn {
+/* .btn {
     padding: 5px;
-}
+} */
 .ms-panel {
     border-bottom: 5px solid;
 }
@@ -222,6 +222,10 @@ font-size: 15px;
     position: relative;
     text-align: center;
     overflow: hidden;
+}
+
+.form-content {
+    padding: 0rem 1rem 1rem 1rem;
 }
 
 /* -----------------home page------------------- */
