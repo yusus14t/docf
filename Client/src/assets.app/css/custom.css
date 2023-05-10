@@ -206,6 +206,29 @@ font-size: 15px;
     text-align: center;
     overflow: hidden;
 }
+/* fotter */
+.footer{
+    background-color: rgb(17,44,47);
+    color: white !important;
+}
+.footer > .sigma_info-wrapper{
+    display: flex;
+}
+.leastFooter{
+    display: flex;
+
+    gap: 2rem;
+    color: white;
+}
+.social-links{
+    display: flex;
+    
+    gap:3.5rem ;
+}
+.row a{
+  text-decoration: none;
+}
+/* ============fotter */
 
 /* -----------------home page------------------- */
 @media (max-width: 767px){

@@ -7,7 +7,7 @@ import {faTwitter, faInstagram, faFacebook, faLinkedin, faGoogle} from '@fortawe
 
 function WebFooter() {
     return (
-        <footer className="sigma_footer style-5 pb-0">
+        <footer className="sigma_footer style-5 pb-0 footer">
             <div className="container">
             <div className="sigma_info-wrapper style-26 mb-5">
                 <div className="sigma_info style-26">
@@ -67,7 +67,7 @@ function WebFooter() {
                         <p className="mb-0">It is a long established fact that a reader will be distracted by the readable.</p>
                         </div>
                     </div>
-                    <ul className="sigma_social-icons has-border mt-4 ">
+                    <ul className="sigma_social-icons has-border mt-4 social-links ">
                         <li>
                         <a href="/"><FontAwesomeIcon className='brandicon' icon={faInstagram} />
                         </a>
