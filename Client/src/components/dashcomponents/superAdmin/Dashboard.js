@@ -1,16 +1,31 @@
 import React from 'react';
 import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
+import { Link } from 'react-router-dom';
+import {userRoutes} from '../../../constants/constant';
 const Dashbaord = () => {
+    const userinfo = JSON.parse(localStorage.getItem('user'))
+    
     return (
         <div className='ms-content-wrapper'>
+            <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
+                <div>
+                    <h6>Dashboard</h6>
+                </div>
+                <div className="">
+                    <Link to={`${userRoutes[userinfo.userType].path}/clinicsregistration`} className="btn btn-info btn-md">Add Clinic</Link>
+                </div>
+            </div>
             <div className='row'>
                 <div class="col-xl-3 col-md-6 col-sm-6">
                     <a href="#">
                         <div class="ms-card card-gradient-custom ms-widget ms-infographics-widget ms-p-relative">
                             <div class="ms-card-body media">
                                 <div class="media-body">
-                                    <h6>Today Patients</h6>
-                                    <p class="ms-card-change"> 45</p>
+                                    <h6>Patients</h6>
+                                    <div className='d-flex justify-content-start'>
+                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>45</div>
+                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>34</div>
+                                    </div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
@@ -22,8 +37,11 @@ const Dashbaord = () => {
                         <div class="ms-card card-gradient-custom ms-widget ms-infographics-widget ms-p-relative">
                             <div class="ms-card-body media">
                                 <div class="media-body">
-                                    <h6>Current Token</h6>
-                                    <p class="ms-card-change"> 4</p>
+                                    <h6>Clinics</h6>
+                                    <div className='d-flex justify-content-start'>
+                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>45</div>
+                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>34</div>
+                                    </div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
@@ -35,8 +53,11 @@ const Dashbaord = () => {
                         <div class="ms-card card-gradient-custom ms-widget ms-infographics-widget ms-p-relative">
                             <div class="ms-card-body media">
                                 <div class="media-body">
-                                    <h6>Remaining</h6>
-                                    <p class="ms-card-change"> 45</p>
+                                    <h6>Hospitals</h6>
+                                    <div className='d-flex justify-content-start'>
+                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>45</div>
+                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>34</div>
+                                    </div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
@@ -48,8 +69,11 @@ const Dashbaord = () => {
                         <div class="ms-card card-gradient-custom ms-widget ms-infographics-widget ms-p-relative">
                             <div class="ms-card-body media">
                                 <div class="media-body">
-                                    <h6>Unreached</h6>
-                                    <p class="ms-card-change">45</p>
+                                    <h6>Doctors</h6>
+                                    <div className='d-flex justify-content-start'>
+                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>45</div>
+                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>34</div>
+                                    </div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>

@@ -1,24 +1,33 @@
 const { Schema, model} = require('mongoose');
 
 const organizationSchema = new Schema({
-    firstName: { required: true, type: String },
-    lastName: { required: true, type: String },
-
+    registration: { type: String , required: true },
+    name: { required: true, type: String },
     email: { required: true, type: String },
-    gst: { type: Number },
+    gst: { type: String },
 
-    phone: { type: Number, min: 10, max: 12 },
-    workPhone: { type: Number, min: 10, max: 12 },
+    phone: { type: String },
+    workPhone: { type: String },
     address: { type: String },
     organizationType: { type: String, default: 'CL', enum: [ 'CL', 'HL' ] },
     photo: { type: String, default: null },
+    specialization: { type: String },
+    fee: { type: String, default: '0' },
+    timing: { type: String },
+    offDay: { type: String },
+    parking: { type: String, enum: [ 'available', 'unAvailable' ] },
     additionalDoctors: [
         { type: Schema.Types.ObjectId }
     ],
 
+    tab: {
+        step: { type: String },
+        isComplete: { type: Boolean },
+    },
+
     bank: {
         name: { type: String },
-        account: { type: Number },
+        account: { type: String },
         isfc: { type: String },
     }
 })

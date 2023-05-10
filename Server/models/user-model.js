@@ -1,11 +1,10 @@
 const { Schema, model} = require('mongoose');
 
 const userSchema = new Schema({
-    firstName: { required: true, type: String },
-    lastName: { required: true, type: String },
+    firstName: { type: String },
+    lastName: { type: String },
     email: { required: true, type: String },
-    age: {  type: Number },
-    phone: { type: Number },
+    age: {  type: String },
     address: { type: String },
     gender: { type: String },
     Nationalty: { type: String },
@@ -15,11 +14,16 @@ const userSchema = new Schema({
     userType: { type: String, default: 'PT', enum: ['PT', 'MR', 'AN', 'DR'] },
     organizationId: { type: Schema.Types.ObjectId,  ref: 'organization' },
     isActive: { type: Boolean, default: false },
-    relation:[
+    qualification:{ type: String },
+    experience: { type: String },
+    specialization: { type: String },
+    isPortal: { type: Boolean, default: false },
+    createdBy: { type: Schema.Types.ObjectId, ref: 'user' },
+    relation: [
         {
             relationType: { type: String },
             name: { type: String },
-            phone: { type: Number, min: 10, max: 12 },
+            phone: { type: String  },
         }
     ],
 
@@ -32,7 +36,7 @@ const userSchema = new Schema({
 
     bank: {
         name: { type: String },
-        account: { type: Number },
+        account: { type: String },
         isfc: { type: String },
     }
 })

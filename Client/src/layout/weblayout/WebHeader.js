@@ -5,6 +5,7 @@ import Avatar from '../../assets.app/img/dashboard/doctor-3.jpg'
 
 import logo from '../../assets.web/img/Doctor.png'
 import WebSidebar from "./WebSidebar";
+import { userRoutes } from "../../constants/constant";
 
 const WebHeader = () => {
   const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -111,6 +112,9 @@ const WebHeader = () => {
                           <li className="dropdown-divider"></li>
                           <li className="ms-dropdown-list">
                           <Link className="media fs-14 p-2" to="pages/prebuilt-pages/user-profile.html"> <span><i className="flaticon-user me-2"></i> Profile</span> </Link>
+
+                          { userInfo && <Link className="media fs-14 p-2" to={userRoutes[userInfo.userType].path}> <span><i className="flaticon-user me-2"></i> Dashboard</span> </Link>}
+
                           <Link className="media fs-14 p-2" to="pages/apps/email.html"> <span><i className="flaticon-mail me-2"></i> Inbox</span> <span className="badge rounded-pill badge-info">3</span> </Link>
                           <Link className="media fs-14 p-2" to="pages/prebuilt-pages/user-profile.html"> <span><i className="flaticon-gear me-2"></i> Account Settings</span> </Link>
                           </li>

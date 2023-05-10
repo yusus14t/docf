@@ -625,14 +625,6 @@ body {
   font-size: 14px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #000000;
-}
 
 h1 {
   font-size: 60px;
@@ -2239,7 +2231,7 @@ textarea {
   position: relative;
   display: block;
   margin: 20px 0;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .ms-form-group,
@@ -2309,9 +2301,9 @@ select.form-control{
   background-color:#112C2F;
 }
 
-.input-group {
+/* .input-group {
   margin-bottom: 1rem;
-}
+} */
 
 .custom-file-label {
   color: #778087;
@@ -3412,10 +3404,6 @@ input:checked+.ms-switch-slider.ms-switch-dark {
   font-size: 14px;
 }
 
-.ms-card-body h6 {
-  margin-bottom: 1rem;
-}
-
 .ms-card-body p {
   color: #878793;
 }
@@ -3596,7 +3584,7 @@ input:checked+.ms-switch-slider.ms-switch-dark {
   outline: none;
   padding: 0.625rem 1rem;
   min-width: 120px;
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   display: inline-flex;
   align-items: center;
   justify-content: center;
