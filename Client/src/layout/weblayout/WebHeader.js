@@ -53,7 +53,7 @@ const WebHeader = () => {
                       </li>
 
                       <li className="ms-nav-item ms-d-none">
-                      <Link to="/clinic" className="text-white" data-bs-toggle="modal">About Us</Link>
+                      <Link to="/about" className="text-white" data-bs-toggle="modal">About Us</Link>
                       </li>
                       <li className="ms-nav-item ms-d-none">
                       <Link to="/clinic" className="text-white" data-bs-toggle="modal">Contact</Link>

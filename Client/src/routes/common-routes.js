@@ -9,6 +9,7 @@ const SignUp = lazy(() => import("../components/authentication/SignUp"));
 const ClinicGrid = lazy(() => import("../components/webcomponents/ClinicGrid"));
 const LogIn = lazy(() => import("../components/authentication/LogIn"));
 const Home = lazy(() => import("../components/webcomponents/Home.js"));
+const About = lazy(()=> import("../components/webcomponents/About.js"))
 
 const getUserType = () => JSON.parse(localStorage.getItem('user'))?.userType
 
@@ -17,6 +18,7 @@ const COMMON_ROUTE = [
     { path: "/", element: <Home/> },
     { path: "/doctor-detail", element: <Detail /> },
     { path: "/doctors", element: <DoctorsList /> },
+    { path: "/about", element: <About/> },
     { path: "/clinic-detail", element: < ClinicDetail /> },
     { path: "/clinic", element: <ClinicGrid/> },
     { path: "/login", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path || '/login'} /> : <LogIn />},

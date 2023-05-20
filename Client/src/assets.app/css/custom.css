@@ -257,10 +257,46 @@ font-size: 15px;
 }
 /* ============fotter */
 
+/* Profile picture */
+
+/* profile picture end */
+
 .form-content {
     padding: 0rem 1rem 1rem 1rem;
 }
-
+.time-int{
+            width: 60px;
+        }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.time-int{
+    margin-left: 30px;
+}
+.AM{
+    margin-left: 30px;
+}
+.contner{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+.DAYS{
+        width: 50%;
+        margin-bottom: 30px;
+    }
+    .Anti{
+        margin-left: 30px;
+    }
+    .Meridian{
+        height: 25px;
+    }
+    .clos-t{
+        margin-left: 30px;
+    }
 /* -----------------home page------------------- */
 @media (max-width: 767px){
     .ml255 {
