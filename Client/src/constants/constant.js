@@ -13,6 +13,7 @@ export const MODULES = [
     {id: 'patient', title: 'patient', pathname: '/patient', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
     {id: 'clinicsregistration', title: 'Clinics Registration', pathname: '/clinicsregistration', access: ['SA', 'MA', 'MR']},
+    {id: 'hospitalregistration', title: 'Hospital Registration', pathname: '/hospitalregistration', access: ['SA', 'MA', 'MR']},
     {id: 'clinics', title: 'Clinics', pathname: '/', access: ['DR', 'PT', 'SA', 'MA', 'MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['DR', 'SA', 'MA', 'MR']},
 ]
