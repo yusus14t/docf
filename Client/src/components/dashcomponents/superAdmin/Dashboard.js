@@ -90,7 +90,7 @@ const Dashbaord = () => {
                                 <button className="btn btn-info btn-md" >Add Appointment</button>
                             </div>
                         </div>
-                        <div class="ms-panel-body p-0">
+                        <div class="ms-panel-body h20 p-0">
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {[1,2,3,4,5,6,7,8].map((e, i) => <li class="ms-list-item media">
                                     <img src={image} class="ms-img-small ms-img-round" alt="people" />

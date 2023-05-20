@@ -5,13 +5,7 @@ const Appointment = () => {
   <div className="ms-content-wrapper">
     <div className="row">
       <div className="col-md-12">
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb ps-0">
-            <li className="breadcrumb-item"><a href="/"><i className="material-icons">home</i> Home</a></li>
-            <li className="breadcrumb-item"><a href="/">Appointment</a></li>
-            <li className="breadcrumb-item active" aria-current="page">Appointment List</li>
-          </ol>
-        </nav>
+        
         <div className="ms-panel">
           <div className="ms-panel-header ms-panel-custome">
             <h6>Appointment List</h6>

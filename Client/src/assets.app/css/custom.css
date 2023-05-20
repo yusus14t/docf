@@ -157,9 +157,13 @@ font-size: 15px;
 }
 
 .ms-panel-body {
-    /* height: 20rem; */
     overflow: scroll;
 }
+
+.h20 {
+    height: 20rem;
+}
+
 .ms-panel-header {
     background-color: #112C2F;
     color: white;

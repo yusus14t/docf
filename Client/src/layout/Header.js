@@ -1,4 +1,4 @@
-import { memo, useState  } from "react"
+import { memo, useEffect, useState  } from "react"
 import Logo from '../assets.web/img/Doctor.png'
 import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 import { useNavigate } from "react-router-dom"
@@ -7,12 +7,19 @@ import Sidebar from "./Sidebar"
 const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const mobileView = window.screen.availWidth <= 767
-    const [isSidebarOpen, setIsSidebarOpen] = useState( mobileView ? false : true)
-    const navigate = useNavigate();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(mobileView ? false : true)
+
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            const mobileView = window.screen.availWidth <= 767
+            setIsSidebarOpen(mobileView ? false : true)
+        })
+        return() =>  window.removeEventListener('resize', true) 
+    }, [])
 
     const Logout = () => {
         localStorage.clear()
-        navigate('/login')
+        window.location.replace('/login')
     }
 
     return(
@@ -44,46 +51,6 @@ const Header = () => {
                     <a href="/" className="text-white" data-bs-toggle="modal"><i className="flaticon-list me-2"></i> Generate Report</a>
                     </li>
 
-                    <li className="ms-nav-item dropdown">
-                    <a href="/" className="text-disabled ms-has-notification" id="notificationDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="flaticon-bell"></i></a>
-                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-                        <li className="dropdown-menu-header">
-                        <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Notifications</span></h6>
-                        <span className="badge rounded-pill badge-info">4 New</span>
-                        </li>
-                        <li className="dropdown-divider"></li>
-                        <li className="ms-scrollable ms-dropdown-list ps">
-                        <a className="media p-2" href="/">
-                            <div className="media-body">
-                            <span>12 ways to improve your crypto dashboard</span>
-                            <p className="fs-10 my-1 text-disabled"><i className="material-icons">access_time</i> 30 seconds ago</p>
-                            </div>
-                        </a>
-                        <a className="media p-2" href="/">
-                            <div className="media-body">
-                            <span>You have newly registered users</span>
-                            <p className="fs-10 my-1 text-disabled"><i className="material-icons">access_time</i> 45 minutes ago</p>
-                            </div>
-                        </a>
-                        <a className="media p-2" href="/">
-                            <div className="media-body">
-                            <span>Your account was logged in from an unauthorized IP</span>
-                            <p className="fs-10 my-1 text-disabled"><i className="material-icons">access_time</i> 2 hours ago</p>
-                            </div>
-                        </a>
-                        <a className="media p-2" href="/">
-                            <div className="media-body">
-                            <span>An application form has been submitted</span>
-                            <p className="fs-10 my-1 text-disabled"><i className="material-icons">access_time</i> 1 day ago</p>
-                            </div>
-                        </a>
-                        <div className="ps__rail-x" ><div className="ps__thumb-x" tabIndex="0" ></div></div><div className="ps__rail-y" ><div className="ps__thumb-y" tabIndex="0" ></div></div></li>
-                        <li className="dropdown-divider"></li>
-                        <li className="dropdown-menu-footer text-center">
-                        <a href="/">View all Notifications</a>
-                        </li>
-                    </ul>
-                    </li>
                     <li className="ms-nav-item ms-nav-user dropdown">
                     <img className="ms-user-img ms-img-round float-end" src={Avatar} alt="people" onClick={() => setDropdownOpen(!dropdownOpen)} /> 
                     <ul className={`dropdown-menu dropdown-menu-end user-dropdown ${ dropdownOpen ? 'show' : '' }`}>
