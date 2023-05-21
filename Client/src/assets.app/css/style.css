@@ -452,6 +452,12 @@ Version: 1.0.0
   color: #34334a;
 }
 
+.ms-text-ligth,
+.ms-text-ligth:hover,
+.ms-text-ligth:focus {
+  color: white;
+}
+
 .bg-primary {
   background-color:#112C2F !important;
 }
@@ -886,6 +892,10 @@ button > .material-icons{
 
 .ms-img-round {
   border-radius: 50%;
+}
+
+.ms-img-curved {
+  border-radius: 6%;
 }
 
 .ms-has-notification {

@@ -126,7 +126,7 @@ font-size: 15px;
 
 .cursor-pointer{
     cursor: pointer;
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }
 .tabName{
 
@@ -254,6 +254,9 @@ font-size: 15px;
 }
 .row a{
   text-decoration: none;
+}
+.btn-primary{
+    border: none !important;
 }
 /* ============fotter */
 

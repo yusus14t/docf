@@ -14,7 +14,7 @@ const Header = () => {
             const mobileView = window.screen.availWidth <= 767
             setIsSidebarOpen(mobileView ? false : true)
         })
-        return() =>  window.removeEventListener('resize', true) 
+        return() =>  window.removeEventListener('resize', () => {},  false) 
     }, [])
 
     const Logout = () => {
