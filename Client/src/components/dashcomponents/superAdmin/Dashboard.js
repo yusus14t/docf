@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { lazy, useState } from 'react';
 import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
 import { Link } from 'react-router-dom';
-import {userRoutes} from '../../../constants/constant';
+import { userRoutes } from '../../../constants/constant';
+import Appointment from '../../common-components/Appointment';
+const  Modal = lazy(() => import('../../common-components/Modal'));
+
 const Dashbaord = () => {
     const userinfo = JSON.parse(localStorage.getItem('user'))
-    
+    const [isModalOpen, setIsModalOpen] = useState(false)
     return (
         <div className='ms-content-wrapper'>
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
@@ -87,12 +90,12 @@ const Dashbaord = () => {
                                 <h6>Patients List</h6>
                             </div>
                             <div className="">
-                                <button className="btn btn-info btn-md" >Add Appointment</button>
+                                <button className="btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
                             </div>
                         </div>
                         <div class="ms-panel-body h20 p-0">
                             <ul class="ms-followers ms-list ms-scrollable ps">
-                                {[1,2,3,4,5,6,7,8].map((e, i) => <li class="ms-list-item media">
+                                {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => <li class="ms-list-item media">
                                     <img src={image} class="ms-img-small ms-img-round" alt="people" />
                                     <div class="media-body mt-1">
                                         <h4>Micheal</h4>
@@ -105,6 +108,13 @@ const Dashbaord = () => {
                     </div>
                 </div>
             </div>
+
+            {isModalOpen && 
+                <Appointment 
+                    isOpen={isModalOpen}
+                    setIsOpen={setIsModalOpen}
+                />
+            }
         </div>
 
     )

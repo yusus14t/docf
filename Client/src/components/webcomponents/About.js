@@ -1,5 +1,4 @@
 import React from 'react'
-import OurTeam from './OurTeam'
 
 const About = () => {
   return (
@@ -11,7 +10,6 @@ const About = () => {
             solutions that streamline the appointment scheduling process and improve overall efficiency in medical
             practices.
         </p>
-        <OurTeam/>
     </>
   )
 }

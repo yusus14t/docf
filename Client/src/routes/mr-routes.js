@@ -7,7 +7,8 @@ const Doctors = lazy(()=>import('../components/dashcomponents/DoctorsList'))
 
 
 const SUPER_ADMIN = [
-    { path: "/mr", element: <Dashboard /> },
+    { path: "/mr", element: <Navigate to={'/mr/dashboard'} /> },
+    { path: "/mr/dashboard", element: <Dashboard /> },
     { path: "/mr/profile", element: <div> Profile </div> },
     { path: "/mr/user", element: <h1>user</h1> },
     { path: "/mr/appointment", element: <Appointment/> },
