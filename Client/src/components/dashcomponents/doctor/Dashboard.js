@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
+import { axiosInstance, getAuthHeader } from '../../../constants/utils';
+import Appointment from '../../common-components/Appointment';
 const Dashbaord = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [appointments, setAppointments] = useState([]);
+
+    useEffect(() => {
+        getAppointments()
+    },[])
+
+    const getAppointments = async () => {
+        try{
+            let { data } = await axiosInstance.get('/doctor/get-appointments', {...getAuthHeader()})
+            setAppointments(data?.appointments)
+        } catch(error){ console.log(error) }
+    }
+
     return (
         <div className='ms-content-wrapper'>
             <div className='row'>
@@ -60,27 +76,33 @@ const Dashbaord = () => {
                     <div class="ms-panel ms-panel-fh ms-widget">
                         <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
                             <div>
-                                <h6>Patients List</h6>
+                                <h6>Appointment List</h6>
                             </div>
                             <div className="">
-                                <button className="btn btn-info btn-md" >Add Appointment</button>
+                                <button className="btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
                             </div>
                         </div>
-                        <div class="ms-panel-body p-0">
+                        <div class="ms-panel-body p-0">{console.log(appointments)}
                             <ul class="ms-followers ms-list ms-scrollable ps">
-                                {[1,2,3,4,5,6,7,8].map((e, i) => <li class="ms-list-item media">
+                                {appointments?.length && appointments.map((appointment, i) => <li class="ms-list-item media">
                                     <img src={image} class="ms-img-small ms-img-round" alt="people" />
                                     <div class="media-body mt-1">
-                                        <h4>Micheal</h4>
-                                        <span class="fs-12">MBBS, MD</span>
+                                        <h4>{appointment?.user.firstName} {appointment?.user.lastName || ""}</h4>
+                                        <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5,10)}</span>
                                     </div>
-                                    <button type="button" class="ms-btn-icon btn-success" name="button"> </button>
+                                    <button type="button" class="ms-btn-icon btn-success" name="button">{appointment?.token} </button>
                                 </li>)}
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            {isModalOpen && 
+                <Appointment 
+                    isOpen={isModalOpen}
+                    setIsOpen={setIsModalOpen}
+                />
+            }
         </div>
 
     )

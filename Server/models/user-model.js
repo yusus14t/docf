@@ -3,12 +3,12 @@ const { Schema, model} = require('mongoose');
 const userSchema = new Schema({
     firstName: { type: String },
     lastName: { type: String },
-    email: { required: true, type: String },
+    email: { type: String },
     age: {  type: String },
     address: { type: String },
-    gender: { type: String },
+    gender: { type: String, enum:['M', 'F', 'O'] },
     Nationalty: { type: String },
-    phone: { type: String,  },
+    phone: { type: String, required: true  },
     photo: { type: String, default: null },
     password: { type: String, default: null },
     userType: { type: String, default: 'PT', enum: ['PT', 'MR', 'AN', 'DR'] },
@@ -17,6 +17,7 @@ const userSchema = new Schema({
     qualification:{ type: String },
     experience: { type: String },
     specialization: { type: String },
+    bloodGroup: { type: String },
     isPortal: { type: Boolean, default: false },
     relation: [
         {

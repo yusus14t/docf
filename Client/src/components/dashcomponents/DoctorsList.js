@@ -26,7 +26,7 @@ const DoctorsList = () => {
     const handleDelete = async ( doctor ) => {
         try{ 
             console.log('>>>.', doctor)
-            await axiosInstance.post('/delete-doctor', { _id: doctor._id }, getAuthHeader());
+            await axiosInstance.post('/common/delete-doctor', { _id: doctor._id }, getAuthHeader());
             setDoctors((old) => old.filter(d => d._id !== doctor._id))
         } catch(error){ console.log(error) }
     }

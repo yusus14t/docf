@@ -3,7 +3,6 @@ import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
 import { Link } from 'react-router-dom';
 import { userRoutes } from '../../../constants/constant';
 import Appointment from '../../common-components/Appointment';
-const  Modal = lazy(() => import('../../common-components/Modal'));
 
 const Dashbaord = () => {
     const userinfo = JSON.parse(localStorage.getItem('user'))

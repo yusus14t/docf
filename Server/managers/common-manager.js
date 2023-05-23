@@ -1,7 +1,7 @@
 const { Error, Success, encryptPassword, comparePassword, createToken } = require('../constants/utils');
 const UserModel = require('../models/user-model');
 const OrganizationModel = require('../models/organization-model');
-const { Mongoose } = require('mongoose');
+const AppointmentModel = require('../models/appointment-model');
 
 
 // function pattern 
@@ -158,11 +158,86 @@ const deleteDoctor = async ( body, user ) => {
     }
 }
 
+const appointmentDoctors = async ( body, user ) => {
+    try{
+        let query = {}
+
+        if(user.type === 'DR'){
+            query = { organizationId: user.organizationId }
+        }
+
+        let doctors = await UserModel.aggregate([
+            {
+                $match: { userType: 'DR', isActive: true, ...query },
+            },
+            {
+                $lookup: {
+                    from: 'organizations',
+                    localField: 'organizationId',
+                    foreignField: '_id',
+                    as: 'clinic',
+                    pipeline: [
+                        {
+                            $project: {
+                                name:  '$name'
+                            },
+                        }
+                    ]
+                }
+            },
+            {
+                $project: {
+                    fullName: {
+                        $concat: ['$firstName', ' ', '$lastName']
+                    },
+                    clinic: { $first: '$clinic.name' },
+                    specialization: '$specialization',
+                    phone: 1,
+                    organizationId: 1,
+                }
+            }
+        ])
+        return Success({ message: 'Successfull fetch doctor', doctors })
+    } catch(error){ 
+        console.log(error) 
+        return Error();
+    }
+}
+
+
+const addAppointment = async ( body, user ) => {
+    try{
+        let lastAppointment = await  AppointmentModel.findOne({ doctorId: body.doctor }, { token: 1 }).sort({ createdAt: -1 })
+        let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
+        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' },{ firstName: 1, lastName: 1, userType: 1 });
+
+        if(!patient){
+            patient = await UserModel({  ...body,  userType: 'PT' }).save();
+        }
+
+        let appointment = await AppointmentModel({ token, userId: patient._id, doctorId: body.doctor,  createdBy: user._id }).save()
+        return Success({ message: 'Appointment successfully created', appointment})
+    } catch(error){ 
+        console.log(error) 
+        return Error();
+    }
+}
+
+const getPatientByNumber = async ( body, user ) => {
+    try{
+        let patient = await UserModel.find({ phone: body.phone, userType: 'PT' },{ firstName: 1, lastName: 1, phone: 1, gender: 1, bloodGroup: 1, address: 1 })
+        return Success({ patient })
+    } catch(error){ console.log(error) }
+}
+
 module.exports = {
     logIn,
     signUp,
     createClinic,
     checkDuplicateEmail,
     getAllDoctors,
-    deleteDoctor
+    deleteDoctor,
+    appointmentDoctors,
+    addAppointment,
+    getPatientByNumber,
 }

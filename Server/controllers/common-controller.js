@@ -33,7 +33,24 @@ const deleteDoctor = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
-    
+
+const appointmentDoctors = async ( req, res ) => {
+    commonManager.appointmentDoctors( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const addAppointment = async ( req, res ) => {
+    commonManager.addAppointment( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+ 
+const getPatientByNumber = async ( req, res ) => {
+    commonManager.getPatientByNumber( req.query, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
         
 module.exports = {
     signUp,
@@ -42,4 +59,7 @@ module.exports = {
     checkDuplicateEmail,
     getAllDoctors,
     deleteDoctor,
+    appointmentDoctors,
+    addAppointment,
+    getPatientByNumber
 }

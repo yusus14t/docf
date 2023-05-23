@@ -6,6 +6,8 @@ const { jwt_verify } = require('../middlewares/common-middleware');
 // List Of Modules
 const modules = [
     {'path' : 'super-admin', 'module': 'superadmin-route'},
+    {'path' : 'common', 'module': 'common-route'},
+    {'path' : 'doctor', 'module': 'doctor-route'},
 ]
 
 // Return All Routes
@@ -13,10 +15,6 @@ modules.map( route => router.use(`/${route.path}`,jwt_verify, require(`./${ rout
 
 // Use Custom Route
 router.get('/', (req, res) => res.send('Hello AcadTech'));
-router.post('/checkDuplicateEmail', jwt_verify, commonController.checkDuplicateEmail);
-router.post('/create-clinic', jwt_verify, commonController.createClinic);
-router.post('/delete-doctor', jwt_verify, commonController.deleteDoctor);
-
 
 // Un verify routes
 router.post('/signup', commonController.signUp);

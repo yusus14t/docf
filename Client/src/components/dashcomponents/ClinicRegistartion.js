@@ -43,7 +43,7 @@ const ClinicRegistartion = () => {
         formData['userId'] = doctor._id
       }
 
-      let {data}  = await axiosInstance.post('/create-clinic', formData, getAuthHeader())
+      let {data}  = await axiosInstance.post('/common/create-clinic', formData, getAuthHeader())
 
       if(data?.tab === 'STEP1'){ 
         localStorage.setItem('createDoctor', JSON.stringify(data.doctor))
