@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Modal from './Modal';
-import {Controller, useForm} from 'react-hook-form';
+import { useForm} from 'react-hook-form';
 import Select from "react-select"
+import useToasty from '../../hooks/toasty';
 import { axiosInstance, getAuthHeader } from '../../constants/utils';
 
 const Appointment = ({isOpen, setIsOpen}) => {
-    // const userinfo = JSON.parse(localStorage.getItem('user'))
+    const toasty = useToasty()
     const [isAnotherAppointment, setIsAnotherAppointment] = useState(false)
     const [patients, setPatients] = useState([]);
     const [doctors, setDoctors] = useState([]);
@@ -23,7 +24,10 @@ const Appointment = ({isOpen, setIsOpen}) => {
         try {
             let { data } = await axiosInstance.get('/common/appointment-doctors', getAuthHeader());
             setDoctors(data?.doctors || [])
-        } catch(error){ console.log(error) }
+        } catch(error){ 
+            toasty.error(error?.messgae)
+            console.log(error) 
+        }
     }
 
     const saveAppointment = async ( formData ) => {
@@ -35,9 +39,14 @@ const Appointment = ({isOpen, setIsOpen}) => {
                 return
             }
             let { data } = await axiosInstance.post('/common/add-appointment', formData,  getAuthHeader());
-            data.code === 200 && setIsOpen(false)
-            console.log(data)
-        } catch(error){ console.log(error) }
+            await fetchDoctors();
+            
+            setIsOpen(false)
+            toasty.success(data?.message)
+        } catch(error){ 
+            toasty.error(error?.messgae)
+            console.log(error) 
+        }
     }
 
     const getPatientByNumber = async (phone) => {

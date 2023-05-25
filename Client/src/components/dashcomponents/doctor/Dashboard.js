@@ -82,7 +82,7 @@ const Dashbaord = () => {
                                 <button className="btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
                             </div>
                         </div>
-                        <div class="ms-panel-body p-0">{console.log(appointments)}
+                        <div class="ms-panel-body p-0">
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {appointments?.length && appointments.map((appointment, i) => <li class="ms-list-item media">
                                     <img src={image} class="ms-img-small ms-img-round" alt="people" />

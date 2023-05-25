@@ -19,6 +19,7 @@ router.get('/', (req, res) => res.send('Hello AcadTech'));
 // Un verify routes
 router.post('/signup', commonController.signUp);
 router.post('/login', commonController.logIn);
+router.get('/user-by-email', commonController.getUserByEmail);
 router.get('/allDoctors', commonController.getAllDoctors);
 
 // Module Export 

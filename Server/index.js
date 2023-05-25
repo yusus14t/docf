@@ -19,7 +19,10 @@ app.use(express.json());
 app.use(cors({ origin: '*' }))
 
 // All Routes
-app.use('/api', routes);
+app.use('/api',(req, res, next) => {
+    console.log('===>', req.method,  req.originalUrl)
+    next();
+}, routes);
 
 // 404 Route
 app.get('*', ( req, res ) => res.send('Sorry Api Not Found'))

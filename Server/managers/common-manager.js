@@ -83,7 +83,7 @@ const logIn = async ( body, user1, userId ) => {
     try{
         let user = await UserModel.findOne({ email: body.email })
 
-        if(!user) return Error(message = ' User not found')
+        if(!user) return Error({message: 'User not found'})
 
         let isValid = await comparePassword(body.password, user.password)
         if(!isValid) return Error({message: 'Invalid Password'})
@@ -230,6 +230,13 @@ const getPatientByNumber = async ( body, user ) => {
     } catch(error){ console.log(error) }
 }
 
+const getUserByEmail = async ( body ) => {
+    try{
+        let user = await UserModel.findOne({ email: body.email },{ firstName: 1, lastName: 1, email: 1 })
+        return Success({ user })
+    } catch(error){ console.log(error) }
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -240,4 +247,5 @@ module.exports = {
     appointmentDoctors,
     addAppointment,
     getPatientByNumber,
+    getUserByEmail,
 }

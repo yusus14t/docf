@@ -51,6 +51,12 @@ const getPatientByNumber = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
+
+const getUserByEmail = async ( req, res ) => {
+    commonManager.getUserByEmail( req.query )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
         
 module.exports = {
     signUp,
@@ -61,5 +67,6 @@ module.exports = {
     deleteDoctor,
     appointmentDoctors,
     addAppointment,
-    getPatientByNumber
+    getPatientByNumber,
+    getUserByEmail
 }

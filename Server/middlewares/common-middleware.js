@@ -3,7 +3,6 @@ const userModel = require('../models/user-model');
 
 const jwt_verify = async ( req, res, next ) => {
     try{
-        console.log('===>', req.method,  req.originalUrl)
         let verify = jwt.verify(req.header('auth-token'), process.env.JWT_SECRET )
         let user = await userModel.findOne({_id: verify._id}).lean();
         req.user = user

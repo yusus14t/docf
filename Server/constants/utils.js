@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
- const Error = (message = 'Something went wrong!', code = 500, status = 'Fail', ...args) => { 
+ const Error = ({message = 'Something went wrong!', code = 500, status = 'Fail', ...args}) => { 
   return { message, code, status, ...args } 
 }
 
