@@ -6,7 +6,6 @@ import {userRoutes} from '../../constants/constant'
 import { Link } from 'react-router-dom';
 import useToasty from '../../hooks/toasty';
 
-
 const LogIn = () => {
    const toasty = useToasty();
    const { register, handleSubmit } = useForm({ onChange: true })

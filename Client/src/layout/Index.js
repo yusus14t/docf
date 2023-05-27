@@ -1,10 +1,7 @@
 import Header from "./Header";
 import "../assets.app/css/style.css"
 import "../assets.app/css/custom.css"
-
-
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 
 const Layout = () => {
     return (

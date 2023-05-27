@@ -12,4 +12,8 @@ router.get('/appointment-doctors',  commonController.appointmentDoctors);
 router.post('/add-appointment', commonController.addAppointment)
 router.get('/get-patient-by-number', commonController.getPatientByNumber)
 
+//Notifications
+router.get('/notification', commonController.allNotification)
+
+
 module.exports = router;

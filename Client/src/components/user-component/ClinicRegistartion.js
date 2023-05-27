@@ -382,6 +382,7 @@ const ClinicRegistartion = () => {
             </div>}
             {tab === "FINAL" && <div>
                <div className="row">
+               <div className="col-md-3 mb-3"></div>
                 <div className="col-md-6 mb-3">
                   <label className=''>Deal Price</label>
                   <div className="input-group">
@@ -396,6 +397,9 @@ const ClinicRegistartion = () => {
                   { errors?.dealprice && <div className="text-danger ">{errors?.dealprice.message}</div>}
 
                 </div>
+               <div className="col-md-3 mb-3"></div>
+               <div className="col-md-3 mb-3"></div>
+
                 <div className="col-md-6 mb-3">
                   <label className=''>Details</label>
                   <div className="input-group">
@@ -410,6 +414,8 @@ const ClinicRegistartion = () => {
                   { errors?.details && <div className="text-danger ">{errors?.details.message}</div>}
 
                 </div>
+               <div className="col-md-3 mb-3"></div>
+
               </div>
               </div>}
             <div className="actions btn-submit">

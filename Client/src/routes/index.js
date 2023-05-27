@@ -1,5 +1,5 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import SUPER_ADMIN from './super-admin-routes';
 import PATIENT from './user-routes';
 import DOCTOR from './doctor-routes';
@@ -24,12 +24,24 @@ export const AllRoutes = () => {
   let user = getUserType()
   let userRoute = USER_ROUTES[user]
 
-  let allUseRoutes = [{ path: "/", element: <WebLayout />, children: COMMON_ROUTE },]
-  allUseRoutes.push({ path: `/${userRoute?.path}`, element: user ? <AppLayout /> : <Navigate to={'/login'} />, children: user ? userRoute.id : [] })
+  let allUseRoutes = [{ 
+    path: "/", 
+    element: <WebLayout />, 
+    children: COMMON_ROUTE 
+  }]
+
+  allUseRoutes.push({ 
+    path: `/${userRoute?.path}`, 
+    element: user ? <AppLayout /> : <Navigate to={'/login'} />, 
+    children: user ? userRoute.id : []
+  })
   
   let routes = useRoutes(allUseRoutes); 
 
   return(
-    <Suspense fallback={<Loader />} >{routes}</Suspense>
+    <Suspense fallback={<Loader />} >
+      { routes}
+      {/* <Loader /> */}
+    </Suspense>
   )
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import {  useForm } from 'react-hook-form';
 import Select from "react-select"
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,7 +12,6 @@ import AddDoctors from '../common-components/AddDoctors';
 const HospitalRegistartion = () => {
   const { register, handleSubmit, watch, getValues, reset,setError,control,   formState: { errors } } = useForm({ onChange: true })
   const [tab, setTab] = useState("STEP1")
-  const [department, setDepartment] = useState(JSON.parse(localStorage.getItem('createDeaprtment')) || {});
   const [timingNo, setTimingNo] = useState(1);
   const [doctor, setDoctor] = useState(JSON.parse(localStorage.getItem('createDoctor')) || {});
   const [doctors, setDoctors] = useState([]);
