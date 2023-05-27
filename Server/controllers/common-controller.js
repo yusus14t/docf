@@ -1,4 +1,5 @@
 const commonManager = require('../managers/common-manager');
+const notificationManager = require('../managers/notification-manager');
 
 
 const signUp = async ( req, res ) =>
@@ -57,7 +58,13 @@ const getUserByEmail = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
-        
+
+const allNotification = async ( req, res ) => {
+    notificationManager.allNotification( req.query, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
@@ -68,5 +75,6 @@ module.exports = {
     appointmentDoctors,
     addAppointment,
     getPatientByNumber,
-    getUserByEmail
+    getUserByEmail,
+    allNotification
 }

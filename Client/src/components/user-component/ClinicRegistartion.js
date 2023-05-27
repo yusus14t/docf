@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import Select from "react-select"
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
+import Drimg from "../../assets.app/img/doctors-list/182x280-1.jpg"
+import Select from "react-select"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPencil} from '@fortawesome/free-solid-svg-icons'
-import Drimg from "../../assets.app/img/doctors-list/182x280-1.jpg"
 
 
-
-const HospitalRegistartion = () => {
-  const { register, handleSubmit, watch, getValues, reset,setError,control,   formState: { errors } } = useForm({ onChange: true })
+const ClinicRegistartion = () => {
+  const { register, handleSubmit, reset, getValues,  formState: { errors } } = useForm({ onChange: true })
   const [tab, setTab] = useState("STEP1")
-  const [department, setDepartment] = useState(JSON.parse(localStorage.getItem('createDeaprtment')) || {});
-  const [timingNo, setTimingNo] = useState(1);
   const [doctor, setDoctor] = useState(JSON.parse(localStorage.getItem('createDoctor')) || {});
   const [doctors, setDoctors] = useState([]);
+   
+  const [timingNo, setTimingNo] = useState(1);
 
   const DAYS = [
     { id:0, value: 'MON', day: 'Monday' },
@@ -29,16 +28,15 @@ const HospitalRegistartion = () => {
   useEffect(() => {
     setTimingNo(1)
   }, [tab])
+
   const handleDoctors = () => {
     setDoctors([...doctors, getValues()])
     reset({})
   }
 
-
-  const password = watch('password')
-
   const submit = async (formData) => {
     try {
+
       formData['tab'] = tab
       if(doctor?.organizationId){
         formData['organizationId'] = doctor.organizationId
@@ -77,23 +75,21 @@ const HospitalRegistartion = () => {
               <li onClick={() => { setTab("STEP1"); reset({}) }} role="tab" className={`${tab === "STEP1" ? "current" : "disabled"} cursor-pointer`} aria-disabled="false" aria-selected="False"><span className="current-info audible tabName ">Step 1 </span></li>
               <li onClick={() => { setTab("STEP2"); reset({}) }} role="tab" className={`${tab === "STEP2" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"> <span className='tabName'>Step 2</span> </li>
               <li onClick={() => { setTab("STEP3"); reset({}) }} role="tab" className={`${tab === "STEP3" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 3</span></li>
-              <li onClick={() => { setTab("STEP4"); reset({}) }} role="tab" className={`${tab === "STEP4" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 4</span></li>
-              <li onClick={() => { setTab("FINAL"); reset({}) }} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 5</span></li>
+              <li onClick={() => { setTab("FINAL"); reset({}) }} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 4</span></li>
             </ul>
           </div>
           <div className="content ">
             <h3 id="default-wizard-h-0" tabIndex={-1} className="title current">Step 1</h3>
             {tab === "STEP1" && <div className="ms-wizard-step body current" id="default-wizard-p-0" role="tabpanel" aria-labelledby="default-wizard-h-0" aria-hidden="false">
-              
               <div className="row">
                 <div className="col-md-6 mb-3">
-                  <label className=''>Hospital Name</label>
+                  <label className=''>Clinic Name</label>
                   <div className="input-group">
                     <input type="text"
                       className="form-control "
-                      placeholder="Eg: Shad Hospital"
+                      placeholder="Ex: Madni Clinic"
                       {...register('name', {
-                        required: 'Hospital name is required'
+                        required: 'Clinic name is required'
                       })}
                     />
                   </div>
@@ -101,7 +97,7 @@ const HospitalRegistartion = () => {
 
                 </div>
                 <div className="col-md-6 mb-3">
-                  <label className=''>Hospital Registration No.</label>
+                  <label className=''>Clinic Registration No.</label>
                   <div className="input-group">
                     <input type="text"
                       className="form-control "
@@ -180,7 +176,7 @@ const HospitalRegistartion = () => {
             {tab === "STEP2" && <div>
               <div className="row">
                 <div className="col-md-6 mb-3">
-                  <label >Specialization of Hospital</label>
+                  <label >Specialization of Clininc</label>
                   <div className="">
                     <Select
                         // defaultValue={[]}
@@ -212,13 +208,13 @@ const HospitalRegistartion = () => {
               
               <div className="row">
                 <div className="col-md-6 mb-3">
-                  <label className=''>Hospital Address</label>
+                  <label className=''>Clinic Address</label>
                   <div className="input-group">
                     <input type="text"
                       className="form-control"
                       placeholder="Eg: Hamdard nagar 'A' jamalpur Aligarh "
                       {...register('address', {
-                        required: 'Hospital address is required'
+                        required: 'Clinic address is required'
                       })}
                     />
                   </div>
@@ -229,16 +225,6 @@ const HospitalRegistartion = () => {
                   <div className="row input-group mt-4">
                     
                     <div className="col"><label >Parking</label></div>
-                   
-                    <label class="ms-switch">
-                      <input type="checkbox"/>
-                      <span class="ms-switch-slider round"></span>
-                    </label>
-                    
-                  </div>
-                  <div className="row input-group mt-4">
-                    
-                    <div className="col"><label >Ambulance</label></div>
                    
                     <label class="ms-switch">
                       <input type="checkbox"/>
@@ -260,6 +246,7 @@ const HospitalRegistartion = () => {
                           {DAYS.map( (day) => <option value={day.value} >{day.day}</option>)}
                         </select>
                       </div>
+                      <div className="col-1 text-end"><p style={{marginTop:"25px"}}>Morning</p></div>
                       <div className='col '>
                     
                         <label htmlFor="#open">Open</label>
@@ -284,7 +271,31 @@ const HospitalRegistartion = () => {
                         />
                       </div>
 
+                      {/* evening */}
                       
+                      <div className="col-1 text-end"><p style={{marginTop:"25px"}}>Evening</p></div>
+                      <div className='col '>
+                        <label htmlFor="#open">Open</label>
+                        <input type="time"
+                        id='open'
+                          onFocusCapture={(e) => console.log('>>>>>>>', e)}
+                          className="form-control"
+                          placeholder="morning 10am to 12pm"
+                          {...register('timing', {
+                            required: 'Timing is required'
+                          })}
+                        />
+                      </div>
+                      <div className='col '>
+                        <label className=''>Close</label>
+                        <input type="time"
+                          className="form-control"
+                          placeholder="morning 10am to 12pm"
+                          {...register('timing', {
+                            required: 'Timing is required'
+                          })}
+                        />
+                      </div>
                        <div className='col '>
                         { timingNo === i && i < 7 && <button type='button' style={{minWidth:"60px"}} className='btn btn-primary mt-4 p-1 px-1' 
                         onClick={() => setTimingNo((old) => { 
@@ -309,93 +320,6 @@ const HospitalRegistartion = () => {
               </div>
             </div>}
             {tab === "STEP3" && <div className='row'>
-              
-              <div >
-                <div className="row">
-                  <span className='mb-3 ' >Departments </span>
-                  <div className="col-md-6 mb-3">
-                    <label >Name of Department</label>
-                    <div className="input-group">
-                      <input type="text"
-                      className="form-control"
-                      placeholder="Cardio"
-                      
-                    />
-                  </div>
-                  { errors?.doctor && <div className="text-danger ">{errors?.doctor?.firstName.message}</div>}
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label className=''>Room No.</label>
-                    <div className="input-group">
-                      <input type="number"
-                      
-                        className="form-control"
-                        placeholder="Eg: 45"
-                        
-                      />
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-              {Array(timingNo).fill(0).map((v, i) => 
-                (i = i + 1, <div className="row">
-                  <div className="col-md-12 mb-3">
-                    <label className=''>Timming</label>
-                    <div className='row' style={{paddingRight:0}}>
-                      <div className="col">
-                        <label htmlFor="">Days</label>
-                        <select name="days" className='form-control' id="" >
-                          {DAYS.map( (day) => <option value={day.value} >{day.day}</option>)}
-                        </select>
-                      </div>
-                      <div className='col '>
-                        <label htmlFor="#open">Open</label>
-                        <input type="time"
-                        id='open'
-                          onFocusCapture={(e) => console.log('>>>>>>>', e)}
-                          className="form-control"
-                          placeholder="morning 10am to 12pm"
-                          {...register('timing', {
-                            required: 'Timing is required'
-                          })}
-                        />
-                      </div>
-                      <div className='col '>
-                        <label className=''>Close</label>
-                        <input type="time"
-                          className="form-control"
-                          placeholder="morning 10am to 12pm"
-                          {...register('timing', {
-                            required: 'Timing is required'
-                          })}
-                        />
-                      </div>
-
-                      
-                       <div className='col '>
-                        { timingNo === i && i < 7 && <button type='button' style={{minWidth:"60px"}} className='btn btn-primary mt-4 p-1 px-1' 
-                        onClick={() => setTimingNo((old) => { 
-                          if( old < 7) old  = old + 1  
-                          return old
-                        })}> Add</button> }
-
-                        <button type='button' style={{minWidth:"60px"}} className='btn btn-light mx-2 mt-4 p-1 px-1' 
-                        onClick={() => setTimingNo((old) => { 
-                          if( old < 7) old  = old - 1  
-                          return old
-                        })}>x</button>
-                      </div>
-                      
-                      
-                    </div>
-                  
-                    { errors?.timing && <div className="text-danger ">{errors?.timing.message}</div>}
-
-                  </div>
-              </div>))}
-            </div>}
-            {tab === "STEP4" && <div className='row'>
               {doctors.map( doc => <div className="col-md-4 col-sm-6 mb-3">
                 <div class="ms-card card-gradient-dark ms-infographics-widget ms-widget">
                   
@@ -567,7 +491,8 @@ const HospitalRegistartion = () => {
               </div>
             </div>}
             {tab === "FINAL" && <div>
-              <div className="row">
+               <div className="row">
+               <div className="col-md-3 mb-3"></div>
                 <div className="col-md-6 mb-3">
                   <label className=''>Deal Price</label>
                   <div className="input-group">
@@ -582,6 +507,9 @@ const HospitalRegistartion = () => {
                   { errors?.dealprice && <div className="text-danger ">{errors?.dealprice.message}</div>}
 
                 </div>
+               <div className="col-md-3 mb-3"></div>
+               <div className="col-md-3 mb-3"></div>
+
                 <div className="col-md-6 mb-3">
                   <label className=''>Details</label>
                   <div className="input-group">
@@ -596,11 +524,13 @@ const HospitalRegistartion = () => {
                   { errors?.details && <div className="text-danger ">{errors?.details.message}</div>}
 
                 </div>
+               <div className="col-md-3 mb-3"></div>
+
               </div>
-              
-            </div>}
+              </div>}
             <div className="actions btn-submit">
-              <button type='submit' className='btn btn-primary btn-sm'>Next</button>
+              
+              <button type='submit' className='btn btn-primary btn-sm ' >Next</button>
             </div>
           </div>
         </form>
@@ -609,4 +539,4 @@ const HospitalRegistartion = () => {
   )
 }
 
-export default HospitalRegistartion;
+export default ClinicRegistartion

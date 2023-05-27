@@ -2,15 +2,15 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import { userRoutes as userRouteConstant } from '../constants/constant';
 
-const Detail = lazy(() => import('../components/webcomponents/Detail'));
-const ClinicDetail = lazy(() => import('../components/webcomponents/Clinic_Details'));
-const DoctorsList = lazy(() => import('../components/webcomponents/DoctorsList'))
-const SignUp = lazy(() => import("../components/authentication/SignUp"));
-const ClinicGrid = lazy(() => import("../components/webcomponents/ClinicGrid"));
-const LogIn = lazy(() => import("../components/authentication/LogIn"));
-const Home = lazy(() => import("../components/webcomponents/Home.js"));
-const About = lazy(()=> import("../components/webcomponents/About.js"))
-const Lockscreen = lazy(() => import("../components/authentication/Lockscreen"));
+import Detail from  '../components/webcomponents/Detail';
+import ClinicDetail from  '../components/webcomponents/Clinic_Details';
+import DoctorsList from  '../components/webcomponents/DoctorsList';
+import SignUp from  "../components/authentication/SignUp";
+import ClinicGrid from  "../components/webcomponents/ClinicGrid";
+import LogIn from  "../components/authentication/LogIn";
+import Home from  "../components/webcomponents/Home.js";
+import About from "../components/webcomponents/About.js";
+import Lockscreen from  "../components/authentication/Lockscreen";
 
 const getUserType = () => JSON.parse(localStorage.getItem('user'))?.userType
 const isLock = JSON.parse(localStorage.getItem('email'))

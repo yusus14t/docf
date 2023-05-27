@@ -220,7 +220,9 @@ const Appointment = ({isOpen, setIsOpen}) => {
                     :
                     <>
                         <div class="col-12">
+                            <button type='submit' className='btn btn-primary shadow-none mb-2' onClick={() => setIsAnotherAppointment(true)}>Add Another</button>
                             <div class="ms-card card-gradient-dark ms-widget ms-infographics-widget">
+
                                 <div class="ms-card-body media">
                                     <div class="media-body">
                                         <div className='row'>
@@ -238,7 +240,6 @@ const Appointment = ({isOpen, setIsOpen}) => {
                                 </div>
                                 <i class="flaticon-reuse"></i>
                             </div>
-                            <button type='submit' className='btn btn-primary shadow-none mb-2' onClick={() => setIsAnotherAppointment(true)}>Add Another</button>
                         </div>
                     </>
                     

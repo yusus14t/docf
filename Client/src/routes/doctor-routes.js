@@ -1,9 +1,8 @@
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
-import Appointment from "../components/dashcomponents/Appointment";
-
-const Patients = lazy(()=> import ("../components/dashcomponents/doctor/Patients"));
-const Dashbaord = lazy(() => import("../components/dashcomponents/doctor/Dashboard"));
+import Appointment from "../components/user-component/Appointment";
+import Patients from "../components/user-component/doctor/Patients";
+import Dashbaord from "../components/user-component/doctor/Dashboard";
 
 const DOCTOR = [
     { path: "/doctor", element: <Navigate to={'/doctor/dashboard'} /> },
