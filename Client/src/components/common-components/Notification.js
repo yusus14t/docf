@@ -17,7 +17,7 @@ const Notification = () => {
                              <h6>Notification</h6>
                         </div>
                         <div>
-                            <button className="btn btn-light">+ Notification</button>
+                            <button className=" btn btn-info btn-md">+ Notification</button>
                         </div>
                         </div>
                         <div class="ms-panel-body">

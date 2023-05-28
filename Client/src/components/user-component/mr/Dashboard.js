@@ -81,7 +81,7 @@ const Dashbaord = () => {
                                 <h6>Latest Doctors</h6>
                             </div>
                             <div className="">
-                                <Link to={'/mr/clinic-registration'} className='btn btn-info btn-md'>Add Clinic</Link>
+                                <Link to={'/mr/clinic-registration'} className='btn btn btn-info btn-md'>Add Clinic</Link>
                             </div>
                         </div>
                         <div class="ms-panel-body h20 p-0">

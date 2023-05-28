@@ -197,6 +197,10 @@ font-size: 15px;
     padding: 8px;
 }
 .btn {
+    padding: 4px;
+
+}
+.btn-1{
     padding: 15px;
 }
 .ms-panel {

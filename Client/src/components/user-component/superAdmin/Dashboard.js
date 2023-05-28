@@ -14,7 +14,7 @@ const Dashbaord = () => {
                     <h6>Dashboard</h6>
                 </div>
                 <div className="">
-                    <Link to={`${userRoutes[userinfo.userType].path}/clinicsregistration`} className="btn btn-info btn-md">Add Clinic</Link>
+                    <Link to={`${userRoutes[userinfo.userType].path}/clinicsregistration`} className=" btn btn-info btn-md">Add Clinic</Link>
                 </div>
             </div>
             <div className='row'>
@@ -89,7 +89,7 @@ const Dashbaord = () => {
                                 <h6>Patients List</h6>
                             </div>
                             <div className="">
-                                <button className="btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
+                                <button className=" btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
                             </div>
                         </div>
                         <div class="ms-panel-body h20 p-0">

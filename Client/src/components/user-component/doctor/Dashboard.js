@@ -79,7 +79,7 @@ const Dashbaord = () => {
                                 <h6>Appointment List</h6>
                             </div>
                             <div className="">
-                                <button className="btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
+                                <button className=" btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
                             </div>
                         </div>
                         <div class="ms-panel-body p-0">
