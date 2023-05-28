@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
-import Appointment from "../components/user-component/Appointment";
+import Appointment from "../components/common-components/Appointment";
 import Patients from "../components/user-component/doctor/Patients";
 import Dashbaord from "../components/user-component/doctor/Dashboard";
 

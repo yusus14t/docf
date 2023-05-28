@@ -20,3 +20,9 @@ export const MODULES = [
     {id: 'notification', title: 'Notification', pathname: '/notification', access: ['DR', 'SA', 'MA', 'MR']},
     {id: 'support', title: 'Support', pathname: '/support', access: ['DR', 'SA', 'MA', 'MR']},
 ]
+
+export const PRIORITY = [
+    { label: 'Low', value: 'low' },
+    { label: 'Medium', value: 'medium' },
+    { label: 'High', value: 'high' },
+]

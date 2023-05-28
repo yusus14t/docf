@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import Appointment from "../components/user-component/Appointment";
+import Appointment from "../components/common-components/Appointment";
 
 const PATIENT = [
     { path: "/patient", element: <h1>Dashbaord</h1> },

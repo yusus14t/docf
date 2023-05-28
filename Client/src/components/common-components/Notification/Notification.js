@@ -1,14 +1,9 @@
+import { useState } from 'react';
+import AddNotification from '../Notification/AddNotification'
 const Notification = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
     return(
         <div className='ms-content-wrapper'>
-            {/* <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
-                <div>
-                    <h6>Notification</h6>
-                </div>
-                <div>
-                    <button className="btn btn-light">+ Notification</button>
-                </div>
-            </div> */}
             <div className="row" >
                 <div class="col-xl-12 col-md-12">
                     <div class="ms-panel mb-0">
@@ -17,7 +12,7 @@ const Notification = () => {
                              <h6>Notification</h6>
                         </div>
                         <div>
-                            <button className=" btn btn-info btn-md">+ Notification</button>
+                            <button className=" btn btn-info btn-md" onClick={() => setIsModalOpen(true)}>Add Notification</button>
                         </div>
                         </div>
                         <div class="ms-panel-body p-0" >
@@ -41,7 +36,7 @@ const Notification = () => {
                             </div>
                             <div className="mx-4 mt-4">
 
-                            {Array(15).fill(0).map( a =>
+                            {Array(25).fill(0).map( a =>
                                  <div className="row dropdown-menu-active">
                                 <div className="col">
                                     <span className="text-dark">Dr. Andrew </span>
@@ -128,6 +123,12 @@ const Notification = () => {
                     </div>
                 </div>
             </div>
+            { isModalOpen &&
+                <AddNotification
+                    isOpen={isModalOpen}
+                    setIsOpen={setIsModalOpen}
+                />
+            }
         </div>
     )
 }
