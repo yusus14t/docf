@@ -11,7 +11,7 @@
     top: 82px;
 }
 .ms-main-aside{
-    height: inherit;
+    height: 22rem;
 }
 
 /* .main-content{
@@ -194,7 +194,7 @@ font-size: 15px;
     background-color: #112C2F;
     color: white;
     border-radius: 4px;
-    padding: 13px;
+    padding: 8px;
 }
 .btn {
     padding: 15px;
