@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Dashbaord = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     return (
-        <div className='ms-content-wrapper'>
+        <div className='ms-content-wrapper content-height'>
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                 <div>
                     <h6>Dashboard</h6>
