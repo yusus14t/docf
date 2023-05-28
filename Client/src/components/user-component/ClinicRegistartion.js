@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
-import Drimg from "../../assets.app/img/doctors-list/182x280-1.jpg"
 import Select from "react-select"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPencil} from '@fortawesome/free-solid-svg-icons'
+import AddDoctors from '../common-components/AddDoctors';
+import ImgUpload from '../common-components/Imgupload';
 
 
 const ClinicRegistartion = () => {
@@ -14,6 +15,7 @@ const ClinicRegistartion = () => {
   const [doctors, setDoctors] = useState([]);
    
   const [timingNo, setTimingNo] = useState(1);
+  const [clinicProfileImage, setClinicProfileImage] = useState(null);
 
   const DAYS = [
     { id:0, value: 'MON', day: 'Monday' },
@@ -66,16 +68,26 @@ const ClinicRegistartion = () => {
     // value === password && setError('confirmPassword', { message: ""})
   }
 
+  const handleDrop = (event) => {
+    const reader = new FileReader();
+    const file = event.target.files[0]
+    reader.onloadend = () => {
+      setClinicProfileImage(reader.result)
+    }
+    reader.readAsDataURL(file)
+    console.log('>>>>>>>', event)
+  }
+
   return (
     <div>
       <div className="ms-panel-body">
         <form className="ms-form-wizard style1-wizard wizard form-content" onSubmit={handleSubmit(submit)} role="application">
           <div className="steps  ">
             <ul role="tablist">
-              <li onClick={() => { setTab("STEP1"); reset({}) }} role="tab" className={`${tab === "STEP1" ? "current" : "disabled"} cursor-pointer`} aria-disabled="false" aria-selected="False"><span className="current-info audible tabName ">Step 1 </span></li>
-              <li onClick={() => { setTab("STEP2"); reset({}) }} role="tab" className={`${tab === "STEP2" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"> <span className='tabName'>Step 2</span> </li>
-              <li onClick={() => { setTab("STEP3"); reset({}) }} role="tab" className={`${tab === "STEP3" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 3</span></li>
-              <li onClick={() => { setTab("FINAL"); reset({}) }} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 4</span></li>
+              <li style={{marginTop:"15px"}} onClick={() => { setTab("STEP1"); reset({}) }} role="tab" className={`${tab === "STEP1" ? "current" : "disabled"} cursor-pointer`} aria-disabled="false" aria-selected="False"><span className="current-info audible tabName ">Step 1 </span></li>
+              <li style={{marginTop:"15px"}} onClick={() => { setTab("STEP2"); reset({}) }} role="tab" className={`${tab === "STEP2" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"> <span className='tabName'>Step 2</span> </li>
+              <li style={{marginTop:"15px"}} onClick={() => { setTab("STEP3"); reset({}) }} role="tab" className={`${tab === "STEP3" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 3</span></li>
+              <li style={{marginTop:"15px"}} onClick={() => { setTab("FINAL"); reset({}) }} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Step 4</span></li>
             </ul>
           </div>
           <div className="content ">
@@ -174,7 +186,11 @@ const ClinicRegistartion = () => {
               </div>
             </div>}
             {tab === "STEP2" && <div>
+              <div className="row d-flex justify-content-center">
+                <div className="col-md-12 mb-3">< ImgUpload source={'clinic'} /></div>
+              </div>
               <div className="row">
+                
                 <div className="col-md-6 mb-3">
                   <label >Specialization of Clininc</label>
                   <div className="">
@@ -204,15 +220,57 @@ const ClinicRegistartion = () => {
                   { errors?.fee && <div className="text-danger ">{errors?.fee.message}</div>}
 
                 </div>
-              </div>
-              
+
               <div className="row">
-                <div className="col-md-6 mb-3">
-                  <label className=''>Clinic Address</label>
+                <div className="col-md-4 mb-3">
+                  <label className=''>Landmark & Street</label>
                   <div className="input-group">
                     <input type="text"
                       className="form-control"
-                      placeholder="Eg: Hamdard nagar 'A' jamalpur Aligarh "
+                      placeholder="Eg:Near Abdullah women's college "
+                      {...register('address', {
+                        required: 'Clinic address is required'
+                      })}
+                    />
+                  </div>
+                  { errors?.address && <div className="text-danger ">{errors?.address.message}</div>}
+
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className=''>Pincode</label>
+                  <div className="input-group">
+                    <input type="text"
+                      className="form-control"
+                      placeholder="Eg: 202001"
+                      {...register('address', {
+                        required: 'Clinic address is required'
+                      })}
+                    />
+                  </div>
+                  { errors?.address && <div className="text-danger ">{errors?.address.message}</div>}
+
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className=''>City</label>
+                  <div className="input-group">
+                    <input type="text"
+                      className="form-control"
+                      placeholder="Eg: ALigarh"
+                      {...register('address', {
+                        required: 'Clinic address is required'
+                      })}
+                    />
+                  </div>
+                  { errors?.address && <div className="text-danger ">{errors?.address.message}</div>}
+
+                </div>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className=''>State</label>
+                  <div className="input-group">
+                    <input type="text"
+                      className="form-control"
+                      placeholder="Eg: Uttar pardesh"
                       {...register('address', {
                         required: 'Clinic address is required'
                       })}
@@ -260,7 +318,7 @@ const ClinicRegistartion = () => {
                           })}
                         />
                       </div>
-                      <div className='col '>
+                      <div className='col ms-0'>
                         <label className=''>Close</label>
                         <input type="time"
                           className="form-control"
@@ -320,175 +378,7 @@ const ClinicRegistartion = () => {
               </div>
             </div>}
             {tab === "STEP3" && <div className='row'>
-              {doctors.map( doc => <div className="col-md-4 col-sm-6 mb-3">
-                <div class="ms-card card-gradient-dark ms-infographics-widget ms-widget">
-                  
-            <div class="ms-card-body">
-              <div class="media fs-14" style={{marginBottom:"0"}}>
-
-                <div class="me-2 align-self-center">
-                  <img src={Drimg} class="ms-img-curved" alt="people"/>
-                </div>
-                <div class="media-body">
-                  <div className='d-flex justify-content-between'>
-                    <div>
-                      <h6>{doc.firstName} {doc.lastName}</h6>
-                    </div>
-                    <div>
-                      <FontAwesomeIcon className='ms-text-ligth mx-3 cursor-pointer' icon={faPencil}  />
-                      <FontAwesomeIcon className='ms-text-ligth cursor-pointer' icon={faTrash} onClick={() => setDoctors(old => old.filter( d => d.phone !== doc.phone))} />
-                    </div>
-                  </div>
-                  <p class="fs-12 my-1 text-disabled">{doc.specialization}</p>
-                  <h6 class="mt-2">
-                    <span class="fs-14">
-                      <i class="fas fa-map-marker-alt"></i>
-                    </span>
-                     { doctor.name || 'Jawahar Lal Nehru Hospital'}</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-                
-              </div>)}
-              <div >
-                <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label >First Name</label>
-                    <div className="input-group">
-                      <input type="text"
-                      className="form-control"
-                      placeholder="JOHN"
-                      {...register(`firstName`, {
-                        required: 'First name is required'
-                      })}
-                    />
-                  </div>
-                  { errors?.firstName && <div className="text-danger ">{errors?.firstName.message}</div>}
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label className=''>Last Name</label>
-                    <div className="input-group">
-                      <input type="text"
-                        className="form-control"
-                        placeholder="DEE"
-                        {...register(`lastName`, {
-                          required: 'Last name is required'
-                        })}
-                      />
-                    </div>
-                    { errors?.lastName && <div className="text-danger ">{errors?.lastName.message}</div>}
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label >Email ID</label>
-                    <div className="input-group">
-                      <input type="text"
-                        className="form-control"
-                        placeholder="Eg. example@gmail.com"
-                        {...register(`email`, {
-                          required: 'Email is required'
-                        })}
-                      />
-                    </div>
-                    { errors?.email && <div className="text-danger ">{errors?.email.message}</div>}
-
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label className=''>Phone Number</label>
-                    <div className="input-group">
-                      <input type="text"
-                        className="form-control"
-                        placeholder="XXXX-XXX-XXX"
-                        {...register(`phone`, {
-                          required: 'Phone is required'
-                        })}
-                      />
-                    </div>
-                    { errors?.phone && <div className="text-danger ">{errors?.phone.message}</div>}
-
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label >Qualifications</label>
-                    <div className="input-group">
-                      <textarea type="text"
-                        className="form-control"
-                        placeholder="Eg.: MBBS from RUSSIA"
-                        {...register(`qualification`, {
-                          required: 'Qualification is required'
-                        })}
-                      />
-                    </div>
-                    { errors?.qualification && <div className="text-danger ">{errors?.qualification.message}</div>}
-
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label >Specialization</label>
-                    <div className="input-group">
-                      <input type="text"
-                        className="form-control"
-                        placeholder="Eg: Neurologist"
-                        {...register(`specialization`, {
-                          required: 'Specialization is required'
-                        })}
-                      />
-                    </div>
-                    { errors?.specialization && <div className="text-danger ">{errors?.specialization.message}</div>}
-
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label >Experiance</label>
-                    <div className="input-group">
-                      <input type="text"
-                        className="form-control"
-                        placeholder="Eg: 10 Years"
-                        {...register(`experience`, {
-                          required: 'Experience is required'
-                        })}
-                      />
-                    </div>
-                    { errors?.experience && <div className="text-danger ">{errors?.experience.message}</div>}
-
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label className=''>Address</label>
-                    <div className="input-group">
-                      <input type="text"
-                        className="form-control"
-                        placeholder="Ex: Hamdard nagar 'A' jamalpur Aligarh "
-                        {...register(`address`, {
-                          required: 'Address is required'
-                        })}
-                      />
-                    </div>
-                    { errors?.address && <div className="text-danger ">{errors?.address.message || ""}</div>}
-
-                  </div>
-                  <div className="col-md-6 mb-3">
-                    <label className=''>About ME</label>
-                    <div className="input-group">
-                      <textarea type="text"
-                        className="form-control"
-                        placeholder="Eg: I am in practice since 1995 "
-                        {...register(`aboutme`, {
-                          required: 'Address is required'
-                        })}
-                      />
-                    </div>
-                    { errors?.aboutme && <div className="text-danger ">{errors?.aboutme.message || ""}</div>}
-
-                  </div>
-                  <div className="actions btn-submit mb-2">
-                    <button type='button' className='btn btn-primary btn-sm' onClick={() => handleDoctors()} >Save</button>
-                  </div>
-
-                </div>{console.log('>>>>>>', doctors)}
-              </div>
+              <AddDoctors tab={tab} />
             </div>}
             {tab === "FINAL" && <div>
                <div className="row">
@@ -530,7 +420,7 @@ const ClinicRegistartion = () => {
               </div>}
             <div className="actions btn-submit">
               
-              <button type='submit' className='btn btn-primary btn-sm ' >Next</button>
+              <button type='submit' className='btn btn-primary btn-sm ' >Save</button>
             </div>
           </div>
         </form>
