@@ -372,7 +372,12 @@ font-size: 15px;
     object-fit: cover;
 
 }
-
+/* header icons */
+.Header-icon{
+    font-size: 20px;
+    margin-right: 10px;
+}
+/*  */
 /* profile picture end */
 
 .form-content {

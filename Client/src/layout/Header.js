@@ -4,6 +4,8 @@ import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 import Sidebar from "./Sidebar"
 import { Dropdown, Item } from '../components/common-components/Dropdown';
 import Appointment from "../components/common-components/Appointment";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faB, faBell, faCalendar, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 
 const Header = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -41,17 +43,30 @@ const Header = () => {
                     <span className="ms-toggler-bar bg-white"></span>
                 </div>
                 <div className="docfind-logo">
-                    <a className="sigma_logo" href="../index-2.html">
+                    <a className="sigma_logo" href="/">
                         <img src={Logo} alt="logo" />
                     </a>
                 </div>
 
                 <ul className="ms-nav-list ms-inline mb-0" id="ms-nav-options">
                     <li className="ms-nav-item ms-d-none">
-                        <div className="text-white cursor-pointer" onClick={() => setIsModalOpen(true) }><i className="flaticon-pencil me-2"></i> Make an appointment</div>
+                        <div className="text-white cursor-pointer" onClick={() => setIsModalOpen(true) }><FontAwesomeIcon className="Header-icon" icon={faCalendarDays} />Make an appointment</div>
                     </li>
+                    
                     <li className="ms-nav-item ms-d-none">
-                        <a href="/" className="text-white" data-bs-toggle="modal"><i className="flaticon-list me-2"></i> Generate Report</a>
+                        <div className="text-white cursor-pointer" >
+                        <Dropdown
+                            toggle={ <FontAwesomeIcon className="Header-icon" icon={faBell} />}
+                        >
+                            <li className="dropdown-menu-header">
+                                <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Notifications</span></h6>
+                            </li>
+                            <li className="dropdown-divider"></li>
+                            <Item><span className="fs-14 p-2">Add new Hospital</span></Item>
+                            <Item><span className="fs-14 p-2">Introduced Doctors to our new Service</span></Item>
+                            <Item><span className="fs-14 p-2"> Renew Plan for Apollo Hospital </span></Item>
+                        </Dropdown>
+                        </div>
                     </li>
                     <li className="ms-nav-item ms-nav-user dropdown">
                         <Dropdown
