@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Drimg from "../../assets.app/img/doctors-list/182x280-1.jpg"
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPencil} from '@fortawesome/free-solid-svg-icons'
-import { Form } from 'react-bootstrap';
 import ImgUpload from './Imgupload';
 
 const AddDoctors = ({ tab }) => {

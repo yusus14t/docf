@@ -33,6 +33,7 @@
 .main-content{
     display: flex;
     flex-direction: row;
+    height: 100vh;
 }
 .profile-image {
     border-radius: 50%;
@@ -195,6 +196,11 @@ font-size: 15px;
     color: white;
     border-radius: 4px;
     padding: 8px;
+}
+
+.content-height{
+    height: 85vh;
+    overflow-x: hidden;
 }
 .btn {
     padding: 4px;

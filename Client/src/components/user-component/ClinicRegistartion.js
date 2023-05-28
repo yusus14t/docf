@@ -2,20 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
 import Select from "react-select"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faPencil} from '@fortawesome/free-solid-svg-icons'
 import AddDoctors from '../common-components/AddDoctors';
 import ImgUpload from '../common-components/Imgupload';
 
 
 const ClinicRegistartion = () => {
-  const { register, handleSubmit, reset, getValues,  formState: { errors } } = useForm({ onChange: true })
+  const { register, handleSubmit, reset,  formState: { errors } } = useForm({ onChange: true })
   const [tab, setTab] = useState("STEP1")
   const [doctor, setDoctor] = useState(JSON.parse(localStorage.getItem('createDoctor')) || {});
-  const [doctors, setDoctors] = useState([]);
    
   const [timingNo, setTimingNo] = useState(1);
-  const [clinicProfileImage, setClinicProfileImage] = useState(null);
 
   const DAYS = [
     { id:0, value: 'MON', day: 'Monday' },
@@ -30,11 +26,6 @@ const ClinicRegistartion = () => {
   useEffect(() => {
     setTimingNo(1)
   }, [tab])
-
-  const handleDoctors = () => {
-    setDoctors([...doctors, getValues()])
-    reset({})
-  }
 
   const submit = async (formData) => {
     try {
@@ -68,19 +59,10 @@ const ClinicRegistartion = () => {
     // value === password && setError('confirmPassword', { message: ""})
   }
 
-  const handleDrop = (event) => {
-    const reader = new FileReader();
-    const file = event.target.files[0]
-    reader.onloadend = () => {
-      setClinicProfileImage(reader.result)
-    }
-    reader.readAsDataURL(file)
-    console.log('>>>>>>>', event)
-  }
 
   return (
     <div>
-      <div className="ms-panel-body">
+      <div className="ms-panel-body content-height">
         <form className="ms-form-wizard style1-wizard wizard form-content" onSubmit={handleSubmit(submit)} role="application">
           <div className="steps  ">
             <ul role="tablist">
