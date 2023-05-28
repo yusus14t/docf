@@ -1,10 +1,12 @@
 import { lazy } from "react"
 import { Navigate } from "react-router-dom"
-const Appointment  = lazy(() => import("../components/user-component/Appointment"));
-const ClinicRegistration = lazy(()=>import('../components/user-component/ClinicRegistartion'))
-const HospitalRegistration = lazy(()=>import('../components/user-component/HospitalRegistration'))
-const Dashboard = lazy(()=>import('../components/user-component/mr/Dashboard'))
-const Doctors = lazy(()=>import('../components/user-component/DoctorsList'))
+import Appointment  from "../components/user-component/Appointment";
+import ClinicRegistration from '../components/user-component/ClinicRegistartion';
+import HospitalRegistration from '../components/user-component/HospitalRegistration';
+import Dashboard from '../components/user-component/mr/Dashboard';
+import Doctors from '../components/user-component/DoctorsList';
+import Support from '../components/common-components/Support';
+import Notification from '../components/common-components/Notification';
 
 const MR = [
     { path: "/mr", element: <Navigate to={'/mr/dashboard'} /> },
@@ -17,6 +19,8 @@ const MR = [
     { path: "/mr/doctors", element: <Doctors /> },
     { path: "/mr/clinics", element:  <h1>Clinics LIsts</h1>},
     { path: "/mr/setting", element:  <h1>Setting</h1>},
+    { path: "/mr/notification", element:  <Notification />},
+    { path: "/mr/support", element:  <Support />},
     { path: "/mr/*", element: <Navigate to={'/mr'} /> },
 ]
 
