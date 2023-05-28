@@ -1,5 +1,4 @@
-import { useState } from "react";
-import Modal from "./Modal";
+import Modal from "../Modal";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select"
 
