@@ -337,13 +337,13 @@ const ClinicRegistartion = () => {
                         />
                       </div>
                        <div className='col '>
-                        { timingNo === i && i < 7 && <button type='button' style={{minWidth:"60px"}} className='btn btn-primary mt-4 p-1 px-1' 
+                        { timingNo === i && i < 7 && <button type='button' style={{minWidth:"60px"}} className='btn-1 btn btn-primary mt-4 p-1 px-1' 
                         onClick={() => setTimingNo((old) => { 
                           if( old < 7) old  = old + 1  
                           return old
                         })}> Add</button> }
 
-                        <button type='button' style={{minWidth:"60px"}} className='btn btn-light mx-2 mt-4 p-1 px-1' 
+                        <button type='button' style={{minWidth:"60px"}} className='btn-1 btn  btn-light mx-2 mt-4 p-1 px-1' 
                         onClick={() => setTimingNo((old) => { 
                           if( old < 7) old  = old - 1  
                           return old
@@ -402,7 +402,7 @@ const ClinicRegistartion = () => {
               </div>}
             <div className="actions btn-submit">
               
-              <button type='submit' className='btn btn-primary btn-sm ' >Save</button>
+              <button type='submit' className=' btn btn-1 btn-primary btn-sm ' >Save</button>
             </div>
           </div>
         </form>
