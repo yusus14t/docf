@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AddNotification from '../Notification/AddNotification'
 const Notification = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const userInfo = JSON.parse(localStorage.getItem('user'))
     return(
         <div className='ms-content-wrapper'>
             <div className="row mr-0" >
@@ -11,9 +12,9 @@ const Notification = () => {
                         <div>
                              <h6>Notification</h6>
                         </div>
-                        <div>
+                        {userInfo.userType === 'SA' && <div>
                             <button className=" btn btn-info btn-md" onClick={() => setIsModalOpen(true)}>Add Notification</button>
-                        </div>
+                        </div>}
                         </div>
                         <div class="ms-panel-body p-0" >
                         <div  class="table-responsive scrollbar-deep-purple ">
@@ -65,7 +66,7 @@ const Notification = () => {
                     </div>
                 </div>
             </div>
-            { isModalOpen &&
+            { userInfo.userType === 'SA' && isModalOpen &&
                 <AddNotification
                     isOpen={isModalOpen}
                     setIsOpen={setIsModalOpen}
