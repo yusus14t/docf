@@ -205,7 +205,7 @@ const AddDoctors = ({ tab }) => {
 
                   </div>
                   <div className="actions btn-submit mb-2">
-                    <button type='button' className='btn btn-primary btn-sm' onClick={() => handleDoctors()} >Save</button>
+                    <button type='button' className='btn btn-1 btn-primary btn-sm' onClick={() => handleDoctors()} >Save</button>
                   </div>
 
                 </div>{console.log('>>>>>>', doctors)}
