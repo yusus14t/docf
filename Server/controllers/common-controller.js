@@ -65,6 +65,18 @@ const allNotification = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const addNotification = async ( req, res ) => {
+    notificationManager.addNotification( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const deleteNotification = async ( req, res ) => {
+    notificationManager.deleteNotification( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
@@ -76,5 +88,7 @@ module.exports = {
     addAppointment,
     getPatientByNumber,
     getUserByEmail,
-    allNotification
+    allNotification,
+    addNotification,
+    deleteNotification,
 }

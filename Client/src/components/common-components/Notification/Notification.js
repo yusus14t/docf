@@ -1,8 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddNotification from '../Notification/AddNotification'
+import useNotification from '../../../hooks/Notification';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import useToasty from '../../../hooks/toasty';
+
 const Notification = () => {
+    const notification = useNotification();
+    const toasty = useToasty();
     const [isModalOpen, setIsModalOpen] = useState(false)
     const userInfo = JSON.parse(localStorage.getItem('user'))
+    const [notifications, setNotifications] = useState([])
+
+    useEffect(() => {
+        getNotifications()
+    }, [])
+
+    const getNotifications = async () => {
+        try { 
+            let { data } = await notification.get()
+            setNotifications(data.notifications)
+        } catch(error){ console.log(error) }
+    }
+
+    const handleDelete = async (notificationId) => {
+        try{
+            await notification.delete({_id: notificationId})
+            setNotifications( prev => prev.filter( notify => notify._id !== notificationId ))
+            toasty.success('Successfully delete ntification.')
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
     return(
         <div className='ms-content-wrapper'>
             <div className="row mr-0" >
@@ -20,44 +50,55 @@ const Notification = () => {
                         <div  class="table-responsive scrollbar-deep-purple ">
                             <div style={{position:"absolute", width:"99%", zIndex:"9"}}  className="row mx-0 ms-panel-header ">
                                 <div className="col text-center ">
-                                    <span className="text-light ml-4">People</span>
+                                    <span className="text-light ml-4">Title</span>
                                 </div>
-                                <div className="col text-center">
-                                    <span className="text-light">Reciever</span>
-                                </div>                                
                                 <div className="col text-center">
                                     <span className="text-light">Message</span>
                                 </div>                                
                                 <div className="col text-center">
-                                    <span className="text-light">Title</span>
+                                    <span className="text-light">Assignees Name</span>
+                                </div>                                
+                                <div className="col text-center">
+                                    <span className="text-light">Priority</span>
                                 </div>                                
                                 <div className="col text-center">
                                     <span className="text-light">Status</span>
                                 </div>
+                                <div className="col text-center">
+                                    <span className="text-light">fghjk</span>
+                                </div>
                             </div>
-                            <div className="mx-4 mt-10  " style={{height:"65vh", marginTop:"50px"}}>
+                            <div className="mx-4 mt-6  " style={{height:"65vh", marginTop:"50px"}}>
 
-                            {Array(25).fill(0).map( a =>
-                                 <div className="row dropdown-menu-active ">
+                            {notifications.map( notification =>
+                                 <div className="row dropdown-menu-active  pt-2 ">
                                 <div className="col text-center ">
-                                    <span className="text-dark align-middle">Dr. Andrew </span>
+                                    <span className="text-dark align-middle"> {notification.title.slice(0,20)}{ notification.title.length > 20 ? '...' : ''} </span>
                                 </div>
                                 <div className="col text-center">
-                                    <span className="text-dark">01 Dec 2022</span>
+                                    <span className="text-dark">{notification.message.slice(0,30)}{ notification.message.length > 30 ? '...' : ''}</span>
                                 </div>                                
                                 <div className="col text-center">
-                                    <span className="text-dark">Hello world</span>
+                                    {notification.assigneeIds.map( assignee => <span className="text-dark">{assignee.firstName} {assignee.lastName},</span> )}
                                 </div>                                
                                 <div className="col text-center">
-                                    <span className="text-dark">Title</span>
-                                </div>                                
+                                    <span className="text-dark">{notification.priority}</span>
+                                </div>  
                                 <div className="col text-center">
+                                    <div className='row'>
+                                        <div className='col-6'>
+                                            <span className="text-dark ">{notification.status}</span>
+                                        </div>
+                                        <div className='col-4'>
+                                            <FontAwesomeIcon className='ms-text-dark cursor-pointer' icon={faTrash} onClick={() => handleDelete(notification._id)}  />
+                                        </div>
+                                    </div>
+                                </div>                                
+                                {/* <div className="col text-center">
                                     <span className="text-dark">
-                                        <label class="ms-switch">
-                                                <input type="checkbox" />
-                                                <span class="ms-switch-slider ms-switch-success round"></span>
-                                        </label></span>
-                                </div>
+                                        
+                                    </span>
+                                </div> */}
                             </div>)}
                             </div>
                             
@@ -70,6 +111,7 @@ const Notification = () => {
                 <AddNotification
                     isOpen={isModalOpen}
                     setIsOpen={setIsModalOpen}
+                    refresh={() => getNotifications()}
                 />
             }
         </div>
