@@ -19,4 +19,9 @@ export const getAuthHeader = () => {
     let token = JSON.parse(localStorage.getItem('session'))
     return { headers: {'auth-token': token} }
 }
+
+export const formatDate = ( value ) => {
+    let date = new Date(value)
+    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+}
  

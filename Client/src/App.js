@@ -1,9 +1,7 @@
 import { AllRoutes } from './routes';
 import './assets.app/css/bootstrap.min.css';
 import SnackbarProvider from 'react-simple-snackbar'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Loader from './layout/Loader';
-import { Suspense } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom'
 
 function App() {
   return (

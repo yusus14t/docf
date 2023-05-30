@@ -7,6 +7,7 @@ import useNotification from '../../../hooks/Notification';
 import { useEffect, useState } from "react";
 import { axiosInstance, getAuthHeader } from "../../../constants/utils";
 
+
 const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
     const toasty = useToasty();
     const notification = useNotification();
@@ -21,7 +22,7 @@ const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
         try {
             let { data } = await axiosInstance.get('/common/appointment-doctors', getAuthHeader());
             setDoctors(data?.doctors || [])
-        } catch(error){ 
+        } catch(error) { 
             toasty.error(error?.messgae)
             console.log(error) 
         }
@@ -55,12 +56,13 @@ const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
                             <Controller
                                 control={control}
                                 name="assignedTo"
-                                render={({ field }) => (
+                                rules={{ required: 'Asignee must be required' }}
+                                render={({ field, formState:{invalid} }) => (
                                     <Select
                                         {...field}
                                         isMulti
                                         options={doctors}
-                                        className="p-0"
+                                        className={`form-control p-0 ${errors.assignedTo ? 'border-danger' : ''}`}
                                         classNamePrefix="select"
                                         getOptionLabel={({fullName}) => fullName}
                                         getOptionValue={({_id}) => _id}
@@ -73,21 +75,18 @@ const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
                                 )}
                             />
                         </div>
-                        { errors?.related && <div className="text-danger ">{errors?.related.message}</div>}
                     </div>
                     <div className="col-8 mb-3">
                         <label className=''>Title</label>
                         <div className="input-group">
                             <input type="text"
-                                className="form-control "
+                                className={`form-control ${errors?.title ? 'border-danger' : ''}`}
                                 placeholder="Something"
                                 {...register('title', {
                                     required: 'Query title must be required'
                                 })}
                             />
                         </div>
-                        {errors?.address && <div className="text-danger ">{errors?.address.message}</div>}
-
                     </div>
                     <div className="col-md-4 mb-3">
                         <label >Priority  </label>
@@ -108,25 +107,12 @@ const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
                                 )}
                             />
                         </div>
-                        { errors?.doctor && <div className="text-danger ">{errors?.doctor.message}</div>}
-                    </div>
-                    <div className="col-md-12 ">
-                        <div className="row input-group">
-                            <div className="col"><label >Active</label></div>
-                            <label class="ms-switch">
-                                <input type="checkbox" 
-                                    {...register('isActive')}
-                                />
-                                <span class="ms-switch-slider round"></span>
-                            </label>
-                        </div>
-                        { errors?.parking && <div className="text-danger ">{errors?.parking.message}</div>}
                     </div>
                     <div className="col-md-12 mb-3">
                         <label >Description: </label>
                         <div className="input-group">
                         <textarea type="text"
-                            className="form-control"
+                            className={`form-control ${errors?.message  ? 'border-danger' : '' } `}
                             placeholder="description"
                             rows={7}
                             {...register(`message`, {
@@ -134,8 +120,6 @@ const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
                             })}
                         />
                         </div>
-                        { errors?.message && <div className="text-danger ">{errors?.message.message}</div>}
-
                     </div>
                 </div>
                 <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={() => setIsOpen(false)}>Cancel</button>

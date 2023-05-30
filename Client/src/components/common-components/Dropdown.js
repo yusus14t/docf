@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 
 export const Item = ({ children, ...rest }) => {
     return(
-        <li class="dropdown-menu-header cursor-pointer dropdown-menu-active" {...rest} style={{ padding: '7px'}}>
+        <li class="dropdown-menu-header cursor-pointer dropdown-menu-active px-2 py-1" {...rest} >
             {children}
         </li>
     )
@@ -27,7 +27,7 @@ export const Dropdown = ({ toggle, children }) => {
         <>  
             <div className="dropdown" onClick={() => setIsOpen(!isOpen)} ref={wrapperRef}>
                 {toggle}
-                <ul class={`dropdown-menu dropdown-menu-end user-dropdown ${ isOpen && 'show' }`} aria-labelledby="userDropdown" data-bs-popper="none">
+                <ul class={`dropdown-menu dropdown-menu-end user-dropdown pb-0 ${ isOpen && 'show' }`} aria-labelledby="userDropdown" data-bs-popper="none">
                     {children}
                 </ul>
             </div>

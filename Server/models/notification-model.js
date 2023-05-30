@@ -6,7 +6,7 @@ const notificationSchema = new Schema({
     assigneeIds:  [{ type: Schema.Types.ObjectId, ref:'user' }],
     message:  { type: String },
     priority: { type: String, enum: [ 'low', 'medium', 'high' ], default: 'low' },
-    status: { type: String, enum: [ 'send', 'cancel', 'seen' ], default: 'send' },
+    status: { type: String, enum: [ 'send', 'cancel', 'seen', 'unseen' ], default: 'unseen' },
     isActive: { type: Boolean, default: true },
     createdBy:  { type: Schema.Types.ObjectId, ref:'user' },
 },{ timestamps: true })

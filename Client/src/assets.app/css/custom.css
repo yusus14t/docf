@@ -44,6 +44,14 @@
     background: #00000012;
 }
 
+.bell-badge {
+    position: absolute;
+    left: 10px;
+    top: -15px;
+    font-size: 8px;
+    color: white;
+}
+
 .main-content{
     display: flex;
     flex-direction: row;

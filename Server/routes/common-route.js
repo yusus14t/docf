@@ -18,4 +18,8 @@ router.post('/notification', commonController.addNotification)
 router.post('/delete-notification', commonController.deleteNotification)
 
 
+// support
+router.get('/tickets', commonController.allTickets)
+router.post('/create-ticket', commonController.createTicket)
+
 module.exports = router;

@@ -1,6 +1,6 @@
 const commonManager = require('../managers/common-manager');
 const notificationManager = require('../managers/notification-manager');
-
+const supportManager = require("../managers/support-manager")
 
 const signUp = async ( req, res ) =>
     commonManager.signUp( req.body )
@@ -77,6 +77,18 @@ const deleteNotification = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const createTicket = async ( req, res ) => {
+    supportManager.createTicket( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const allTickets = async ( req, res ) => {
+    supportManager.allTickets( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
@@ -91,4 +103,6 @@ module.exports = {
     allNotification,
     addNotification,
     deleteNotification,
+    createTicket,
+    allTickets,
 }
