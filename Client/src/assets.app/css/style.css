@@ -1184,7 +1184,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 999;
+  z-index: 9;
   overflow-y: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -1926,7 +1926,7 @@ a.ms-confirm-trigger:hover {
 }
 
 .user-dropdown.dropdown-menu {
-  min-width: 200px;
+  min-width: 280px;
 }
 
 .dropdown-menu .media img {

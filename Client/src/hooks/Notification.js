@@ -3,7 +3,14 @@ import { axiosInstance, getAuthHeader } from '../constants/utils'
 const Notification = () => {
     const create = async ( data ) => {
         try{
-            let response = await axiosInstance.push('/common/notification', data, getAuthHeader())
+            let response = await axiosInstance.post('/common/notification', data, getAuthHeader())
+            return response.data
+        } catch(error){ console.log(error) }
+    }
+
+    const del = async ( data ) => {
+        try{
+            let response = await axiosInstance.post('/common/delete-notification', data, getAuthHeader())
             return response.data
         } catch(error){ console.log(error) }
     }
@@ -16,7 +23,7 @@ const Notification = () => {
     }
 
     return {
-        create, get
+        create, get, delete: del
     }
 }
 

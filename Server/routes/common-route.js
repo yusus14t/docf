@@ -14,6 +14,12 @@ router.get('/get-patient-by-number', commonController.getPatientByNumber)
 
 //Notifications
 router.get('/notification', commonController.allNotification)
+router.post('/notification', commonController.addNotification)
+router.post('/delete-notification', commonController.deleteNotification)
 
+
+// support
+router.get('/tickets', commonController.allTickets)
+router.post('/create-ticket', commonController.createTicket)
 
 module.exports = router;

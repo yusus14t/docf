@@ -1,6 +1,6 @@
 const commonManager = require('../managers/common-manager');
 const notificationManager = require('../managers/notification-manager');
-
+const supportManager = require("../managers/support-manager")
 
 const signUp = async ( req, res ) =>
     commonManager.signUp( req.body )
@@ -65,6 +65,30 @@ const allNotification = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const addNotification = async ( req, res ) => {
+    notificationManager.addNotification( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const deleteNotification = async ( req, res ) => {
+    notificationManager.deleteNotification( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const createTicket = async ( req, res ) => {
+    supportManager.createTicket( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const allTickets = async ( req, res ) => {
+    supportManager.allTickets( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
@@ -76,5 +100,9 @@ module.exports = {
     addAppointment,
     getPatientByNumber,
     getUserByEmail,
-    allNotification
+    allNotification,
+    addNotification,
+    deleteNotification,
+    createTicket,
+    allTickets,
 }
