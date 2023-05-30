@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {  useForm } from 'react-hook-form';
 import Select from "react-select"
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faPencil} from '@fortawesome/free-solid-svg-icons'
-import Drimg from "../../assets.app/img/doctors-list/182x280-1.jpg"
 import AddDoctors from '../common-components/AddDoctors';
+import ImgUpload from '../common-components/Imgupload';
+
 
 
 
@@ -178,6 +177,10 @@ const HospitalRegistartion = () => {
               </div>
             </div>}
             {tab === "STEP2" && <div>
+
+              <div className="row d-flex justify-content-center">
+                <div className="col-md-12 mb-3">< ImgUpload source={'clinic'} /></div>
+              </div>
               <div className="row">
                 <div className="col-md-6 mb-3">
                   <label >Specialization of Hospital</label>
@@ -309,13 +312,13 @@ const HospitalRegistartion = () => {
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
                     </label>
-                    <div className="col"><label >ECHO</label></div>
+                    <div className="col"><label >ENDOSCOPY</label></div>
                     <label class="ms-switch">
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
                     </label>
 
-                    <div className="col"><label >Care Taker</label></div>
+                    <div className="col"><label >NICU</label></div>
                     <label class="ms-switch">
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
@@ -326,27 +329,27 @@ const HospitalRegistartion = () => {
                   
                   <div className="row input-group mt-4">
                    
-                      <div className="col"><label >Parking</label></div>                
+                      <div className="col"><label >CATHLAB</label></div>                
                       <label class="ms-switch">
                         <input type="checkbox"/>
                         <span class="ms-switch-slider round"></span>
                       </label>
                     
 
-                    <div className="col"><label >Ambulance</label></div>
+                    <div className="col"><label >Operation Theatre</label></div>
                     <label class="ms-switch">
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
                     </label>
 
-                    <div className="col"><label >Waiting</label></div>
+                    <div className="col"><label >Veltilator</label></div>
                     <label class="ms-switch">
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
                     </label>
 
 
-                     <div className="col"><label >Fooding for Patients</label></div>
+                     <div className="col"><label >Ultrasound</label></div>
                    
                     <label class="ms-switch">
                       <input type="checkbox"/>
@@ -354,41 +357,64 @@ const HospitalRegistartion = () => {
                     </label>
                   </div>
                   <div className="row input-group mt-4">
-                    <div className="col"><label >ECHO</label></div>
+                    <div className="col"><label >ECG Services</label></div>
                     <label class="ms-switch">
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
                     </label>
 
-                    <div className="col"><label >Care Taker</label></div>
+                    <div className="col"><label >Pharmacy</label></div>
                     <label class="ms-switch">
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
                     </label>
-                    <div className="col"><label >ECHO</label></div>
+                    <div className="col"><label >Room Facility</label></div>
                     <label class="ms-switch">
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
                     </label>
 
-                    <div className="col"><label >Care Taker</label></div>
+                    <div className="col"><label >MRI</label></div>
                     <label class="ms-switch">
                       <input type="checkbox"/>
                       <span class="ms-switch-slider round"></span>
                     </label>
+                    
 
 
                   </div>
                   
 
-                  
-                  
-                  
                   <div className="row input-group mt-4">
+                    <div className="col"><label >CT Scan</label></div>
+                    <label class="ms-switch">
+                      <input type="checkbox"/>
+                      <span class="ms-switch-slider round"></span>
+                    </label>
+
+                    <div className="col"><label >Blood Bank</label></div>
+                    <label class="ms-switch">
+                      <input type="checkbox"/>
+                      <span class="ms-switch-slider round"></span>
+                    </label>
+                    <div className="col"><label >ICU</label></div>
+                    <label class="ms-switch">
+                      <input type="checkbox"/>
+                      <span class="ms-switch-slider round"></span>
+                    </label>
+
+                    <div className="col"><label >Oxygen</label></div>
+                    <label class="ms-switch">
+                      <input type="checkbox"/>
+                      <span class="ms-switch-slider round"></span>
+                    </label>
                     
-                    
-                    
+
+
                   </div>
+                  
+                  
+                  
                   <div className="row input-group mt-4">
                     
                     
@@ -435,13 +461,13 @@ const HospitalRegistartion = () => {
 
                       
                        <div className='col '>
-                        { timingNo === i && i < 7 && <button type='button' style={{minWidth:"60px"}} className='btn btn-primary mt-4 p-1 px-1' 
+                        { timingNo === i && i < 7 && <button type='button' style={{minWidth:"60px"}} className='btn btn-1 btn-primary mt-4 p-1 px-1' 
                         onClick={() => setTimingNo((old) => { 
                           if( old < 7) old  = old + 1  
                           return old
                         })}> Add</button> }
 
-                        <button type='button' style={{minWidth:"60px"}} className='btn btn-light mx-2 mt-4 p-1 px-1' 
+                        <button type='button' style={{minWidth:"60px"}} className='btn btn-1 btn-light mx-2 mt-4 p-1 px-1' 
                         onClick={() => setTimingNo((old) => { 
                           if( old < 7) old  = old - 1  
                           return old
@@ -523,13 +549,13 @@ const HospitalRegistartion = () => {
 
                       
                        <div className='col '>
-                        { timingNo === i && i < 7 && <button type='button' style={{minWidth:"60px"}} className='btn btn-primary mt-4 p-1 px-1' 
+                        { timingNo === i && i < 7 && <button type='button' style={{minWidth:"60px"}} className='btn btn-1 btn-primary mt-4 p-1 px-1' 
                         onClick={() => setTimingNo((old) => { 
                           if( old < 7) old  = old + 1  
                           return old
                         })}> Add</button> }
 
-                        <button type='button' style={{minWidth:"60px"}} className='btn btn-light mx-2 mt-4 p-1 px-1' 
+                        <button type='button' style={{minWidth:"60px"}} className='btn btn-1 btn-light mx-2 mt-4 p-1 px-1' 
                         onClick={() => setTimingNo((old) => { 
                           if( old < 7) old  = old - 1  
                           return old
@@ -581,7 +607,7 @@ const HospitalRegistartion = () => {
               
             </div>}
             <div className="actions btn-submit">
-              <button type='submit' className='btn btn-primary btn-sm'>Next</button>
+              <button type='submit' className='btn btn-1 btn-primary btn-sm'>Next</button>
             </div>
           </div>
         </form>

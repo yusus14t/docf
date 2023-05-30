@@ -43,7 +43,7 @@ const DoctorsList = () => {
                     
                 </div>
                 <div className="row">
-                    {doctors.length && doctors.map((doctor, index) =>(index = index+1, <div key={index} className="col-lg-4 col-md-4 col-sm-6">
+                    {}{doctors.length && doctors.map((doctor, index) =>(index = index+1, <div key={index} className="col-lg-4 col-md-4 col-sm-6">
                         <div className="ms-card">
                             <div className="ms-card-body">
                                 <div className="media fs-14">
@@ -90,6 +90,7 @@ const DoctorsList = () => {
                         </div>
                     </div>))}
                 </div>
+                
             </div>
         </>
     )

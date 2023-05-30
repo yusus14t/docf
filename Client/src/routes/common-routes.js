@@ -11,6 +11,7 @@ import LogIn from  "../components/authentication/LogIn";
 import Home from  "../components/webcomponents/Home.js";
 import About from "../components/webcomponents/About.js";
 import Lockscreen from  "../components/authentication/Lockscreen";
+import Contact from '../components/webcomponents/Contact';
 
 const getUserType = () => JSON.parse(localStorage.getItem('user'))?.userType
 const isLock = JSON.parse(localStorage.getItem('email'))
@@ -22,6 +23,7 @@ const COMMON_ROUTE = [
     { path: "/about", element: <About/> },
     { path: "/clinic-detail", element: < ClinicDetail /> },
     { path: "/clinic", element: <ClinicGrid/> },
+    { path: "/contact", element: <Contact/> },
     { path: "/login", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path ||  '/login' } /> : ( Boolean(isLock) ? <Navigate to={'/lock'} /> : <LogIn />)},
     { path: "/signup", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path || '/signup'} /> : <SignUp />},
     { path: "/lock", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path || '/lock'} /> : <Lockscreen />},
