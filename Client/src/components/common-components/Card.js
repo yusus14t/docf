@@ -6,7 +6,7 @@ import Photo from "../../assets.web/img/doctors-grid/348x350-0.jpg";
 export function DoctorInfoCard(props) {
   return (
     <div className="sigma_team style-17 mb-0">
-      <div className="row g-0">
+      {/* <div className="row g-0">
         <div className="col-md-4">
           <div className="sigma_team-thumb">
             <img src={ProfilePhoto} alt="team" />
@@ -38,15 +38,15 @@ export function DoctorInfoCard(props) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
 
 export function DoctorListCard({ doctors }) {
   return doctors.map((doctor, key) => (
-    <div className="col-lg-4 col-md-4 mcard" key={key}>
-      <div className="sigma_team style-16">
+    <div className="col-lg-2 col-md-2 mcard" key={key}>
+      {/* <div className="sigma_team style-16">
         <div className="sigma_team-thumb">
           <img src={Photo} alt="team" />
           <div className="sigma_team-controls">
@@ -72,7 +72,26 @@ export function DoctorListCard({ doctors }) {
           </div>
           <Link to={'/doctor-detail'} className="sigma_btn btn-block btn-sm"> View Detail </Link>
         </div>
-      </div>
+      </div> */}
+      <div class=" mb-3 mcard">
+  
+  <div class="card drcardcontainer mx-2 mb-30 ">
+    <div class="card-header  drimgcontainer m-0"><img class="drimage mx-auto d-block" src={Photo} alt=""/> </div>
+    <div class="card-body text-dark ">
+        <div style={{marginLeft:"20px"}} className="ml-2">
+          <h5 className="mb-1 drname">DR. ANGELA YU</h5>
+          <p className=" mb-0">Neurologist</p>
+          <p className=" mb-0">MBBS RUSSIA</p>
+        </div>    
+    </div>
+      <div className=" text-center">
+          <h5 >AL Samd Hospital</h5>
+          </div>
+    <div class="card-footer text-center">
+        <p class=" p-0 mb-0   text-white w-100"><a href="/" className="link-light">Book Appointment</a></p>
+    </div>
+  </div>
+</div>
     </div>
   ));
 }
