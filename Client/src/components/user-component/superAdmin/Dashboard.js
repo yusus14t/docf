@@ -1,20 +1,12 @@
-import React, { lazy, useState } from 'react';
-import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
-import { Link } from 'react-router-dom';
-import { userRoutes } from '../../../constants/constant';
-import Appointment from '../../common-components/Appointment';
+import React from 'react';
+import image from "../../../assets.app/img/dashboard/doctor-1.jpg";
 
 const Dashbaord = () => {
-    const userinfo = JSON.parse(localStorage.getItem('user'))
-    const [isModalOpen, setIsModalOpen] = useState(false)
     return (
         <div className='ms-content-wrapper'>
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                 <div>
                     <h6>Dashboard</h6>
-                </div>
-                <div className="">
-                    <Link to={`${userRoutes[userinfo.userType].path}/clinicsregistration`} className=" btn btn-info btn-md">Add Clinic</Link>
                 </div>
             </div>
             <div className='row'>
@@ -88,9 +80,6 @@ const Dashbaord = () => {
                             <div>
                                 <h6>Patients List</h6>
                             </div>
-                            <div className="">
-                                <button className=" btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
-                            </div>
                         </div>
                         <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">
                             <ul class="ms-followers ms-list ms-scrollable ps">
@@ -107,13 +96,6 @@ const Dashbaord = () => {
                     </div>
                 </div>
             </div>
-
-            {isModalOpen && 
-                <Appointment 
-                    isOpen={isModalOpen}
-                    setIsOpen={setIsModalOpen}
-                />
-            }
         </div>
 
     )

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {  useForm } from 'react-hook-form';
 import Select from "react-select"
 import {  axiosInstance, getAuthHeader } from '../../constants/utils'
-import AddDoctors from '../common-components/AddDoctors';
+import DoctorRegistration from '../common-components/registration/DoctorRegistration';
 import ImgUpload from '../common-components/Imgupload';
 
 
@@ -571,7 +571,7 @@ const HospitalRegistartion = () => {
               </div>))}
             </div>}
             {tab === "STEP4" && <div className='row'>
-              <AddDoctors tab={tab}/>
+              <DoctorRegistration tab={tab}/>
             </div>}
             {tab === "FINAL" && <div>
               <div className="row">
