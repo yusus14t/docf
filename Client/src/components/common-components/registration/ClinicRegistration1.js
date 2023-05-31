@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const ClinicRegistration = ({ tab }) => {
+const ClinicRegistration = ({ source, tab }) => {
     const { register, handleSubmit, control, formState: { errors } } = useForm({ onChange: true })
-
 
     return (
         <form onSubmit={handleSubmit((data) => console.log(data))}>
             <div className="ms-wizard-step body current" id="default-wizard-p-0" role="tabpanel" aria-labelledby="default-wizard-h-0" aria-hidden="false">
                 <div className="row">
                     <div className="col-md-6 mb-3">
-                        <label className=''>Clinic Name</label>
+                        <label className=''>{source} Name</label>
                         <div className="input-group">
                             <input type="text"
                                 className={`form-control ${errors?.name ? 'border-danger' : ''}`}
-                                placeholder="Ex: Madni Clinic"
+                                placeholder={`Ex: Madni ${source}`}
                                 {...register('name', {
                                     required: 'Clinic name is required'
                                 })}
@@ -23,7 +22,7 @@ const ClinicRegistration = ({ tab }) => {
 
                     </div>
                     <div className="col-md-6 mb-3">
-                        <label className=''>Clinic Registration No.</label>
+                        <label className=''>{source} Registration No.</label>
                         <div className="input-group">
                             <input type="text"
                                 className={`form-control ${errors?.registration ? 'border-danger' : ''}`}
@@ -89,6 +88,7 @@ const ClinicRegistration = ({ tab }) => {
                     </div>
                 </div>
             </div>
+            <button className='btn btn-primary btn-md' type='submit'>Save</button>
         </form>
     )
 }

@@ -6,7 +6,6 @@ const DealRegistration = ({ tab }) => {
     return (
         <form onSubmit={handleSubmit((data) => console.log(data))}>
             <div className="row">
-                <div className="col-md-3 mb-3"></div>
                 <div className="col-md-6 mb-3">
                     <label className=''>Deal Price</label>
                     <div className="input-group">
@@ -41,6 +40,7 @@ const DealRegistration = ({ tab }) => {
                 <div className="col-md-3 mb-3"></div>
 
             </div>
+            <button type="submit" className="btn btn-primary btn-md">Save</button>
         </form>
     )
 }

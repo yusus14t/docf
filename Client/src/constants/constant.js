@@ -26,3 +26,13 @@ export const PRIORITY = [
     { label: 'Medium', value: 'medium' },
     { label: 'High', value: 'high' },
 ]
+
+export const DAYS = [
+    { id:0, value: 'MON', day: 'Monday' },
+    { id:1, value: 'TUE', day: 'Tuesday' },
+    { id:2, value: 'WED', day: 'Wednesday' },
+    { id:3, value: 'THU', day: 'Thursday' },
+    { id:4, value: 'FRI', day: 'Friday' },
+    { id:5, value: 'SAT', day: 'Saturday' },
+    { id:6, value: 'SUN', day: 'Sunday' },
+  ]

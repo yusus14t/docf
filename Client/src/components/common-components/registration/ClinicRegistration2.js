@@ -3,7 +3,7 @@ import Select from "react-select"
 import ImgUpload from '../Imgupload';
 import { useEffect, useState } from 'react';
 
-const CLiniRegistration2 = ({ tab }) => {
+const CLiniRegistration2 = ({ source, tab }) => {
     const { register, handleSubmit, control, formState: { errors } } = useForm({ onChange: true })
 
     const [timingNo, setTimingNo] = useState(1);
@@ -38,7 +38,7 @@ const CLiniRegistration2 = ({ tab }) => {
                                 render={({ field }) => (
                                     <Select
                                         {...field}
-                                        isMulti={false}
+                                        isMulti={source === 'Hospital' ? true : false}
                                         options={[{ label: 'Other', value: 'other' }]}
                                         className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
                                         classNamePrefix="select"
@@ -61,7 +61,7 @@ const CLiniRegistration2 = ({ tab }) => {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-4 mb-3">
+                        <div className="col-md-3 mb-3">
                             <label className=''>Landmark & Street</label>
                             <div className="input-group">
                                 <input type="text"
@@ -73,7 +73,7 @@ const CLiniRegistration2 = ({ tab }) => {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-4 mb-3">
+                        <div className="col-md-3 mb-3">
                             <label className=''>Pincode</label>
                             <div className="input-group">
                                 <input type="text"
@@ -85,7 +85,7 @@ const CLiniRegistration2 = ({ tab }) => {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-4 mb-3">
+                        <div className="col-md-3 mb-3">
                             <label className=''>City</label>
                             <div className="input-group">
                                 <input type="text"
@@ -97,29 +97,144 @@ const CLiniRegistration2 = ({ tab }) => {
                                 />
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-4 mb-3">
-                        <label className=''>State</label>
-                        <div className="input-group">
-                            <input type="text"
-                                className={`form-control ${errors.state ? 'border-danger' : ''}`}
-                                placeholder="Eg: Uttar pardesh"
-                                {...register('state', {
-                                    required: 'Clinic address is required'
-                                })}
-                            />
+                        <div className="col-md-3 mb-3">
+                            <label className=''>State</label>
+                            <div className="input-group">
+                                <input type="text"
+                                    className={`form-control ${errors.state ? 'border-danger' : ''}`}
+                                    placeholder="Eg: Uttar pardesh"
+                                    {...register('state', {
+                                        required: 'Clinic address is required'
+                                    })}
+                                />
+                            </div>
                         </div>
                     </div>
-                    <div className="col-md-6 mb-3">
+                    { source === 'Clinic' && <div className="col-md-6 mb-3">
                         <div className="row input-group mt-4">
-
                             <div className="col"><label >Parking</label></div>
                             <label class="ms-switch">
                                 <input type="checkbox" />
                                 <span class="ms-switch-slider round"></span>
                             </label>
                         </div>
-                    </div>
+                    </div>}
+                    { source === 'Hospital' && <div className="col-md-12 mb-3">
+                        <div className="row input-group mt-4">
+                            <div className="col"><label >Parking</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Ambulance</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Waiting</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Fooding for Patients</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                        </div>
+                        <div className="row input-group mt-4">
+                            <div className="col"><label >ECHO</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Care Taker</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >ENDOSCOPY</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+
+                            <div className="col"><label >NICU</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                        </div>
+                        <div className="row input-group mt-4">
+                            <div className="col"><label >CATHLAB</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Operation Theatre</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Veltilator</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Ultrasound</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                        </div>
+                        <div className="row input-group mt-4">
+                            <div className="col"><label >ECG Services</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Pharmacy</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Room Facility</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >MRI</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                        </div>
+                        <div className="row input-group mt-4">
+                            <div className="col"><label >CT Scan</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Blood Bank</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >ICU</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                            <div className="col"><label >Oxygen</label></div>
+                            <label class="ms-switch">
+                                <input type="checkbox" />
+                                <span class="ms-switch-slider round"></span>
+                            </label>
+                        </div>
+                        <div className="row input-group mt-4">
+                        </div>
+                        {errors?.parking && <div className="text-danger ">{errors?.parking.message}</div>}
+                    </div>}
 
                     {Array(timingNo).fill(0).map((v, i) =>
                     (i = i + 1, <div className="row">
@@ -194,6 +309,7 @@ const CLiniRegistration2 = ({ tab }) => {
                         </div>
                     </div>))}
                 </div>
+              <button type="submit" className="btn btn-primary shadow-none mx-2" >Save</button>
             </div>
         </form>
     )
