@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 // import Select from 'react-select';
 import profile from '../../assets.app/img/dashboard/doctor-1.jpg'
 import { axiosInstance, getAuthHeader } from "../../constants/utils";
@@ -43,43 +45,26 @@ const DoctorsList = () => {
                     
                 </div>
                 <div className="row">
-                    {}{doctors.length && doctors.map((doctor, index) =>(index = index+1, <div key={index} className="col-lg-4 col-md-4 col-sm-6">
+                    {}{doctors.length && doctors.map((doctor, index) =>(index = index+1, <div key={index} className="col-lg-3 col-md-3  col-sm-6">
                         <div className="ms-card">
                             <div className="ms-card-body">
-                                <div className="media fs-14">
+                                <div className="media mb-0 fs-14">
                                     <div className="me-2 align-self-center">
                                     <img src={profile} className="ms-img-round" alt="people" />
                                     </div>
                                     <div className="media-body">
                                     <h6>{ doctor?.fullName || 'Abaan Hamson' }</h6>
-                                    <div className="dropdown float-end">
-                                        <i className="material-icons cursor-pointer" onClick={() => handleMoreOptions(index)} >i</i>
-                                        <ul className={`dropdown-menu dropdown-menu-end ${ isMoreOptions === index && 'show' }`} >
-                                        <li className="ms-dropdown-list">
-                                            <a className="media p-2" href="#">
-                                            <div className="media-body">
-                                                <span>View Details</span>
-                                            </div>
-                                            </a>
-                                            <a className="media p-2" href="#">
-                                            <div className="media-body">
-                                                <span>Assign</span>
-                                            </div>
-                                            </a>
-                                            <a className="media p-2" href="#">
-                                            <div className="media-body">
-                                                <span>Edit</span>
-                                            </div>
-                                            </a>
-                
-                                            <div className="media-body px-2 cursor-pointer" onClick={() => handleDelete(doctor)}>
-                                                <span>Delete</span>
-                                            </div>
-                                        </li>
-                                        </ul>
+                                    <div className="float-end d-flex-colum justify-content-between">
+                                        <div className="div">
+                                            <span style={{marginBottom:"50%"}} class="badge badge-outline-danger">Inactive</span>
+                                        </div>
+                                        <div style={{marginLeft:"15px"}} className="float-last">
+                                        <FontAwesomeIcon className="cursor-pointer" onClick={() => handleMoreOptions(index)} icon={faEdit}></FontAwesomeIcon>
+                                        <FontAwesomeIcon style={{marginLeft:"8px"}} className="cursor-pointer" onClick={() => handleDelete(index)} icon={faTrash}></FontAwesomeIcon>
+                                        </div>                                      
                                     </div>
                                     <p className="fs-12 my-1 text-disabled">{ doctor?.specialization || 'Neurologist'}</p>
-                                    <h6 className="mt-2">
+                                    <h6 className="mt-0">
                                         <span className="fs-14">
                                         <i className="fas fa-map-marker-alt"></i>
                                         </span>
