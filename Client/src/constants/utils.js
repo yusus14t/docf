@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // axios instance 
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: `http://${window.location.hostname}:5000/api`,
     headers: {'Access-Control-Allow-Origin': '*'},
 })
 

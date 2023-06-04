@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Modal from './Modal';
-import { useForm} from 'react-hook-form';
+import { Controller, useForm} from 'react-hook-form';
 import Select from "react-select"
 import useToasty from '../../hooks/toasty';
 import { axiosInstance, getAuthHeader } from '../../constants/utils';
 
 const Appointment = ({isOpen, setIsOpen}) => {
     const toasty = useToasty()
+    const userInfo = JSON.parse(localStorage.getItem('user'))
     const [isAnotherAppointment, setIsAnotherAppointment] = useState(false)
     const [patients, setPatients] = useState([]);
     const [doctors, setDoctors] = useState([]);
-    const { register, handleSubmit, setError, clearErrors ,formState:{ errors }, control } = useForm({ onChange: true });
-    const [doctor, setDoctor] = useState(null);
+    const { register, handleSubmit ,formState:{ errors }, control } = useForm({ onChange: true });
     const [selected, setSelected] = useState(null);
 
     useEffect(() => {
         fetchDoctors();
+
+        if(userInfo.userType === "DR") setIsAnotherAppointment(true)
     },[])
 
     useEffect(() => setSelected(null), [isOpen] )
@@ -33,11 +35,7 @@ const Appointment = ({isOpen, setIsOpen}) => {
     const saveAppointment = async ( formData ) => {
         try {
             if(selected) formData = selected
-            formData['doctor'] = doctor
-            if( !doctor ){
-                setError('doctor', {type: 'custom', message: 'Doctor is required'})
-                return
-            }
+
             let { data } = await axiosInstance.post('/common/add-appointment', formData,  getAuthHeader());
             await fetchDoctors();
             
@@ -73,35 +71,31 @@ const Appointment = ({isOpen, setIsOpen}) => {
                             <label className=''>First Name</label>
                             <div className="input-group">
                                 <input type="text"
-                                    className="form-control "
+                                    className={`form-control ${errors?.firstName ? 'border-danger' : ''}`}
                                     placeholder="Andy"
                                     {...register('firstName', {
                                         required: !selected && 'First name is required'
                                     })}
                                 />
                             </div>
-                            {errors?.firstName && <div className="text-danger ">{errors?.firstName.message}</div>}
-
                         </div>
                         <div className="col-6 mb-3">
                             <label className=''>Last Name</label>
                             <div className="input-group">
                                 <input type="text"
-                                    className="form-control "
+                                    className={`form-control ${errors?.lastName ? 'border-danger' : ''}`}
                                     placeholder="America"
                                     {...register('lastName', {
                                         required: !selected && 'Last name is required'
                                     })}
                                 />
                             </div>
-                            {errors?.lastName && <div className="text-danger ">{errors?.lastName.message}</div>}
-
                         </div>
                         <div className="col-6 mb-3">
                             <label className=''>Phone</label>
                             <div className="input-group">
                                 <input type="text"
-                                    className="form-control "
+                                    className={`form-control ${errors?.phone ? 'border-danger' : ''}`}
                                     placeholder="xxxx-xxx-xxx"
                                     onBlurCapture={(e) => getPatientByNumber(e.target.value)}
                                     onInput={(e) => {
@@ -114,33 +108,21 @@ const Appointment = ({isOpen, setIsOpen}) => {
                                     })}
                                 />
                             </div>
-                            {errors?.phone && <div className="text-danger ">{errors?.phone.message}</div>}
-
                         </div>
                         <div className="col-6 mb-3">
                             <label className=''>Gender</label>
                             <div className="input-group">
-                                <select className='form-control'
-                                    {...register('gender',{
-                                        required: 'Gender is required'
-                                    })}
-                                >
+                                <select className='form-control'>
                                     <option value={'M'} >Male</option>
                                     <option value={'F'} >Female</option>
                                     <option value={'O'} >Other</option>
                                 </select>
                             </div>
-                            {errors?.gender && <div className="text-danger ">{errors?.gender.message}</div>}
-
                         </div>
                         <div className="col-6 mb-3">
                             <label className=''>Blood Group</label>
                             <div className="input-group">
-                                <select className='form-control'
-                                    {...register('bloodGroup',{
-                                        required: 'Blood Group is required'
-                                    })}
-                                >
+                                <select className='form-control'>
                                     {['A', 'B', 'AB', 'O'].map( e => 
                                         <>
                                             <option value={`${e}+`} >{e}+</option>
@@ -149,47 +131,47 @@ const Appointment = ({isOpen, setIsOpen}) => {
                                     )}
                                 </select>
                             </div>
-                            {errors?.bloodGroup && <div className="text-danger ">{errors?.bloodGroup.message}</div>}
-
                         </div>
                         <div className="col-6 mb-3">
                             <label className=''>Address</label>
                             <div className="input-group">
                                 <input type="text"
-                                    className="form-control "
+                                    className={`form-control ${errors?.address ? 'border-danger' : ''}`}
                                     placeholder="Ex: Ramghat Road Aligarh"
                                     {...register('address', {
                                         required: !selected && 'Address is required'
                                     })}
                                 />
                             </div>
-                            {errors?.address && <div className="text-danger ">{errors?.address.message}</div>}
-
                         </div>
 
                         <div className="col-md-12 mb-3">
                             <label >Doctor</label>
                             <div className="">
-                                <Select
-                                    // {...register('doctor')}
-                                    isMulti={false}
-                                    name="colors"
-                                    options={doctors}
-                                    getOptionLabel={({fullName}) => fullName}
-                                    getOptionValue={({_id}) => _id}
-                                    className=" p-0"
-                                    classNamePrefix="select"
-                                    onChange={({_id}) => {setDoctor(_id); clearErrors('doctor')}}
-                                    formatOptionLabel={(option, meta) => 
-                                        <div className='d-flex justify-content-between'>
-                                            <div><span>{option.fullName}</span></div>
-                                            <div><span style={{fontWeight:'bold', letterSpacing:'1.2px', color:'#4e81ff'}}>{option.clinic}</span></div>
-                                            <div></div>
-                                        </div>
-                                    }
+                                <Controller
+                                    control={control}
+                                    name="doctor"
+                                    rules={{
+                                        required: !selected && 'Doctor must be required'
+                                    }}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            isMulti={false}
+                                            options={doctors}
+                                            className={`form-control p-0 ${errors?.doctor ? 'border-danger' : ''}`}
+                                            classNamePrefix="select"
+                                            formatOptionLabel={(option) => 
+                                                <div className='d-flex justify-content-between'>
+                                                    <div><span>{option.fullName}</span></div>
+                                                    <div><span style={{fontWeight:'bold', letterSpacing:'1.2px', color:'#4e81ff'}}>{option.clinic}</span></div>
+                                                    <div></div>
+                                                </div>
+                                            }
+                                        />
+                                    )}
                                 />
                             </div>
-                            { errors?.doctor && <div className="text-danger ">{errors?.doctor.message}</div>}
                         </div>
                         {patients.length > 0 && <label>Please Select </label>}
                         <div className='overflow-auto mb-2' style={{maxHeight:'12rem'}}>

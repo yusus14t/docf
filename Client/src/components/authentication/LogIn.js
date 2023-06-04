@@ -5,6 +5,7 @@ import {  axiosInstance, getAuthHeader } from '../../constants/utils'
 import {userRoutes} from '../../constants/constant'
 import { Link } from 'react-router-dom';
 import useToasty from '../../hooks/toasty';
+import axios from 'axios'
 
 const LogIn = () => {
    const toasty = useToasty();
@@ -13,11 +14,12 @@ const LogIn = () => {
 
    const submit = async (formData) => {
       try{
-         let { data } = await axiosInstance.post('/login', formData, getAuthHeader())
-         localStorage.setItem('user', JSON.stringify(data.user))
-         localStorage.setItem('session', JSON.stringify(data.token))
+         let response = await axiosInstance.post('/login', formData )
+         let data = response?.data
+         localStorage.setItem('user', JSON.stringify(data?.user))
+         localStorage.setItem('session', JSON.stringify(data?.token))
 
-         navigate(`${userRoutes[data.user.userType].path}`)
+         navigate(`${userRoutes[data?.user?.userType].path}`)
       } catch(error){ 
          toasty.error(error?.message)
          console.log(error)
