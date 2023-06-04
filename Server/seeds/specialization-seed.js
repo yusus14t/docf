@@ -94,7 +94,8 @@ let specialization = {
             
             {
                 id:"GASTROENTEROLOGIST",
-                name:"Gastroenterologist "
+                name:"Gastroenterologist",
+                description:""
             }
         ],
     function: async () => {
