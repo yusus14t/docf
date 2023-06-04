@@ -11,6 +11,7 @@ import useNotification from '../hooks/Notification';
 
 const Header = () => {
     const notificationAPI = useNotification();
+    const userInfo = JSON.parse(localStorage.getItem('user'))
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [notifications, setNotifications] = useState([])
     const [unseenNotificationCount, setUnseenNotificationCount] = useState(0)
@@ -69,9 +70,9 @@ const Header = () => {
                 </div>
 
                 <ul className="ms-nav-list ms-inline mb-0" id="ms-nav-options">
-                    <li className="ms-nav-item ms-d-none">
+                    {userInfo.userType === "DR"  && <li className="ms-nav-item ms-d-none">
                         <div className="text-white cursor-pointer" onClick={() => setIsModalOpen(true) }><FontAwesomeIcon className="Header-icon" icon={faCalendarDays} />Make an appointment</div>
-                    </li>
+                    </li>}
                     
                     <li className="ms-nav-item ms-d-none">
                         <div className="text-white cursor-pointer" >
@@ -82,7 +83,7 @@ const Header = () => {
                                 <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Notifications</span></h6>
                             </li>
                             <li className="dropdown-divider m-0 fs-12"></li>
-                            {notifications.length && 
+                            {notifications.length ? 
                                 notifications.map( notification => 
                                     <Item>
                                         <div className="row">
@@ -94,7 +95,7 @@ const Header = () => {
                                             </div>
                                         </div>
                                     </Item>
-                                )
+                                ) : <Item><span>No Data</span></Item>
 
                             }
                             <li className="dropdown-divider m-0 fs-12"></li>
