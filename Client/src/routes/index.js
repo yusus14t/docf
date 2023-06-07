@@ -1,5 +1,5 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense } from "react";
 import SUPER_ADMIN from './super-admin-routes';
 import PATIENT from './user-routes';
 import DOCTOR from './doctor-routes';
@@ -8,10 +8,11 @@ import MR from './mr-routes';
 import COMMON_ROUTE from './common-routes';
 import Loader from "../layout/Loader";
 
-const WebLayout = lazy(() => import("../layout/weblayout/WebLayout"));
-const AppLayout = lazy(() => import("../layout/Index"));
+import WebLayout from "../layout/weblayout/WebLayout";
+import AppLayout from "../layout/Index";
 
 const getUserType = () => JSON.parse(localStorage.getItem('user'))?.userType
+
 
 const USER_ROUTES = {
   SA: { path: "/super-admin", id: SUPER_ADMIN },
