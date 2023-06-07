@@ -1,10 +1,13 @@
-import React, { lazy, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
 import { axiosInstance, getAuthHeader } from '../../../constants/utils';
-import Appointment from '../../common-components/Appointment';
+import Appointment from '../../common-components/Appointment/Appointment';
+import UserModal from '../../common-components/UserModal';
 const Dashbaord = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isUserModalOpen, setIsUserModalOpen] = useState(false);
     const [appointments, setAppointments] = useState([]);
+    const [appointmentData, setAppointmentData] = useState({})
 
     useEffect(() => {
         getAppointments()
@@ -86,7 +89,7 @@ const Dashbaord = () => {
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {appointments?.length && appointments.map((appointment, i) => <li class="ms-list-item media">
                                     <img src={image} class="ms-img-small ms-img-round" alt="people" />
-                                    <div class="media-body mt-1">
+                                    <div class="media-body mt-1 cursor-pointer" onClick={() => {setAppointmentData(appointment); setIsUserModalOpen(true); }}>
                                         <h4>{appointment?.user.firstName} {appointment?.user.lastName || ""}</h4>
                                         <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5,10)}</span>
                                     </div>
@@ -101,6 +104,14 @@ const Dashbaord = () => {
                 <Appointment 
                     isOpen={isModalOpen}
                     setIsOpen={setIsModalOpen}
+                />
+            }
+
+            {isUserModalOpen && 
+                <UserModal 
+                    isOpen={isUserModalOpen}
+                    setIsOpen={setIsUserModalOpen}
+                    appointmentData={appointmentData}
                 />
             }
         </div>

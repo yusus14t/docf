@@ -3,7 +3,7 @@ import Logo from '../assets.web/img/Doctor.png'
 import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 import Sidebar from "./Sidebar"
 import { Dropdown, Item } from '../components/common-components/Dropdown';
-import Appointment from "../components/common-components/Appointment";
+import Appointment from "../components/common-components/Appointment/Appointment";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faBell, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 import useNotification from '../hooks/Notification';
