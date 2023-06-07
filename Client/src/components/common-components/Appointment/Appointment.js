@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Modal from './Modal';
+import React, { useContext, useEffect, useState } from 'react';
+import Modal from '../Modal';
 import { Controller, useForm} from 'react-hook-form';
 import Select from "react-select"
-import useToasty from '../../hooks/toasty';
-import { axiosInstance, getAuthHeader } from '../../constants/utils';
+import useToasty from '../../../hooks/toasty';
+import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 
 const Appointment = ({isOpen, setIsOpen}) => {
-    const toasty = useToasty()
     const userInfo = JSON.parse(localStorage.getItem('user'))
+    const toasty = useToasty()
     const [isAnotherAppointment, setIsAnotherAppointment] = useState(false)
     const [patients, setPatients] = useState([]);
     const [doctors, setDoctors] = useState([]);
@@ -16,7 +16,6 @@ const Appointment = ({isOpen, setIsOpen}) => {
 
     useEffect(() => {
         fetchDoctors();
-
         if(userInfo.userType === "DR") setIsAnotherAppointment(true)
     },[])
 

@@ -14,12 +14,13 @@ const AppointmentModel = require('../models/appointment-model');
 //     }
 // }
 
-const checkDuplicateEmail = async ( body ) => {
+const sessionInfo = async ( body, user ) => {
     try{ 
-        //
+        delete(user.password)
+        return Success({ user })
     } catch(error){ 
         console.log(error) 
-        return Error();
+        return Error({ message: 'Something went wrong'});
     }
 }
 
@@ -79,7 +80,7 @@ const signUp = async ( body ) => {
     }
 }
 
-const logIn = async ( body, user1, userId ) => {
+const logIn = async ( body ) => {
     try{
         let user = await UserModel.findOne({ email: body.email })
 
@@ -240,8 +241,8 @@ const getUserByEmail = async ( body ) => {
 module.exports = {
     logIn,
     signUp,
+    sessionInfo,
     createClinic,
-    checkDuplicateEmail,
     getAllDoctors,
     deleteDoctor,
     appointmentDoctors,

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AddNotification from '../Notification/AddNotification'
 import useNotification from '../../../hooks/Notification';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -48,10 +48,10 @@ const AppointmentList = () => {
     }
 
     return(
-        <div className='ms-content-wrapper'>
+        <div className='ms-content-wrapper '>
             <div className="row mr-0" >
                 <div class="col-xl-12 col-md-12">
-                    <div class="ms-panel mb-0">
+                    <div class="ms-panel mb-0 inner-content-height">
                         <div  class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                         <div>
                              <h6>Appointments</h6>

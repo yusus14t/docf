@@ -3,7 +3,7 @@ import Logo from '../assets.web/img/Doctor.png'
 import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 import Sidebar from "./Sidebar"
 import { Dropdown, Item } from '../components/common-components/Dropdown';
-import Appointment from "../components/common-components/Appointment";
+import Appointment from "../components/common-components/Appointment/Appointment";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faBell, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 import useNotification from '../hooks/Notification';
@@ -43,21 +43,19 @@ const Header = () => {
             let { data } = await notificationAPI.get()
             setNotifications(data.notifications)
             setUnseenNotificationCount(data?.unseenNotificationCount)
-            console.log(data.notifications)
         } catch(error){ console.log(error) }
     }
 
     const LockUser = () => {
-        let user = JSON.parse( localStorage.getItem('user'))
         localStorage.clear()
-        localStorage.setItem('email', JSON.stringify(user.email))
+        localStorage.setItem('email', JSON.stringify(userInfo.email))
         window.location.replace('/login')
     }
 
     return (
         <>
             <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} mobileView={mobileView} />
-            <nav className="navbar ms-navbar">
+            <nav className="navbar ms-navbar position-fixed">
                 <div className="ms-aside-toggler ms-toggler ps-0" data-bs-target="#ms-side-nav" data-bs-toggle="slideLeft">
                     <span className="ms-toggler-bar bg-white"></span>
                     <span className="ms-toggler-bar bg-white"></span>

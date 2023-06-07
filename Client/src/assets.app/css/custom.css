@@ -492,6 +492,11 @@ input::-webkit-inner-spin-button {
 /* .hname{
     color: green;
 } */
+
+/* Maain content it must not be change */
+.inner-content-height {
+    height: 83dvh;
+}
 /* Doctor card end */
 @media (max-width: 767px){
     .ml255 {

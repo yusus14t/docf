@@ -16,7 +16,7 @@ export const numberValidator = (value) => {
 }
 
 export const getAuthHeader = () => {
-    let token = JSON.parse(localStorage.getItem('session'))
+    let token = JSON.parse(localStorage.getItem('token'))
     return { headers: {'auth-token': token} }
 }
 

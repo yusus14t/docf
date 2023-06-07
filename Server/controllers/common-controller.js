@@ -19,7 +19,12 @@ const checkDuplicateEmail = async ( req, res ) =>
         .catch( err => res.status(500).send(err.data) )
 
 const logIn = async ( req, res ) =>
-    commonManager.logIn( req.body, req.user, req.userId )
+    commonManager.logIn( req.body )
+        .then( result => res.status(result.code).send(result) )
+        .catch( err => res.status(500).send(err.data) )
+
+const sessionInfo = async ( req, res ) =>
+    commonManager.sessionInfo( req.body, req.user )
         .then( result => res.status(result.code).send(result) )
         .catch( err => res.status(500).send(err.data) )
 
@@ -105,4 +110,5 @@ module.exports = {
     deleteNotification,
     createTicket,
     allTickets,
+    sessionInfo,
 }

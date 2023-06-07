@@ -17,6 +17,7 @@ modules.map( route => router.use(`/${route.path}`,jwt_verify, require(`./${ rout
 // Use Custom Route
 router.get('/', (req, res) => res.send('Hello AcadTech'));
 
+router.post('/session-info', jwt_verify, commonController.sessionInfo);
 // Un verify routes
 router.post('/signup', commonController.signUp);
 router.post('/login', commonController.logIn);
