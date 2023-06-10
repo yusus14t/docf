@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DrAvatar from "../../assets.app/img/DoctorAvatar.png"
 
 
-export default function ImgUpload({ source }) {
+export default function ImgUpload({ source, file=() => {} }) {
   const [image, setImage] = useState({ preview: "", raw: "" });
 
   const handleChange = e => {
@@ -11,6 +11,7 @@ export default function ImgUpload({ source }) {
         preview: URL.createObjectURL(e.target.files[0]),
         raw: e.target.files[0]
       });
+      file(e.target.files[0])
     }
   };
 

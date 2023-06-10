@@ -24,7 +24,7 @@ const Modal = ({
                     </div>
                     {(closeButton || submitButton) && <div className="modal-footer">
                         {closeButton && <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={() => setIsOpen(false)}>Cancel</button>}
-                        {submitButton && <button type="button" className="btn btn-primary shadow-none" onClick={() => { callback(data) }}>{submitButtonText}</button>}
+                        {submitButton && <button type="button" className="btn btn-primary shadow-none" onClick={(event) => callback(event, data)} >{submitButtonText}</button>}
                     </div>}
                 </div>
             </div>

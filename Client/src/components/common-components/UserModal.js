@@ -9,7 +9,7 @@ const UserModal = ({isOpen, setIsOpen, appointmentData}) => {
             setIsOpen={setIsOpen}
             title='Appointment Card'
         >
-            <h1>{appointmentData.user.firstName}</h1>
+            <h1>{appointmentData?.user?.firstName}</h1>
         </Modal>
     )
 }

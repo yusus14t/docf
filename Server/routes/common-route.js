@@ -5,7 +5,7 @@ const commonController = require(`../controllers/common-controller`);
 
 router.post('/checkDuplicateEmail',  commonController.checkDuplicateEmail);
 router.post('/create-clinic',  commonController.createClinic);
-router.post('/delete-doctor',  commonController.deleteDoctor);
+router.post('/organization-details', commonController.organizationDetails)
 
 //Appointment
 router.get('/appointment-doctors',  commonController.appointmentDoctors);

@@ -2,42 +2,34 @@ const commonManager = require('../managers/common-manager');
 const notificationManager = require('../managers/notification-manager');
 const supportManager = require("../managers/support-manager")
 
-const signUp = async ( req, res ) =>
+const signUp = async ( req, res ) => {
     commonManager.signUp( req.body )
         .then( data => res.status(data.code).send(data) )
         .catch( err => res.status(500).send(err.data) )
+}
 
-
-const createClinic = async ( req, res ) =>
+const createClinic = async ( req, res ) => {
 commonManager.createClinic( req.body, req.user )
     .then( data => res.status(200).send(data) )
     .catch( err => res.status(500).send(err.data) )
+}
 
-const checkDuplicateEmail = async ( req, res ) =>
+const checkDuplicateEmail = async ( req, res ) => {
     commonManager.signUp( req.body )
         .then( data => res.status(200).send(data) )
         .catch( err => res.status(500).send(err.data) )
+}
 
-const logIn = async ( req, res ) =>
+const logIn = async ( req, res ) => {
     commonManager.logIn( req.body )
         .then( result => res.status(result.code).send(result) )
         .catch( err => res.status(500).send(err.data) )
+}
 
-const sessionInfo = async ( req, res ) =>
+const sessionInfo = async ( req, res ) => {
     commonManager.sessionInfo( req.body, req.user )
         .then( result => res.status(result.code).send(result) )
         .catch( err => res.status(500).send(err.data) )
-
-const getAllDoctors = async ( req, res ) => {
-    commonManager.getAllDoctors( req.body, req.user )
-    .then( result => res.status(result.code).send(result) )
-    .catch( err => res.status(500).send(err.data) )
-}
-
-const deleteDoctor = async ( req, res ) => {
-    commonManager.deleteDoctor( req.body, req.user )
-    .then( result => res.status(result.code).send(result) )
-    .catch( err => res.status(500).send(err.data) )
 }
 
 const appointmentDoctors = async ( req, res ) => {
@@ -94,13 +86,17 @@ const allTickets = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const organizationDetails = async ( req, res ) => {
+    commonManager.organizationDetails( req.body, req.user, )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
     createClinic,
     checkDuplicateEmail,
-    getAllDoctors,
-    deleteDoctor,
     appointmentDoctors,
     addAppointment,
     getPatientByNumber,
@@ -111,4 +107,5 @@ module.exports = {
     createTicket,
     allTickets,
     sessionInfo,
+    organizationDetails,
 }

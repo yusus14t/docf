@@ -2,10 +2,11 @@ import { Controller, useForm } from 'react-hook-form';
 import Select from "react-select"
 import ImgUpload from '../Imgupload';
 import { useEffect, useState } from 'react';
+import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 
 const CLiniRegistration2 = ({ source, tab }) => {
     const { register, handleSubmit, control, formState: { errors } } = useForm({ onChange: true })
-
+    const [selectedFile, setSelectedFile] = useState(null);
     const [timingNo, setTimingNo] = useState(1);
     const DAYS = [
         { id: 0, value: 'MON', day: 'Monday' },
@@ -20,14 +21,26 @@ const CLiniRegistration2 = ({ source, tab }) => {
     useEffect(() => {
         setTimingNo(1)
     }, [tab])
+
+    const submit = async ( values ) => {
+        try{
+            let formData = new FormData()
+            formData.append('data', JSON.stringify(values))
+            // formData.append('selectedFile', selectedFile)
+            
+            let header = getAuthHeader()
+            // header.headers['Content-Type'] = 'multipart/form-data'            
+            let { data } = axiosInstance.post('/common/organization-details', { data: formData }, header )
+            console.log('>>', data)
+        } catch(error){ console.error(error) }
+    }
     return (
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form onSubmit={handleSubmit(submit)} >
             <div>
                 <div className="row d-flex justify-content-center">
-                    <div className="col-md-12 ">< ImgUpload source={'clinic'} /></div>
+                    <div className="col-md-12 ">< ImgUpload source={'clinic'} file={(image) => {setSelectedFile(image)}} /></div>
                 </div>
                 <div className="row">
-
                     <div className="col-md-6 mb-3">
                         <label >Specialization of Clininc</label>
                         <div className="">
@@ -50,12 +63,13 @@ const CLiniRegistration2 = ({ source, tab }) => {
                     <div className="col-md-6 mb-3">
                         <label >Consultant Fee</label>
                         <div className="input-group">
-                            <input type="number"
-                                className={`form-control ${errors.fee ? 'border-danger' : ''}`}
-                                placeholder="Ex: 200"
+                            <input 
                                 {...register('fee', {
                                     required: 'Consultation fee is required'
                                 })}
+                                type="number"
+                                className={`form-control ${errors.fee ? 'border-danger' : ''}`}
+                                placeholder="Ex: 200"
                             />
                         </div>
                     </div>
@@ -114,8 +128,16 @@ const CLiniRegistration2 = ({ source, tab }) => {
                         <div className="row input-group mt-4">
                             <div className="col"><label >Parking</label></div>
                             <label class="ms-switch">
-                                <input type="checkbox" />
-                                <span class="ms-switch-slider round"></span>
+                            <Controller
+                                control={control}
+                                name="specialization"
+                                rules={{ required: 'Query must be select' }}
+                                render={({ field }) => (
+                                    <input type="checkbox"
+                                        {...register('parking')}
+                                    />
+                                )} />
+                                    <span class="ms-switch-slider round"></span>
                             </label>
                         </div>
                     </div>}
@@ -273,7 +295,6 @@ const CLiniRegistration2 = ({ source, tab }) => {
                                     <label htmlFor="#open">Open</label>
                                     <input type="time"
                                         id='open'
-                                        onFocusCapture={(e) => console.log('>>>>>>>', e)}
                                         className="form-control"
                                         placeholder="morning 10am to 12pm"
 

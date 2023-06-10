@@ -9,7 +9,6 @@ import Services from './Services';
 function Home() {
     return(
         <>
-        <div className="box"></div>
             <Slider/>
              <div className="sigma_banner-info style-2">
         <div className="container">

@@ -5,6 +5,26 @@ const getAppointments = async ( req, res ) =>
         .then( req => res.status(200).send(req) )
         .catch( err => res.status(500).send(err.data) )
     
+const editDoctor = async ( req, res ) => 
+    DoctorManager.editDoctor( req.body, req.user )
+        .then( req => res.status(200).send(req) )
+        .catch( err => res.status(500).send(err) )
+
+const getAllDoctors = async ( req, res ) => {
+    DoctorManager.getAllDoctors( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const deleteDoctor = async ( req, res ) => {
+    DoctorManager.deleteDoctor( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+        
 module.exports = {
     getAppointments,
+    editDoctor,
+    getAllDoctors,
+    deleteDoctor,
 }

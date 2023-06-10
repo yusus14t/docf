@@ -22,7 +22,7 @@ router.post('/session-info', jwt_verify, commonController.sessionInfo);
 router.post('/signup', commonController.signUp);
 router.post('/login', commonController.logIn);
 router.get('/user-by-email', commonController.getUserByEmail);
-router.get('/allDoctors', commonController.getAllDoctors);
+
 
 router.get('/ping', (req, res) => {
     res.send('>>>>> Server Running....')

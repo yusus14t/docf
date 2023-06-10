@@ -71,9 +71,11 @@ const signUp = async ( body ) => {
         if( body.password === body.confirmPassword ) body.password = await encryptPassword(body.password)
         else return Error({ message: 'Incorrect confirm password' })
 
-        await UserModel({ ...body }).save()
+        if( body.registrationType === 'CLINIC' ) body['userType'] = 'DR'
 
-        return Success({ message: 'Account created successfully', code: 201 }) ;
+        let user = await UserModel({ ...body }).save()
+        let token = createToken(user._id)
+        return Success({ message: 'Account created successfully', code: 201, user, token }) ;
     } catch ( error ) { 
         console.log(error) 
         return Error();
@@ -97,73 +99,12 @@ const logIn = async ( body ) => {
     }
 }
 
-const getAllDoctors = async (body, user) => {
-    try{ 
-        let query = {}
-
-        // if( body?.source === 'dashboard' && user ){
-        //     query['createdBy'] = user._id
-        // }
-
-        let doctors = await UserModel.aggregate([
-            {
-                $match: { userType: 'DR', isActive: true, ...query },
-            },
-            {
-                $lookup: {
-                    from: 'organizations',
-                    localField: 'organizationId',
-                    foreignField: '_id',
-                    as: 'clinic',
-                    pipeline: [
-                        {
-                            $project: {
-                                name:  '$name'
-                            },
-                        }
-                    ]
-                }
-            },
-            {
-                $project: {
-                    fullName: {
-                        $concat: ['$firstName', ' ', '$lastName']
-                    },
-                    clinic: { $first: '$clinic.name' },
-                    specialization: '$specialization',
-                    phone: 1,
-                    photo: 1,
-                    organizationId: 1,
-                }
-            }
-        ])
-
-        return Success({ doctors })
-    } catch(error){ 
-        console.log(error) 
-        return Error();
-    }
-}
-
-const deleteDoctor = async ( body, user ) => {
-    try{
-        let doctor = await UserModel.findOne({ _id: body._id })
-        if(user.userType === 'SA' || doctor.createdBy.toString() === user._id.toString() ){
-            await UserModel.deleteOne({ _id: body._id })
-            return Success({ message: 'Successfull delete doctor' })
-        }
-
-    } catch(error){ 
-        console.log(error) 
-        return Error();
-    }
-}
 
 const appointmentDoctors = async ( body, user ) => {
     try{
         let query = {}
 
-        if(user.type === 'DR'){
+        if(user.type === 'DR' ){
             query = { organizationId: user.organizationId }
         }
 
@@ -238,15 +179,22 @@ const getUserByEmail = async ( body ) => {
     } catch(error){ console.log(error) }
 }
 
+const organizationDetails = async ( body, user ) => {
+    try{
+        // let user = await UserModel.findOne({ email: body.email },{ firstName: 1, lastName: 1, email: 1 })
+        console.log(body)
+        return Success({ user: '' })
+    } catch(error){ console.log(error) }
+}
+
 module.exports = {
     logIn,
     signUp,
     sessionInfo,
     createClinic,
-    getAllDoctors,
-    deleteDoctor,
     appointmentDoctors,
     addAppointment,
     getPatientByNumber,
     getUserByEmail,
+    organizationDetails,
 }

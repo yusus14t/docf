@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 
-const ClinicRegistration = ({ source, tab }) => {
-    const { register, handleSubmit, control, formState: { errors } } = useForm({ onChange: true })
+const ClinicRegistration = ({ source, tab, isSelfCreated }) => {
+    const { register, handleSubmit, formState: { errors } } = useForm({ onChange: true })
 
     return (
         <form onSubmit={handleSubmit((data) => console.log(data))}>
@@ -13,7 +13,7 @@ const ClinicRegistration = ({ source, tab }) => {
                             <input type="text"
                                 className={`form-control ${errors?.name ? 'border-danger' : ''}`}
                                 placeholder={`Ex: Madni ${source}`}
-                                {...register('name', {
+                                {...register('fullName', {
                                     required: 'Clinic name is required'
                                 })}
                             />
@@ -59,7 +59,7 @@ const ClinicRegistration = ({ source, tab }) => {
                         </div>
                     </div>
                 </div>
-                <div className="row">
+                { !isSelfCreated && <div className="row">
                     <div className="col-md-6 mb-3">
                         <label className=''>Password</label>
                         <div className="input-group">
@@ -85,7 +85,7 @@ const ClinicRegistration = ({ source, tab }) => {
                             />
                         </div>
                     </div>
-                </div>
+                </div>}
             </div>
             <button className='btn btn-primary btn-md' type='submit'>Save</button>
         </form>

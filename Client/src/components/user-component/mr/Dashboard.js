@@ -1,9 +1,11 @@
 import React, {  useState } from 'react';
 import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
 import { Link } from 'react-router-dom';
+import UserModal from '../../common-components/UserModal';
 
 const Dashbaord = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isUserModalOpen, setUserModalOpen] = useState(false)
+    const [doctor, setDoctor] = useState({})
     return (
         <div className='ms-content-wrapper content-height'>
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
@@ -87,8 +89,9 @@ const Dashbaord = () => {
                         <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => <li class="ms-list-item media">
+                                    
                                     <img src={image} class="ms-img-small ms-img-round" alt="people" />
-                                    <div class="media-body mt-1">
+                                    <div class="media-body mt-1"  onClick={() => {setUserModalOpen(true); setDoctor(e)}}>
                                         <h4>Micheal</h4>
                                         <span class="fs-12">MBBS, MD</span>
                                     </div>
@@ -99,6 +102,13 @@ const Dashbaord = () => {
                     </div>
                 </div>
             </div>
+            {
+                isUserModalOpen && <UserModal
+                    isOpen={isUserModalOpen}
+                    setIsOpen={setUserModalOpen}
+                    appointmentData={{}}
+                />
+            }
         </div>
 
     )

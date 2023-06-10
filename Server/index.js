@@ -4,7 +4,6 @@ const routes = require('./routes/index');
 const cors = require('cors');
 const env = require('dotenv/config');
 const mongoose = require('mongoose');
-const {logIn, signUp} = require('./controllers/common-controller')
 
 //  Data Base Connection
 mongoose.set('strictQuery', false)

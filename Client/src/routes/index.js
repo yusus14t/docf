@@ -41,7 +41,6 @@ export const AllRoutes = () => {
   return(
     <Suspense fallback={<Loader />} >
       { routes}
-      {/* <Loader /> */}
     </Suspense>
   )
 };
