@@ -92,6 +92,12 @@ const organizationDetails = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const createUser = async ( req, res ) => {
+    commonManager.createUser( req.body, req.user, )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
@@ -108,4 +114,5 @@ module.exports = {
     allTickets,
     sessionInfo,
     organizationDetails,
+    createUser,
 }

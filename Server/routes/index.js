@@ -21,6 +21,7 @@ router.post('/session-info', jwt_verify, commonController.sessionInfo);
 // Un verify routes
 router.post('/signup', commonController.signUp);
 router.post('/login', commonController.logIn);
+router.post('create-user', commonController.createUser)
 router.get('/user-by-email', commonController.getUserByEmail);
 
 
