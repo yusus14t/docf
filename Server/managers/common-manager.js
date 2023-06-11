@@ -187,6 +187,15 @@ const organizationDetails = async ( body, user ) => {
     } catch(error){ console.log(error) }
 }
 
+
+const createUser = async ( body, user ) => {
+    try{
+        // let user = await UserModel.findOne({ email: body.email },{ firstName: 1, lastName: 1, email: 1 })
+        console.log(body)
+        return Success({ user: '' })
+    } catch(error){ console.log(error) }
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -197,4 +206,5 @@ module.exports = {
     getPatientByNumber,
     getUserByEmail,
     organizationDetails,
+    createUser,
 }

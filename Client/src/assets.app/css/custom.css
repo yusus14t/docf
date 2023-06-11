@@ -40,6 +40,7 @@
     padding-bottom: 0px !important;
 }
 
+
 .dropdown-menu-active:hover {
     background: #00000012;
 }
@@ -297,6 +298,30 @@ font-size: 15px;
   color: #bebebe;
 }
 /*  */
+
+
+/* LoginConatent start */
+.loginContainer{
+    height: 100vh;
+    padding-top: 10rem;
+}
+.loginform{
+    margin-top: 3%;
+    margin-left: 65%;
+    color: white;
+}
+.letterSpcing{
+    letter-spacing: 10px;
+}
+.medit{
+    font-size: 15px;
+    margin-left: 10px;
+}
+.medit:hover{
+    color: white;
+}
+/* LoginConatent ends*/
+
 /* --------------------home page=--------------- */
 
 .icon{
