@@ -13,11 +13,18 @@ const Appointment = ({isOpen, setIsOpen}) => {
     const [doctors, setDoctors] = useState([]);
     const { register, handleSubmit ,formState:{ errors }, control } = useForm({ onChange: true });
     const [selected, setSelected] = useState(null);
+    const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
         fetchDoctors();
         if(userInfo.userType === "DR") setIsAnotherAppointment(true)
-    },[])
+
+        const Source = new EventSource('http://localhost:5000/api/stream')
+        console.log(Source)
+        Source.onmessage = ( data ) => {
+            console.log('data', data)
+        }
+    },[appointments,])
 
     useEffect(() => setSelected(null), [isOpen] )
 
@@ -36,7 +43,7 @@ const Appointment = ({isOpen, setIsOpen}) => {
             if(selected) formData = selected
 
             let { data } = await axiosInstance.post('/common/add-appointment', formData,  getAuthHeader());
-            await fetchDoctors();
+            setAppointments(data?.appointment)
             
             setIsOpen(false)
             toasty.success(data?.message)
@@ -67,25 +74,13 @@ const Appointment = ({isOpen, setIsOpen}) => {
                 {isAnotherAppointment ?
                     <div className='row'>
                         <div className="col-6 mb-3">
-                            <label className=''>First Name</label>
+                            <label className=''>Full Name</label>
                             <div className="input-group">
                                 <input type="text"
-                                    className={`form-control ${errors?.firstName ? 'border-danger' : ''}`}
+                                    className={`form-control ${errors?.fullName ? 'border-danger' : ''}`}
                                     placeholder="Andy"
-                                    {...register('firstName', {
-                                        required: !selected && 'First name is required'
-                                    })}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-6 mb-3">
-                            <label className=''>Last Name</label>
-                            <div className="input-group">
-                                <input type="text"
-                                    className={`form-control ${errors?.lastName ? 'border-danger' : ''}`}
-                                    placeholder="America"
-                                    {...register('lastName', {
-                                        required: !selected && 'Last name is required'
+                                    {...register('fullName', {
+                                        required: !selected && 'Full name is required'
                                     })}
                                 />
                             </div>
@@ -131,7 +126,7 @@ const Appointment = ({isOpen, setIsOpen}) => {
                                 </select>
                             </div>
                         </div>
-                        <div className="col-6 mb-3">
+                        <div className="col-12 mb-3">
                             <label className=''>Address</label>
                             <div className="input-group">
                                 <input type="text"

@@ -3,16 +3,10 @@ const UserModel = require('../models/user-model');
 const OrganizationModel = require('../models/organization-model');
 const AppointmentModel = require('../models/appointment-model');
 
+const { EventEmitter } = require('events')
 
-// function pattern 
-// const createOrganization = async () => {
-//     try{ 
+const eventEmitter = new EventEmitter()
 
-//     } catch(error){ 
-//         console.log(error) 
-//         return Error();
-//     }
-// }
 
 const sessionInfo = async ( body, user ) => {
     try{ 
@@ -129,9 +123,7 @@ const appointmentDoctors = async ( body, user ) => {
             },
             {
                 $project: {
-                    fullName: {
-                        $concat: ['$firstName', ' ', '$lastName']
-                    },
+                    fullName: 1,
                     clinic: { $first: '$clinic.name' },
                     specialization: '$specialization',
                     phone: 1,
@@ -151,13 +143,15 @@ const addAppointment = async ( body, user ) => {
     try{
         let lastAppointment = await  AppointmentModel.findOne({ doctorId: body.doctor }, { token: 1 }).sort({ createdAt: -1 })
         let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
-        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' },{ firstName: 1, lastName: 1, userType: 1 });
+        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' },{ fullName: 1, userType: 1 });
 
         if(!patient){
             patient = await UserModel({  ...body,  userType: 'PT' }).save();
         }
 
         let appointment = await AppointmentModel({ token, userId: patient._id, doctorId: body.doctor,  createdBy: user._id }).save()
+
+        eventEmitter.emit('new-appointment', { event: 'new-appointment', appointment });
         return Success({ message: 'Appointment successfully created', appointment})
     } catch(error){ 
         console.log(error) 
@@ -167,7 +161,7 @@ const addAppointment = async ( body, user ) => {
 
 const getPatientByNumber = async ( body, user ) => {
     try{
-        let patient = await UserModel.find({ phone: body.phone, userType: 'PT' },{ firstName: 1, lastName: 1, phone: 1, gender: 1, bloodGroup: 1, address: 1 })
+        let patient = await UserModel.find({ phone: body.phone, userType: 'PT' },{ fullName: 1, phone: 1, gender: 1, bloodGroup: 1, address: 1 })
         return Success({ patient })
     } catch(error){ console.log(error) }
 }
@@ -196,6 +190,22 @@ const createUser = async ( body, user ) => {
     } catch(error){ console.log(error) }
 }
 
+
+const EventHandler = ( req, res ) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    const newAppointment = ( data ) => {
+        console.log('its work', data)
+        res.write(`event: ${data.event}\n`)
+        res.write(`data: ${JSON.stringify(data)}\n`)
+    }
+
+    eventEmitter.on('new-appointment', (data) => newAppointment(data))
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -207,4 +217,5 @@ module.exports = {
     getUserByEmail,
     organizationDetails,
     createUser,
+    EventHandler,
 }
