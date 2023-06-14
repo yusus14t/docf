@@ -1,4 +1,3 @@
-import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import { userRoutes as userRouteConstant } from '../constants/constant';
 
@@ -8,9 +7,7 @@ import DoctorsList from  '../components/webcomponents/DoctorsList';
 import SignUp from  "../components/authentication/SignUp";
 import ClinicGrid from  "../components/webcomponents/ClinicGrid";
 import LogIn from  "../components/authentication/LogIn";
-import UserLogin from "../components/authentication/UserLogin"
 import UserSignUp from "../components/authentication/UserSignUp"
-
 import Home from  "../components/webcomponents/Home.js";
 import About from "../components/webcomponents/About.js";
 import Lockscreen from  "../components/authentication/Lockscreen";
@@ -28,8 +25,7 @@ const COMMON_ROUTE = [
     { path: "/clinic", element: <ClinicGrid/> },
     { path: "/contact", element: <Contact/> },
     { path: "/login", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path ||  '/login' } /> : ( Boolean(isLock) ? <Navigate to={'/lock'} /> : <LogIn />)},
-    { path: "/user-login", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path ||  '/user-login' } /> : ( Boolean(isLock) ? <Navigate to={'/lock'} /> : <UserLogin/>)},
-    { path: "/user-signup", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path ||  '/user-signup' } /> : ( Boolean(isLock) ? <Navigate to={'/lock'} /> : <UserSignUp/>)},
+    { path: "/patient-login", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path ||  '/patient-login' } /> : ( Boolean(isLock) ? <Navigate to={'/lock'} /> : <UserSignUp/>)},
 
     { path: "/signup", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path || '/signup'} /> : <SignUp />},
     { path: "/lock", element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path || '/lock'} /> : <Lockscreen />},

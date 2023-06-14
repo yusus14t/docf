@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import SUPER_ADMIN from './super-admin-routes';
-import PATIENT from './user-routes';
+import PATIENT from './patient-routes';
 import DOCTOR from './doctor-routes';
 import MR from './mr-routes';
 

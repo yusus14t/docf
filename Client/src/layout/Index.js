@@ -12,7 +12,7 @@ const Layout = () => {
                 <Header />
                 <div className='main-content'>
                     <div id="main-content" className="ml255 mt80 " style={{ width: '100%',  }}>
-                       { userInfo?.twoFactor?.isVerified || ['SA', "MR"].includes(userInfo.userType) || true ? <Outlet /> : <ClinicRegistartion source={'Clinic'} isSelfCreated={true} />}
+                       { userInfo?.twoFactor?.isVerified || ['SA', "MR",].includes(userInfo?.userType) || true ? <Outlet /> : <ClinicRegistartion source={'Clinic'} isSelfCreated={true} />}
                     </div> 
                 </div>
             </main>

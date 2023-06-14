@@ -92,8 +92,20 @@ const organizationDetails = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
-const createUser = async ( req, res ) => {
-    commonManager.createUser( req.body, req.user, )
+const savePatientDatails = async ( req, res ) => {
+    commonManager.savePatientDatails( req.body, )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const patientSignUp = async ( req, res ) => {
+    commonManager.patientSignUp( req.body, req.user, )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const validateOtp = async ( req, res ) => {
+    commonManager.validateOtp( req.body )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -114,5 +126,7 @@ module.exports = {
     allTickets,
     sessionInfo,
     organizationDetails,
-    createUser,
+    savePatientDatails,
+    patientSignUp,
+    validateOtp,
 }
