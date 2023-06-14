@@ -14,10 +14,17 @@ export const MODULES = [
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['DR', 'PT', 'MA',]},
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MA', 'MR']},
     {id: 'hospital-registration', title: 'Hospital Registration', pathname: '/hospital-registration', access: [ 'MA', 'MR']},
+<<<<<<< HEAD
     {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['DR', 'SA', 'MA', 'MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['DR', 'SA', 'MA', 'MR']},
     {id: 'setting', title: 'Setting', pathname: '/setting', access: ['DR', 'SA', 'MA', 'MR', 'PT']},
     {id: 'notification', title: 'Notification', pathname: '/notification', access: ['DR', 'SA', 'MA', 'MR', 'PT']},
+=======
+    {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['PT', 'SA', 'MA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'MA', 'MR']},
+    {id: 'setting', title: 'Setting', pathname: '/settings', access: ['DR', 'SA', 'MA', 'MR']},
+    {id: 'notification', title: 'Notification', pathname: '/notification', access: ['DR', 'SA', 'MA', 'MR']},
+>>>>>>> db18f8bffcbec616e448b4b7cc255b0b7dff2109
     {id: 'support', title: 'Support', pathname: '/support', access: ['DR', 'SA', 'MA', 'MR', 'PT']},
 ]
 
