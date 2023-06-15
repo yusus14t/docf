@@ -24,7 +24,7 @@ function Sidebar({isOpen, setIsOpen, mobileView}) {
                             <a href="/" className="text-center "> <img className="profile-image" src={Doctor} alt="logo" /></a>
                         </div>
                         <div className="">
-                            <h5 className="text-center text-white mt-2">{userInfo?.firstName} {userInfo?.lastName}</h5>
+                            <h5 className="text-center text-white mt-2">{userInfo?.fullName}</h5>
                             <h6 className="text-center text-white mb-3">{userRoutes[userInfo?.userType].title}</h6>
                         </div>
                     </div>

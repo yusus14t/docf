@@ -1,12 +1,13 @@
-const { Error, Success, encryptPassword, comparePassword, createToken } = require('../constants/utils');
+const { Error, Success, encryptPassword, comparePassword, createToken, smsService } = require('../constants/utils');
 const UserModel = require('../models/user-model');
 const OrganizationModel = require('../models/organization-model');
 const AppointmentModel = require('../models/appointment-model');
+const { randomOtp } = require('../constants/utils')
+const ObjectId = require('mongoose').Types.ObjectId
 
 const { EventEmitter } = require('events')
 
 const eventEmitter = new EventEmitter()
-
 
 const sessionInfo = async ( body, user ) => {
     try{ 
@@ -182,11 +183,39 @@ const organizationDetails = async ( body, user ) => {
 }
 
 
-const createUser = async ( body, user ) => {
+const savePatientDatails = async ( body ) => {
     try{
-        // let user = await UserModel.findOne({ email: body.email },{ firstName: 1, lastName: 1, email: 1 })
-        console.log(body)
-        return Success({ user: '' })
+        await UserModel.updateOne({ _id: ObjectId(body._id) },{ ...body, 'twoFactor.isVerified': true })
+        let user = await UserModel.findOne({ _id: ObjectId(body?._id)})
+        return Success({ user, message: 'Update details successfull' })
+    } catch(error){ console.log(error) }
+}
+
+const patientSignUp = async ( body, user ) => {
+    try{
+        const otp = randomOtp()
+        let user = await UserModel.findOne({ phone: body?.phone })
+        if(user){
+            await UserModel.updateOne({ phone: body?.phone }, { 'twoFactor.otp': otp })
+        } else {
+            user = await UserModel({ phone: body.phone, twoFactor: { otp } }).save()
+        }
+        
+        await smsService(`your otp is ${ otp } `, body.phone)
+
+        return Success({ message: 'OTP Sent to your phone.', user })
+    } catch(error){ console.log(error) }
+}
+
+const validateOtp = async ( body ) => {
+    try{
+        let user = await UserModel.findOne({_id: body?.patientId })
+        if( user?.twoFactor?.otp === body?.otp ){
+            await UserModel.updateOne({_id: user._id}, { 'twoFactor.otp':  0000 })
+            user.twoFactor = { otp: null, isVerified: true }
+            let token = createToken(user._id)
+            return Success({ user, message: 'Your mobile number is verified.', token})
+        } else {  return Error({ message: 'Invalid OTP!' }) }
     } catch(error){ console.log(error) }
 }
 
@@ -216,6 +245,8 @@ module.exports = {
     getPatientByNumber,
     getUserByEmail,
     organizationDetails,
-    createUser,
+    savePatientDatails,
     EventHandler,
+    patientSignUp,
+    validateOtp,
 }
