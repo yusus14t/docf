@@ -540,6 +540,80 @@ input::-webkit-inner-spin-button {
     font-weight: 900;
     color: #0b3094;
 }
+/*---------------------------user card ends--------------------------*/
+
+/*--------------------------Clinic Card starts-----------------------*/
+
+.clinic-card{
+    height: 304px;
+    /* border: 2px solid #093c1c; */
+    border-radius: 6px;
+}
+.inner-card-border{
+    height: 15px;
+    width: 100%;
+    /* background: linear-gradient(90deg, rgba(139,84,254,1) 0%, rgba(0,212,255,1) 100%); */
+    background: #093c1c;
+}
+.clinic-img{
+    width: 100%;
+    height: 100px;
+    background-repeat: no-repeat;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    object-fit: fill;
+}
+.clinic-title{
+    font-weight: 900 !important;
+    border-radius:6px ;
+    width: auto;
+    position: relative;
+    font-size: 20px;
+    margin-top: -25px;
+    left: 10px;
+    color: white;
+    top: -40px;
+    /* background-color:rgba(47, 255, 99, 0.542); */
+    background-color: rgba(0, 0, 0, 0.616);
+}
+.open{
+    background-color: rgba(255, 0, 0);
+    color: white;
+    font-size: 8px;
+    margin: auto;
+    padding: 3px;
+    position: relative;
+    top: -2px;
+    border-radius: 3px;
+}
+.clinic-details{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.clinic-icon{
+    margin-right: 10px;
+}
+.address-icon{
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    margin-top: -200px;
+}
+.adjust{
+    position: relative;
+    margin-left: 22px;
+    top: -20px;
+
+}
+.clinic-btn{
+    margin: 35px 0 0 0px;
+    width: 100%;
+
+}
+.clinic-address{
+   
+}
+/*--------------------------Clinic Cards Ends--------------------*/
 /* .hname{
     color: green;
 } */
@@ -549,7 +623,20 @@ input::-webkit-inner-spin-button {
     height: 83dvh;
 }
 /* Doctor card end */
+
+/*==================*************************media queries*******************==========================*/
 @media (max-width: 767px){
+    
+    /*-------------------clinic crad--------------*/
+    .clinic-timming{
+        font-size: 14px;
+    }
+    .clinic-btn{
+        font-size: 16px;
+        margin:36px 0 0px 0px ;
+    }
+
+    /*-------------------ends-------------------*/
     .ml255 {
         margin-left: 0;
     }
