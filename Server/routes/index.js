@@ -2,7 +2,8 @@ const express = require('express');
 const router = express();
 const commonController = require(`../controllers/common-controller`);
 // const Events = require(`./events`);
-const { EventHandler } = require('../managers/common-manager')
+// const { EventHandler } = require('./events')
+const { EventHandler } = require('../managers/doctor-manager')
 const { jwt_verify } = require('../middlewares/common-middleware');
 const {  PINCODES } = require('../seeds/pincode-seed'); 
 

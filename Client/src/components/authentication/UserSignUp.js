@@ -40,10 +40,9 @@ const UserSignUp = () => {
   const ValidateOTP = async () => {
     try {
       let { data } = await axiosInstance.post('/validate-otp', { otp: otpRef.current.value, patientId: patient?._id })
-      console.log('data', data)
+      localStorage.setItem('user', JSON.stringify(data?.user))
+      localStorage.setItem('token', JSON.stringify(data?.token))
       if (data?.user?.twoFactor?.isVerified) {
-        localStorage.setItem('user', JSON.stringify(data?.user))
-        localStorage.setItem('token', JSON.stringify(data?.token))
         window.location.replace('/patient')
       } else {
         setIsUserForm(true)

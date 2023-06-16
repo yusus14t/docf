@@ -9,16 +9,16 @@ function DoctorsList(props) {
         <div>
                   <div className="box"></div>
 
-            <Banner2 title={'Clinic List'} />
+            {/* <Banner2 title={'Clinic List'} /> */}
             
             <div className='section section-padding aaside'>
                 <Aside/>
                 <div className="asidebox"></div>
                 <div className='container'>
                     
-                    <div className='row'>
+                    <div className='row mt-2 mb-2'>
                         <div className='col-12'>
-                            <div className='row'>
+                            <div className='row '>
                                 <ClinicListCard clinics={clinics} />  
                             </div>
                         </div>
