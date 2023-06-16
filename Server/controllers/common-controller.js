@@ -38,11 +38,6 @@ const appointmentDoctors = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
-const addAppointment = async ( req, res ) => {
-    commonManager.addAppointment( req.body, req.user )
-    .then( result => res.status(result.code).send(result) )
-    .catch( err => res.status(500).send(err.data) )
-}
  
 const getPatientByNumber = async ( req, res ) => {
     commonManager.getPatientByNumber( req.query, req.user )
@@ -92,11 +87,7 @@ const organizationDetails = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
-const savePatientDatails = async ( req, res ) => {
-    commonManager.savePatientDatails( req.body, )
-    .then( result => res.status(result.code).send(result) )
-    .catch( err => res.status(500).send(err.data) )
-}
+
 
 const patientSignUp = async ( req, res ) => {
     commonManager.patientSignUp( req.body, req.user, )
@@ -116,7 +107,6 @@ module.exports = {
     createClinic,
     checkDuplicateEmail,
     appointmentDoctors,
-    addAppointment,
     getPatientByNumber,
     getUserByEmail,
     allNotification,
@@ -126,7 +116,6 @@ module.exports = {
     allTickets,
     sessionInfo,
     organizationDetails,
-    savePatientDatails,
     patientSignUp,
     validateOtp,
 }

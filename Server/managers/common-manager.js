@@ -5,9 +5,7 @@ const AppointmentModel = require('../models/appointment-model');
 const { randomOtp } = require('../constants/utils')
 const ObjectId = require('mongoose').Types.ObjectId
 
-const { EventEmitter } = require('events')
 
-const eventEmitter = new EventEmitter()
 
 const sessionInfo = async ( body, user ) => {
     try{ 
@@ -140,25 +138,7 @@ const appointmentDoctors = async ( body, user ) => {
 }
 
 
-const addAppointment = async ( body, user ) => {
-    try{
-        let lastAppointment = await  AppointmentModel.findOne({ doctorId: body.doctor }, { token: 1 }).sort({ createdAt: -1 })
-        let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
-        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' },{ fullName: 1, userType: 1 });
 
-        if(!patient){
-            patient = await UserModel({  ...body,  userType: 'PT' }).save();
-        }
-
-        let appointment = await AppointmentModel({ token, userId: patient._id, doctorId: body.doctor,  createdBy: user._id }).save()
-
-        eventEmitter.emit('new-appointment', { event: 'new-appointment', appointment });
-        return Success({ message: 'Appointment successfully created', appointment})
-    } catch(error){ 
-        console.log(error) 
-        return Error();
-    }
-}
 
 const getPatientByNumber = async ( body, user ) => {
     try{
@@ -183,13 +163,7 @@ const organizationDetails = async ( body, user ) => {
 }
 
 
-const savePatientDatails = async ( body ) => {
-    try{
-        await UserModel.updateOne({ _id: ObjectId(body._id) },{ ...body, 'twoFactor.isVerified': true })
-        let user = await UserModel.findOne({ _id: ObjectId(body?._id)})
-        return Success({ user, message: 'Update details successfull' })
-    } catch(error){ console.log(error) }
-}
+
 
 const patientSignUp = async ( body, user ) => {
     try{
@@ -212,7 +186,6 @@ const validateOtp = async ( body ) => {
         let user = await UserModel.findOne({_id: body?.patientId })
         if( user?.twoFactor?.otp === body?.otp ){
             await UserModel.updateOne({_id: user._id}, { 'twoFactor.otp':  0000 })
-            user.twoFactor = { otp: null, isVerified: true }
             let token = createToken(user._id)
             return Success({ user, message: 'Your mobile number is verified.', token})
         } else {  return Error({ message: 'Invalid OTP!' }) }
@@ -220,20 +193,7 @@ const validateOtp = async ( body ) => {
 }
 
 
-const EventHandler = ( req, res ) => {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-    res.setHeader('Access-Control-Allow-Origin', '*');
 
-    const newAppointment = ( data ) => {
-        console.log('its work', data)
-        res.write(`event: ${data.event}\n`)
-        res.write(`data: ${JSON.stringify(data)}\n`)
-    }
-
-    eventEmitter.on('new-appointment', (data) => newAppointment(data))
-}
 
 module.exports = {
     logIn,
@@ -241,12 +201,9 @@ module.exports = {
     sessionInfo,
     createClinic,
     appointmentDoctors,
-    addAppointment,
     getPatientByNumber,
     getUserByEmail,
     organizationDetails,
-    savePatientDatails,
-    EventHandler,
     patientSignUp,
     validateOtp,
 }

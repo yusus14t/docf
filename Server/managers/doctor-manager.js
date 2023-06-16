@@ -3,6 +3,9 @@ const { Success, Error } = require('../constants/utils');
 const UserModel = require('../models/user-model');
 const ObjectId = require('mongoose').Types.ObjectId
 
+const { EventEmitter } = require('events')
+const eventEmitter = new EventEmitter()
+
 const getAppointments = async (body, user) => {
     try{ 
         let appointments = await AppointmentModel.aggregate([
@@ -33,6 +36,8 @@ const getAppointments = async (body, user) => {
                 }
             }
         ])
+
+
         return Success({ message: 'Appointment fetch successfully', appointments})
     } catch(error){ 
         console.log(error) 
@@ -115,10 +120,60 @@ const deleteDoctor = async ( body, user ) => {
     }
 }
 
+const addAppointment = async ( body, user ) => {
+    try{
+        let lastAppointment = await  AppointmentModel.findOne({ doctorId: body.doctor }, { token: 1 }).sort({ createdAt: -1 })
+        let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
+        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' },{ fullName: 1, userType: 1 });
+
+        if(!patient){
+            patient = await UserModel({  ...body,  userType: 'PT' }).save();
+        }
+
+        let appointment = await AppointmentModel({ token, userId: patient._id, doctorId: body.doctor,  createdBy: user._id }).save()
+
+        let Obj = {
+            _id: appointment._id,
+            doctorId: body.doctor._id,
+            token,
+            user: {
+                _id: patient._id,
+                fullName: patient.fullName,
+                phone: patient.phone,
+            }
+        }
+        eventEmitter.emit('new-appointment', { event: 'new-appointment', data: Obj });
+
+        return Success({ message: 'Appointment successfully created', appointment: Obj})
+        
+    } catch(error){ 
+        console.log(error) 
+        return Error();
+    }
+}
+
+const EventHandler = ( req, res ) => {
+    res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Access-Control-Allow-Origin': '*'
+    });       
+
+    const newAppointment = (data) => {
+        res.write("event: new-appointment\n");
+        res.write(`data: ${ JSON.stringify(data) }`);
+        res.write("\n\n");
+    } 
+
+    eventEmitter.on('new-appointment', (data) => newAppointment(data))
+}
+
 
 module.exports = {
     getAppointments,
     editDoctor,
     getAllDoctors,
     deleteDoctor,
+    addAppointment,
+    EventHandler
 }
