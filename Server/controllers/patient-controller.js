@@ -12,7 +12,14 @@ const getPatientDetails = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const setAppointmentStatus = async ( req, res ) => {
+    patientManager.setAppointmentStatus( req.body, )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     savePatientDetails,
     getPatientDetails,
+    setAppointmentStatus,
 }

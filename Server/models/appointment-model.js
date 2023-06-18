@@ -5,7 +5,7 @@ const appointmentSchemna = new Schema({
     userId: { type: Schema.Types.ObjectId, ref:'user' },
     doctorId:  { type: Schema.Types.ObjectId, ref:'user' },
     createdBy:  { type: Schema.Types.ObjectId, ref:'user' },
-    status: { type: String, enum: ['waiting', 'cancel', 'complete'], default: 'waiting' }
+    status: { type: String, enum: ['waiting', 'cancel', 'complete', 'unreached'], default: 'waiting' }
 },{ timestamps: true })
 
 module.exports = model( 'appointment', appointmentSchemna)

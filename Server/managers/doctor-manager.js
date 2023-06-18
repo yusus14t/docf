@@ -8,10 +8,9 @@ const eventEmitter = new EventEmitter()
 
 const getAppointments = async (body, user) => {
     try {
-        console.log(user._id)
         let appointments = await AppointmentModel.aggregate([
             {
-                $match: { [user.userType === 'PT' ? 'createdBy' : 'doctorId']: user._id }
+                $match: { [user.userType === 'PT' ? 'createdBy' : 'doctorId']: user._id, status: { $in : [ 'waiting', 'unreached' ] } }
             },
             {
                 $lookup: {
@@ -33,11 +32,21 @@ const getAppointments = async (body, user) => {
                 $project: {
                     token: 1,
                     doctorId: 1,
-                    user: { $first: '$user' }
+                    user: { $first: '$user' },
+                    status: 1
+                }
+            },
+            {
+                $group: {
+                    _id: '$status',
+                    data: {
+                        $push: '$$ROOT'
+                    }
                 }
             }
+            
         ])
-
+        console.log('appointments', appointments)
 
         return Success({ message: 'Appointment fetch successfully', appointments })
     } catch (error) {
@@ -125,17 +134,22 @@ const addAppointment = async (body, user) => {
     try {
         let lastAppointment = await AppointmentModel.findOne({ doctorId: body.doctor }, { token: 1 }).sort({ createdAt: -1 })
         let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
-        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' }, { fullName: 1, userType: 1 });
+        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' }, { fullName: 1, userType: 1, phone: 1 });
 
-        if (!patient) {
-            patient = await UserModel({ ...body, userType: 'PT' }).save();
+        if (!patient) {  patient = await UserModel({ ...body, userType: 'PT' }).save() }
+
+        let today = new Date()
+        today.setHours(0,0,0,0)
+        let appointment = await AppointmentModel.findOne({ userId: patient._id, doctorId: body.doctor, status:'waiting', createdAt: { $gte: today }})
+        if( !appointment ){
+            appointment = await AppointmentModel({ token, userId: patient._id, doctorId: body.doctor, createdBy: user._id }).save()
+        } else {
+            return Error({ message: 'Already in your waiting list.' })
         }
-
-        let appointment = await AppointmentModel({ token, userId: patient._id, doctorId: body.doctor, createdBy: user._id }).save()
 
         let Obj = {
             _id: appointment._id,
-            doctorId: body.doctor._id,
+            doctorId: appointment.doctorId,
             token,
             user: {
                 _id: patient._id,
@@ -173,6 +187,16 @@ const appointmentById = async (body, user) => {
     }
 }
 
+const reAppointment = async (body) => {
+    try {
+        console.log(body)
+        await AppointmentModel.updateOne({ _id: ObjectId(body?._id) }, { status: 'waiting' })
+        return Success({ ...body, message: 'Re-appointment successfully' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const EventHandler = (req, res) => {
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
@@ -197,5 +221,6 @@ module.exports = {
     deleteDoctor,
     addAppointment,
     appointmentById,
+    reAppointment,
     EventHandler
 }

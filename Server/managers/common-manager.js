@@ -97,7 +97,7 @@ const appointmentDoctors = async ( body, user ) => {
     try{
         let query = {}
 
-        if(user.type === 'DR' ){
+        if(user.userType === 'DR' ){
             query = { organizationId: user.organizationId }
         }
 
@@ -142,6 +142,7 @@ const appointmentDoctors = async ( body, user ) => {
 
 const getPatientByNumber = async ( body, user ) => {
     try{
+        if( user.userType !== 'DR') return Error({ message: 'You are not access' })
         let patient = await UserModel.find({ phone: body.phone, userType: 'PT' },{ fullName: 1, phone: 1, gender: 1, bloodGroup: 1, address: 1 })
         return Success({ patient })
     } catch(error){ console.log(error) }
