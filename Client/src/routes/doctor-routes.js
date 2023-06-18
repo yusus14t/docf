@@ -14,7 +14,7 @@ const DOCTOR = [
   { path: "/doctor/appointment", element: <AppointmentList /> },
   { path: "/doctor/notification", element: <Notification /> },
   { path: "/doctor/support", element: <Support /> },
-  { path: "/doctor/settings", element: <Settings /> },
+  { path: "/doctor/setting", element: <Settings /> },
   { path: "/doctor/*", element: <Navigate to={"/doctor/dashboard"} /> },
 ];
 

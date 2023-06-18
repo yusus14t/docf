@@ -13,6 +13,7 @@ function Sidebar({isOpen, setIsOpen, mobileView}) {
     useEffect(() => {
         setActiveNav(pathname[2])
     }, [pathname, ])
+    
 
     return (
             <aside className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ${ !isOpen ? 'ms-aside-left' : '' } `}>
@@ -29,6 +30,7 @@ function Sidebar({isOpen, setIsOpen, mobileView}) {
                         </div>
                     </div>
                 </div>
+                
     
                 <ul className="accordion ms-main-aside fs-14 overflow-auto">
   

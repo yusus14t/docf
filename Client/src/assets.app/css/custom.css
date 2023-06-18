@@ -1,31 +1,32 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-::-webkit-scrollbar{
-    width: 6px;
-    height: 10%;
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 10%;
 }
-::-webkit-scrollbar-track{
-    background-color: #112C2F;
+::-webkit-scrollbar-track {
+  background-color: #112c2f;
 }
-::-webkit-scrollbar-thumb{
-    background-color: white;
-    border: 1px solid black;
-    width: 5px;
-    margin:2px;
-    border-radius: 8px;
+::-webkit-scrollbar-thumb {
+  background-color: white;
+  border: 1px solid black;
+  width: 5px;
+  margin: 2px;
+  border-radius: 8px;
 }
-.fs-07{
-    font-size: 0.7rem !important;
+.fs-07 {
+  font-size: 0.7rem !important;
 }
-.parent{
-    position: relative;
-    top: 82px;
+.parent {
+  position: relative;
+  top: 82px;
 }
-.ms-main-aside{
-    height: 25rem;
+.ms-main-aside {
+  height: 25rem;
 }
 
 /* .main-content{
@@ -37,173 +38,168 @@
 }
 */
 .dropdown-menu {
-    padding-bottom: 0px !important;
+  padding-bottom: 0px !important;
 }
 
-
 .dropdown-menu-active:hover {
-    background: #00000012;
+  background: #00000012;
 }
 
 .bell-badge {
-    position: absolute;
-    left: 10px;
-    top: -15px;
-    font-size: 8px;
-    color: white;
+  position: absolute;
+  left: 10px;
+  top: -15px;
+  font-size: 8px;
+  color: white;
 }
 
-.main-content{
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
+.main-content {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
 }
 .profile-image {
-    border-radius: 50%;
-    height: 5rem;
-    border: 3px white solid;
+  border-radius: 50%;
+  height: 5rem;
+  border: 3px white solid;
 }
 .nav-link-active {
-    background-color: #ffffff78;
-    margin-left: .5rem;
-    margin-right: .5rem;
-    border-radius: 7px;
+  background-color: #ffffff78;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 7px;
 }
 .ms-content-wrapper {
-    padding: 12px;
+  padding: 12px;
 }
-.form-control:focus{
-    border-color: #112C2F;
-    box-shadow: 0 0 0 .03rem #112C2F;
+.form-control:focus {
+  border-color: #112c2f;
+  box-shadow: 0 0 0 0.03rem #112c2f;
 }
 /* ---------------header--------------- */
-.navbar{
-    height: 82px;
-    display: flex;
-    justify-content: space-between;
+.navbar {
+  /* height: 82px; */
+  display: flex;
+  justify-content: space-between;
 }
-.logo{
-    width: 100%;
-    height: 50px;
+.logo {
+  width: 100%;
+  height: 40px;
 }
-.avatar{
-    width: 100%;
-    height: 50px;
+.avatar {
+  width: 100%;
+  height: 40px;
 }
-.login_button{
-    background-color: #ffffff78;
-    padding: 10px;
-    border-radius:8px ;
-    cursor: pointer;
-    }
+.login_button {
+  background-color: #ffffff78;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-.login_button a{
-    color: white;
-
+.login_button a {
+  color: white;
 }
 
 /* ---------------------navbar ends-------------- */
 /* ==================Mobile navbar=============== */
 
-.m-title{
-    text-align: center;
-    color: white;
-    font-size: large;
+.m-title {
+  text-align: center;
+  color: white;
+  font-size: large;
 }
-.m-menu{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.m-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
-.m-menu-item{
-    margin-bottom: 10px;
+.m-menu-item {
+  margin-bottom: 10px;
 }
-.m-menu-item a{
-    
-    font-size: 1.5rem;
-    margin:0  5px 5px 30px ;
-    
+.m-menu-item a {
+  font-size: 1.5rem;
+  margin: 0 5px 5px 30px;
 }
-.underline{
-    width: 188px;
-    border-bottom: 2px solid rgba(255, 255, 0, 0.529);
-    margin: 0;
+.underline {
+  width: 188px;
+  border-bottom: 2px solid rgba(255, 255, 0, 0.529);
+  margin: 0;
 }
-.m-icon{
-font-size: 15px;
+.m-icon {
+  font-size: 15px;
+  color: rgba(0, 225, 255, 0.71);
+  padding: 2px;
 }
-.m-container{
-    height: 100vh;
+.m-container {
+  height: 100vh;
 }
-.m-footer{
-    text-align: center;
+.m-footer {
+  text-align: center;
 }
-.m-login{
-    position: relative;
-    
-    width: 120px;
-    padding:10px 20px !important;
-    margin:0 auto 15px auto;
-    color: white;
-    border-radius: 6px;
-    font-size: large;
-    width: 70%;
-    border: 1px solid rgba(197, 197, 189, 0.529);
+.m-login {
+  position: relative;
+
+  width: 120px;
+  padding: 10px 20px !important;
+  margin: 0 auto 15px auto;
+  color: white;
+  border-radius: 6px;
+  font-size: large;
+  width: 70%;
+  border: 1px solid rgba(197, 197, 189, 0.529);
 }
 
-.m-login a{
-    padding: 10px !important;
+.m-login a {
+  padding: 10px !important;
 }
 
-.cursor-pointer{
-    cursor: pointer;
-    /* margin-top: 15px; */
+.cursor-pointer {
+  cursor: pointer;
+  /* margin-top: 15px; */
 }
 
-.show{
-    display: block;
+.show {
+  display: block;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 /* Modal */
 .modal {
-    background-color: #000000e5;;
+  background-color: #000000e5;
 }
 .modal-header {
-    padding: 0.5rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 }
 .modal-footer {
-    padding: 0.5rem;
+  padding: 0.5rem;
 }
-.tabName{
-
-    font-style:30px;
+.tabName {
+  font-style: 30px;
 }
 .ms-form-wizard ul[role="tablist"] li {
-    padding: 10px;
+  padding: 10px;
 }
 /* ==================mobile navbar end ================ */
 
-
 /* ===============Registration form================= */
 
-.reg-form{
-      margin: 0 15px;
-
+.reg-form {
+  margin: 0 15px;
 }
-.clearfix{
-    margin: 0 15px 10px 15px;
+.clearfix {
+  margin: 0 15px 10px 15px;
 }
 /* =============Registration form end====================== */
 .ml255 {
-    margin-left: 255px;
+  margin-left: 255px;
 }
 
 .mt80 {
-    margin-top: 80px;
+  margin-top: 80px;
 }
 
 /* .ms-panel-body {
@@ -211,29 +207,28 @@ font-size: 15px;
 } */
 
 .h20 {
-    height: 20rem;
+  height: 20rem;
 }
 
 .ms-panel-header {
-    background-color: #112C2F;
-    color: white;
-    border-radius: 4px;
-    padding: 8px;
+  background-color: #112c2f;
+  color: white;
+  border-radius: 4px;
+  padding: 8px;
 }
 
-.content-height{
-    height: 85vh;
-    overflow-x: hidden;
+.content-height {
+  height: 85vh;
+  overflow-x: hidden;
 }
 .btn {
-    padding: 4px;
-
+  padding: 4px;
 }
-.btn-1{
-    padding: 15px;
+.btn-1 {
+  padding: 15px;
 }
 .ms-panel {
-    border-bottom: 5px solid;
+  border-bottom: 5px solid;
 }
 /*  profile*/
 .custom-file-upload {
@@ -245,14 +240,14 @@ font-size: 15px;
   background: linear-gradient(270deg, #3fa1a9, #79f1a4);
   margin-bottom: 25px;
 }
-.img-wrap{
+.img-wrap {
   position: relative;
   width: 200px;
   height: 200px;
   overflow: hidden;
   border-radius: 50%;
 }
-.img-upload:before{
+.img-upload:before {
   content: "\f093";
   font-size: 90px;
   position: absolute;
@@ -266,146 +261,145 @@ font-size: 15px;
   height: 200px;
   border-radius: 50%;
   opacity: 0;
-  transition: .5s ease;
+  transition: 0.5s ease;
   background-color: #fff;
 }
-.img-upload:hover:before{
- opacity: 1;
+.img-upload:hover:before {
+  opacity: 1;
 }
 .img-file {
   width: auto;
   height: 100%;
 }
 
-.label-file{
+.label-file {
   text-transform: uppercase;
   font-weight: 700;
   color: #676767;
 }
 
-.input-file{
+.input-file {
   border-radius: 15px;
   border: 1px solid #b7b7b7;
   padding: 5px 5px 5px 10px;
   font-size: 18px;
   transition: 0.2s;
 }
-.input-file:focus{
+.input-file:focus {
   outline: none;
   border: 1px solid #64d488;
 }
-.input-file::placeholder{
+.input-file::placeholder {
   color: #bebebe;
 }
 /*  */
 
-
 /* LoginConatent start */
-.loginContainer{
-    height: 100vh;
-    padding-top: 10rem;
+.loginContainer {
+  height: 100vh;
+  padding-top: 10rem;
 }
-.loginform{
-    margin-top: 3%;
-    margin-left: 65%;
-    color: white;
+.loginform {
+  margin-top: 3%;
+  margin-left: 65%;
+  color: white;
 }
-.letterSpcing{
-    letter-spacing: 10px;
+.letterSpcing {
+  letter-spacing: 10px;
 }
-.medit{
-    font-size: 15px;
-    margin-left: 10px;
+.medit {
+  font-size: 15px;
+  margin-left: 10px;
 }
-.medit:hover{
-    color: white;
+.medit:hover {
+  color: white;
 }
 /* LoginConatent ends*/
 
 /* --------------------home page=--------------- */
 
-.icon{
+.icon {
   font-size: 70px;
   color: rgba(0, 225, 255, 0.71);
   padding: 20px;
 }
-.arrowIcon{
+.arrowIcon {
   font-size: 30px;
-  padding-left:8px ;
+  padding-left: 8px;
 }
-.brandicon{
+.brandicon {
   font-size: 18px;
 }
-.whyicon{
+.whyicon {
   font-size: 30px;
   color: white;
   margin-right: 15px;
 }
-.sigma_social-icons{
+.sigma_social-icons {
   margin-left: 30px;
   color: white !important;
 }
-.box{
-    height: 82px;
-    width: 100%;
+.box {
+  height: 50px;
+  width: 100%;
 }
-.ab{
-    padding: 0;
-    display: inline-block;
-    width: 45%;
-
+.ab {
+  padding: 0;
+  display: inline-block;
+  width: 45%;
 }
-.abl{
-    margin-left: 28px;
+.abl {
+  margin-left: 28px;
 }
-.hmbg{
+.hmbg {
   background-image: url(../../assets.web/img/home-1/1920x1280-1.jpg);
 }
-.slide{
+.slide {
   width: 100%;
   height: 100vh;
 }
 .selected {
-    border: solid 2px #ff2a2a;
-    border-radius: 6px;
+  /* border: solid 2px #ff2a2a; */
+  border-radius: 6px;
 }
 
-.searchHome{
-    border-top: 10px solid var(--thm-base);
-    padding: 30px 40px 20px;
-    box-shadow: 0px 10px 24px rgb(0 0 0 / 4%);
-    text-align: left;
-    background-color: #fff;
+.searchHome {
+  border-top: 10px solid var(--thm-base);
+  padding: 30px 40px 20px;
+  box-shadow: 0px 10px 24px rgb(0 0 0 / 4%);
+  text-align: left;
+  background-color: #fff;
 }
 .sigma_cta {
-    position: relative;
-    text-align: center;
-    overflow: hidden;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
 }
 /* fotter */
-.footer{
-    background-color: rgb(17,44,47);
-    color: white !important;
+.footer {
+  background-color: rgb(17, 44, 47);
+  color: white !important;
+  /* position: relative;; */
 }
-.footer > .sigma_info-wrapper{
-    display: flex;
+.footer > .sigma_info-wrapper {
+  display: flex;
 }
-.leastFooter{
-    display: flex;
+.leastFooter {
+  display: flex;
 
-    gap: 2rem;
-    color: white;
+  gap: 2rem;
+  color: white;
 }
-.social-links{
-    display: flex;
-    
-    gap:3.5rem ;
+.social-links {
+  display: flex;
+
+  gap: 3.5rem;
 }
-.row a{
+.row a {
   text-decoration: none;
 }
-.btn-primary{
-    border: none !important;
+.btn-primary {
+  border: none !important;
 }
 /* ============fotter */
 
@@ -420,198 +414,212 @@ font-size: 15px;
 } */
 
 .doctor-profile {
-    width: 150px;
-    height: 150px !important;
-    border: 2px dotted #00000038;
+  width: 150px;
+  height: 150px !important;
+  border: 2px dotted #00000038;
 }
 
 .clinic-profile {
-    
-    width: 100% !important;
-    position: relative;
-    height: 230px !important;
-    object-fit: contain;
-    border: 2px dotted #00000038;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100% !important;
+  position: relative;
+  height: 230px !important;
+  object-fit: contain;
+  border: 2px dotted #00000038;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* header icons */
-.Header-icon{
-    font-size: 20px;
-    margin-right: 10px;
+.Header-icon {
+  font-size: 20px;
+  margin-right: 10px;
 }
 /*  */
 /* profile picture end */
 
 .form-content {
-    padding: 0rem 1rem 1rem 1rem;
+  padding: 0rem 1rem 1rem 1rem;
 }
-.time-int{
-            width: 60px;
-        }
+.time-int {
+  width: 60px;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.time-int{
-    margin-left: 30px;
+.time-int {
+  margin-left: 30px;
 }
-.AM{
-    margin-left: 30px;
+.AM {
+  margin-left: 30px;
 }
-.contner{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-.DAYS{
-        width: 50%;
-        margin-bottom: 30px;
-    }
-    .Anti{
-        margin-left: 30px;
-    }
-    .Meridian{
-        height: 25px;
-    }
-    .clos-t{
-        margin-left: 30px;
-    }
+.contner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.DAYS {
+  width: 50%;
+  margin-bottom: 30px;
+}
+.Anti {
+  margin-left: 30px;
+}
+.Meridian {
+  height: 25px;
+}
+.clos-t {
+  margin-left: 30px;
+}
 /* -----------------home page------------------- */
 /*------------------------------------------------------------user card-----------------------------------------------------*/
-.user-profile-img-container{
-    width: 80px;
-    height: 80px;
+.user-profile-img-container {
+  width: 80px;
+  height: 80px;
 }
-.user-profile-img{
-    width: 80px;
-    height: 80px;
-    border-radius: 6px;
-
+.user-profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
 }
-.user-token{
-    width: 60px;
-    height: 60px;
-    background-color: #00bf63;
-    border-radius: 6px;
+.user-token {
+  width: 60px;
+  height: 60px;
+  background-color: #00bf63;
+  border-radius: 6px;
 }
-.user-deatils{
-    display: flex;
-    flex-direction: column;
+.user-deatils {
+  display: flex;
+  flex-direction: column;
 }
-.user-token h3{
-    margin-top: 20%;
+.user-token h3 {
+  margin-top: 20%;
 }
 /*------------------------------------------------------------user card ends -----------------------------------------------------*/
 
 /* Doctor card start */
-.drcardcontainer{
-    border-radius:6px ;
-    background-color: #236b71;
-    width: 400px;
-    /* height: 300px; */
+.drcardcontainer {
+  border-radius: 6px;
+  background-color: #236b71;
+  width: 400px;
+  /* height: 300px; */
 }
-.drimgcontainer{
-    align-items: center;
-    margin: auto;
-    padding: 0;
-    
-    /* width: 100%; */
-    /* height: 150px; */
-    object-fit: contain;
+.drimgcontainer {
+  align-items: center;
+  margin: auto;
+  padding: 0;
+
+  /* width: 100%; */
+  /* height: 150px; */
+  object-fit: contain;
 }
-.drimage{
-    margin-top:5px ;
-    margin-bottom: 5px;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    border: 3px solid white;
+.drimage {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  border: 3px solid white;
 }
-.card-body{
-    padding: 5px;
-    background-color: rgba(255, 255, 255, 0.685);
+.card-body {
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.685);
 }
-.drname{
-    font-weight: 900;
-    color: #0b3094;
+.drname {
+  font-weight: 900;
+  color: #0b3094;
 }
 /*---------------------------user card ends--------------------------*/
 
 /*--------------------------Clinic Card starts-----------------------*/
 
-.clinic-card{
-    height: 304px;
-    /* border: 2px solid #093c1c; */
-    border-radius: 6px;
+.clinic-card {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /* box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset; */
+  height: 320px;
+  /* border: 2px solid #093c1c; */
+  border-radius: 6px;
 }
-.inner-card-border{
-    height: 15px;
-    width: 100%;
-    /* background: linear-gradient(90deg, rgba(139,84,254,1) 0%, rgba(0,212,255,1) 100%); */
-    background: #093c1c;
+.inner-card-border {
+  height: 15px;
+  width: 100%;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  /* background: linear-gradient(90deg, rgba(139,84,254,1) 0%, rgba(0,212,255,1) 100%); */
+  background: #093c1c;
 }
-.clinic-img{
-    width: 100%;
-    height: 100px;
-    background-repeat: no-repeat;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    object-fit: fill;
+.clinic-img {
+  width: 100%;
+  height: 150px;
+  background-repeat: no-repeat;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  object-fit: fill;
 }
-.clinic-title{
-    font-weight: 900 !important;
-    border-radius:6px ;
-    width: auto;
-    position: relative;
-    font-size: 20px;
-    margin-top: -25px;
-    left: 10px;
-    color: white;
-    top: -40px;
-    /* background-color:rgba(47, 255, 99, 0.542); */
-    background-color: rgba(0, 0, 0, 0.616);
+.clinic-title {
+  font-weight: 900 !important;
+  border-radius: 6px;
+  width: auto;
+  position: relative;
+  font-size: 20px;
+  margin-top: -25px;
+  left: 10px;
+  color: white;
+  top: -40px;
+  /* background-color:rgba(47, 255, 99, 0.542); */
+  background-color: rgba(0, 0, 0, 0.616);
 }
-.open{
-    background-color: rgba(255, 0, 0);
-    color: white;
-    font-size: 8px;
-    margin: auto;
-    padding: 3px;
-    position: relative;
-    top: -2px;
-    border-radius: 3px;
+.open {
+  background-color: rgba(255, 0, 0);
+  color: white;
+  font-size: 8px;
+  margin: auto;
+  padding: 3px;
+  position: relative;
+  top: -2px;
+  border-radius: 3px;
 }
-.clinic-details{
-    margin-left: 15px;
-    margin-right: 15px;
+.clinic-details {
+  margin-left: 15px;
+  margin-right: 15px;
 }
-.clinic-icon{
-    margin-right: 10px;
+.clinic-icon {
+  margin-right: 10px;
+  font-size: 10px;
 }
-.address-icon{
-    position: relative;
-    display: inline-block;
-    font-size: 18px;
-    margin-top: -200px;
+.clinic-specialization {
+  font-size: 10px;
+  padding: 2px;
+  border-radius: 3px;
+  color: black;
+  display: inline;
+  background-color: #00bf6388;
 }
-.adjust{
-    position: relative;
-    margin-left: 22px;
-    top: -20px;
-
+.address-icon {
+  position: relative;
+  display: inline-block;
+  font-size: 13px;
+  margin-top: -200px;
 }
-.clinic-btn{
-    margin: 35px 0 0 0px;
-    width: 100%;
-
+.adjust {
+  position: relative;
+  margin-left: 22px;
+  top: -20px;
 }
-.clinic-address{
-   
+.clinic-btn {
+  margin: 35px 0 0 0px;
+  width: 100%;
+}
+.clinic-timming {
+  font-size: 13px;
+}
+.contact-info {
+  font-size: 12px;
+}
+.clinic-address {
 }
 /*--------------------------Clinic Cards Ends--------------------*/
 /* .hname{
@@ -620,36 +628,180 @@ input::-webkit-inner-spin-button {
 
 /* Maain content it must not be change */
 .inner-content-height {
-    height: 83dvh;
+  height: 83dvh;
 }
 /* Doctor card end */
+.slide {
+  width: 100%;
+  height: 100vh;
+}
 
+/*-------------top----------*/
+.top-below-header {
+  position: relative;
+  top: 80px;
+}
+
+.clinicbanner {
+  width: 100%;
+  height: 450px;
+  margin-top: 60px;
+}
+/*----------------clinic-detail-name--------*/
+.clinic-detail-name {
+  color: white;
+  margin: auto;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+  background-color: #00bf6380;
+  border-radius: 6px;
+}
+.clinic-detail-img-container {
+  position: relative;
+  top: 130px;
+  left: 40px;
+}
+.clinic-detail-img {
+  position: relative;
+  height: 200px;
+  width: 180px;
+
+  border-radius: 6px;
+}
+.clinic-detail-drName {
+  background-color: rgba(17, 1, 1, 0.456);
+  padding: 5px;
+  margin-left: 20px;
+}
+.clinic-description-contianer ul {
+  font-weight: 600;
+}
+.clinic-detail-des {
+  background: #ffffff;
+  padding: 15px;
+}
+.current-clicnic-token {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  background-color: #00bf63b0;
+  margin: 5% 0 200px 60%;
+}
+.bookappoint {
+  position: fixed;
+  right: 20px;
+  text-align: center;
+  color: white;
+  height: 80px;
+  width: 180px;
+  border-radius: 6px;
+  margin-left: 20px;
+  background-color: #093c1caf;
+}
+.clinic-detail-timming {
+  background: #ffffff;
+  padding: 15px;
+  margin-left: 30px;
+}
+.clinic-deatils-header {
+  text-align: center;
+  background-color: #ffffff;
+}
+.clinic-deatils-header li {
+  cursor: pointer;
+  margin-top: 5px;
+}
+.clinic-detail-item {
+  position: relative;
+  padding: 5px 15px 5px 15px;
+  background-color: #f1f5fc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.clinic-detail-item:hover {
+  background-color: #236b71;
+}
+
+.current-clicnic-token h {
+}
 /*==================*************************media queries*******************==========================*/
-@media (max-width: 767px){
-    
-    /*-------------------clinic crad--------------*/
-    .clinic-timming{
-        font-size: 14px;
-    }
-    .clinic-btn{
-        font-size: 16px;
-        margin:36px 0 0px 0px ;
-    }
+@media (max-width: 767px) {
+  /*clinic Datails*/
 
-    /*-------------------ends-------------------*/
-    .ml255 {
-        margin-left: 0;
-    }
-    .navbar {
-        height: 75px;
-    }
-    .login_button{
-        display: none;
-    }
-    .side-nav .logo-sn a{
-        padding: 0;
-    }
-    .d-profile{
-        display: none !important;
-    }
-} 
+  .clinic-detail-item {
+    font-size: 15px !important;
+  }
+  .clinic-detail-timming {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+  .current-clicnic-token {
+    height: 60px;
+    width: 60px;
+    font-size: 16px;
+    margin: 40px 0 0 70px;
+  }
+  .current-clicnic-token h1 {
+    margin: 7px !important;
+    font-size: 40px;
+  }
+  .clinic-detail-mobile {
+    margin-top: 10px !important;
+  }
+  .clinic-detail-des {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
+
+  .clinicbanner {
+    height: 200px;
+    margin-top: 80px;
+  }
+  .clinic-detail-img-container {
+    top: 40px;
+    left: 10px;
+  }
+  .clinic-detail-drName {
+    font-size: medium;
+    margin-left: 15px;
+  }
+  .clinic-detail-img {
+    height: 100px;
+    width: 80px;
+  }
+
+  /*-------------------clinic crad--------------*/
+  .clinic-timming {
+    font-size: 13px;
+  }
+  .clinic-btn {
+    font-size: 16px;
+    margin: 36px 0 0px 0px;
+  }
+
+  /*-------------------ends-------------------*/
+  .ml255 {
+    margin-left: 0;
+  }
+  .navbar {
+    height: 75px;
+  }
+  .login_button {
+    display: none;
+  }
+  .side-nav .logo-sn a {
+    padding: 0;
+  }
+  .d-profile {
+    display: none !important;
+  }
+  /*slider*/
+  .loginContainer {
+    background-image: none;
+    background-color: rgb(1, 1, 1);
+  }
+}

@@ -1204,6 +1204,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar {
   margin-top: 75px;
   position: fixed;
   left: 0;
+  z-index: 999;
 }
 
 .ms-aside-left.side-nav {
@@ -1256,7 +1257,7 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar {
 }
 
 .docfind-logo a img{
-  max-width: 130px;
+  max-width: 150px;
 }
 
 .side-nav ul li.menu-item {

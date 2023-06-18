@@ -169,7 +169,7 @@ const Dashbaord = () => {
                 </div>
                 <div class="col-xl-6 col-md-6">
                     <div class="ms-panel ms-panel-fh ms-widget">
-                        <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
+                        <div class="ms-panel-header ms-panel-custome d-flex justify-space-between ">
                             <div>
                                 <h6>Appointment List</h6>
                             </div>
@@ -177,7 +177,7 @@ const Dashbaord = () => {
                                 <button className=" btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
                             </div>
                         </div>
-                        <div class="ms-panel-body p-0 h20">
+                        <div class="ms-panel-body p-0 h20 ">
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {appointments?.length && appointments.map((appointment, i) => <li class="ms-list-item media">
                                     <img src={image} class="ms-img-small ms-img-round" alt="people" />

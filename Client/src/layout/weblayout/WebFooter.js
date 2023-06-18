@@ -1,8 +1,4 @@
 import React from 'react';
-import Logo from '../../assets.web/img/Doctor.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import {faTwitter, faFaceboo}   from '@fortawesome/free-solid-svg-icons'
-import {faTwitter, faInstagram, faFacebook, faLinkedin, faGoogle} from '@fortawesome/free-brands-svg-icons'
 
 
 function WebFooter() {

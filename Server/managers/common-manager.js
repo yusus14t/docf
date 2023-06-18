@@ -212,7 +212,7 @@ const validateOtp = async ( body ) => {
         let user = await UserModel.findOne({_id: body?.patientId })
         if( user?.twoFactor?.otp === body?.otp ){
             await UserModel.updateOne({_id: user._id}, { 'twoFactor.otp':  0000 })
-            user.twoFactor = { otp: null, isVerified: true }
+            // user.twoFactor = { otp: null, isVerified: true }
             let token = createToken(user._id)
             return Success({ user, message: 'Your mobile number is verified.', token})
         } else {  return Error({ message: 'Invalid OTP!' }) }

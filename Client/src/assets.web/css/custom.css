@@ -7,27 +7,7 @@ body{
     /* background-color:rgba(0, 0, 0, 0.607) !important; */
 }
 
-.icon{
-  font-size: 70px;
-  color: rgba(0, 225, 255, 0.71);
-  padding: 20px;
-}
-.arrowIcon{
-  font-size: 30px;
-  padding-left:8px ;
-}
-.brandicon{
-  font-size: 18px;
-}
-.whyicon{
-  font-size: 30px;
-  color: white;
-  margin-right: 15px;
-}
-.sigma_social-icons{
-  margin-left: 30px;
-  color: white !important;
-}
+
 .box{
     height: 82px;
     width: 100%;

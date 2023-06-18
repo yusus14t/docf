@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import Store from "../../redux/Store";
 import Avatar from '../../assets.app/img/dashboard/doctor-3.jpg'
 
-import logo from '../../assets.web/img/Doctor.png'
+import logo from '../../assets.app/img/logo/logo.png'
 import WebSidebar from "./WebSidebar";
 import { userRoutes } from "../../constants/constant";
 

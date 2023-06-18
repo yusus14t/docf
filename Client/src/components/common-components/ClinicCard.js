@@ -4,7 +4,6 @@ import clinicPhoto from "../../assets.web/img/clinic-grid/348x350-2.jpg";
 import clinicPhoto2 from "../../assets.web/img/clinic-grid/348x350-1.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faLocation,
   faPhone,
   faEnvelope,
   faLocationDot,
@@ -12,7 +11,7 @@ import {
 
 export function ClinicInfoCard(props) {
   return (
-    <div className="sigma_team style-17 mb-0">
+    <div style={{ backgroundColor: "#ffffff" }} className="sigma_team style-17 mb-0">
       <div className="row g-0">
         <div className="col-md-4">
           <div className="sigma_team-thumb">
@@ -52,7 +51,7 @@ export function ClinicInfoCard(props) {
 
 export function ClinicListCard({ clinics }) {
   return clinics.map((clinic, key) => (
-    <div className="col-lg-4 mb-4 col-md-4 mcard" key={key}>
+    <div className="col-lg-4 mb-4 col-md-4 mcard mt-4" key={key}>
       {/* <div className="sigma_team style-16">
         <div className="sigma_team-thumb">
           <img src={clinicPhoto2} alt="team" />
@@ -80,7 +79,7 @@ export function ClinicListCard({ clinics }) {
           <Link to={'/clinic-detail'} className="sigma_btn btn-block btn-sm"> View Detail </Link>
         </div>
       </div> */}
-      <div className="clinic-card ">
+      <div style={{ background: "#ffffff" }} className="clinic-card ">
         <div className="inner-card-border"></div>
         <div style={{ marginBottom: "-22px" }}>
           <img className="clinic-img" src={clinicPhoto2} alt="" />
@@ -90,9 +89,9 @@ export function ClinicListCard({ clinics }) {
         </div>
         <div className="clinic-details d-flex flex-row justify-content-between">
           <div className="">
-            <h5 className="specialization text-disabled">Dermatologist</h5>
+            <h6 className="clinic-specialization text-disabled">Dermatologist</h6>
             <div className="contact-info">
-              <h5 className="text-disabled">Contact Info :</h5>
+              <h6 className="text-disabled">Contact Info :</h6>
               <div>
                 <FontAwesomeIcon className="clinic-icon" icon={faPhone} />
                 <p className="d-inline-block ml-2 mb-0">+91 8218237855</p>
@@ -117,21 +116,21 @@ export function ClinicListCard({ clinics }) {
             </div>
           </div>
           <div className="">
-            <h5 className="text-disabled">Timming</h5>
+            <h6 className="text-disabled">Timming</h6>
             <div className="d-flex flex-column justify-contant-between">
               <div className="">
-                <h6 className="clinic-timming">Morning : 08 AM to 11 PM</h6>
-                <h6 className="clinic-timming"> Evening : 05 PM to 11 PM</h6>
+                <p className="clinic-timming mb-0">Morning : 08 AM to 11 PM</p>
+                <p className="clinic-timming mb-0"> Evening : 05 PM to 11 PM</p>
               </div>
               <div className="">
                 <button className="clinic-btn  btn btn1 btn-primary">
-                  View More
+                  <Link className="text-light" to={"/clinic-detail"}>View More</Link>
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <div style={{marginTop:"-22px"}} className="inner-card-border"></div>
+        {/* <div style={{ marginTop: "-22px" }} className="inner-card-border"></div> */}
       </div>
     </div>
   ));

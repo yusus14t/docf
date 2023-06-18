@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react"
-import Logo from '../assets.web/img/Doctor.png'
+import Logo from '../assets.app/img/logo/logo.png'
 import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 import Sidebar from "./Sidebar"
 import { Dropdown, Item } from '../components/common-components/Dropdown';
