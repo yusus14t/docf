@@ -3,9 +3,9 @@ import Modal from '../Modal';
 import { Controller, useForm} from 'react-hook-form';
 import Select from "react-select"
 import useToasty from '../../../hooks/toasty';
-import { axiosInstance, getAuthHeader } from '../../../constants/utils';
+import { axiosInstance } from '../../../constants/utils';
 
-const Appointment = ({isOpen, setIsOpen}) => {
+const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const toasty = useToasty()
     const [isAnotherAppointment, setIsAnotherAppointment] = useState(false)
@@ -18,19 +18,23 @@ const Appointment = ({isOpen, setIsOpen}) => {
     useEffect(() => {
         fetchDoctors();
         if(userInfo.userType === "DR") setIsAnotherAppointment(true)
-
-        const Source = new EventSource('http://localhost:5000/api/stream')
-        console.log(Source)
-        Source.onmessage = ( data ) => {
-            console.log('data', data)
-        }
     },[appointments,])
 
-    useEffect(() => setSelected(null), [isOpen] )
+    useEffect(() => {
+        setSelected(null)
+    }, [isOpen] )
+
+    // const getPatientDetail = async ({_id}) => {
+    //     try{
+    //         let { data } = await axiosInstance.get('/patient/patient-details', { params: { _id: }})
+    //     } catch(error){
+    //         console.error(error)
+    //     }
+    // }
 
     const fetchDoctors = async () => {
         try {
-            let { data } = await axiosInstance.get('/common/appointment-doctors', getAuthHeader());
+            let { data } = await axiosInstance.get('/common/appointment-doctors');
             setDoctors(data?.doctors || [])
         } catch(error){ 
             toasty.error(error?.messgae)
@@ -42,10 +46,11 @@ const Appointment = ({isOpen, setIsOpen}) => {
         try {
             if(selected) formData = selected
 
-            let { data } = await axiosInstance.post('/common/add-appointment', formData,  getAuthHeader());
+            let { data } = await axiosInstance.post('/doctor/add-appointment', formData,  );
             setAppointments(data?.appointment)
             
             setIsOpen(false)
+            refresh()
             toasty.success(data?.message)
         } catch(error){ 
             toasty.error(error?.messgae)
@@ -56,7 +61,7 @@ const Appointment = ({isOpen, setIsOpen}) => {
     const getPatientByNumber = async (phone) => {
         try{
             if(phone){
-                let { data } = await axiosInstance.get('/common/get-patient-by-number', { params: {phone}, ...getAuthHeader() })
+                let { data } = await axiosInstance.get('/common/get-patient-by-number', { params: {phone} })
                 setPatients(data?.patient)
             }
         } catch(error){ console.log(error) }
@@ -195,7 +200,7 @@ const Appointment = ({isOpen, setIsOpen}) => {
                     </div>
                     :
                     <>
-                        <div class="col-12">
+                        {userInfo.userType === 'PT' && <div class="col-12">
                             <button type='submit' className='btn btn-primary shadow-none mb-2' onClick={() => setIsAnotherAppointment(true)}>Add Another</button>
                             <div class="ms-card card-gradient-dark ms-widget ms-infographics-widget">
 
@@ -203,20 +208,20 @@ const Appointment = ({isOpen, setIsOpen}) => {
                                     <div class="media-body">
                                         <div className='row'>
                                             <div className='col-6'>
-                                                <h6>Andy America</h6>
-                                                <p class="fs-12">XXXX-XXX-868</p>
-                                                <p class="fs-12">Ramgat Road ......</p>
+                                                <h6>{userInfo.fullName || ""}</h6>
+                                                <p class="fs-12">{userInfo?.phone || ""}</p>
+                                                <p class="fs-12">{userInfo?.address || ""}</p>
                                             </div>
                                             <div className='col-6 dflex'>
-                                                <p>Male</p>
-                                                <p className='mx-2'>B+</p>
+                                                <p>{userInfo?.gender || ""}</p>
+                                                <p className='mx-2'>{userInfo?.bloodGroup || ""}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <i class="flaticon-reuse"></i>
                             </div>
-                        </div>
+                        </div>}
                     </>
                     
                 }   

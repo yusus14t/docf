@@ -1,9 +1,17 @@
 import axios from 'axios';
 
+export const getAuthHeader = () => {
+    let token = JSON.parse(localStorage.getItem('token'))
+    return { headers: {'auth-token': token} }
+}
+
 // axios instance 
 export const axiosInstance = axios.create({
     baseURL: `http://${window.location.hostname}:5000/api`,
-    headers: {'Access-Control-Allow-Origin': '*'},
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'auth-token': getAuthHeader()['headers']['auth-token']
+    },
 })
 
 export const emailPattern = {
@@ -15,13 +23,11 @@ export const numberValidator = (value) => {
     if(value.target.value.length <= 11 ) return value.target.value = value.target.value.slice(0,10)
 }
 
-export const getAuthHeader = () => {
-    let token = JSON.parse(localStorage.getItem('token'))
-    return { headers: {'auth-token': token} }
-}
+
 
 export const formatDate = ( value ) => {
     let date = new Date(value)
     return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
 }
  
+export const dateFormat = (date) => `${date.getDate()} / ${ date.getMonth() + 1 } / ${ date.getFullYear() }` 

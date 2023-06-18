@@ -4,6 +4,8 @@ import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 import Appointment from '../../common-components/Appointment/Appointment';
 import UserModal from '../../common-components/UserModal';
 import { DoughnutChart, LineChart } from '../../common-components/Chart';
+import { useEvent } from '../../../hooks/common-hook';
+
 const Dashbaord = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isUserModalOpen, setIsUserModalOpen] = useState(false);
@@ -11,15 +13,20 @@ const Dashbaord = () => {
     const [appointmentData, setAppointmentData] = useState({})
     const [isWeekChart, setIsWeekChart] = useState(true) 
     const [chartData, setChartData] = useState({})
+    const event = useEvent('new-appointment')
 
     useEffect(() => {
         changeFilter('clinics')
         getAppointments()
     },[])
 
+    useEffect(() => {
+        console.log('event', event)
+    },[event])
+
     const getAppointments = async () => {
         try{
-            let { data } = await axiosInstance.get('/doctor/get-appointments', {...getAuthHeader()})
+            let { data } = await axiosInstance.get('/doctor/get-appointments')
             setAppointments(data?.appointments)
         } catch(error){ console.log(error) }
     }
@@ -199,11 +206,11 @@ const Dashbaord = () => {
                 />
             }
 
-            {isUserModalOpen && 
+            {isUserModalOpen && appointmentData?._id && 
                 <UserModal 
                     isOpen={isUserModalOpen}
                     setIsOpen={setIsUserModalOpen}
-                    appointmentData={appointmentData}
+                    appointmentId={appointmentData._id}
                 />
             }
         </div>

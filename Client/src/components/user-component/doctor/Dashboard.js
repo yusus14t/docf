@@ -4,6 +4,9 @@ import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 import Appointment from '../../common-components/Appointment/Appointment';
 import UserModal from '../../common-components/UserModal';
 import { DoughnutChart, LineChart } from '../../common-components/Chart';
+import { useEvent } from '../../../hooks/common-hook';
+import useToasty from '../../../hooks/toasty';
+
 const Dashbaord = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isUserModalOpen, setIsUserModalOpen] = useState(false);
@@ -11,11 +14,21 @@ const Dashbaord = () => {
     const [appointmentData, setAppointmentData] = useState({})
     const [isWeekChart, setIsWeekChart] = useState(true) 
     const [chartData, setChartData] = useState({})
+    const event = useEvent('new-appointment')
+    const userInfo = JSON.parse(localStorage.getItem('user'))
+    const toasty = useToasty();
 
     useEffect(() => {
         changeFilter('clinics')
         getAppointments()
-    },[])
+    },[]) 
+
+    useEffect(() => {
+        if( userInfo._id === event?.data?.doctorId){
+            setAppointments([...appointments, event.data])
+            toasty.success('New Appointment Added')
+        }
+    },[event])
 
     const getAppointments = async () => {
         try{
@@ -196,6 +209,7 @@ const Dashbaord = () => {
                 <Appointment 
                     isOpen={isModalOpen}
                     setIsOpen={setIsModalOpen}
+                    refresh={() => getAppointments()}
                 />
             }
 
@@ -203,7 +217,7 @@ const Dashbaord = () => {
                 <UserModal 
                     isOpen={isUserModalOpen}
                     setIsOpen={setIsUserModalOpen}
-                    appointmentData={appointmentData}
+                    appointmentId={appointmentData?._id}
                 />
             }
         </div>

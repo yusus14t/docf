@@ -113,9 +113,7 @@ function Detail() {
                     Aligarh, Uttar Pradesh
                   </h4>
                 </div>
-                <div className="col-sm-">
-
-                </div>
+                <div className="col-sm-"></div>
               </div>
             </div>
           </div>
