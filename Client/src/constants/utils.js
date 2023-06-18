@@ -30,3 +30,4 @@ export const formatDate = ( value ) => {
     return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
 }
  
+export const dateFormat = (date) => `${date.getDate()} / ${ date.getMonth() + 1 } / ${ date.getFullYear() }` 

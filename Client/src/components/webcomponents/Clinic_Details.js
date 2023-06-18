@@ -7,7 +7,7 @@ function Detail() {
     const [ patients ] = useState([1,2,3,4,5]);
     return (
         <>  
-            <Banner title={"Clinic Details"} />
+            {/* <Banner title={"Clinic Details"} /> */}
             <div className="section sigma_post-details">
         <div className="container">
           <div className="row">

@@ -27,6 +27,12 @@ const addAppointment = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
+
+const appointmentById = async ( req, res ) => {
+    DoctorManager.appointmentById( req.query, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
         
 module.exports = {
     getAppointments,
@@ -34,4 +40,5 @@ module.exports = {
     getAllDoctors,
     deleteDoctor,
     addAppointment,
+    appointmentById,
 }

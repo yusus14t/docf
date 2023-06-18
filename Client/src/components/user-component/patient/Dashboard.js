@@ -26,7 +26,7 @@ const Dashbaord = () => {
 
     const getAppointments = async () => {
         try{
-            let { data } = await axiosInstance.get('/doctor/get-appointments', {...getAuthHeader()})
+            let { data } = await axiosInstance.get('/doctor/get-appointments')
             setAppointments(data?.appointments)
         } catch(error){ console.log(error) }
     }
@@ -206,11 +206,11 @@ const Dashbaord = () => {
                 />
             }
 
-            {isUserModalOpen && 
+            {isUserModalOpen && appointmentData?._id && 
                 <UserModal 
                     isOpen={isUserModalOpen}
                     setIsOpen={setIsUserModalOpen}
-                    appointmentData={appointmentData}
+                    appointmentId={appointmentData._id}
                 />
             }
         </div>

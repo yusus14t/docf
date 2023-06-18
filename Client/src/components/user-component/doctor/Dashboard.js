@@ -217,7 +217,7 @@ const Dashbaord = () => {
                 <UserModal 
                     isOpen={isUserModalOpen}
                     setIsOpen={setIsUserModalOpen}
-                    appointmentData={appointmentData}
+                    appointmentId={appointmentData?._id}
                 />
             }
         </div>

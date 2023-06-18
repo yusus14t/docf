@@ -3,6 +3,7 @@ const router = express();
 const DoctorController = require('../controllers/doctor-controller')
 
 router.get('/get-appointments', DoctorController.getAppointments )
+router.get('/appointment', DoctorController.appointmentById )
 router.get('/allDoctors', DoctorController.getAllDoctors);
 router.post('/edit-doctor', DoctorController.editDoctor );
 router.post('/delete-doctor',  DoctorController.deleteDoctor);
