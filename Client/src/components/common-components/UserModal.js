@@ -5,7 +5,7 @@ import { axiosInstance, dateFormat } from '../../constants/utils';
 import { useEffect, useState } from 'react';
 import useToasty from '../../hooks/toasty'
 
-const UserModal = ({isOpen, setIsOpen, appointmentId}) => {
+const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
     const [appointment, setAppointment] = useState({});
     const toasty = useToasty()
     useEffect(() => {
@@ -19,6 +19,31 @@ const UserModal = ({isOpen, setIsOpen, appointmentId}) => {
       } catch(error){
         console.error(error)
         toasty.error(error.message)
+      }
+    }
+
+    const patientStatus = async ( status ) => {
+      try{
+        let { data } = await axiosInstance.post('/patient/appointment-status', { _id: appointment._id, status })
+        setIsOpen(false)
+        refresh()
+        toasty.success(data?.message)
+      } catch(error){ 
+        console.error(error)
+        toasty.error(error?.message)
+      }
+    }
+
+    const reAppointment = async () => {
+      try{
+        let { data } = await axiosInstance.post('/doctor/re-appointment', { _id: appointment._id })
+        refresh()
+        setIsOpen(false)
+        toasty.success(data?.message)
+      } catch(error){
+        console.error(error)
+        setIsOpen(false)
+        toasty.error(error?.message)
       }
     }
 
@@ -75,10 +100,11 @@ const UserModal = ({isOpen, setIsOpen, appointmentId}) => {
             <p className="mb-0 text-dark">Mobile Number : +91 {appointment?.userId?.phone}</p>
           </div>
           <hr />
-          <div className='d-flex float-right' >
-          <button type="button" className="btn btn-danger shadow-none mx-2" >Unreached</button>
-          <button type="button" className="btn btn-primary shadow-none mx-2" >Reached</button>
-          </div>
+          { appointment.status !== 'unreached' ? <div className='d-flex float-right' >
+            <button type="button" className="btn btn-danger shadow-none mx-2"  onClick={() => patientStatus('unreached')}>Unreached</button>
+            <button type="button" className="btn btn-primary shadow-none mx-2" onClick={() => patientStatus('reached')}>Reached</button>
+          </div> : <button type="button" className="btn btn-primary shadow-none mx-2" onClick={() => reAppointment()}>Re-Appointment</button>
+          }
         </div>
       </Modal>
     );

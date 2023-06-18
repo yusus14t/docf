@@ -11,7 +11,7 @@ const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
     const [isAnotherAppointment, setIsAnotherAppointment] = useState(false)
     const [patients, setPatients] = useState([]);
     const [doctors, setDoctors] = useState([]);
-    const { register, handleSubmit ,formState:{ errors }, control } = useForm({ onChange: true });
+    const { register, handleSubmit ,formState:{ errors }, control, clearErrors } = useForm({ onChange: true });
     const [selected, setSelected] = useState(null);
     const [appointments, setAppointments] = useState([]);
 
@@ -23,14 +23,6 @@ const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
     useEffect(() => {
         setSelected(null)
     }, [isOpen] )
-
-    // const getPatientDetail = async ({_id}) => {
-    //     try{
-    //         let { data } = await axiosInstance.get('/patient/patient-details', { params: { _id: }})
-    //     } catch(error){
-    //         console.error(error)
-    //     }
-    // }
 
     const fetchDoctors = async () => {
         try {
@@ -44,7 +36,10 @@ const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
 
     const saveAppointment = async ( formData ) => {
         try {
-            if(selected) formData = selected
+            if(selected){
+                let selectedData = {doctor: formData.doctor?._id}
+                formData = { ...selectedData, ...selected }
+            }
 
             let { data } = await axiosInstance.post('/doctor/add-appointment', formData,  );
             setAppointments(data?.appointment)
@@ -53,7 +48,8 @@ const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
             refresh()
             toasty.success(data?.message)
         } catch(error){ 
-            toasty.error(error?.messgae)
+            setIsOpen(false)
+            toasty.error(error?.message)
             console.log(error) 
         }
     }
@@ -151,7 +147,7 @@ const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
                                     control={control}
                                     name="doctor"
                                     rules={{
-                                        required: !selected && 'Doctor must be required'
+                                        required: 'Doctor must be required'
                                     }}
                                     render={({ field }) => (
                                         <Select
@@ -177,12 +173,12 @@ const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
                             {patients.length > 0 && 
                                 patients.map(( patient, index ) => 
                                 <div class="col-12" key={index}>
-                                    <div class={`ms-card card-gradient-dark ms-widget ms-infographics-widget ${ selected?._id === patient._id ? 'selected' : '' }`} style={{ marginBottom:'0.5rem'}} onClick={() => setSelected( selected ? null : patient ) }>
+                                    <div class={`ms-card card-gradient-dark ms-widget ms-infographics-widget ${ selected?._id === patient._id ? 'selected' : '' }`} style={{ marginBottom:'0.5rem'}} onClick={() => {setSelected( selected ? null : patient ); } }>
                                         <div class="ms-card-body media">
                                             <div class="media-body">
                                                 <div className='row'>
                                                     <div className='col-6'>
-                                                        <h6>{patient?.firstName} {patient?.lastName || ""}</h6>
+                                                        <h6>{patient?.fullName}</h6>
                                                         <p class="fs-12">XXXX-XXX-{patient?.phone?.slice(5,10)}</p>
                                                     </div>
                                                     <div className='col-6 dflex'>
