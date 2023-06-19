@@ -340,8 +340,9 @@
   color: white !important;
 }
 .box {
-  height: 50px;
+  height: 80px;
   width: 100%;
+  background-color: #f1f5fc;
 }
 .ab {
   padding: 0;
@@ -725,8 +726,68 @@ input::-webkit-inner-spin-button {
 
 .current-clicnic-token h {
 }
+
+/*-------------------Hospital and clinic signup page*---------------------------*/
+.hos-singup-heading{
+  padding: 10px;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.615);
+}
+.hc-signup-container{
+  background-color: #093c1c8d;
+  padding: 20px;
+  border-radius: 6px;
+}
+.after-container{
+  background:#f1f5fc ;
+  height: 83.5vh;
+}
+.after-signup{
+  cursor: pointer;
+  padding: 10px;
+  width: 230px;
+  height: 240px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+.after-signup-icon{
+  width: 200px;
+  height: 200px;
+  margin-left: 6px;
+}
+.after-container-child{
+  margin: auto;
+  width: 70%;
+}
+/*------------------------end----------------------------*/
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 767px) {
+
+  /*----------hospital and clinic signup*/
+  .after-container-child{
+    flex-direction: column !important;
+    margin-top: 20px;
+  }
+  .after-signup-icon{
+    height: 150px;
+    width: 250px;
+    margin-left: 0;
+  }
+  .after-signup{
+    width: 270px; 
+     height: 190px;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+  .after-container{
+    height: 80vh;
+  }
+  .hc-signup-container{
+    width: 80% !important;
+  }
+
+  /*--------end----------------*/
   /*clinic Datails*/
 
   .clinic-detail-item {
