@@ -97,10 +97,10 @@ export function ClinicListCard({ clinics }) {
                 <p className="d-inline-block ml-2 mb-0">+91 8218237855</p>
               </div>
               <div>
-                <FontAwesomeIcon className="clinic-icon " icon={faEnvelope} />
+                {/* <FontAwesomeIcon className="clinic-icon " icon={faEnvelope} />
                 <p className="d-inline-block ml-2 mb-0">
                   madniclinic@gmial.com
-                </p>
+                </p> */}
                 <br />
                 <FontAwesomeIcon
                   className="clinic-icon address-icon"

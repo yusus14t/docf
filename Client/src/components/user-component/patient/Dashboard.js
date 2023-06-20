@@ -189,8 +189,8 @@ const Dashbaord = () => {
                                 {appointments?.length && appointments.map((appointment, i) => <li class="ms-list-item media">
                                     <img src={image} class="ms-img-small ms-img-round" alt="people" />
                                     <div class="media-body mt-1 cursor-pointer" onClick={() => {setAppointmentData(appointment); setIsUserModalOpen(true); }}>
-                                        <h4>{appointment?.user.fullName || ""}</h4>
-                                        <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5,10)}</span>
+                                        <h4>{appointment?.user?.fullName || ""}</h4>
+                                        <span class="fs-12">XXXX-XXX-{appointment?.user?.phone?.slice(5,10)}</span>
                                     </div>
                                     <button type="button" class="ms-btn-icon btn-success" name="button">{appointment?.token} </button>
                                 </li>)}
