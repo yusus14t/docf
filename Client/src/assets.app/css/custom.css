@@ -53,6 +53,7 @@
   color: white;
 }
 
+
 .main-content {
   display: flex;
   flex-direction: row;
@@ -307,6 +308,11 @@
 .letterSpcing {
   letter-spacing: 10px;
 }
+
+.ls3 {
+  letter-spacing: 3px;
+}
+
 .medit {
   font-size: 15px;
   margin-left: 10px;

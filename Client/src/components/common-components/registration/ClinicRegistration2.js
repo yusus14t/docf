@@ -7,7 +7,8 @@ import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 const CLiniRegistration2 = ({ source, tab }) => {
     const { register, handleSubmit, control, formState: { errors } } = useForm({ onChange: true })
     const [selectedFile, setSelectedFile] = useState(null);
-    const [timingNo, setTimingNo] = useState(1);
+    const [specializations, setSpecializations] = useState([])
+    const [timingNo, setTimingNo] = useState(0);
     const DAYS = [
         { id: 0, value: 'MON', day: 'Monday' },
         { id: 1, value: 'TUE', day: 'Tuesday' },
@@ -20,18 +21,28 @@ const CLiniRegistration2 = ({ source, tab }) => {
 
     useEffect(() => {
         setTimingNo(1)
+        getAllSpecialization()
     }, [tab])
+
+    const getAllSpecialization = async () => {
+        try{
+            let {data} = await axiosInstance.get('/common/specializations')
+            setSpecializations(data?.specializations)
+            console.log(data)
+        } catch(error){
+            console.error(error)
+        }
+    }
 
     const submit = async ( values ) => {
         try{
             let formData = new FormData()
             formData.append('data', JSON.stringify(values))
-            // formData.append('selectedFile', selectedFile)
             
-            let header = getAuthHeader()
+            // let header = getAuthHeader()
             // header.headers['Content-Type'] = 'multipart/form-data'            
-            let { data } = axiosInstance.post('/common/organization-details', { data: formData }, header )
-            console.log('>>', data)
+            // let { data } = axiosInstance.post('/common/organization-details', { data: formData }, header )
+            console.log('>>', values)
         } catch(error){ console.error(error) }
     }
     return (
@@ -43,7 +54,7 @@ const CLiniRegistration2 = ({ source, tab }) => {
                 <div className="row">
                     <div className="col-md-6 mb-3">
                         <label >Specialization of Clininc</label>
-                        <div className="">
+                        <div className="">{ console.log(specializations)}
                             <Controller
                                 control={control}
                                 name="specialization"
@@ -52,7 +63,9 @@ const CLiniRegistration2 = ({ source, tab }) => {
                                     <Select
                                         {...field}
                                         isMulti={source === 'Hospital' ? true : false}
-                                        options={[{ label: 'Other', value: 'other' }]}
+                                        options={specializations}
+                                        getOptionLabel={({ name }) => name}
+                                        getOptionValue={({id}) => id}
                                         className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
                                         classNamePrefix="select"
                                     />
@@ -259,12 +272,12 @@ const CLiniRegistration2 = ({ source, tab }) => {
                     </div>}
 
                     {Array(timingNo).fill(0).map((v, i) =>
-                    (i = i + 1, <div className="row">
+                    (<div className="row">
                         <div className="col-md-12 mb-3">
                             <label className=''>Timming</label>
                             <div className='row' style={{ paddingRight: 0 }}>
                                 <div className="col">
-                                    <label htmlFor="">Days</label>
+                                    <label htmlFor=""></label>
                                     <select name="days" className='form-control' >
                                         {DAYS.map((day) => <option value={day.value} >{day.day}</option>)}
                                     </select>
@@ -275,6 +288,7 @@ const CLiniRegistration2 = ({ source, tab }) => {
                                     <label htmlFor="#open">Open</label>
                                     <input type="time"
                                         id='open'
+                                        {...register(`timing[${i}].morning.open`)}
                                         className={`form-control`}
                                         placeholder="morning 10am to 12pm"
 
@@ -283,6 +297,7 @@ const CLiniRegistration2 = ({ source, tab }) => {
                                 <div className='col ms-0'>
                                     <label className=''>Close</label>
                                     <input type="time"
+                                        {...register(`timing[${i}].morning.close`)}
                                         className="form-control"
                                         placeholder="morning 10am to 12pm"
                                     />
@@ -295,6 +310,8 @@ const CLiniRegistration2 = ({ source, tab }) => {
                                     <label htmlFor="#open">Open</label>
                                     <input type="time"
                                         id='open'
+                                        {...register(`timing[${i}].evening.open`)}
+
                                         className="form-control"
                                         placeholder="morning 10am to 12pm"
 
@@ -303,23 +320,25 @@ const CLiniRegistration2 = ({ source, tab }) => {
                                 <div className='col '>
                                     <label className=''>Close</label>
                                     <input type="time"
+                                        {...register(`timing[${i}].evening.close`)}
+
                                         className="form-control"
                                         placeholder="morning 10am to 12pm"
 
                                     />
                                 </div>
                                 <div className='col '>
-                                    {timingNo === i && i < 7 && <button type='button' style={{ minWidth: "60px" }} className='btn-1 btn btn-primary mt-4 p-1 px-1'
+                                    {i < 7 && <button type='button' style={{ minWidth: "60px" }} className='btn-1 btn btn-primary mt-4 p-1 px-1'
                                         onClick={() => setTimingNo((old) => {
                                             if (old < 7) old = old + 1
                                             return old
                                         })}> Add</button>}
 
-                                    <button type='button' style={{ minWidth: "60px" }} className='btn-1 btn  btn-light mx-2 mt-4 p-1 px-1'
+                                    { i > 0 && <button type='button' style={{ minWidth: "60px" }} className='btn-1 btn  btn-light mx-2 mt-4 p-1 px-1'
                                         onClick={() => setTimingNo((old) => {
                                             if (old < 7) old = old - 1
                                             return old
-                                        })}>x</button>
+                                        })}>x</button>}
                                 </div>
 
 

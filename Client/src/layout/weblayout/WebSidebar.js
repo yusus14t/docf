@@ -1,22 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Logo from '../../assets.app/img/medboard-logo-216x62.png';
+import React from 'react';
 import Doctor from '../../assets.app/img/dashboard/doctor-3.jpg';
 // import { Link,  } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAnglesRight} from '@fortawesome/free-solid-svg-icons'
-import { userRoutes } from '../../constants/constant';
 
-function WebSidebar({isOpen, setIsOpen, mobileView}) {
-    // const location = useLocation();
-    // const pathname = location.pathname.split("/")
-    const userInfo = JSON.parse(localStorage.getItem('user')) || ""
-    // const [activeNav, setActiveNav] = useState(null)
-
-    // useEffect(() => {
-    //     setActiveNav(pathname[2])
-    // }, [pathname, ])
-        
+function WebSidebar({isOpen}) {        
     return (
       <aside
         className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y  ${

@@ -67,10 +67,8 @@ const DoctorRegistration = ({ tab }) => {
       </div>)}
       <form className="ms-form-wizard style1-wizard wizard form-content" onSubmit={handleSubmit((data) => console.log(data))} role="application">
         <div >
-          <div className="row d-flex justify-content-center">
-            <div><ImgUpload source={"doctor"} /></div>
-          </div>
-          <div className="row">
+          <ImgUpload source={"doctor"} />
+          <div className="row mt-2">
             <div className="col-md-6 mb-3">
               <label >First Name</label>
               <div className="input-group">
@@ -95,8 +93,6 @@ const DoctorRegistration = ({ tab }) => {
                 />
               </div>
             </div>
-          </div>
-          <div className="row">
             <div className="col-md-6 mb-3">
               <label >Email ID</label>
               <div className="input-group">
@@ -126,7 +122,7 @@ const DoctorRegistration = ({ tab }) => {
             <div className="col-md-6 mb-3">
               <label >Qualifications</label>
               <div className="input-group">
-                <textarea type="text"
+                <input type="text"
                   className={`form-control ${errors.qualification ? 'border-danger' : ''}`}
                   placeholder="Eg.: MBBS from RUSSIA"
                   {...register(`qualification`, {
@@ -173,10 +169,10 @@ const DoctorRegistration = ({ tab }) => {
                 />
               </div>
             </div>
-            <div className="col-md-6 mb-3">
+            <div className="col-md-12 mb-3">
               <label className=''>About ME</label>
               <div className="input-group">
-                <textarea type="text"
+                <textarea type="text" rows={7}
                   className={`form-control ${errors.aboutme ? 'border-danger' : ''}`}
                   placeholder="Eg: I am in practice since 1995 "
                   {...register(`aboutme`, {

@@ -9,6 +9,7 @@ router.post('/edit-doctor', DoctorController.editDoctor );
 router.post('/delete-doctor',  DoctorController.deleteDoctor);
 router.post('/add-appointment', DoctorController.addAppointment)
 router.post('/re-appointment', DoctorController.reAppointment)
+router.get('/analytics', DoctorController.analytics)
 
 
 module.exports = router;

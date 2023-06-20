@@ -3,7 +3,7 @@ import Modal from '../Modal';
 import { Controller, useForm} from 'react-hook-form';
 import Select from "react-select"
 import useToasty from '../../../hooks/toasty';
-import { axiosInstance } from '../../../constants/utils';
+import { axiosInstance, NumberFormat } from '../../../constants/utils';
 
 const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
     const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -92,12 +92,8 @@ const Appointment = ({isOpen, setIsOpen, refresh = () => {} }) => {
                                 <input type="text"
                                     className={`form-control ${errors?.phone ? 'border-danger' : ''}`}
                                     placeholder="xxxx-xxx-xxx"
-                                    onBlurCapture={(e) => getPatientByNumber(e.target.value)}
-                                    onInput={(e) => {
-                                        if(Number(e.target.value) && String(e.target.value).length < 10) e.target.value = e.target.value
-                                        else if(Number(e.target.value)) e.target.value = e.target.value.slice(0,10)
-                                        else e.target.value = ''
-                                    }}
+                                    // onBlurCapture={(e) => getPatientByNumber(e.target.value)}
+                                    onInput={(e) => NumberFormat(e)}
                                     {...register('phone', {
                                         required: !selected && 'Phone number is required',
                                     })}

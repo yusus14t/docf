@@ -7,34 +7,6 @@ import DepartmentRegistration from '../common-components/registration/Department
 
 const HospitalRegistartion = () => {
   const [tab, setTab] = useState("STEP1")
-
-  // const submit = async (formData) => {
-  //   try {
-  //     formData['tab'] = tab
-  //     if(doctor?.organizationId){
-  //       formData['organizationId'] = doctor.organizationId
-  //       formData['userId'] = doctor._id
-  //     }
-
-  //     let {data}  = await axiosInstance.post('/common/create-clinic', formData, getAuthHeader())
-
-  //     if(data?.tab === 'STEP1'){ 
-  //       localStorage.setItem('createDoctor', JSON.stringify(data.doctor))
-  //       setDoctor(data.doctor)
-  //     }
-
-  //     if( tab === 'FINAL' ){ 
-  //       localStorage.removeItem('createDoctor')
-  //       setDoctor({})
-  //     }
-       
-  //     if( tab === 'STEP1') setTab('STEP2')
-  //     if( tab === 'STEP2') setTab('STEP3')
-  //     if( tab === 'STEP3') setTab('FINAL')
-
-  //   } catch (error) { console.log(error) }
-  // }
-
   return (
     <div>
       <div className="ms-panel-body">

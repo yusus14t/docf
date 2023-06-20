@@ -8,9 +8,12 @@ const eventEmitter = new EventEmitter()
 
 const getAppointments = async (body, user) => {
     try {
+        let status = body.status
+        let today = new Date()
+        today.setHours(0,0,0,0)
         let appointments = await AppointmentModel.aggregate([
             {
-                $match: { [user.userType === 'PT' ? 'createdBy' : 'doctorId']: user._id, status: { $in : [ 'waiting', 'unreached' ] } }
+                $match: { [user.userType === 'PT' ? 'createdBy' : 'doctorId']: user._id, status, createdAt: { $gte: today }   }
             },
             {
                 $lookup: {
@@ -36,18 +39,7 @@ const getAppointments = async (body, user) => {
                     status: 1
                 }
             },
-            {
-                $group: {
-                    _id: '$status',
-                    data: {
-                        $push: '$$ROOT'
-                    }
-                }
-            }
-            
         ])
-        console.log('appointments', appointments)
-
         return Success({ message: 'Appointment fetch successfully', appointments })
     } catch (error) {
         console.log(error)
@@ -132,14 +124,15 @@ const deleteDoctor = async (body, user) => {
 
 const addAppointment = async (body, user) => {
     try {
-        let lastAppointment = await AppointmentModel.findOne({ doctorId: body.doctor }, { token: 1 }).sort({ createdAt: -1 })
+        let today = new Date()
+        today.setHours(0,0,0,0)
+
+        let lastAppointment = await AppointmentModel.findOne({ doctorId: body.doctor, status: 'waiting', createdAt: { $gte: today } }, { token: 1 }).sort({ createdAt: -1 })
         let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
         let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' }, { fullName: 1, userType: 1, phone: 1 });
 
         if (!patient) {  patient = await UserModel({ ...body, userType: 'PT' }).save() }
 
-        let today = new Date()
-        today.setHours(0,0,0,0)
         let appointment = await AppointmentModel.findOne({ userId: patient._id, doctorId: body.doctor, status:'waiting', createdAt: { $gte: today }})
         if( !appointment ){
             appointment = await AppointmentModel({ token, userId: patient._id, doctorId: body.doctor, createdBy: user._id }).save()
@@ -189,9 +182,57 @@ const appointmentById = async (body, user) => {
 
 const reAppointment = async (body) => {
     try {
-        console.log(body)
         await AppointmentModel.updateOne({ _id: ObjectId(body?._id) }, { status: 'waiting' })
         return Success({ ...body, message: 'Re-appointment successfully' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const analytics = async (body, user) => {
+    try {
+        let today = new Date()
+        today.setHours(0, 0, 0, 0)
+        let analytics = await AppointmentModel.aggregate([
+            {
+                $match: {
+                    doctorId: ObjectId(user?._id),
+                }
+            },
+            {
+                $facet: {
+                    "total": [
+                        {
+                            $count: 'count'
+                        },
+                    ],
+                    "today": [
+                        {
+                            $match: { createdAt: { $gte: today } }
+                        },
+                        {
+                            $count: 'count'
+                        },
+                    ],
+                    'currentToken': [
+                        {
+                            $match: { status: 'waiting', createdAt: { $gte: today } }
+                        },
+                        {
+                            $limit: 1
+                        },
+                    ],
+                }
+            },
+            {
+                $project: {
+                    total: { $first: '$total.count' },
+                    today: { $first: '$today.count' },
+                    token: { $first: '$currentToken.token' },
+                }
+            }
+        ])
+        return Success({ analytics: analytics[0] })
     } catch (error) {
         console.log(error)
     }
@@ -210,7 +251,7 @@ const EventHandler = (req, res) => {
         res.write("\n\n");
     }
 
-    eventEmitter.on('new-appointment', (data) => newAppointment(data))
+    // eventEmitter.on('new-appointment', (data) => newAppointment(data))
 }
 
 
@@ -222,5 +263,6 @@ module.exports = {
     addAppointment,
     appointmentById,
     reAppointment,
+    analytics,
     EventHandler
 }

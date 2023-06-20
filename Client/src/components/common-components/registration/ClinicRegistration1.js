@@ -1,10 +1,27 @@
 import { useForm } from 'react-hook-form';
+import { NumberFormat, axiosInstance } from '../../../constants/utils';
+import useToasty from '../../../hooks/toasty';
 
-const ClinicRegistration = ({ source, tab, isSelfCreated }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({ onChange: true })
+const ClinicRegistration = ({ source, tab, setTab, isSelfCreated }) => {
+    const { register, handleSubmit, formState: { errors }, reset, } = useForm({ onChange: true })
+    const toasty = useToasty()
+
+
+    const submit = async (formData) => {
+        try {
+            formData['tab'] = tab
+            let {data}  = await axiosInstance.post('/common/create-clinic', formData )
+            reset({})
+            setTab('STEP2')
+            toasty.success(data?.message)
+        } catch (error) { 
+            toasty.error(error?.message)
+            console.log(error)
+        }
+    }
 
     return (
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form onSubmit={handleSubmit(submit)}>
             <div className="ms-wizard-step body current" id="default-wizard-p-0" role="tabpanel" aria-labelledby="default-wizard-h-0" aria-hidden="false">
                 <div className="row">
                     <div className="col-md-6 mb-3">
@@ -12,9 +29,9 @@ const ClinicRegistration = ({ source, tab, isSelfCreated }) => {
                         <div className="input-group">
                             <input type="text"
                                 className={`form-control ${errors?.name ? 'border-danger' : ''}`}
-                                placeholder={`Ex: Madni ${source}`}
-                                {...register('fullName', {
-                                    required: 'Clinic name is required'
+                                placeholder={`Enter Name`}
+                                {...register('name', {
+                                    required: 'Name is required'
                                 })}
                             />
                         </div>
@@ -25,7 +42,7 @@ const ClinicRegistration = ({ source, tab, isSelfCreated }) => {
                         <div className="input-group">
                             <input type="text"
                                 className={`form-control ${errors?.registration ? 'border-danger' : ''}`}
-                                placeholder="Ex: GAN200061"
+                                placeholder="Enter registration number"
                                 {...register('registration', {
                                     required: 'Registration number is required'
                                 })}
@@ -39,7 +56,8 @@ const ClinicRegistration = ({ source, tab, isSelfCreated }) => {
                         <div className="input-group">
                             <input type="Number"
                                 className={`form-control ${errors?.phone ? 'border-danger' : ''}`}
-                                placeholder="Phone Number"
+                                placeholder="Enter Phone Number"
+                                onInput={(e) => NumberFormat(e)}
                                 {...register('phone', {
                                     required: 'Phone number is required'
                                 })}
@@ -51,7 +69,7 @@ const ClinicRegistration = ({ source, tab, isSelfCreated }) => {
                         <div className="input-group">
                             <input type="email"
                                 className={`form-control ${errors?.email ? 'border-danger' : ''}`}
-                                placeholder="example@gmail.com"
+                                placeholder="Enter Email"
                                 {...register('email', {
                                     required: 'Email is required'
                                 })}

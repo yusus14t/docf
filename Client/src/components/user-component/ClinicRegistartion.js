@@ -6,35 +6,6 @@ import DealRegistration from '../common-components/registration/DealRegistration
 
 const ClinicRegistartion = ({isSelfCreated, source}) => {
   const [tab, setTab] = useState(isSelfCreated ? "STEP2" : 'STEP1')   
-
-  // const submit = async (formData) => {
-  //   try {
-
-  //     formData['tab'] = tab
-  //     if(doctor?.organizationId){
-  //       formData['organizationId'] = doctor.organizationId
-  //       formData['userId'] = doctor._id
-  //     }
-
-  //     let {data}  = await axiosInstance.post('/common/create-clinic', formData, getAuthHeader())
-
-  //     if(data?.tab === 'STEP1'){ 
-  //       localStorage.setItem('createDoctor', JSON.stringify(data.doctor))
-  //       setDoctor(data.doctor)
-  //     }
-
-  //     if( tab === 'FINAL' ){ 
-  //       localStorage.removeItem('createDoctor')
-  //       setDoctor({})
-  //     }
-       
-  //     if( tab === 'STEP1') setTab('STEP2')
-  //     if( tab === 'STEP2') setTab('STEP3')
-  //     if( tab === 'STEP3') setTab('FINAL')
-
-  //   } catch (error) { console.log(error) }
-  // }
-
   return (
     <div>
       <div className="ms-panel-body content-height">
@@ -49,10 +20,10 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
           </div>
           <div className="content ">
             <h3 id="default-wizard-h-0" tabIndex={-1} className="title current">Step 1</h3>
-            {tab === "STEP1" && !isSelfCreated && <ClinicRegistration1 tab={tab} source={source} /> }
-            {tab === "STEP2" && <CLiniRegistration2 tab={tab} source={source} /> }
-            {tab === "STEP3" && <DoctorRegistration tab={tab} source={source} /> }
-            {tab === "FINAL" && <DealRegistration source={source} /> }
+            {tab === "STEP1" && !isSelfCreated && <ClinicRegistration1 tab={tab} setTab={setTab} source={source || 'Clinic'} /> }
+            {tab === "STEP2" && <CLiniRegistration2 tab={tab} source={source || 'Clinic' } /> }
+            {tab === "STEP3" && <DoctorRegistration tab={tab} source={source || 'Clinic' } /> }
+            {tab === "FINAL" && <DealRegistration source={source || 'Clinic' } /> }
           </div>
         </div>
       </div>

@@ -8,8 +8,8 @@ export const useEvent = (event_name) => {
             setCallbackData(JSON.parse(event.data))
         });
 
-        return(() => Source.removeEventListener(event_name, (e) => console.log('event', e)))
-    }, [])
+        return(() =>  Source.removeEventListener(event_name, (e) => {}))
+    }, [event_name])
 
     return(callbackData)
 }

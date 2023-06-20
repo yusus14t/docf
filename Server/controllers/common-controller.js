@@ -101,6 +101,12 @@ const validateOtp = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const allSpecializations = async ( req, res ) => {
+    commonManager.allSpecializations( req.body )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
@@ -118,4 +124,5 @@ module.exports = {
     organizationDetails,
     patientSignUp,
     validateOtp,
+    allSpecializations,
 }

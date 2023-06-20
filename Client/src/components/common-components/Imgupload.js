@@ -28,7 +28,6 @@ export default function ImgUpload({ source, file=() => {} }) {
             </div>
           )}
       </label>
-      <p className={`${source === 'clinic' ? 'text-center' : 'mx-2'} mt-2`}>Upload {source === 'clinic' ? 'clinic' : 'your'} photo</p>
       <input
         type="file"
         id="upload-button"

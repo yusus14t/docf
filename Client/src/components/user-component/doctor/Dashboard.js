@@ -15,32 +15,46 @@ const Dashbaord = () => {
     const [appointmentData, setAppointmentData] = useState({})
     const [isWeekChart, setIsWeekChart] = useState(true)
     const [chartData, setChartData] = useState({})
+    const [analyticsData, setAnalyticsData] = useState({})
     const event = useEvent('new-appointment')
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const toasty = useToasty();
 
     useEffect(() => {
         changeFilter('clinics')
-        getAppointments()
-    }, [])
+        getAppointments('waiting')
+        getAppointments('unreached')
+    },[])
+
+    useEffect(() => {
+        analytics()
+    }, [appointments, unreachedData])
 
     useEffect(() => {
         if (userInfo._id === event?.data?.doctorId) {
             setAppointments([...appointments, event.data])
             toasty.success('New Appointment Added')
         }
-    }, [event])
+    }, [event?.data])
 
-    const getAppointments = async () => {
+    const analytics = async () => {
+        try{
+            let { data } = await axiosInstance.get('/doctor/analytics')
+            setAnalyticsData(data?.analytics)
+        } catch(error){
+            toasty.error(error?.message) 
+            console.error(error) 
+        }
+    }
+
+    const getAppointments = async (status) => {
         try {
-            let { data } = await axiosInstance.get('/doctor/get-appointments', { ...getAuthHeader() })
-            data?.appointments?.forEach( appointment => {
-                if( appointment._id === 'waiting') setAppointments(appointment.data)
-                else if( appointment._id === 'unreached') setUnreachedData(appointment.data)
-            })
-            
+            let { data } = await axiosInstance.get('/doctor/get-appointments', {params: { status }, ...getAuthHeader()})
+            if(status === 'waiting')  setAppointments(data?.appointments || [])
+            else setUnreachedData(data?.appointments || [])   
         } catch (error) { console.log(error) }
     }
+
 
     const changeFilter = (value) => {
         let data = {
@@ -83,7 +97,10 @@ const Dashbaord = () => {
                             <div class="ms-card-body media">
                                 <div class="media-body">
                                     <h6>Today Patients</h6>
-                                    <p class="ms-card-change"> 45</p>
+                                    <div className='d-flex justify-content-start'>
+                                        <div className='ms-card-change  me-3'><span className='fs-07 text-white'>Today </span>{analyticsData?.today || '0'}</div>
+                                        <div className='ms-card-change '><span className='fs-07 text-white'>Total </span>{analyticsData?.total || '0'}</div>
+                                    </div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
@@ -96,7 +113,7 @@ const Dashbaord = () => {
                             <div class="ms-card-body media">
                                 <div class="media-body">
                                     <h6>Current Token</h6>
-                                    <p class="ms-card-change"> 4</p>
+                                    <div className='ms-card-change '><span className='fs-07 text-white'>Today </span>{analyticsData?.token || '0'}</div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
@@ -109,7 +126,7 @@ const Dashbaord = () => {
                             <div class="ms-card-body media">
                                 <div class="media-body">
                                     <h6>Remaining</h6>
-                                    <p class="ms-card-change"> 45</p>
+                                    <div className='ms-card-change '><span className='fs-07 text-white'>Today </span>{ appointments.length || '0'}</div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
@@ -122,7 +139,7 @@ const Dashbaord = () => {
                             <div class="ms-card-body media">
                                 <div class="media-body">
                                     <h6>Unreached</h6>
-                                    <p class="ms-card-change">45</p>
+                                    <div className='ms-card-change '><span className='fs-07 text-white'>Today </span>{unreachedData.length || '0'}</div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
@@ -172,14 +189,14 @@ const Dashbaord = () => {
                         </div>
                         <div class="ms-panel-body d-flex justify-content-around align-items-center">
                             <div>
-                                <span className='h4'>Organization</span>
-                                <div className='mt-3 float-left'>
-                                    <p className='h6'>Hospitals <span className='h5 text-info'>46%</span></p>
-                                    <p className='h6'>Clinics <span className='h5 text-info'>46%</span></p>
-                                    <p className='h6'>Doctors <span className='h5 text-info'>46%</span></p>
+                                <span className='h4'>Patients By Gender</span>
+                                <div className='mt-2 float-left'>
+                                    <p className='h6'>Male <span className='h5 text-info'>46%</span></p>
+                                    <p className='h6'>Female <span className='h5 text-info'>46%</span></p>
+                                    <p className='h6'>Others <span className='h5 text-info'>46%</span></p>
                                 </div>
                             </div>
-                            <div className='text-center' style={{ height: '12rem', width: '12rem' }}>
+                            <div className='text-center' style={{ height: '14rem', width: '14rem' }}>
                                 <DoughnutChart filterType={isWeekChart ? 'week' : 'month'} labelName={'Patient'} chartData={chartData} />
                             </div>
                         </div>
@@ -218,8 +235,8 @@ const Dashbaord = () => {
                                 <h6>Today Unreached Patients</h6>
                             </div>
                         </div>
-                        <div class="ms-panel-body p-0 h20 overflow-scroll">{ console.log(unreachedData)}
-                            <ul class={`ms-followers ms-list ms-scrollable ps ${appointments?.length == 0 && 'text-center'}`}>
+                        <div class="ms-panel-body p-0 h20 overflow-scroll">
+                            <ul class={`ms-followers ms-list ms-scrollable ps ${unreachedData?.length == 0 && 'text-center'}`}>
                                 {unreachedData?.length > 0 ?
                                     unreachedData.map((appointment, i) => <li class="ms-list-item media">
                                         <img src={image} class="ms-img-small ms-img-round" alt="people" />
@@ -239,7 +256,10 @@ const Dashbaord = () => {
                 <Appointment
                     isOpen={isModalOpen}
                     setIsOpen={setIsModalOpen}
-                    refresh={() => getAppointments()}
+                    refresh={() => {
+                        getAppointments('waiting')
+                        getAppointments('unreached')
+                    }}
                 />
             }
 
@@ -248,7 +268,11 @@ const Dashbaord = () => {
                     isOpen={isUserModalOpen}
                     setIsOpen={setIsUserModalOpen}
                     appointmentId={appointmentData?._id}
-                    refresh={() => getAppointments()}
+                    refresh={() => {
+                        getAppointments('waiting')
+                        getAppointments('unreached')
+
+                    }}
                 />
             }
         </div>

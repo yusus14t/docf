@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import image from "../../../assets.app/img/dashboard/doctor-1.jpg";
+import toasty from '../../../hooks/toasty'
+import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 
 const Dashbaord = () => {
+    const [ analyticsData, setAnalyticsData ] = useState({});
+    useEffect(() => {
+        analytics()
+    },[])
+
+    const analytics = async () => {
+        try{
+            let { data } = await axiosInstance.get('/super-admin/analytics', getAuthHeader())
+            console.log(data)
+        } catch(error){ 
+            console.error(error) 
+            toasty.error(error?.message)
+        }
+    }
     return (
         <div className='ms-content-wrapper'>
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">

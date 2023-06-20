@@ -4,6 +4,7 @@ const OrganizationModel = require('../models/organization-model');
 const AppointmentModel = require('../models/appointment-model');
 const { randomOtp } = require('../constants/utils')
 const ObjectId = require('mongoose').Types.ObjectId
+const { specialization } = require('../seeds/specialization-seed')
 
 
 
@@ -19,39 +20,41 @@ const sessionInfo = async ( body, user ) => {
 
 const createClinic = async ( body, userInfo ) => {
     try{ 
-        if( body?.tab === 'STEP1' ){
-            let doctor  = await UserModel.findOne({ email: body.email }).lean();
+        let organization  = await OrganizationModel.findOne({ phone: body.phone }).lean();
 
-            if( !doctor ){
-                let clinic = await OrganizationModel({ 
-                    ...body,
-                    organzationtype: 'CL',
-                    tab: { step: body.tab, isComplete: true }
-                }).save()
-                
-                doctor = await UserModel({
-                    ...body,
-                    password: body.password === body.confirmPassword ? await encryptPassword(body.password) : "",
-                    userType: 'DR',
-                    organizationId: clinic?._id,
-                    isActive: true,
-                    isPortal: true,
-                }).save()
-            }
+        if( !organization ){
+            let clinic = await OrganizationModel({ 
+                ...body,
+                organzationtype: 'CL',
+                tab: { step: body.tab, isComplete: true }
+            }).save()
             
+            doctor = await UserModel({
+                ...body,
+                password: body.password === body.confirmPassword ? await encryptPassword(body.password) : "",
+                userType: 'DR',
+                organizationId: clinic?._id,
+                isActive: true,
+                isPortal: true,
+            }).save()
+
             delete(doctor.password)
-            return Success({ messsage: 'Successfully created', doctor, tab: body.tab })
-
-        } else if( body?.tab === 'STEP2' ){
-            await OrganizationModel.updateOne({ _id: body?.organizationId }, {...body, tab: { step: body.tab, isComplete: true }})
-            return Success({ messsage: 'Successfully updated', tab: body.tab })
-
-        } else if( body?.tab === 'STEP3' ){
-            for( let i=1 ; i <= parseInt(body.doctors); i++ ){
-                console.log({...body, organizationId: body.organizationId })
-                await UserModel({...body.doctor[i], organizationId: body.organizationId }).save()
-            }
+            return Success({ message: 'Successfully created', doctor, tab: body.tab })
+        } else {
+            return Error({ message: 'Already created'})
         }
+        
+
+        // } else if( body?.tab === 'STEP2' ){
+        //     await OrganizationModel.updateOne({ _id: body?.organizationId }, {...body, tab: { step: body.tab, isComplete: true }})
+        //     return Success({ messsage: 'Successfully updated', tab: body.tab })
+
+        // } else if( body?.tab === 'STEP3' ){
+        //     for( let i=1 ; i <= parseInt(body.doctors); i++ ){
+        //         console.log({...body, organizationId: body.organizationId })
+        //         await UserModel({...body.doctor[i], organizationId: body.organizationId }).save()
+        //     }
+        // }
 
     } catch(error){ 
         console.log(error) 
@@ -193,6 +196,13 @@ const validateOtp = async ( body ) => {
     } catch(error){ console.log(error) }
 }
 
+const allSpecializations = async ( body ) => {
+    try{
+       let specializations = specialization.data 
+       return Success({ specializations })
+    } catch(error){ console.log(error) }
+}
+
 
 
 
@@ -207,4 +217,5 @@ module.exports = {
     organizationDetails,
     patientSignUp,
     validateOtp,
+    allSpecializations,
 }
