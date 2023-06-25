@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom"
 import Dashboard from '../components/user-component/superAdmin/Dashboard';
-import Doctors from '../components/user-component/DoctorsList';
+import Doctors from '../components/user-component/Doctors';
 import Notification from '../components/common-components/Notification/Notification';
 import Support from '../components/common-components/Support/Support';
 
