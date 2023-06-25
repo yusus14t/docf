@@ -41,7 +41,7 @@ const WebHeader = () => {
             </li>
 
             <li className="ms-nav-item ms-d-none">
-              <Link to="/hospitals" className="text-white" data-bs-toggle="modal">Gynae</Link>
+              <Link to="/gynae" className="text-white" data-bs-toggle="modal">Gynae</Link>
             </li>
 
             <li className="ms-nav-item ms-d-none">

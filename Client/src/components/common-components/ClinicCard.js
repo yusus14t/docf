@@ -96,21 +96,14 @@ export function ClinicListCard({ clinics }) {
                 <FontAwesomeIcon className="clinic-icon" icon={faPhone} />
                 <p className="d-inline-block ml-2 mb-0">+91 8218237855</p>
               </div>
-              <div>
-                {/* <FontAwesomeIcon className="clinic-icon " icon={faEnvelope} />
-                <p className="d-inline-block ml-2 mb-0">
-                  madniclinic@gmial.com
-                </p> */}
-                <br />
-                <FontAwesomeIcon
+
+              <div className="address-clinc">
+                <p className="ml-2 adjust  ">
+                  <FontAwesomeIcon
                   className="clinic-icon address-icon"
                   icon={faLocationDot}
                 />
-              </div>
-
-              <div>
-                <p className="ml-2 adjust ">
-                  Nala road nagla jamalpur, <br /> Aligarh Uttar Pradesh
+                  Nala road nagla jamalpur,Aligarh Uttar Pradesh
                 </p>
               </div>
             </div>

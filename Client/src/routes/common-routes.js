@@ -1,34 +1,40 @@
-import { Navigate } from 'react-router-dom';
-import { userRoutes as userRouteConstant } from '../constants/constant';
+import { Navigate } from "react-router-dom";
+import { userRoutes as userRouteConstant } from "../constants/constant";
 
-import Detail from  '../components/webcomponents/Detail';
-import ClinicDetail from  '../components/webcomponents/Clinic_Details';
-import DoctorsList from  '../components/webcomponents/DoctorsList';
-import SignUp from  "../components/authentication/SignUp";
-import ClinicGrid from  "../components/webcomponents/ClinicGrid";
-import LogIn from  "../components/authentication/LogIn";
-import UserSignUp from "../components/authentication/UserSignUp"
-import Home from  "../components/webcomponents/Home.js";
+import Detail from "../components/webcomponents/doctor/Detail";
+import ClinicDetail from "../components/webcomponents/Clinic_Details";
+import DoctorsList from "../components/webcomponents/doctor/DoctorsList";
+import SignUp from "../components/authentication/SignUp";
+import ClinicGrid from "../components/webcomponents/ClinicGrid";
+import LogIn from "../components/authentication/LogIn";
+import UserSignUp from "../components/authentication/UserSignUp";
+import Home from "../components/webcomponents/Home.js";
 import About from "../components/webcomponents/About.js";
-import Lockscreen from  "../components/authentication/Lockscreen";
-import Contact from '../components/webcomponents/Contact';
-import DepartmentSignUp from '../components/authentication/DepartmentSignUp';
-import AfterSignup from '../components/process/AfterSignup';
+import Lockscreen from "../components/authentication/Lockscreen";
+import Contact from "../components/webcomponents/Contact";
+import DepartmentSignUp from "../components/authentication/DepartmentSignUp";
+import DepartmentLogin from "../components/authentication/DeaprtmetnLogin";
+import AfterSignup from "../components/process/AfterSignup";
+import HospitalGrid from "../components/webcomponents/Hospital/HospitalGrid";
+import Gynae from "../components/webcomponents/Gynae";
 
-const getUserType = () => JSON.parse(localStorage.getItem('user'))?.userType
-const isLock = JSON.parse(localStorage.getItem('email'))
+const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
+const isLock = JSON.parse(localStorage.getItem("email"));
 
 const COMMON_ROUTE = [
   { path: "/", element: <Home /> },
-  { path: "/doctor-detail", element: <Detail /> },
+  { path: "/doctor-details", element: <Detail /> },
   { path: "/department-Signup", element: <DepartmentSignUp /> },
-
+  { path: "/department-Login", element: <DepartmentLogin /> },
   { path: "/doctors", element: <DoctorsList /> },
   { path: "/about", element: <About /> },
   { path: "/clinic-detail", element: <ClinicDetail /> },
   { path: "/clinic", element: <ClinicGrid /> },
   { path: "/contact", element: <Contact /> },
+  { path: "/hospitals", element: <HospitalGrid /> },
   { path: "/after", element: <AfterSignup /> },
+  { path: "/login2", element: <LogIn /> },
+  { path: "/gynae", element: <Gynae /> },
 
   {
     path: "/login",
@@ -73,4 +79,3 @@ const COMMON_ROUTE = [
 ];
 
 export default COMMON_ROUTE;
-  
