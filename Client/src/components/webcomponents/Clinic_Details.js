@@ -41,7 +41,7 @@ function Detail() {
 
   return (
     <>
-      <div style={{ background: "#f1f5fc" }} className="ms-content-wrapper">
+      <div className="ms-content-wrapper">
         <div className="box"></div>
         <h4 className="clinic-detail-name">Aligarh Hospital</h4>
         <div
@@ -75,167 +75,84 @@ function Detail() {
         <div className="bookappoint cursor-pointer" onClick={() => handleAppointmentModal()}>
           <h5 className="p-2">Book Appointment</h5>
         </div>
-        <div className="clinic-deatils-header">
-          <ul className="d-flex flex-row justify-content-around cursor-pointer">
-            <li>
-              <h5 className="clinic-detail-item">Waiting Area</h5>
-            </li>
-            <li>
-              <h5 className="clinic-detail-item">Clinic Details</h5>
-            </li>
-            <li>
-              <h5 className="clinic-detail-item cursor-pointer">
-                About Clinic
-              </h5>
-            </li>
-          </ul>
-        </div>
 
-        <div className="">
-          {clinicDetail?.doctors?.map( doctor => 
-            <div>
-              <span> Full Name: {doctor.fullName}</span><br />
-              <span> Phone: {doctor.phone}</span><br />
-              <span> Token: {doctor.token}</span>
-            </div>  
-          )}
-        </div>
-        {true && (
-          <div style={{ background: "#ffffff" }} className="text-center">
-            <div class="container mt-5">
-              <h2>Clinic Timing</h2>
-              <table class="table table-bordered">
-                <thead class="thead-light">
-                  <tr>
-                    <th>Session</th>
-                    <th>Morning</th>
-                    <th>Evening</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Monday</td>
-                    <td>9:00 AM - 1:00 PM</td>
-                    <td>4:00 PM - 8:00 PM</td>
-                  </tr>
-                  <tr>
-                    <td>Tuesday</td>
-                    <td>9:00 AM - 1:00 PM</td>
-                    <td>4:00 PM - 8:00 PM</td>
-                  </tr>
-                  <tr>
-                    <td>Wednesday</td>
-                    <td>9:00 AM - 1:00 PM</td>
-                    <td>4:00 PM - 8:00 PM</td>
-                  </tr>
-                  <tr>
-                    <td>Thursday</td>
-                    <td>9:00 AM - 1:00 PM</td>
-                    <td>4:00 PM - 8:00 PM</td>
-                  </tr>
-                  <tr>
-                    <td>Friday</td>
-                    <td>9:00 AM - 1:00 PM</td>
-                    <td>4:00 PM - 8:00 PM</td>
-                  </tr>
-                  <tr>
-                    <td>Saturday</td>
-                    <td>9:00 AM - 1:00 PM</td>
-                    <td>4:00 PM - 8:00 PM</td>
-                  </tr>
-                  <tr>
-                    <td>Sunday</td>
-                    <td>10:00 AM - 12:00 PM</td>
-                    <td>5:00 PM - 7:00 PM</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="clinic-address text-start">
-              <div className="row">
-                <div className="col-sm-5">
-                  <h4>
-                    { clinicDetail?.detail?.address }
-                  </h4>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 ">
+              <div className="wating-area-clinic container">
+                <h4 className="text-center">Waiting List</h4>
+                <div className="Current-token-clinic-details">
+                  <h1 className="mt-4">45</h1>
                 </div>
-                <div className="col-sm-"></div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div  className="text-center">
+                <div class="container">
+                  <h4>Clinic Timing</h4>
+                  <table class="table table-bordered">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Session</th>
+                        <th>Morning</th>
+                        <th>Evening</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Monday</td>
+                        <td>9:00 AM - 1:00 PM</td>
+                        <td>4:00 PM - 8:00 PM</td>
+                      </tr>
+                      <tr>
+                        <td>Tuesday</td>
+                        <td>9:00 AM - 1:00 PM</td>
+                        <td>4:00 PM - 8:00 PM</td>
+                      </tr>
+                      <tr>
+                        <td>Wednesday</td>
+                        <td>9:00 AM - 1:00 PM</td>
+                        <td>4:00 PM - 8:00 PM</td>
+                      </tr>
+                      <tr>
+                        <td>Thursday</td>
+                        <td>9:00 AM - 1:00 PM</td>
+                        <td>4:00 PM - 8:00 PM</td>
+                      </tr>
+                      <tr>
+                        <td>Friday</td>
+                        <td>9:00 AM - 1:00 PM</td>
+                        <td>4:00 PM - 8:00 PM</td>
+                      </tr>
+                      <tr>
+                        <td>Saturday</td>
+                        <td>9:00 AM - 1:00 PM</td>
+                        <td>4:00 PM - 8:00 PM</td>
+                      </tr>
+                      <tr>
+                        <td>Sunday</td>
+                        <td>10:00 AM - 12:00 PM</td>
+                        <td>5:00 PM - 7:00 PM</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        )}
+          <div className="row">
+            <div className="col-md-6">
+              <h6>
+                <span>Address </span>: Nala road nagla Jamalpur <br />
+                Aligarh 202001, Utter Pradesh
+              </h6>
 
-        {true && (
-          <div style={{ background: "#ffffff" }} className="about-clinic ">
-            <p className="p-2">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et, quo
-              dolores repellendus animi, impedit natus corrupti sapiente vitae
-              aliquid porro laborum numquam minus sequi possimus vel nesciunt
-              cum? Labore, iusto! Repellendus quas alias vero! Consequuntur
-              aliquid nesciunt dolorem voluptate! Ipsam vitae repellendus in,
-              omnis quae illo ducimus corporis placeat quo dolor reiciendis est
-              quas, molestiae quam libero laboriosam. Quas vero aliquam
-              provident eum expedita quae veritatis molestias fugiat repudiandae
-              sapiente consequuntur, deserunt eaque reiciendis minus debitis
-              possimus mollitia ullam architecto quod iste. Libero blanditiis a,
-              recusandae, earum assumenda quis fuga dolorem eius eos dolores
-              repellendus cum fugit et dolorum nostrum ipsa ducimus commodi
-              deserunt? Nemo quae sint, debitis nostrum expedita voluptatem
-              sequi corrupti officia pariatur iste ullam aspernatur tempora
-              voluptatum laborum perferendis accusantium quaerat tempore
-              inventore, nisi iure odit autem architecto magnam! Sequi
-              voluptates amet ipsam illum, ad ea nam nulla corrupti neque
-              consequatur. Minus eveniet nobis eligendi impedit, quibusdam
-              dolorem quas totam odio omnis laborum ab ipsa! Voluptatem voluptas
-              quod iste magnam dignissimos similique dicta, id est error facilis
-              excepturi eaque eum voluptates nam corrupti in dolores porro amet
-              veritatis rem enim ex? Illo, soluta quasi! Delectus sequi
-              doloribus adipisci fuga voluptatibus, nesciunt odio dolore sint
-              incidunt atque ducimus optio deserunt officiis corrupti quod
-              error. Obcaecati at hic nam amet facilis corrupti est pariatur
-              placeat repellendus, reiciendis autem ab. Qui laudantium excepturi
-              nesciunt necessitatibus expedita asperiores veritatis? Optio
-              tenetur dicta ea, fuga accusantium, perspiciatis nihil ipsam unde
-              eos a dolore quaerat nam. Reiciendis, quis aliquam? Distinctio
-              quae quibusdam eligendi. Perferendis, consequuntur et dolores sint
-              beatae earum ad est obcaecati, totam cum fugiat culpa quaerat,
-              delectus voluptatem ullam suscipit repudiandae iste cumque
-              provident voluptatibus recusandae? Magnam ipsum incidunt vel,
-              cumque doloribus recusandae repellat at minus nesciunt modi
-              voluptate enim deserunt nostrum velit. Dolorum aspernatur
-              perspiciatis distinctio tenetur maxime est, aut nesciunt
-              consequuntur, sint dolor consectetur blanditiis dolore incidunt
-              illum aliquam sapiente at corporis voluptate expedita mollitia!
-              Eum ullam dicta cumque voluptas! Consequuntur maiores excepturi
-              voluptates omnis! Aliquam eaque repellendus facere modi a ad vel
-              obcaecati ratione unde earum incidunt quod cumque repellat magni
-              consequuntur, ducimus natus eligendi beatae quia deleniti. Iure ex
-              necessitatibus eos veniam inventore sapiente aspernatur dolore
-              optio saepe officia quaerat, eligendi consequuntur doloremque,
-              voluptatem sint tempora dignissimos. Nesciunt sed mollitia, nisi
-              dignissimos enim quibusdam repudiandae non doloremque cupiditate
-              ipsa aliquid sunt dicta est pariatur odit eaque esse omnis
-              quisquam, impedit nihil voluptatem? Dignissimos iure accusamus,
-              consectetur exercitationem magnam quam. Incidunt similique, autem
-              delectus quas natus fugit repellendus earum repudiandae!
-              Laudantium a repellendus beatae assumenda nesciunt perspiciatis
-              hic fugiat veniam aliquid necessitatibus similique expedita illum
-              excepturi, nulla doloremque temporibus non, voluptates, laboriosam
-              voluptas soluta. Quod repellat, iusto expedita temporibus sapiente
-              ratione ex accusantium aliquid facere non quae atque voluptas nam
-              eaque, distinctio veniam nostrum illum explicabo excepturi
-              blanditiis reiciendis. Esse veniam voluptatum molestiae aliquam
-              impedit eaque voluptatem animi id numquam consequuntur rerum atque
-              in perspiciatis eos, sunt, nam tempora ab aliquid provident porro
-              dignissimos ducimus, hic aperiam? Illum, minus. Quasi illo
-              veritatis sed consequatur. Neque incidunt alias obcaecati!
-            </p>
-          </div>
-        )}
-
-        <div className="wating-area-clinic container">
-          <div className="Current-token-clinic-details">
-            <h1 className="mt-4">45</h1>
+            </div>
+            <div className="col-md-6">
+              <h6>
+                <span>Contact Number </span>: +91 8754256653
+              </h6>
+            </div>
           </div>
         </div>
       </div>
