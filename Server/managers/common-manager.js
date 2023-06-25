@@ -100,10 +100,10 @@ const appointmentDoctors = async ( body, user ) => {
     try{
         let query = {}
 
-        if(user.userType === 'DR' ){
-            query = { organizationId: user.organizationId }
+        if( ['DR', 'PT'].includes(user.userType) ){
+            query = { organizationId: ObjectId(body?.organizationId || user?.organizationId)   }
         }
-
+        console.log(query)
         let doctors = await UserModel.aggregate([
             {
                 $match: { userType: 'DR', isActive: true, ...query },
@@ -141,8 +141,6 @@ const appointmentDoctors = async ( body, user ) => {
 }
 
 
-
-
 const getPatientByNumber = async ( body, user ) => {
     try{
         if( user.userType !== 'DR') return Error({ message: 'You are not access' })
@@ -166,9 +164,6 @@ const organizationDetails = async ( body, user ) => {
     } catch(error){ console.log(error) }
 }
 
-
-
-
 const patientSignUp = async ( body, user ) => {
     try{
         const otp = randomOtp()
@@ -176,20 +171,19 @@ const patientSignUp = async ( body, user ) => {
         if(user){
             await UserModel.updateOne({ phone: body?.phone }, { 'twoFactor.otp': otp })
         } else {
-            user = await UserModel({ phone: body.phone, twoFactor: { otp } }).save()
+            user = await UserModel({ phone: body.phone, twoFactor: { otp }, userType: body?.source === 'department' ? 'DR' : 'PT' }).save()
         }
         
         await smsService(`your otp is ${ otp } `, body.phone)
-
         return Success({ message: 'OTP Sent to your phone.', user })
     } catch(error){ console.log(error) }
 }
 
 const validateOtp = async ( body ) => {
     try{
-        let user = await UserModel.findOne({_id: body?.patientId })
+        let user = await UserModel.findOne({_id: body?.userId })
         if( user?.twoFactor?.otp === body?.otp ){
-            await UserModel.updateOne({_id: user._id}, { 'twoFactor.otp':  0000 })
+            await UserModel.updateOne({_id: user._id}, { 'twoFactor.otp':  0 })
             let token = createToken(user._id)
             return Success({ user, message: 'Your mobile number is verified.', token})
         } else {  return Error({ message: 'Invalid OTP!' }) }
@@ -203,6 +197,62 @@ const allSpecializations = async ( body ) => {
     } catch(error){ console.log(error) }
 }
 
+const getAllClinics = async ( body ) => {
+    try{
+       let clinics = await OrganizationModel.find({ organizationType: 'CL',  })
+       return Success({ clinics })
+    } catch(error){ console.log(error) }
+}
+
+const clinicDetails = async ( body ) => {
+    try {
+        let today = new Date
+        today.setHours(0,0,0,0)
+
+        let doctors = await UserModel.aggregate([
+            {
+                $match: {
+                    organizationId: ObjectId(body?._id),
+                }
+            },
+            {
+                $lookup: {
+                    from: 'appointments',
+                    let: { 'doctor': '$_id' },
+                    pipeline:[
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ['$doctorId', '$$doctor'],
+                                },
+                                createdAt: { $gte: today },
+                                status: 'waiting',
+                            }
+                        },
+                        {
+                            $sort: { createdAt: -1 }
+                        }
+                    ],
+                    as: 'appointment'
+                }
+            },
+            {
+                $project: {
+                    fullName: 1,
+                    phone: 1,
+                    token: {$first: '$appointment.token'},
+                }
+            }
+        ])
+
+        console.log(doctors)
+        let detail = await OrganizationModel.findOne({ _id: ObjectId(body?._id)})
+        
+        let clinicDetail = { detail , doctors}
+
+       return Success({ clinicDetail })
+    } catch(error){ console.log(error) }
+}
 
 
 
@@ -218,4 +268,6 @@ module.exports = {
     patientSignUp,
     validateOtp,
     allSpecializations,
+    getAllClinics, 
+    clinicDetails,
 }

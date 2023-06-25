@@ -39,7 +39,7 @@ const Error = ({message = 'Something went wrong!', code = 500, status = 'Fail', 
           'Cache-Control': "no-cache",
         }
       })
-      console.log(data)
+      console.log(data?.data)
     } catch(error){ console.error(error) }
 
  }

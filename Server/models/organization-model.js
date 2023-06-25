@@ -16,6 +16,8 @@ const organizationSchema = new Schema({
     timing: { type: String },
     offDay: { type: String },
     parking: { type: String, enum: [ 'available', 'unAvailable' ] },
+
+    isActive: { type: String, default: false },
     additionalDoctors: [
         { type: Schema.Types.ObjectId }
     ],

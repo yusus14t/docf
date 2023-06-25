@@ -28,6 +28,8 @@ router.post('/patient-signup', commonController.patientSignUp)
 router.post('/validate-otp', commonController.validateOtp)
 router.post('/login', commonController.logIn);
 router.get('/user-by-email', commonController.getUserByEmail);
+router.get('/all-clinics', commonController.getAllClinics);
+router.get('/clinic-detail', commonController.clinicDetails);
 router.get('/stream', EventHandler )
 
 

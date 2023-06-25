@@ -1,13 +1,19 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import background from "../../assets.app/img/backgrounds/login.jpg"
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { axiosInstance, getAuthHeader } from '../../constants/utils';
+import { axiosInstance, getAuthHeader, NumberFormat } from '../../constants/utils';
 import useToasty from '../../hooks/toasty';
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+// import store from '../../redux/Store'
+// import { SET_SESSION } from '../../redux/Reducer'
+// import { useDispatch } from 'react-redux'
 
 const UserSignUp = () => {
-
+  // const dispatch = useDispatch()
+  const { state: LocationState } = useLocation()
+  const navigate = useNavigate()
   const inputRef = useRef(null)
   const otpRef = useRef(null)
   const toasty = useToasty()
@@ -19,11 +25,16 @@ const UserSignUp = () => {
     phone: "",
     age: "",
     gender: "",
-    address: ""
-  })
+   })
+
 
   const patientSignup = async (value) => {
     try {
+      if(!value){
+        toasty.error('Enter number')
+        return
+      }
+
       let { data } = await axiosInstance.post('/patient-signup', { ...details, phone: value })
       setPatient(data?.user)
       setDetails({ ...details, phone: value })
@@ -39,11 +50,15 @@ const UserSignUp = () => {
   }
   const ValidateOTP = async () => {
     try {
-      let { data } = await axiosInstance.post('/validate-otp', { otp: otpRef.current.value, patientId: patient?._id })
+      let { data } = await axiosInstance.post('/validate-otp', { otp: otpRef.current.value, userId: patient?._id })
       localStorage.setItem('user', JSON.stringify(data?.user))
       localStorage.setItem('token', JSON.stringify(data?.token))
+
+
       if (data?.user?.twoFactor?.isVerified) {
-        window.location.replace('/patient')
+        if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
+        else window.location.replace('/patient')
+        
       } else {
         setIsUserForm(true)
       }
@@ -60,7 +75,10 @@ const UserSignUp = () => {
       formData['_id'] = patient?._id
       let { data } = await axiosInstance.post('/patient/patient-details', details, getAuthHeader())
       localStorage.setItem('user', JSON.stringify(data?.user))
-      window.location.replace('/patient')
+
+      if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
+      else window.location.replace('/patient')
+
     } catch (error) {
       toasty.error(error?.message)
       console.error(error)
@@ -78,7 +96,7 @@ const UserSignUp = () => {
         </div>}
         {!otp && <>
           <label className='mb-2' htmlFor="Phone">Mobile Number</label>
-          <input id='Phone' className='form-control mb-2 letterSpcing' type="number" pattern='###-###-####' placeholder='822992255' ref={inputRef} />
+          <input id='Phone' className='form-control mb-2 letterSpcing' type="number" pattern='###-###-####' placeholder='822992255' ref={inputRef} onChange={NumberFormat} />
           <span><button onClick={() => patientSignup(inputRef.current.value)} className='btn btn-light btn1'>Submit</button></span></>
         }
         {otp && <div className="otp mt-2">
@@ -86,7 +104,10 @@ const UserSignUp = () => {
           <input className='form-control mt-2 letterSpcing' type="number" name="OTP" id="" placeholder='X X X X' ref={otpRef} />
           <button onClick={ValidateOTP} className='btn btn-light btn1 mt-4'>Log In</button>
         </div>}
-        <span><a href="/"><p className='text-light mt-3'>If you have already an accont <span className='text-info'>Login</span></p></a></span>
+        <span>
+          <Link to={'/department-login'}>
+            <p className='text-light mt-3'>Hospitals/ clinics are click on <span className='text-info'>Login</span></p>
+          </Link></span>
       </div>}
       {isUserForm && !patient?.isVerified && <div className="loginform mt-0 user-details col-3 d-flex flex-column">
         <h3 className='mb-3'>Fill your Details</h3>

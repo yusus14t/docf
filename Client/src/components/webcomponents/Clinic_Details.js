@@ -1,7 +1,44 @@
 import background from "../../assets.app/img/user-profile-bg-1920x400.jpg";
 import drprofile from "../../assets.app/img/doctors-list/182x280-0.jpg";
+import { axiosInstance, getAuthHeader } from "../../constants/utils";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Appointment from "../common-components/Appointment/Appointment";
+// import { useEvent } from "../../hooks/common-hook";
+// import useToasty from "../../hooks/toasty";
 
 function Detail() {
+  const params = useParams()
+  // const event = useEvent('new-appointment')
+  // const toasty = useToasty()
+  const [clinicDetail, setClinicDetail] = useState({})
+  const [isOpen, setIsOpen] = useState(false)
+  const userInfo = JSON.parse(localStorage.getItem('user'))
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    getClinicDetail()
+  }, [])
+
+  // useEffect(() => {
+  //   if (event?.data?.doctorId) {
+  //       toasty.success('New Appointment Added')
+  //   }
+  // }, [event?.data])
+
+  const getClinicDetail = async () => {
+    try{
+      let { data } = await axiosInstance.get('/clinic-detail', { params: { _id: params.id }, ...getAuthHeader()} )
+      console.log('data', data)
+      setClinicDetail(data?.clinicDetail)
+    } catch(error){ console.error(error) }
+  }
+
+  const handleAppointmentModal =  () => {
+    if(!userInfo) navigate('/patient-login', { state: { redirectTo: window.location.pathname }})
+    setIsOpen(true)
+  }
+
   return (
     <>
       <div className="ms-content-wrapper">
@@ -14,18 +51,19 @@ function Detail() {
             backgroundRepeat: "no-repeat",
           }}
         >
+          <h4 className="clinic-detail-name">{ clinicDetail?.detail?.name }</h4>
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-around  ">
               <img className="clinic-detail-img" src={drprofile} alt="" />
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName mt-4">
-                  Dr Tsunade Senju
+                  { clinicDetail?.doctors && clinicDetail?.doctors['0']?.fullName || 'dfg' }
                 </h4>
                 <h6
                   style={{ display: "inline-block" }}
                   className="text-light clinic-detail-drName"
                 >
-                  Cardiologist
+                  { clinicDetail?.specialization || 'Specialization' }
                 </h6>
               </div>
             </div>
@@ -34,7 +72,7 @@ function Detail() {
             </div>
           </div>
         </div>
-        <div className="bookappoint">
+        <div className="bookappoint cursor-pointer" onClick={() => handleAppointmentModal()}>
           <h5 className="p-2">Book Appointment</h5>
         </div>
 
@@ -118,6 +156,14 @@ function Detail() {
           </div>
         </div>
       </div>
+      { isOpen &&
+        <Appointment 
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          doctors={clinicDetail?.doctors}
+          refresh={() => {}}
+        />
+      }
     </>
   );
 }
