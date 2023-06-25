@@ -42,6 +42,8 @@ function Detail() {
   return (
     <>
       <div style={{ background: "#f1f5fc" }} className="ms-content-wrapper">
+        <div className="box"></div>
+        <h4 className="clinic-detail-name">Aligarh Hospital</h4>
         <div
           className="clinicbanner"
           style={{
@@ -163,7 +165,7 @@ function Detail() {
           </div>
         )}
 
-        {false && (
+        {true && (
           <div style={{ background: "#ffffff" }} className="about-clinic ">
             <p className="p-2">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et, quo
@@ -230,6 +232,12 @@ function Detail() {
             </p>
           </div>
         )}
+
+        <div className="wating-area-clinic container">
+          <div className="Current-token-clinic-details">
+            <h1 className="mt-4">45</h1>
+          </div>
+        </div>
       </div>
       { isOpen &&
         <Appointment 

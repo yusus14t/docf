@@ -3,7 +3,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+.card-gradient-custom1{
+  background: rgb(0,118,215);
+  background: linear-gradient(90deg, rgba(0,118,215,1) 0%, rgba(0,255,0,1) 100%);
 
+
+}
 ::-webkit-scrollbar {
   width: 6px;
   height: 10%;
@@ -79,7 +84,7 @@
 }
 /* ---------------header--------------- */
 .navbar {
-  /* height: 82px; */
+  height: 65px;
   display: flex;
   justify-content: space-between;
 }
@@ -382,6 +387,27 @@
   text-align: center;
   overflow: hidden;
 }
+
+.search-icon{
+  margin-left: 10px;
+  font-size: 16px;
+  padding: 3px;
+  position:absolute;
+  margin-top: 5px;
+}
+.city-input{
+  text-align: center;
+  margin-right:15px ;
+}
+.seacrh-bar-container{
+  height: 60px;
+}
+.dsearch-doctor{
+  width: 600px;
+}
+.seacrh-ul{
+  margin-top: auto;
+}
 /* fotter */
 .footer {
   background-color: rgb(17, 44, 47);
@@ -508,38 +534,55 @@ input::-webkit-inner-spin-button {
 /*------------------------------------------------------------user card ends -----------------------------------------------------*/
 
 /* Doctor card start */
-.drcardcontainer {
-  border-radius: 6px;
-  background-color: #236b71;
-  width: 400px;
-  /* height: 300px; */
+.Dr-container{
+  cursor: pointer;
+  border: solid 3px #0076d7;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 180px;
+  border-radius:6px ;
 }
-.drimgcontainer {
-  align-items: center;
-  margin: auto;
-  padding: 0;
+.experience-dr,
+.dr-qualifiction,
+.dr-address{
+  font-size: 14px;
+  font-weight: 900 !important;
+}
+.dr-spelialization{
+  color: white;
+  font-size: 16px !important;
+  background-color: #0076d7;
+  border-radius:3px ;
+  padding: 2px;
+  /* font-weight: 700 !important; */
+  text-align: center;
+}
+.qualifiction{
+  font-size: 12px;
+}
 
-  /* width: 100%; */
-  /* height: 150px; */
-  object-fit: contain;
+.dr-details{
+  margin-left: 30px;
 }
-.drimage {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border-radius: 50%;
+.dr-profile-img{
+  border-radius: 6px;
   width: 120px;
-  height: 120px;
-  border: 3px solid white;
+  height: 140px;
 }
-.card-body {
-  padding: 5px;
-  background-color: rgba(255, 255, 255, 0.685);
+/*wating-area-clinic*/
+.wating-area-clinic{
+  height: 800px;
+  width: 100%;
 }
-.drname {
-  font-weight: 900;
-  color: #0b3094;
+.Current-token-clinic-details{
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  background-color: #0076d7;
+  border-radius: 6px;
 }
 /*---------------------------user card ends--------------------------*/
+
 
 /*--------------------------Clinic Card starts-----------------------*/
 
@@ -598,7 +641,7 @@ input::-webkit-inner-spin-button {
   font-size: 10px;
 }
 .clinic-specialization {
-  font-size: 10px;
+  font-size: 15px;
   padding: 2px;
   border-radius: 3px;
   color: black;
@@ -611,11 +654,14 @@ input::-webkit-inner-spin-button {
   font-size: 13px;
   margin-top: -200px;
 }
-.adjust {
+.address-clinc{
+  width: 200px;
+}
+/* .adjust {
   position: relative;
   margin-left: 22px;
   top: -20px;
-}
+} */
 .clinic-btn {
   margin: 35px 0 0 0px;
   width: 100%;
@@ -652,17 +698,21 @@ input::-webkit-inner-spin-button {
 .clinicbanner {
   width: 100%;
   height: 450px;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 /*----------------clinic-detail-name--------*/
 .clinic-detail-name {
   color: white;
+  
   margin: auto;
   font-weight: bold;
   padding: 10px;
   text-align: center;
-  background-color: #00bf6380;
-  border-radius: 6px;
+  /* background-color: #00bf63c7; */
+  
+  /* background-color: lightblue; */
+  background-color: #0076d7;
+  /* border-radius: 6px; */
 }
 .clinic-detail-img-container {
   position: relative;
@@ -677,7 +727,8 @@ input::-webkit-inner-spin-button {
   border-radius: 6px;
 }
 .clinic-detail-drName {
-  background-color: rgba(17, 1, 1, 0.456);
+  /* background-color: rgba(17, 1, 1, 0.456); */
+  background-color: #0076d7;
   padding: 5px;
   margin-left: 20px;
 }
@@ -691,8 +742,9 @@ input::-webkit-inner-spin-button {
 .current-clicnic-token {
   width: 100px;
   height: 100px;
+  color: white;
   border-radius: 12px;
-  background-color: #00bf63b0;
+  background-color: #0076d7;
   margin: 5% 0 200px 60%;
 }
 .bookappoint {
@@ -766,9 +818,107 @@ input::-webkit-inner-spin-button {
   margin: auto;
   width: 70%;
 }
+
+/*-----------------------Hospital card-------------*/
+.hospitalCard{
+  height: 300px;
+  background-color: #ffffff;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+.hospital-card-inner-header{
+  width: 100%;
+  height: 20px;
+  background-color: #00bf63a6;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+
+}
+.hospitalCard-background-img{
+  height: 170px;
+  width: 100%;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+
+
+}
+.hospital-btn {
+  margin: 8px 0 0 0px;
+  width: 100%;
+}
+.hospital-specialization{
+  font-size: 22px ;
+  padding: 2px;
+  border-radius: 3px;
+  color: black;
+  display: inline;
+  margin-top:20px;
+  background-color: #00bf6388;
+}
+/*--------------------------end-------------------*/
+
+/*-------------------patient-card-----------------*/
+.patient-card{
+
+  border:3px solid #0076d7;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/*---------------------patient-help------------*/
+.appint-list-card{
+  width: 100%;
+  height: 50px;
+  background-color: #0076d7;
+}
+.patient-profile{
+  width:60%; margin:auto;
+}
+.patient-profile-img{
+  width: 150px;
+  height: 200px;
+}
+/*--------------------ends--------------------*/
+/*---------------------ends-----------------------*/
 /*------------------------end----------------------------*/
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 767px) {
+  .patient-profile-img{
+  width: 150px;
+  height: 150px;
+}
+
+  .patient-profile{
+  width:100%; margin:auto;
+}
+  /*search bar*/
+  .dsearch-doctor{
+    width: auto;
+    
+  }
+  .dsearch-doctor::placeholder{
+
+  }
+  /*----end-----*/
+  /*------------Dr Card----------*/
+  .dr-qualifiction{
+    font-size:12px ;
+  }
+  .dr-spelialization{
+    font-size: 15px !important;
+    padding: 2px;
+    border-radius: 3px;
+  }
+  /*---------------card----------*/
+  /*hospital card starts*/
+  .hospitalCard{
+    /* margin-left:45px ; */
+  }
+
+
+  /*ends*/
 
   /*----------hospital and clinic signup*/
   .after-container-child{

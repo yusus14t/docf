@@ -1,5 +1,5 @@
-import { Navigate } from 'react-router-dom';
-import { userRoutes as userRouteConstant } from '../constants/constant';
+import { Navigate } from "react-router-dom";
+import { userRoutes as userRouteConstant } from "../constants/constant";
 
 import Detail from  '../components/webcomponents/Detail';
 import ClinicDetail from  '../components/webcomponents/Clinic_Details';
@@ -14,9 +14,10 @@ import About from "../components/webcomponents/About.js";
 import Contact from '../components/webcomponents/Contact';
 import DepartmentSignUp from '../components/authentication/DepartmentSignUp';
 import AfterSignup from '../components/process/AfterSignup';
+import Gynae from "../components/webcomponents/Gynae";
 
-const getUserType = () => JSON.parse(localStorage.getItem('user'))?.userType
-const isLock = JSON.parse(localStorage.getItem('email'))
+const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
+const isLock = JSON.parse(localStorage.getItem("email"));
 
 const COMMON_ROUTE = [
   { path: "/", element: <Home /> },
@@ -27,7 +28,10 @@ const COMMON_ROUTE = [
   { path: "/clinic-detail/:id", element: <ClinicDetail /> },
   { path: "/clinic", element: <Clinics /> },
   { path: "/contact", element: <Contact /> },
+  { path: "/hospitals", element: <HospitalGrid /> },
   { path: "/after", element: <AfterSignup /> },
+  { path: "/login2", element: <LogIn /> },
+  { path: "/gynae", element: <Gynae /> },
 
   {
     path: "/login",
@@ -60,4 +64,3 @@ const COMMON_ROUTE = [
 ];
 
 export default COMMON_ROUTE;
-  
