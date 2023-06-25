@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { userRoutes as userRouteConstant } from "../constants/constant";
 
-import Detail from  '../components/webcomponents/Detail';
+// import Detail from  '../components/webcomponents/Detail';
 import ClinicDetail from  '../components/webcomponents/Clinic_Details';
-import DoctorsList from  '../components/webcomponents/DoctorsList';
+import DoctorsList from  '../components/webcomponents/doctor/DoctorsList';
 import SignUp from  "../components/authentication/SignUp";
 import Clinics from  "../components/webcomponents/Clinics";
 // import LogIn from  "../components/authentication/LogIn";
@@ -15,20 +15,22 @@ import Contact from '../components/webcomponents/Contact';
 import DepartmentSignUp from '../components/authentication/DepartmentSignUp';
 import AfterSignup from '../components/process/AfterSignup';
 import Gynae from "../components/webcomponents/Gynae";
+import Hospitals from "../components/webcomponents/Hospital/Hospitals";
+import LogIn from "../components/authentication/LogIn";
 
 const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
 const isLock = JSON.parse(localStorage.getItem("email"));
 
 const COMMON_ROUTE = [
   { path: "/", element: <Home /> },
-  { path: "/doctor-detail", element: <Detail /> },
+  // { path: "/doctor-detail", element: <Detail /> },
   { path: "/department-login", element: <DepartmentSignUp /> },
   { path: "/doctors", element: <DoctorsList /> },
   { path: "/about", element: <About /> },
   { path: "/clinic-detail/:id", element: <ClinicDetail /> },
   { path: "/clinic", element: <Clinics /> },
   { path: "/contact", element: <Contact /> },
-  { path: "/hospitals", element: <HospitalGrid /> },
+  { path: "/hospitals", element: <Hospitals /> },
   { path: "/after", element: <AfterSignup /> },
   { path: "/login2", element: <LogIn /> },
   { path: "/gynae", element: <Gynae /> },
