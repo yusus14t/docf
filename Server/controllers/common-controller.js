@@ -33,7 +33,7 @@ const sessionInfo = async ( req, res ) => {
 }
 
 const appointmentDoctors = async ( req, res ) => {
-    commonManager.appointmentDoctors( req.body, req.user )
+    commonManager.appointmentDoctors( req.query, req.user )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -107,6 +107,18 @@ const allSpecializations = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const getAllClinics = async ( req, res ) => {
+    commonManager.getAllClinics( req.body )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const clinicDetails = async ( req, res ) => {
+    commonManager.clinicDetails( req.query )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
@@ -125,4 +137,6 @@ module.exports = {
     patientSignUp,
     validateOtp,
     allSpecializations,
+    getAllClinics,
+    clinicDetails
 }

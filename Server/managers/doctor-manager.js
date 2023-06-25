@@ -127,7 +127,8 @@ const addAppointment = async (body, user) => {
         let today = new Date()
         today.setHours(0,0,0,0)
 
-        let lastAppointment = await AppointmentModel.findOne({ doctorId: body.doctor, status: 'waiting', createdAt: { $gte: today } }, { token: 1 }).sort({ createdAt: -1 })
+
+        let lastAppointment = await AppointmentModel.findOne({ doctorId: ObjectId(body.doctor), status: 'waiting', createdAt: { $gte: today } }, { token: 1 }).sort({ createdAt: -1 })
         let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
         let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' }, { fullName: 1, userType: 1, phone: 1 });
 

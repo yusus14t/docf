@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
-import Banner2 from '../common-components/Banner2';
+import React, { useEffect, useState } from 'react';
 import { ClinicListCard } from '../common-components/ClinicCard';
 import Aside from './Aside';
+import { axiosInstance } from '../../constants/utils';
 
-function DoctorsList(props) {
-    const [ clinics ] = useState([1,2,3,4,5,6])
+function Clinics(props) {
+    const [ clinics, setClinics ] = useState([])
+
+    useEffect(() => {
+      getAllClinics()
+    }, [])
+    
+    const getAllClinics = async () => {
+      try{
+        let { data } = await axiosInstance.get('/all-clinics')
+        console.log('data', data)
+        setClinics(data?.clinics)
+      } catch(error){ console.error(error) }
+    }
     return (
       <div>
         <div className="box"></div>
@@ -31,4 +43,4 @@ function DoctorsList(props) {
     );
 }
 
-export default DoctorsList;
+export default Clinics;
