@@ -31,6 +31,7 @@ const Dashbaord = () => {
     }, [appointments, unreachedData])
 
     useEffect(() => {
+        console.log('>>>>>>>>>', event)
         if (userInfo._id === event?.data?.doctorId) {
             setAppointments([...appointments, event.data])
             toasty.success('New Appointment Added')

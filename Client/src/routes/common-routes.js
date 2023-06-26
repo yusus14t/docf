@@ -3,7 +3,7 @@ import { userRoutes as userRouteConstant } from "../constants/constant";
 
 // import Detail from  '../components/webcomponents/Detail';
 import ClinicDetail from  '../components/webcomponents/Clinic_Details';
-import DoctorsList from  '../components/webcomponents/doctor/DoctorsList';
+import Doctors from  '../components/webcomponents/doctor/Doctors';
 import SignUp from  "../components/authentication/SignUp";
 import Clinics from  "../components/webcomponents/Clinics";
 // import LogIn from  "../components/authentication/LogIn";
@@ -26,7 +26,7 @@ const COMMON_ROUTE = [
   { path: "/", element: <Home /> },
   { path: "/doctor-detail", element: <Detail /> },
   { path: "/department-login", element: <DepartmentSignUp /> },
-  { path: "/doctors", element: <DoctorsList /> },
+  { path: "/doctors", element: <Doctors /> },
   { path: "/about", element: <About /> },
   { path: "/clinic-detail/:id", element: <ClinicDetail /> },
   { path: "/clinic", element: <Clinics /> },

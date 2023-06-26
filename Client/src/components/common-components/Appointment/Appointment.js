@@ -39,12 +39,13 @@ const Appointment = ({isOpen, setIsOpen,  refresh = () => {} }) => {
 
     const saveAppointment = async ( formData ) => {
         try {
+            console.log('>>>>>>>>>>>>>>>>>')
             if( !formData?.phone && !selected) {
                 setCardError('Card Must be select')
                 return;
             }
             if(selected){
-                let selectedData = { doctor: formData.doctor?._id }
+                let selectedData = { doctor: {_id: formData.doctor?._id} }
                 formData = { ...selectedData, ...selected }
             }
 
@@ -263,7 +264,7 @@ const Appointment = ({isOpen, setIsOpen,  refresh = () => {} }) => {
                     
                 }   
                     <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={() => setIsOpen(false)}>Cancel</button>
-                    <button type="submit" className="btn btn-primary shadow-none mx-2" onClick={() => {  }}>Save</button>
+                    <button type="submit" className="btn btn-primary shadow-none mx-2">Save</button>
                 </form>
             </Modal>
     )
