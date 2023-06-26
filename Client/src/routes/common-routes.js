@@ -17,13 +17,14 @@ import AfterSignup from '../components/process/AfterSignup';
 import Gynae from "../components/webcomponents/Gynae";
 import Hospitals from "../components/webcomponents/Hospital/Hospitals";
 import LogIn from "../components/authentication/LogIn";
+import Detail from "../components/webcomponents/doctor/Detail";
 
 const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
 const isLock = JSON.parse(localStorage.getItem("email"));
 
 const COMMON_ROUTE = [
   { path: "/", element: <Home /> },
-  // { path: "/doctor-detail", element: <Detail /> },
+  { path: "/doctor-detail", element: <Detail /> },
   { path: "/department-login", element: <DepartmentSignUp /> },
   { path: "/doctors", element: <DoctorsList /> },
   { path: "/about", element: <About /> },

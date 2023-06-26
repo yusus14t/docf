@@ -39,7 +39,7 @@ const Appointment = ({isOpen, setIsOpen,  refresh = () => {} }) => {
 
     const saveAppointment = async ( formData ) => {
         try {
-            if( formData?.phone || !selected) {
+            if( !formData?.phone && !selected) {
                 setCardError('Card Must be select')
                 return;
             }

@@ -43,7 +43,6 @@ function Detail() {
     <>
       <div className="ms-content-wrapper">
         <div className="box"></div>
-        <h4 className="clinic-detail-name">Aligarh Hospital</h4>
         <div
           className="clinicbanner"
           style={{
