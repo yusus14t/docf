@@ -4,21 +4,22 @@ import { axiosInstance, getAuthHeader } from "../../constants/utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
+import imgh from "../../assets.app/img/doctors-grid/348x350-3.jpg";
 // import { useEvent } from "../../hooks/common-hook";
 // import useToasty from "../../hooks/toasty";
 
 function Detail() {
-  const params = useParams()
+  const params = useParams();
   // const event = useEvent('new-appointment')
   // const toasty = useToasty()
-  const [clinicDetail, setClinicDetail] = useState({})
-  const [isOpen, setIsOpen] = useState(false)
-  const userInfo = JSON.parse(localStorage.getItem('user'))
-  const navigate = useNavigate()
+  const [clinicDetail, setClinicDetail] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getClinicDetail()
-  }, [])
+    getClinicDetail();
+  }, []);
 
   // useEffect(() => {
   //   if (event?.data?.doctorId) {
@@ -27,17 +28,25 @@ function Detail() {
   // }, [event?.data])
 
   const getClinicDetail = async () => {
-    try{
-      let { data } = await axiosInstance.get('/clinic-detail', { params: { _id: params.id }, ...getAuthHeader()} )
-      console.log('data', data)
-      setClinicDetail(data?.clinicDetail)
-    } catch(error){ console.error(error) }
-  }
+    try {
+      let { data } = await axiosInstance.get("/clinic-detail", {
+        params: { _id: params.id },
+        ...getAuthHeader(),
+      });
+      console.log("data", data);
+      setClinicDetail(data?.clinicDetail);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const handleAppointmentModal =  () => {
-    if(!userInfo) navigate('/patient-login', { state: { redirectTo: window.location.pathname }})
-    setIsOpen(true)
-  }
+  const handleAppointmentModal = () => {
+    if (!userInfo)
+      navigate("/patient-login", {
+        state: { redirectTo: window.location.pathname },
+      });
+    setIsOpen(true);
+  };
 
   return (
     <>
@@ -51,19 +60,21 @@ function Detail() {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <h4 className="clinic-detail-name">{ clinicDetail?.detail?.name }</h4>
+          <h4 className="clinic-detail-name">{clinicDetail?.detail?.name}</h4>
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-around  ">
               <img className="clinic-detail-img" src={drprofile} alt="" />
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName mt-4">
-                  { clinicDetail?.doctors && clinicDetail?.doctors['0']?.fullName || 'dfg' }
+                  {(clinicDetail?.doctors &&
+                    clinicDetail?.doctors["0"]?.fullName) ||
+                    "dfg"}
                 </h4>
                 <h6
                   style={{ display: "inline-block" }}
                   className="text-light clinic-detail-drName"
                 >
-                  { clinicDetail?.specialization || 'Specialization' }
+                  {clinicDetail?.specialization || "Specialization"}
                 </h6>
               </div>
             </div>
@@ -72,7 +83,10 @@ function Detail() {
             </div>
           </div>
         </div>
-        <div className="bookappoint cursor-pointer" onClick={() => handleAppointmentModal()}>
+        <div
+          className="bookappoint cursor-pointer"
+          onClick={() => handleAppointmentModal()}
+        >
           <h5 className="p-2">Book Appointment</h5>
         </div>
 
@@ -81,13 +95,31 @@ function Detail() {
             <div className="col-md-6 ">
               <div className="wating-area-clinic container">
                 <h4 className="text-center">Waiting List</h4>
-                <div className="Current-token-clinic-details">
-                  <h1 className="mt-4">45</h1>
+                <div className=" w-100">
+                  <ul className="token-list">
+                    <li className="">
+                      <div className="mt-auto">
+
+                      <div className="token-list-item d-flex flex-row justify-content-around">
+                        <div className="token "><h4>45</h4></div>
+                        <img className="token-list-img" src={imgh} alt="" />
+                        <div className="token-list-detail">
+                          <h4>
+                            <span>Name</span>: Kelly Clarson
+                          </h4>
+                          <p>
+                            Address : {/*put only landmark or street*/} Jamlpur
+                          </p>
+                        </div>
+                      </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
             <div className="col-md-6">
-              <div  className="text-center">
+              <div className="text-center">
                 <div class="container">
                   <h4>Clinic Timing</h4>
                   <table class="table table-bordered">
@@ -146,7 +178,6 @@ function Detail() {
                 <span>Address </span>: Nala road nagla Jamalpur <br />
                 Aligarh 202001, Utter Pradesh
               </h6>
-
             </div>
             <div className="col-md-6">
               <h6>
@@ -156,14 +187,14 @@ function Detail() {
           </div>
         </div>
       </div>
-      { isOpen &&
-        <Appointment 
+      {isOpen && (
+        <Appointment
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           doctors={clinicDetail?.doctors}
           refresh={() => {}}
         />
-      }
+      )}
     </>
   );
 }
