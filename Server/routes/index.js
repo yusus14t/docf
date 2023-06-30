@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express();
 const commonController = require(`../controllers/common-controller`);
+const doctorContoller = require(`../controllers/doctor-controller`);
 // const Events = require(`./events`);
 // const { EventHandler } = require('./events')
 const { EventHandler } = require('../managers/doctor-manager')
@@ -30,6 +31,7 @@ router.post('/login', commonController.logIn);
 router.get('/user-by-email', commonController.getUserByEmail);
 router.get('/all-clinics', commonController.getAllClinics);
 router.get('/clinic-detail', commonController.clinicDetails);
+router.get("/all-doctors", doctorContoller.getAllDoctors);
 router.get('/stream', EventHandler )
 
 
