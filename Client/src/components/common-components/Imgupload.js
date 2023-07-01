@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DrAvatar from "../../assets.app/img/DoctorAvatar.png"
 
 
-export default function ImgUpload({ source, file=() => {} }) {
+export default function ImgUpload({ source, file=() => {}, editImage = null }) {
   const [image, setImage] = useState({ preview: "", raw: "" });
 
   const handleChange = e => {
@@ -18,9 +18,9 @@ export default function ImgUpload({ source, file=() => {} }) {
   return (
     <>
       <label htmlFor="upload-button" className={` cursor-pointer ${source === 'clinic' ? 'w-100' : ""}`}>
-        {image.preview ? 
+        {image.preview || editImage? 
         (<div className={` contain ${source === 'clinic' ? 'clinic-profile' : 'doctor-profile'}`}>
-          <img src={image.preview} className={` h-100 w-100 p-1 rounded ${source === 'clinic' ? 'h20' : 'h-100'}`} alt="dummy" width='100%' />
+          <img src={image.preview || editImage} className={` h-100 w-100 p-1 rounded ${source === 'clinic' ? 'h20' : 'h-100'}`} alt="dummy" width='100%' />
         </div>
         ) :
           (<div className={` contain ${source === 'clinic' ? 'clinic-profile' : 'doctor-profile'}`} >

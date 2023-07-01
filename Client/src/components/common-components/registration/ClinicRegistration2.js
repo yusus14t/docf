@@ -3,12 +3,14 @@ import Select from "react-select"
 import ImgUpload from '../Imgupload';
 import { useEffect, useState } from 'react';
 import { axiosInstance, getAuthHeader } from '../../../constants/utils';
+import useToasty from '../../../hooks/toasty';
 
-const CLiniRegistration2 = ({ source, tab }) => {
+const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
     const { register, handleSubmit, control, formState: { errors } } = useForm({ onChange: true })
     const [selectedFile, setSelectedFile] = useState(null);
     const [specializations, setSpecializations] = useState([])
     const [timingNo, setTimingNo] = useState(0);
+    const toasty = useToasty();
     const DAYS = [
         { id: 0, value: 'MON', day: 'Monday' },
         { id: 1, value: 'TUE', day: 'Tuesday' },
@@ -36,13 +38,19 @@ const CLiniRegistration2 = ({ source, tab }) => {
 
     const submit = async ( values ) => {
         try{
+            values['_id'] = organization?._id || JSON.parse(localStorage.getItem('registerOrganizationId'))
+            values['tab'] = tab
+
             let formData = new FormData()
             formData.append('data', JSON.stringify(values))
-            
-            // let header = getAuthHeader()
-            // header.headers['Content-Type'] = 'multipart/form-data'            
-            // let { data } = axiosInstance.post('/common/organization-details', { data: formData }, header )
-            console.log('>>', values)
+            formData.append('image', selectedFile )
+
+            let header = getAuthHeader()
+            header.headers['Content-Type'] = 'multipart/form-data'            
+            let { data } = axiosInstance.post('/common/organization-details', formData, header)
+
+            toasty.success(data?.message)
+            setTab('STEP3')
         } catch(error){ console.error(error) }
     }
     return (
@@ -54,7 +62,7 @@ const CLiniRegistration2 = ({ source, tab }) => {
                 <div className="row">
                     <div className="col-md-6 mb-3">
                         <label >Specialization of Clininc</label>
-                        <div className="">{ console.log(specializations)}
+                        <div className="">
                             <Controller
                                 control={control}
                                 name="specialization"

@@ -9,11 +9,11 @@ import WebFooter from "./WebFooter";
 
 const WebLayout = () => {
   return (
-    <div>
+    <>
       <WebHeader />
         <Outlet />
       <WebFooter />
-    </div>
+    </>
   );
 };
 

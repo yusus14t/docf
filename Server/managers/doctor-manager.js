@@ -3,7 +3,9 @@ const { Success, Error } = require('../constants/utils');
 const UserModel = require('../models/user-model');
 const ObjectId = require('mongoose').Types.ObjectId
 
-const { EventEmitter } = require('events')
+const { EventEmitter } = require('events');
+const OrganizationModel = require('../models/organization-model');
+const DealModel = require('../models/deal-model');
 const eventEmitter = new EventEmitter()
 
 const getAppointments = async (body, user) => {
@@ -47,20 +49,36 @@ const getAppointments = async (body, user) => {
     }
 }
 
-const editDoctor = async (body, user) => {
+const editDoctor = async (body, user, file) => {
     try {
-        if (body._id !== user._id && user.userType !== 'SA') return Error({ message: 'You have not permission to edit.' })
-        await UserModel.updateOne({ _id: ObjectId(body._id) }, {
-            ...body,
-        })
-        return Success({ message: 'Doctor update  Successfully', doctor: body })
+        body = JSON.parse(body?.data)
+
+        console.log(body?.createdBy, user._id)
+        if (body._id !== user._id && user.userType !== 'SA' && body?.createdBy?.toString() !== user._id?.toString()) return Error({ message: 'You have not permission to edit.' })
+
+        let userObj = {
+            fullName: body?.fullName,
+            email: body?.email,
+            phone: body?.phone,
+            qualification: body?.qualification,
+            specialization: body?.specialization?.id,
+            experience: body?.experience,
+            address: body?.address,
+            aboutme: body?.aboutme,
+            photo: body?.photo
+        }
+        if( file ) userObj['photo'] = file?.filename
+
+        await UserModel.updateOne({ _id: ObjectId(body._id) }, userObj)
+
+        userObj['_id'] = body?._id
+
+        return Success({ message: 'Doctor update  Successfully', doctor: userObj })
     } catch (error) { console.error(error) }
 }
 
 const getAllDoctors = async (body, user) => {
     try {
-        console.log('>>>>>')
-
         let query = {}
         if (user?.userType === 'MR') query['createdBy'] = user?._id
 
@@ -101,8 +119,6 @@ const getAllDoctors = async (body, user) => {
                 }
             }
         ])
-
-        console.log('>>>>>>>', doctors)
 
         return Success({ doctors })
     } catch (error) {
@@ -243,6 +259,74 @@ const analytics = async (body, user) => {
     }
 }
 
+const createDoctor = async (body, user, image) => {
+    try {
+        body = JSON.parse(body?.data)
+
+        let doctor = await UserModel.findOne({ phone: body?.phone }) 
+        if( doctor ){
+            if( doctor?.organizationId === body?.organizationId ) return Error({ message: 'Already added in your clinic/hospitals.', doctor })
+            else return Error({ message: 'This phone already used try another phone.', doctor })
+        } else {
+            doctor = await UserModel({
+                userType: 'DR',
+                fullName: body?.fullName,
+                email: body?.email,
+                phone: body?.phone,
+                qualification: body?.qualification,
+                experience: body?.experience,
+                address: body?.address,
+                aboutme: body?.aboutme,
+                organizationId: body?.organizationId,
+                createdBy: user._id,
+                photo: image?.filename,
+                isActive: true,
+            }).save()
+            await OrganizationModel.updateOne({ _id: body?.organizationId }, { tab: { step: body?.tab, isComplete: true }})
+            return Success({ message: 'Doctor successfully created.', doctor })
+        }
+    } catch(error) { console.error(error) }
+}
+
+const doctorsInOrganization = async (body) => {
+    try {
+        let doctors = await UserModel.find({ organizationId: body?.organizationId }, { 
+            fullName: 1,
+            email: 1,
+            phone: 1,
+            qualification: 1,
+            specialization: 1,
+            experience: 1,
+            address: 1,
+            aboutme: 1,
+            photo: 1,
+            createdBy: 1,
+        })
+        return Success({ doctors })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const deal = async (body, user) => {
+    try {
+        console.log(body)
+        let deal = await DealModel.findOne({ organizationId: body?.organizationId })
+        if( !deal ){
+            deal = await DealModel({ 
+                price: body?.price,
+                detail: body?.details,
+                organizationId: body?.organizationId,
+                createdBy: user._id
+            }).save()
+        }
+        await OrganizationModel.updateOne({ _id: body?.organizationId }, { tab: { step: body?.tab, isComplete: true }})
+        return Success({ message: 'Successfull saved', deal })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const EventHandler = (req, res) => {
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
@@ -269,5 +353,8 @@ module.exports = {
     appointmentById,
     reAppointment,
     analytics,
+    createDoctor ,
+    doctorsInOrganization,
+    deal,
     EventHandler
 }

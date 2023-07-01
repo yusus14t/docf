@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const multer = require('multer');
 
 const Error = ({message = 'Something went wrong!', code = 500, status = 'Fail', ...args}) => { 
   return { message, code, status, ...args } 
@@ -50,11 +51,24 @@ const Error = ({message = 'Something went wrong!', code = 500, status = 'Fail', 
   invalid_password: 'Invalid Password',
 }
 
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `doctortime-${file.fieldname}-${Date.now()}.${ext}`);
+  },
+});
+const upload = multer({ storage: multerStorage })
+
+
 module.exports = {
   Error, Success,
   encryptPassword, comparePassword,
   createToken,
   Errors,
   randomOtp,
-  smsService
+  smsService,
+  upload,
 }

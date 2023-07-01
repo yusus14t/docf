@@ -1,10 +1,31 @@
 import { useForm } from "react-hook-form";
+import useToasty from '../../../hooks/toasty'
+import { axiosInstance } from "../../../constants/utils";
 
 
-const DealRegistration = ({ tab }) => {
+const DealRegistration = ({ tab, organization }) => {
     const { register, handleSubmit, formState: { errors } } = useForm({ onChange: true })
+    const toasty = useToasty();
+
+    const submit = async (formData) => {
+        try{
+            formData['tab'] = tab
+            formData['organizationId'] = organization._id
+
+            let { data } = await  axiosInstance.post('/doctor/deal', formData )
+            console.log(data)
+            toasty.success(data?.message)
+
+            localStorage.removeItem('registerOrganizationId')
+            window.location.reload()
+        } catch(error){ 
+            console.error(error)
+            toasty.error(error?.message)
+        }
+    }
+
     return (
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form onSubmit={handleSubmit(submit)}>
             <div className="row">
                 <div className="col-md-6 mb-3">
                     <label className=''>Deal Price</label>
@@ -12,7 +33,7 @@ const DealRegistration = ({ tab }) => {
                         <input type="text"
                             className="form-control "
                             placeholder="Eg: 900/m"
-                            {...register('dealprice', {
+                            {...register('price', {
                                 required: 'Deal price is required'
                             })}
                         />

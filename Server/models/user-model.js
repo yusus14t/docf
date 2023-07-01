@@ -19,6 +19,7 @@ const userSchema = new Schema(
     specialization: { type: String },
     bloodGroup: { type: String },
     isPortal: { type: Boolean, default: false },
+    aboutme: { type: String }, 
     twoFactor: {
       otp: { type: String },
       isVerified: { type: Boolean, default: false },

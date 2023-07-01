@@ -21,7 +21,7 @@ const Search = () => {
             <FontAwesomeIcon className="search-icon" icon={faSearch} />
           </li>
           <li className='sm-col-3'>
-            <input type="text" placeholder="Doctor, Hospital and Doctor" className="form-control dsearch-doctor text-center" />
+            <input type="text" placeholder="Doctor, Hospital and Doctor" className="form-control dsearch-doctor " />
           </li>
         </ul>
       </div>

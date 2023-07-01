@@ -1,15 +1,20 @@
 const express = require('express');
 const router = express();
 const DoctorController = require('../controllers/doctor-controller')
+const { upload } = require('../constants/utils')
 
 router.get('/get-appointments', DoctorController.getAppointments )
 router.get('/appointment', DoctorController.appointmentById )
 router.get('/allDoctors', DoctorController.getAllDoctors);
-router.post('/edit-doctor', DoctorController.editDoctor );
+router.post('/edit-doctor', upload.single('image'), DoctorController.editDoctor );
 router.post('/delete-doctor',  DoctorController.deleteDoctor);
 router.post('/add-appointment', DoctorController.addAppointment)
 router.post('/re-appointment', DoctorController.reAppointment)
+router.post('/create-doctor', upload.single('image'), DoctorController.createDoctor)
 router.get('/analytics', DoctorController.analytics)
+router.get('/doctorsInOrganization', DoctorController.doctorsInOrganization)
+router.post('/deal', DoctorController.deal)
+
 
 
 module.exports = router;

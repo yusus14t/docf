@@ -43,7 +43,6 @@ const Header = () => {
             let { data } = await notificationAPI.get()
             setNotifications(data.notifications)
             setUnseenNotificationCount(data?.unseenNotificationCount)
-            console.log(data.notifications)
         } catch(error){ console.log(error) }
     }
 

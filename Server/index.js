@@ -4,6 +4,7 @@ const routes = require('./routes/index');
 const cors = require('cors');
 const env = require('dotenv/config');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 //  Data Base Connection
 mongoose.set('strictQuery', false)
@@ -16,6 +17,17 @@ database.once('connected', () => console.log('Database Connected') )
 
 app.use(express.json());
 app.use(cors({ origin: '*' }))
+
+// Configurations for "body-parser"
+app.use(
+    bodyParser.urlencoded({
+      extended: true,
+    })
+);
+
+// Static Routes
+app.use('/images', express.static('uploads'))
+
 
 // All Routes
 app.use('/api',(req, res, next) => {

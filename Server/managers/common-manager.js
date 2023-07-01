@@ -18,44 +18,22 @@ const sessionInfo = async ( body, user ) => {
     }
 }
 
-const createClinic = async ( body, userInfo ) => {
+const createOrganization = async ( body, userInfo ) => {
     try{ 
         let organization  = await OrganizationModel.findOne({ phone: body.phone }).lean();
 
         if( !organization ){
-            let clinic = await OrganizationModel({ 
+            let organization = await OrganizationModel({ 
                 ...body,
                 organzationtype: 'CL',
                 tab: { step: body.tab, isComplete: true }
             }).save()
-            
-            doctor = await UserModel({
-                ...body,
-                password: body.password === body.confirmPassword ? await encryptPassword(body.password) : "",
-                userType: 'DR',
-                organizationId: clinic?._id,
-                isActive: true,
-                isPortal: true,
-            }).save()
 
-            delete(doctor.password)
-            return Success({ message: 'Successfully created', doctor, tab: body.tab })
+            return Success({ message: 'Successfully created', organization, tab: body.tab })
         } else {
-            return Error({ message: 'Already created'})
+            return Error({ message: 'Already created', organization })
         }
         
-
-        // } else if( body?.tab === 'STEP2' ){
-        //     await OrganizationModel.updateOne({ _id: body?.organizationId }, {...body, tab: { step: body.tab, isComplete: true }})
-        //     return Success({ messsage: 'Successfully updated', tab: body.tab })
-
-        // } else if( body?.tab === 'STEP3' ){
-        //     for( let i=1 ; i <= parseInt(body.doctors); i++ ){
-        //         console.log({...body, organizationId: body.organizationId })
-        //         await UserModel({...body.doctor[i], organizationId: body.organizationId }).save()
-        //     }
-        // }
-
     } catch(error){ 
         console.log(error) 
         return Error();
@@ -156,11 +134,24 @@ const getUserByEmail = async ( body ) => {
     } catch(error){ console.log(error) }
 }
 
-const organizationDetails = async ( body, user ) => {
+const organizationDetails = async ( body, user, file ) => {
     try{
-        // let user = await UserModel.findOne({ email: body.email },{ firstName: 1, lastName: 1, email: 1 })
-        console.log(body)
-        return Success({ user: '' })
+        let detail = JSON.parse(JSON.stringify(body))
+        if( detail ) detail = JSON.parse(detail.data)
+
+        await OrganizationModel.updateOne({ _id: detail._id}, {
+            fee: detail?.fee,
+            adddress: detail?.address,
+            // pincode: detail?.pincode,
+            // city: detail?.city,
+            // state: detail?.state,
+            specialization: detail?.specialization?.id,
+            photo: file?.path,
+            tab: { step: detail?.tab, isComplete: true }
+        })
+
+        console.log('detail', detail)
+        return Success({ message: 'Details saved successfully' })
     } catch(error){ console.log(error) }
 }
 
@@ -254,13 +245,18 @@ const clinicDetails = async ( body ) => {
     } catch(error){ console.log(error) }
 }
 
-
+const getOrganization = async ( body ) => {
+    try{
+       let organization = await OrganizationModel.findOne({ _id: body?.organizationId })
+       return Success({ organization })
+    } catch(error){ console.log(error) }
+}
 
 module.exports = {
     logIn,
     signUp,
     sessionInfo,
-    createClinic,
+    createOrganization,
     appointmentDoctors,
     getPatientByNumber,
     getUserByEmail,
@@ -270,4 +266,5 @@ module.exports = {
     allSpecializations,
     getAllClinics, 
     clinicDetails,
+    getOrganization,
 }

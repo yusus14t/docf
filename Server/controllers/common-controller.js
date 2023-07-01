@@ -2,14 +2,15 @@ const commonManager = require('../managers/common-manager');
 const notificationManager = require('../managers/notification-manager');
 const supportManager = require("../managers/support-manager")
 
+
 const signUp = async ( req, res ) => {
     commonManager.signUp( req.body )
         .then( data => res.status(data.code).send(data) )
         .catch( err => res.status(500).send(err.data) )
 }
 
-const createClinic = async ( req, res ) => {
-commonManager.createClinic( req.body, req.user )
+const createOrganization = async ( req, res ) => {
+commonManager.createOrganization( req.body, req.user )
     .then( data => res.status(200).send(data) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -82,7 +83,7 @@ const allTickets = async ( req, res ) => {
 }
 
 const organizationDetails = async ( req, res ) => {
-    commonManager.organizationDetails( req.body, req.user, )
+    commonManager.organizationDetails( req.body, req.user, req.file)
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -119,10 +120,16 @@ const clinicDetails = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const getOrganization = async ( req, res ) => {
+    commonManager.getOrganization( req.query )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
-    createClinic,
+    createOrganization,
     checkDuplicateEmail,
     appointmentDoctors,
     getPatientByNumber,
@@ -138,5 +145,6 @@ module.exports = {
     validateOtp,
     allSpecializations,
     getAllClinics,
-    clinicDetails
+    clinicDetails,
+    getOrganization
 }

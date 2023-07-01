@@ -50,7 +50,7 @@ function Detail() {
 
   return (
     <>
-      <div className="ms-content-wrapper">
+      <div className="">
         <div className="box"></div>
         <div
           className="clinicbanner"

@@ -13,7 +13,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 const UserSignUp = () => {
   // const dispatch = useDispatch()
   const { state: LocationState } = useLocation()
-  const navigate = useNavigate()
   const inputRef = useRef(null)
   const otpRef = useRef(null)
   const toasty = useToasty()

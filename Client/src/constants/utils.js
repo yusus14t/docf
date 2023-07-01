@@ -38,3 +38,5 @@ export const NumberFormat = ( e ) =>  {
     else e.target.value = ''
     return e.target.value
 }
+
+export const getFullPath = (filename) => `http://${window.location.hostname}:5000/images/${filename}`

@@ -4,6 +4,7 @@ import { NumberFormat, axiosInstance } from '../../constants/utils';
 import useToasty from '../../hooks/toasty';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { userRoutes } from '../../constants/constant';
 
 
 const DepartmentSignUp = () => {
@@ -36,11 +37,13 @@ const DepartmentSignUp = () => {
 
       localStorage.setItem('user', JSON.stringify(data?.user))
       localStorage.setItem('token', JSON.stringify(data?.token))
+
       if (data?.user?.twoFactor?.isVerified) {
-        window.location.replace('/patient')
-      } else {
+        let route = userRoutes[data?.user?.userType]?.path
+        window.location.replace(route)
+      } else if( data?.user?.userType === 'DR' ) {
         window.location.replace('/after')
-      }
+      } 
       
       toasty.success(data?.message)
     } catch(error){ 

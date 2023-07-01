@@ -1,37 +1,113 @@
-import React, {  useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, {  useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import Drimg from "../../../assets.app/img/doctors-list/182x280-1.jpg"
-import { axiosInstance, getAuthHeader } from '../../../constants/utils'
+import { NumberFormat, axiosInstance, getAuthHeader, getFullPath } from '../../../constants/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
 import ImgUpload from '../Imgupload';
+import Select from "react-select"
+import useToasty from '../../../hooks/toasty';
 
-const DoctorRegistration = ({ tab }) => {
-  const { register, handleSubmit, reset, getValues, formState: { errors } } = useForm({ onChange: true })
 
-  const [doctor, setDoctor] = useState(JSON.parse(localStorage.getItem('createDoctor')) || {});
+const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
+  const { register, handleSubmit, reset, formState: { errors }, control } = useForm({ onChange: true })
+
   const [doctors, setDoctors] = useState([]);
-  const handleDoctors = () => {
-    setDoctors([...doctors, getValues()])
-    reset({})
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [editImage, setEditImage] = useState(null)
+  const toasty = useToasty()
+
+  useEffect(() => {
+    if( organization?._id ) getDoctorsInOrganization()
+  }, [])
+
+  const getDoctorsInOrganization = async () => {
+    try {
+      let { data } = await axiosInstance.get('/doctor/doctorsInOrganization', { params: { organizationId: organization._id }, ...getAuthHeader()})
+      setDoctors(data?.doctors)
+      console.log(data?.doctors)
+    } catch(error){ 
+      console.error(error)
+      toasty.error(error)
+    }
   }
 
-  const submit = async (formData) => {
+  const submit = async (values) => {
     try {
-      formData['tab'] = tab
-      if (doctor?.organizationId) {
-        formData['organizationId'] = doctor.organizationId
-        formData['userId'] = doctor._id
+      console.log(values)
+      
+
+      if(!values?._id){
+        values['organizationId'] = organization._id
+        values['tab'] = tab
+      }
+      
+      let formData = new FormData()
+      formData.append('data', JSON.stringify(values))
+      formData.append('image', selectedImage)
+      
+      let response = null
+      if(values?._id){
+        response = await axiosInstance.post('/doctor/edit-doctor', formData)
+  
+        setDoctors( prev => prev.map( old => {
+          if( old._id.toString() === response?.data?.doctor?._id ) old = response?.data?.doctor
+          return old
+        }))
+
+      } else {
+        response = await axiosInstance.post('/doctor/create-doctor', formData )
+        
+        let data = response?.data
+        let doctorObj = {
+          fullName: data?.doctor?.fullName,
+          email: data?.doctor?.email,
+          phone: data?.doctor?.phone,
+          qualification: data?.doctor?.qualification,
+          experience: data?.doctor?.experience,
+          aboutme: data?.doctor?.aboutme,
+          specialization: data?.doctor?.specialization,
+          address: data?.doctor?.address,
+          photo: data?.doctor?.photo,
+        }
+        
+        setDoctors([...doctors, doctorObj ])
       }
 
-      let { data } = await axiosInstance.post('/common/create-clinic', formData, getAuthHeader())
+      setEditImage(null)
+      reset({ fullName: null, email: null, qualification: null, experience: null, aboutme: null, specialization: null, address: null, phone: null })
+      toasty.success(response?.data?.message)
+    } catch (error) { 
+      console.log(error)
+      toasty.error(error?.message)
+    }
 
-      if (data) {
-        localStorage.setItem('createDoctor', JSON.stringify(data.doctor))
-        setDoctor(data.doctor)
-      }
+  }
 
-    } catch (error) { console.log(error) }
+  const handleDelete = async (_id) => {
+    try {
+      let { data } = await axiosInstance.post('/doctor/delete-doctor', {_id})
+      setDoctors(old => old.filter(d => d._id !== _id))
+      console.log(data)
+      toasty.success(data?.message)
+    } catch(error){
+      console.error(error)
+      toasty.error(error?.message)
+    }
+  }
+
+  const handleNext = () => {
+    if( !doctors.length ) {
+      toasty.error('Atleast one doctor created')
+      return
+    }
+
+    setTab('FINAL')
+  }
+
+  const handleEdit = (doctor) => {
+    setEditImage(getFullPath(doctor?.photo))
+    reset(doctor)
   }
 
   return (
@@ -42,53 +118,38 @@ const DoctorRegistration = ({ tab }) => {
             <div class="media fs-14" style={{ marginBottom: "0" }}>
 
               <div class="me-2 align-self-center">
-                <img src={Drimg} class="ms-img-curved" alt="people" />
+                <img src={getFullPath(doc.photo)} class="ms-img-curved" alt="people" />
               </div>
               <div class="media-body">
                 <div className='d-flex justify-content-between'>
                   <div>
-                    <h6>{doc.firstName} {doc.lastName}</h6>
+                    <h6>{doc.fullName}</h6>
                   </div>
                   <div>
-                    <FontAwesomeIcon className='ms-text-ligth mx-3 cursor-pointer' icon={faPencil} />
-                    <FontAwesomeIcon className='ms-text-ligth cursor-pointer' icon={faTrash} onClick={() => setDoctors(old => old.filter(d => d.phone !== doc.phone))} />
+                    <FontAwesomeIcon className='ms-text-ligth mx-3 cursor-pointer' icon={faPencil} onClick={() => handleEdit(doc)} />
+                    <FontAwesomeIcon className='ms-text-ligth cursor-pointer' icon={faTrash} onClick={() => handleDelete(doc._id)} />
                   </div>
                 </div>
-                <p class="fs-12 my-1 text-disabled">{doc.specialization}</p>
-                <h6 class="mt-2">
-                  <span class="fs-14">
-                    <i class="fas fa-map-marker-alt"></i>
-                  </span>
-                  {doctor.name || 'Jawahar Lal Nehru Hospital'}</h6>
+                <span className='text-light' style={{ fontSize: 'x-small'}}>{doc?.specialization || 'Specialization'}</span>
+                <br />
+                <span className='text-light' style={{ fontSize: 'x-small'}}>{doc?.address}</span>
               </div>
             </div>
           </div>
         </div>
       </div>)}
-      <form className="ms-form-wizard style1-wizard wizard form-content" onSubmit={handleSubmit((data) => console.log(data))} role="application">
+      <form className="ms-form-wizard style1-wizard wizard form-content" onSubmit={handleSubmit(submit)} role="application">
         <div >
-          <ImgUpload source={"doctor"} />
+          <ImgUpload source={"doctor"} file={(image) => setSelectedImage(image)} editImage={editImage} />
           <div className="row mt-2">
             <div className="col-md-6 mb-3">
-              <label >First Name</label>
+              <label >Full Name</label>
               <div className="input-group">
                 <input type="text"
                   className={`form-control ${errors.firstName ? 'border-danger' : ''}`}
                   placeholder="JOHN"
-                  {...register(`firstName`, {
+                  {...register(`fullName`, {
                     required: 'First name is required'
-                  })}
-                />
-              </div>
-            </div>
-            <div className="col-md-6 mb-3">
-              <label className=''>Last Name</label>
-              <div className="input-group">
-                <input type="text"
-                  className={`form-control ${errors.lastName ? 'border-danger' : ''}`}
-                  placeholder="DEE"
-                  {...register(`lastName`, {
-                    required: 'Last name is required'
                   })}
                 />
               </div>
@@ -111,14 +172,13 @@ const DoctorRegistration = ({ tab }) => {
                 <input type="text"
                   className={`form-control ${errors.phone ? 'border-danger' : ''}`}
                   placeholder="XXXX-XXX-XXX"
+                  onInput={(e) => NumberFormat(e)}
                   {...register(`phone`, {
                     required: 'Phone is required'
                   })}
                 />
               </div>
             </div>
-          </div>
-          <div className="row">
             <div className="col-md-6 mb-3">
               <label >Qualifications</label>
               <div className="input-group">
@@ -132,21 +192,29 @@ const DoctorRegistration = ({ tab }) => {
               </div>
             </div>
             <div className="col-md-6 mb-3">
-              <label >Specialization</label>
-              <div className="input-group">
-                <input type="text"
-                  className={`form-control ${errors.specialization ? 'border-danger' : ''}`}
-                  placeholder="Eg: Neurologist"
-                  {...register(`specialization`, {
-                    required: 'Specialization is required'
-                  })}
+              <label >Specialization of Clininc</label>
+              <div className="">
+                <Controller
+                  control={control}
+                  name="specialization"
+                  // rules={{ required: 'Query must be select' }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      isMulti={false}
+                      options={[{ id: 'test', name: 'test',}]}
+                      getOptionLabel={({ name }) => name}
+                      getOptionValue={({ id }) => id}
+                      className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
+                      classNamePrefix="select"
+                    />
+                  )}
                 />
               </div>
             </div>
-          </div>
-          <div className="row">
+       
             <div className="col-md-6 mb-3">
-              <label >Experiance</label>
+              <label >Experience</label>
               <div className="input-group">
                 <input type="text"
                   className={`form-control ${errors.experience ? 'border-danger' : ''}`}
@@ -183,6 +251,7 @@ const DoctorRegistration = ({ tab }) => {
             </div>
             <div className="actions btn-submit mb-2">
               <button type="submit" className="btn btn-primary shadow-none mx-2" >Save</button>
+              <button className="btn btn-primary shadow-none mx-2" onClick={() => { handleNext() }}>Next</button>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import profile from '../../assets.app/img/dashboard/doctor-1.jpg'
-import { axiosInstance, getAuthHeader } from "../../constants/utils";
+import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils";
 import Modal from "../common-components/Modal";
 import { useForm } from "react-hook-form";
 import useToasty from '../../hooks/toasty';
@@ -68,7 +68,7 @@ const DoctorsList = () => {
                                 <div className="ms-card-body">
                                     <div className="media mb-0 fs-14">
                                         <div className="me-2 align-self-center">
-                                            <img src={profile} className="ms-img-round" alt="people" />
+                                            <img src={getFullPath(doctor.photo)} className="ms-img-round" alt="people" />
                                         </div>
                                         <div className="media-body">
                                             <h6>{doctor?.fullName}</h6>
