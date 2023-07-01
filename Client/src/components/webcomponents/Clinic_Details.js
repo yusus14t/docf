@@ -7,6 +7,13 @@ import Appointment from "../common-components/Appointment/Appointment";
 import imgh from "../../assets.app/img/doctors-grid/348x350-3.jpg";
 // import { useEvent } from "../../hooks/common-hook";
 // import useToasty from "../../hooks/toasty";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendarPlus,
+  faEnvelope,
+  faMapMarker,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Detail() {
   const params = useParams();
@@ -51,9 +58,8 @@ function Detail() {
   return (
     <>
       <div className="">
-        <div className="box"></div>
         <div
-          className="clinicbanner"
+          className="clinicbanner mt-8"
           style={{
             background: `url(${background})`,
             backgroundRepeat: "no-repeat",
@@ -82,46 +88,215 @@ function Detail() {
             </div>
           </div>
         </div>
+
         <div
           className="bookappoint cursor-pointer"
           onClick={() => handleAppointmentModal()}
         >
+          <FontAwesomeIcon
+            className="bookappointment-icon"
+            icon={faCalendarPlus}
+          />
+
           <h5 className="p-2">Book Appointment</h5>
         </div>
 
-        <div className="container">
-          <div className="row">
+        <div className="">
+          <div className="row ">
             <div className="col-md-6 ">
-              <div className="wating-area-clinic container">
-                <h4 className="text-center">Waiting List</h4>
-                <div className=" w-100">
+              <div className="wating-area-clinic">
+                <h4 className="text-center mb-3">Waiting List</h4>
+                <div className="token-list-container ">
                   <ul className="token-list">
-                    <li className="">
+                    <li className=" p-2">
                       <div className="mt-auto">
-
-                      <div className="token-list-item d-flex flex-row justify-content-around">
-                        <div className="token "><h4>45</h4></div>
-                        <img className="token-list-img" src={imgh} alt="" />
-                        <div className="token-list-detail">
-                          <h4>
-                            <span>Name</span>: Kelly Clarson
-                          </h4>
-                          <p>
-                            Address : {/*put only landmark or street*/} Jamlpur
-                          </p>
+                        <div className="token-list-item d-flex flex-row justify-content-around">
+                          <div className="token ">
+                            <h4 className="token-list-number">45</h4>
+                          </div>
+                          <div className="token-list-detail">
+                            <h4 className="list-patient-name mb-1">
+                              <span>Name</span>: Kelly Clarson
+                            </h4>
+                            <p className="mb-0 list-mobile-no">
+                              Mobile Number : +91 xxxxxx6998
+                            </p>
+                            <p className="mb-0 list-address">
+                              Address : {/*put only landmark or street*/}{" "}
+                              Jamlpur
+                            </p>
+                          </div>
                         </div>
                       </div>
+                    </li>
+                    <li className="p-2">
+                      <div className="mt-auto">
+                        <div className="token-list-item d-flex flex-row justify-content-around">
+                          <div className="token ">
+                            <h4 className="token-list-number">45</h4>
+                          </div>
+                          <div className="token-list-detail">
+                            <h4 className="list-patient-name mb-1">
+                              <span>Name</span>: Kelly Clarson
+                            </h4>
+                            <p className="mb-0 list-mobile-no">
+                              Mobile Number : +91 xxxxxx6998
+                            </p>
+                            <p className="mb-0 list-address">
+                              Address : {/*put only landmark or street*/}{" "}
+                              Jamlpur
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li className="p-2">
+                      <div className="mt-auto">
+                        <div className="token-list-item d-flex flex-row justify-content-around">
+                          <div className="token ">
+                            <h4 className="token-list-number">45</h4>
+                          </div>
+                          <div className="token-list-detail">
+                            <h4 className="list-patient-name mb-1">
+                              <span>Name</span>: Kelly Clarson
+                            </h4>
+                            <p className="mb-0 list-mobile-no">
+                              Mobile Number : +91 xxxxxx6998
+                            </p>
+                            <p className="mb-0 list-address">
+                              Address : {/*put only landmark or street*/}{" "}
+                              Jamlpur
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li className="p-2">
+                      <div className="mt-auto">
+                        <div className="token-list-item d-flex flex-row justify-content-around">
+                          <div className="token ">
+                            <h4 className="token-list-number">45</h4>
+                          </div>
+                          <div className="token-list-detail">
+                            <h4 className="list-patient-name mb-1">
+                              <span>Name</span>: Kelly Clarson
+                            </h4>
+                            <p className="mb-0 list-mobile-no">
+                              Mobile Number : +91 xxxxxx6998
+                            </p>
+                            <p className="mb-0 list-address">
+                              Address : {/*put only landmark or street*/}{" "}
+                              Jamlpur
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li className="p-2">
+                      <div className="mt-auto">
+                        <div className="token-list-item d-flex flex-row justify-content-around">
+                          <div className="token ">
+                            <h4 className="token-list-number">45</h4>
+                          </div>
+                          <div className="token-list-detail">
+                            <h4 className="list-patient-name mb-1">
+                              <span>Name</span>: Kelly Clarson
+                            </h4>
+                            <p className="mb-0 list-mobile-no">
+                              Mobile Number : +91 xxxxxx6998
+                            </p>
+                            <p className="mb-0 list-address">
+                              Address : {/*put only landmark or street*/}{" "}
+                              Jamlpur
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li className="p-2">
+                      <div className="mt-auto">
+                        <div className="token-list-item d-flex flex-row justify-content-around">
+                          <div className="token ">
+                            <h4 className="token-list-number">45</h4>
+                          </div>
+                          <div className="token-list-detail">
+                            <h4 className="list-patient-name mb-1">
+                              <span>Name</span>: Kelly Clarson
+                            </h4>
+                            <p className="mb-0 list-mobile-no">
+                              Mobile Number : +91 xxxxxx6998
+                            </p>
+                            <p className="mb-0 list-address">
+                              Address : {/*put only landmark or street*/}{" "}
+                              Jamlpur
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li className="p-2">
+                      <div className="mt-auto">
+                        <div className="token-list-item d-flex flex-row justify-content-around">
+                          <div className="token ">
+                            <h4 className="token-list-number">45</h4>
+                          </div>
+                          <div className="token-list-detail">
+                            <h4 className="list-patient-name mb-1">
+                              <span>Name</span>: Kelly Clarson
+                            </h4>
+                            <p className="mb-0 list-mobile-no">
+                              Mobile Number : +91 xxxxxx6998
+                            </p>
+                            <p className="mb-0 list-address">
+                              Address : {/*put only landmark or street*/}{" "}
+                              Jamlpur
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li className="p-2">
+                      <div className="mt-auto">
+                        <div className="token-list-item d-flex flex-row justify-content-around">
+                          <div className="token ">
+                            <h4 className="token-list-number">45</h4>
+                          </div>
+                          <div className="token-list-detail">
+                            <h4 className="list-patient-name mb-1">
+                              <span>Name</span>: Kelly Clarson
+                            </h4>
+                            <p className="mb-0 list-mobile-no">
+                              Mobile Number : +91 xxxxxx6998
+                            </p>
+                            <p className="mb-0 list-address">
+                              Address : {/*put only landmark or street*/}{" "}
+                              Jamlpur
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 p-0">
+              <div className="clinic-info-details">
+                <h4 className="mb-3 pt-2  text-center">Info</h4>
+                <h6 className="text-left text-light mx-2">
+                  <span className="text-disabled">Consultation Fee</span> : Rs
+                  300
+                </h6>
+                <div className="description-clinic-detail mb-3 pe-2">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
+                  velit quam iure quibusdam dolorum quisquam eos quis sed
+                  molestiae, quae excepturi delectus soluta sunt dignissimos
+                  accusamus accusantium repellendus quod assumenda.
+                </div>
+              </div>
               <div className="text-center">
-                <div class="container">
-                  <h4>Clinic Timing</h4>
-                  <table class="table table-bordered">
+                <div class="pr-2 ">
+                  <table class="table  table-bordered">
                     <thead class="thead-light">
                       <tr>
                         <th>Session</th>
@@ -171,17 +346,56 @@ function Detail() {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <h6>
-                <span>Address </span>: Nala road nagla Jamalpur <br />
-                Aligarh 202001, Utter Pradesh
-              </h6>
+
+          <div class="contact-details-clinic">
+            <div class="sigma_info style-26 d-flex">
+              <div class="sigma_info-title">
+                <span class="sigma_info-icon clinic-address-icon-container">
+                  <FontAwesomeIcon
+                    className="clinic-address-icon"
+                    icon={faMapMarker}
+                  />
+                </span>
+              </div>
+              <div class="sigma_info-description">
+                <p>Our Address</p>
+                <p class="secondary-color">
+                  <b>Drive Chicago, IL 60607</b>
+                </p>
+              </div>
             </div>
-            <div className="col-md-6">
-              <h6>
-                <span>Contact Number </span>: +91 8754256653
-              </h6>
+            <div class="sigma_info style-26 d-flex">
+              <div class="sigma_info-title d-flex">
+                <span class="sigma_info-icon clinic-address-icon-container">
+                  <FontAwesomeIcon
+                    className="clinic-address-icon"
+                    icon={faPhone}
+                  />
+                  <i class="fal fa-phone"></i>
+                </span>
+              </div>
+              <div class="sigma_info-description">
+                <p>Call Us</p>
+                <p class="secondary-color">
+                  <b>360-779-2228</b>
+                </p>
+              </div>
+            </div>
+            <div class="sigma_info style-26 d-flex">
+              <div class="sigma_info-title">
+                <span class="sigma_info-icon clinic-address-icon-container">
+                  <FontAwesomeIcon
+                    className="clinic-address-icon"
+                    icon={faEnvelope}
+                  />
+                </span>
+              </div>
+              <div class="sigma_info-description">
+                <p>Our Mail</p>
+                <p class="secondary-color">
+                  <b>yourname@mail.com</b>
+                </p>
+              </div>
             </div>
           </div>
         </div>
