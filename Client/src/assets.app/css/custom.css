@@ -3,11 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
-.card-gradient-custom1{
-  background: rgb(0,118,215);
-  background: linear-gradient(90deg, rgba(0,118,215,1) 0%, rgba(0,255,0,1) 100%);
-
-
+.card-gradient-custom1 {
+  background: rgb(0, 118, 215);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 118, 215, 1) 0%,
+    rgba(0, 255, 0, 1) 100%
+  );
 }
 ::-webkit-scrollbar {
   width: 6px;
@@ -57,7 +59,6 @@
   font-size: 8px;
   color: white;
 }
-
 
 .main-content {
   display: flex;
@@ -388,24 +389,24 @@
   overflow: hidden;
 }
 
-.search-icon{
+.search-icon {
   margin-left: 10px;
   font-size: 16px;
   padding: 3px;
-  position:absolute;
+  position: absolute;
   margin-top: 5px;
 }
-.city-input{
+.city-input {
   text-align: center;
-  margin-right:15px ;
+  margin-right: 15px;
 }
-.seacrh-bar-container{
+.seacrh-bar-container {
   height: 60px;
 }
-.dsearch-doctor{
+.dsearch-doctor {
   width: 600px;
 }
-.seacrh-ul{
+.seacrh-ul {
   margin-top: auto;
 }
 /* fotter */
@@ -534,47 +535,47 @@ input::-webkit-inner-spin-button {
 /*------------------------------------------------------------user card ends -----------------------------------------------------*/
 
 /* Doctor card start */
-.Dr-container{
+.Dr-container {
   cursor: pointer;
   border: solid 3px #0076d7;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   height: 180px;
-  border-radius:6px ;
+  border-radius: 6px;
 }
 .experience-dr,
 .dr-qualifiction,
-.dr-address{
+.dr-address {
   font-size: 14px;
   font-weight: 900 !important;
 }
-.dr-spelialization{
+.dr-spelialization {
   color: white;
   font-size: 16px !important;
   background-color: #0076d7;
-  border-radius:3px ;
+  border-radius: 3px;
   padding: 2px;
   /* font-weight: 700 !important; */
   text-align: center;
 }
-.qualifiction{
+.qualifiction {
   font-size: 12px;
 }
 
-.dr-details{
+.dr-details {
   margin-left: 30px;
 }
-.dr-profile-img{
+.dr-profile-img {
   border-radius: 6px;
   width: 120px;
   height: 140px;
 }
 /*wating-area-clinic*/
-.wating-area-clinic{
+.wating-area-clinic {
   height: 500px;
   width: 100%;
 }
-.Current-token-clinic-details{
+.Current-token-clinic-details {
   text-align: center;
   width: 150px;
   height: 150px;
@@ -583,25 +584,69 @@ input::-webkit-inner-spin-button {
 }
 /*---------------------------user card ends--------------------------*/
 /*----------------token-list on clinc Start----------------------------*/
-.token{
+.token {
   width: 80px;
-  margin-top: 1.5.%;
+  margin-top: 10px;
   height: 80px;
   border-radius: 50px;
   background-color: #0076d7;
+  margin-left: -50px;
 }
-.token-list-item{
+.token-list-item {
   width: 100%;
   height: 100px;
   border-radius: 50px;
   background-color: #f1f5fc;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.token-list-img{
-  width: 20px;
-  height: 20px;
+.token-list-img {
+  width: 60px;
+  height: 75px;
+  margin-top: 12px;
+  border-radius: 6px;
 }
-/*--------------------end----------------------------------------*/
+.token-list-number {
+  text-align: center;
+  font-size: 50px;
+  margin-top: 6px;
+}
+.token-list-detail {
+  height: 90px;
+  margin-top: 5px;
+  border-radius: 6px;
+  width: 60%;
+}
+.token-list {
+  width: 90%;
+  margin-top: 550px;
+  /* background-color: green; */
+}
+.clinic-info-details{
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  min-height: 150px;
+  background-color: #236b71;
+  max-width: 98%;
+  margin-bottom: 10px;
+}
+.description-clinic-detail{
+  padding-left:10px ;
+  color: white;
+  padding-bottom:10px ;
+
+}
+.token-list-container {
+  height: 400px;
+  overflow-y: scroll;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.Clinic-basic-details{
+  padding-left: 40px;
+}
+/*---------------------------end----------------------------------------*/
 /*--------------------------Clinic Card starts-----------------------*/
 
 .clinic-card {
@@ -672,7 +717,7 @@ input::-webkit-inner-spin-button {
   font-size: 13px;
   margin-top: -200px;
 }
-.address-clinc{
+.address-clinc {
   width: 200px;
 }
 /* .adjust {
@@ -716,18 +761,18 @@ input::-webkit-inner-spin-button {
 .clinicbanner {
   width: 100%;
   height: 450px;
-  /* margin-top: 60px; */
+  margin-top: 60px;
 }
 /*----------------clinic-detail-name--------*/
 .clinic-detail-name {
   color: white;
-  
+
   margin: auto;
   font-weight: bold;
   padding: 10px;
   text-align: center;
   /* background-color: #00bf63c7; */
-  
+
   /* background-color: lightblue; */
   background-color: #0076d7;
   /* border-radius: 6px; */
@@ -735,7 +780,7 @@ input::-webkit-inner-spin-button {
 .clinic-detail-img-container {
   position: relative;
   top: 130px;
-  left: 40px;
+  margin-left: 40px;
 }
 .clinic-detail-img {
   position: relative;
@@ -743,6 +788,21 @@ input::-webkit-inner-spin-button {
   width: 180px;
 
   border-radius: 6px;
+}
+.contact-details-clinic {
+  margin: auto;
+  padding: 20px 50px;
+  max-width: 1280px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 15px;
+  display: flex;
+  background-color: #0076d721;
+}
+.sigma_info,
+.style-26 {
+  flex: 0 0 33.3%;
+  padding: 0;
+  background-color: transparent;
 }
 .clinic-detail-drName {
   /* background-color: rgba(17, 1, 1, 0.456); */
@@ -766,16 +826,50 @@ input::-webkit-inner-spin-button {
   margin: 5% 0 200px 60%;
 }
 .bookappoint {
+  font-size: small;
   position: fixed;
   right: 20px;
+  bottom: 50px;
   text-align: center;
   color: white;
   height: 40px;
-  width: 200px;
+  /* width: 200px; */
   border-radius: 6px;
   margin-left: 20px;
+  padding-bottom: 3px;
   background-color: #112c2f;
 }
+.bookappoint h5 {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+.bookappointment-icon {
+  font-size: 20px !important;
+  margin-left: 5px;
+}
+.bookappoint:hover {
+  color: #0076d7 !important;
+  /* border-radius: 50px; */
+  /* border-color: #494949 !important; */
+  transition: all 0.3s ease 0s;
+  background-color: #fff;
+  border: 1px solid #494949 ;
+}
+.clinic-address-icon-container{
+  width: 60px;
+  height: 60px;
+  margin-right: 41px;
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid gray;
+  text-align: center;
+}
+.clinic-address-icon{
+
+  margin-top: 9px;
+  font-size: 40px;
+}
+
 .clinic-detail-timming {
   background: #ffffff;
   padding: 15px;
@@ -804,97 +898,92 @@ input::-webkit-inner-spin-button {
 }
 
 /*-------------------Hospital and clinic signup page*---------------------------*/
-.hos-singup-heading{
+.hos-singup-heading {
   padding: 10px;
   border-radius: 6px;
   background-color: rgba(0, 0, 0, 0.615);
 }
-.hc-signup-container{
+.hc-signup-container {
   background-color: #093c1c8d;
   padding: 20px;
   border-radius: 6px;
 }
-.after-container{
-  background:#f1f5fc ;
+.after-container {
+  background: #f1f5fc;
   height: 83.5vh;
 }
-.after-signup{
+.after-signup {
   cursor: pointer;
   padding: 10px;
   width: 150px;
   height: 160px;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
 }
-.after-signup-icon{
+.after-signup-icon {
   width: 120px;
   height: 120px;
   margin-left: 6px;
 }
-.after-container-child{
+.after-container-child {
   margin: auto;
   width: 70%;
 }
 
 /*-----------------------Hospital card-------------*/
-.hospitalCard{
+.hospitalCard {
   height: 300px;
   background-color: #ffffff;
   width: 100%;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
 }
-.hospital-card-inner-header{
+.hospital-card-inner-header {
   width: 100%;
   height: 20px;
   background-color: #00bf63a6;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-
 }
-.hospitalCard-background-img{
+.hospitalCard-background-img {
   height: 170px;
   width: 100%;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-
-
 }
 .hospital-btn {
   margin: 8px 0 0 0px;
   width: 100%;
 }
-.hospital-specialization{
-  font-size: 22px ;
+.hospital-specialization {
+  font-size: 22px;
   padding: 2px;
   border-radius: 3px;
   color: black;
   display: inline;
-  margin-top:20px;
+  margin-top: 20px;
   background-color: #00bf6388;
 }
 /*--------------------------end-------------------*/
 
 /*-------------------patient-card-----------------*/
-.patient-card{
-
-  border:3px solid #0076d7;
+.patient-card {
+  border: 3px solid #0076d7;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 /*---------------------patient-help------------*/
-.appint-list-card{
+.appint-list-card {
   width: 100%;
   height: 50px;
   background-color: #0076d7;
 }
-.patient-profile{
-  width:60%; margin:auto;
+.patient-profile {
+  width: 60%;
+  margin: auto;
 }
-.patient-profile-img{
+.patient-profile-img {
   width: 150px;
   height: 200px;
 }
@@ -903,61 +992,112 @@ input::-webkit-inner-spin-button {
 /*------------------------end----------------------------*/
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 767px) {
-  .patient-profile-img{
-  width: 150px;
-  height: 150px;
-}
+  .clinic-address-icon{
+    font-size: 25px ;
+    margin: 5px;
 
-  .patient-profile{
-  width:100%; margin:auto;
-}
-  /*search bar*/
-  .dsearch-doctor{
-    width: auto;
-    
+
   }
-  .dsearch-doctor::placeholder{
+  .clinic-info-details{
+    margin: auto;
+  }
+  .clinic-address-icon-container{
+    width: 40px;
+    height: 40px;
 
+  }
+
+  .contact-details-clinic{
+    flex-direction: column;
+  }
+  /*--------token-list---------*/
+  .token-list {
+    width: 100%;
+    margin-top: 50px;
+  }
+  .token-list-item {
+    height: 60px;
+  }
+  .token-list-img {
+    margin: 3px 0 0 -50px;
+    height: 50px;
+    width: 40px;
+  }
+  .token {
+    margin: 4px 0 0 -40px;
+    height: 50px;
+    width: 50px;
+  }
+  .token-list-number {
+    font-size: 30px;
+    margin-top: 6px;
+  }
+  .token-list-detail {
+    margin-left: -50px;
+    margin-top: 5px;
+    height: 50px;
+  }
+  .list-patient-name {
+    font-size: small;
+  }
+  .list-mobile-no,
+  .list-address {
+    font-size: 10px;
+  }
+  /*-----------end------------*/
+  .patient-profile-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .patient-profile {
+    width: 100%;
+    margin: auto;
+  }
+  /*search bar*/
+  .dsearch-doctor {
+    width: auto;
+  }
+  .dsearch-doctor::placeholder {
   }
   /*----end-----*/
   /*------------Dr Card----------*/
-  .dr-qualifiction{
-    font-size:12px ;
+  .dr-qualifiction {
+    font-size: 12px;
   }
-  .dr-spelialization{
+  .dr-spelialization {
     font-size: 15px !important;
     padding: 2px;
     border-radius: 3px;
   }
   /*---------------card----------*/
   /*hospital card starts*/
-  .hospitalCard{
+  .hospitalCard {
     /* margin-left:45px ; */
   }
-
 
   /*ends*/
 
   /*----------hospital and clinic signup*/
-  .after-container-child{
+  .after-container-child {
     flex-direction: column !important;
     margin-top: 20px;
   }
-  .after-signup-icon{
+  .after-signup-icon {
     height: 150px;
     width: 250px;
     margin-left: 0;
   }
-  .after-signup{
-    width: 270px; 
-     height: 190px;
+  .after-signup {
+    width: 270px;
+    height: 190px;
     margin: auto;
     margin-bottom: 20px;
   }
-  .after-container{
+  .after-container {
     height: 80vh;
   }
-  .hc-signup-container{
+  .hc-signup-container {
     width: 80% !important;
   }
 
@@ -998,7 +1138,7 @@ input::-webkit-inner-spin-button {
   }
   .clinic-detail-img-container {
     top: 40px;
-    left: 10px;
+    margin-left: 10px;
   }
   .clinic-detail-drName {
     font-size: medium;
