@@ -224,9 +224,6 @@ const clinicDetails = async ( body ) => {
                                 status: 'waiting',
                             }
                         },
-                        {
-                            $sort: { createdAt: -1 }
-                        }
                     ],
                     as: 'appointment'
                 }
@@ -235,6 +232,7 @@ const clinicDetails = async ( body ) => {
                 $project: {
                     fullName: 1,
                     phone: 1,
+                    photo: 1,
                     token: {$first: '$appointment.token'},
                 }
             }
@@ -294,7 +292,6 @@ const waitingList = async ( body, user ) => {
             }
        ])
 
-       console.log('>>>>>>>', appointment)
        return Success({ appointment })
     } catch(error){ console.log(error) }
 }

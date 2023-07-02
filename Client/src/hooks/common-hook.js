@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 export const useEvent = (event_name) => {
-    const [callbackData, setCallbackData] = useState({})
+    const [callbackData, setCallbackData] = useState(null)
     useEffect(() => {
         const Source = new EventSource(`http://${window.location.hostname}:5000/api/stream`)
         Source.addEventListener(event_name, function(event){

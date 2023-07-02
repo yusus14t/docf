@@ -24,7 +24,7 @@ const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
 
     const patientStatus = async ( status ) => {
       try{
-        let { data } = await axiosInstance.post('/patient/appointment-status', { _id: appointment._id, status })
+        let { data } = await axiosInstance.post('/doctor/appointment-status', { _id: appointment._id, status })
         setIsOpen(false)
         refresh()
         toasty.success(data?.message)

@@ -13,6 +13,7 @@ router.post('/re-appointment', DoctorController.reAppointment)
 router.post('/create-doctor', upload.single('image'), DoctorController.createDoctor)
 router.get('/analytics', DoctorController.analytics)
 router.get('/doctorsInOrganization', DoctorController.doctorsInOrganization)
+router.post('/appointment-status', DoctorController.setAppointmentStatus)
 router.post('/deal', DoctorController.deal)
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import background from "../../../assets.app/img/user-profile-bg-1920x400.jpg";
-import DepartmentCard from "./DepartmentCard";
+// import DepartmentCard from "./DepartmentCard";
 
 const HospitalDetails = () => {
   return (
@@ -12,7 +12,7 @@ const HospitalDetails = () => {
       </div>
       <div className="container-fluid">
         <div className="departments">
-          <DepartmentCard />
+          {/* <DepartmentCard /> */}
         </div>
       </div>
     </>

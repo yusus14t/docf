@@ -63,6 +63,12 @@ const deal = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
+
+const setAppointmentStatus = async ( req, res ) => {
+    DoctorManager.setAppointmentStatus( req.body, )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
       
 module.exports = {
     getAppointments,
@@ -76,4 +82,5 @@ module.exports = {
     createDoctor,
     doctorsInOrganization,
     deal,
+    setAppointmentStatus,
 }

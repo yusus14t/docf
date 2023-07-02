@@ -1,11 +1,11 @@
 import background from "../../assets.app/img/user-profile-bg-1920x400.jpg";
 import drprofile from "../../assets.app/img/doctors-list/182x280-0.jpg";
-import { axiosInstance, getAuthHeader } from "../../constants/utils";
+import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
-// import { useEvent } from "../../hooks/common-hook";
-// import useToasty from "../../hooks/toasty";
+import { useEvent } from "../../hooks/common-hook";
+import useToasty from "../../hooks/toasty";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarPlus,
@@ -16,10 +16,12 @@ import {
 
 function Detail() {
   const params = useParams();
-  // const event = useEvent('new-appointment')
-  // const toasty = useToasty()
+  const appointmentEvent = useEvent('new-appointment')
+  const statusEvent = useEvent('status')
+  const toasty = useToasty()
   const [clinicDetail, setClinicDetail] = useState({});
   const [waitingList, setWaitingList] = useState({});
+  const [token, setToken] = useState(0)
   const [isOpen, setIsOpen] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
@@ -28,11 +30,24 @@ function Detail() {
     getClinicDetail();
   }, []);
 
-  // useEffect(() => {
-  //   if (event?.data?.doctorId) {
-  //       toasty.success('New Appointment Added')
-  //   }
-  // }, [event?.data])
+  useEffect(() => {
+    if (appointmentEvent?.event === 'new-appointment' && appointmentEvent?.data) {
+        setWaitingList([ ...waitingList, { 
+          token: appointmentEvent?.data?.token,
+          fullName: appointmentEvent.data.user.fullName,  
+          phone: appointmentEvent.data.user.phone,  
+          address: appointmentEvent.data.user.address,  
+        }])
+    } 
+    if( statusEvent?.event === 'status' && statusEvent?.data ) {
+      let list = waitingList.filter( app => app._id !== statusEvent?.data?.appointmentId )
+      setWaitingList(list)
+
+      setToken(list?.length ? list[0]?.token : '00')
+
+    }
+  }, [appointmentEvent, statusEvent])
+
 
   useEffect(() => {
     if( clinicDetail?.doctors?.length){
@@ -47,6 +62,15 @@ function Detail() {
         ...getAuthHeader(),
       });
       setClinicDetail(data?.clinicDetail);
+
+      let token = '00'
+      if(data?.clinicDetail?.doctors?.length){
+        token = data?.clinicDetail?.doctors["0"]?.token?.length === 1  ? 
+                `0${data?.clinicDetail?.doctors["0"]?.token}` : 
+                data?.clinicDetail?.doctors["0"]?.token
+      }
+
+      setToken( token )
     } catch (error) {
       console.error(error);
     }
@@ -78,14 +102,14 @@ function Detail() {
         <div
           className="clinicbanner mt-8"
           style={{
-            background: `url(${background})`,
+            background: `url(${clinicDetail?.detail?.photo ? getFullPath(clinicDetail?.detail?.photo) : background})`,
             backgroundRepeat: "no-repeat",
           }}
         >
           <h4 className="clinic-detail-name">{clinicDetail?.detail?.name}</h4>
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-around  ">
-              <img className="clinic-detail-img" src={drprofile} alt="" />
+              <img className="clinic-detail-img" src={clinicDetail?.doctors && (clinicDetail?.doctors[0]?.photo ? getFullPath(clinicDetail?.doctors[0]?.photo) : drprofile)} alt="" />
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName mt-4">
                   {(clinicDetail?.doctors &&
@@ -105,11 +129,7 @@ function Detail() {
               style={{ position: "relative" }}
             >
               <h1 style={{ position: "absolute", left: "15%", top: "15%" }}>
-                {(clinicDetail?.doctors &&
-                  (clinicDetail?.doctors["0"]?.token?.length === 1
-                    ? `0${clinicDetail?.doctors["0"]?.token}`
-                    : clinicDetail?.doctors["0"]?.token)) ||
-                  "00"}
+                {token}
               </h1>
             </div>
           </div>
@@ -140,13 +160,7 @@ function Detail() {
                         <li className=" p-2">
                           <div className="mt-auto">
                             <div
-                              className={`token-list-item d-flex flex-row justify-content-around ${
-                                list?.token ===
-                                (clinicDetail?.doctors &&
-                                  clinicDetail?.doctors[0]?.token)
-                                  ? "token-list-active"
-                                  : ""
-                              }`}
+                              className={`token-list-item d-flex flex-row justify-content-around ${ list?.token == parseInt(token) ? "token-list-active" : "" }`}
                             >
                               <div className="token ">
                                 <h4 className="token-list-number">
