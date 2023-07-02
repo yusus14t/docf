@@ -30,7 +30,6 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
         try{
             let {data} = await axiosInstance.get('/common/specializations')
             setSpecializations(data?.specializations)
-            console.log(data)
         } catch(error){
             console.error(error)
         }
@@ -47,7 +46,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
 
             let header = getAuthHeader()
             header.headers['Content-Type'] = 'multipart/form-data'            
-            let { data } = axiosInstance.post('/common/organization-details', formData, header)
+            let { data } = await axiosInstance.post('/common/organization-details', formData, header)
 
             toasty.success(data?.message)
             setTab('STEP3')
@@ -70,7 +69,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                                 render={({ field }) => (
                                     <Select
                                         {...field}
-                                        isMulti={source === 'Hospital' ? true : false}
+                                        isMulti={true}
                                         options={specializations}
                                         getOptionLabel={({ name }) => name}
                                         getOptionValue={({id}) => id}

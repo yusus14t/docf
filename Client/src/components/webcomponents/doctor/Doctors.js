@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import store from '../../redux/Store';
-import { axiosInstance } from "../../../constants/utils";
+import { axiosInstance, getFullPath } from "../../../constants/utils";
 import ProfilePhoto from "../../../assets.web/img/doctor-details/243x264.jpg";
 
 function DoctorsList(props) {
@@ -11,12 +11,12 @@ function DoctorsList(props) {
   }, []);
 
   const getAllDoctors = async () => {
-    console.log("data");
-
-    let { data } = await axiosInstance.get("/all-doctors");
-    console.log(data);
-    setDoctors(data?.doctors);
-    console.log("response", data.doctors);
+    try{
+      let { data } = await axiosInstance.get("/all-doctors");
+      setDoctors(data?.doctors);
+    } catch(error){ 
+      console.erroe(error)
+    }
   };
 
   return (
@@ -39,7 +39,7 @@ function DoctorsList(props) {
                           <div className="ml-3">
                             <img
                               className="dr-profile-img"
-                              src={ProfilePhoto}
+                              src={doctor?.photo ? getFullPath(doctor?.photo) : ProfilePhoto}
                               alt=""
                             />
                           </div>

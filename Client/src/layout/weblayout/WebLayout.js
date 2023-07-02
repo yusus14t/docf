@@ -11,7 +11,7 @@ const WebLayout = () => {
   return (
     <>
       <WebHeader />
-        <Outlet />
+          <Outlet />
       <WebFooter />
     </>
   );

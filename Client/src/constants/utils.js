@@ -40,3 +40,5 @@ export const NumberFormat = ( e ) =>  {
 }
 
 export const getFullPath = (filename) => `http://${window.location.hostname}:5000/images/${filename}`
+
+export const userInfo = JSON.parse(localStorage.getItem('user'))

@@ -6,7 +6,7 @@ const userSchema = new Schema(
     email: { type: String },
     age: { type: String },
     address: { type: String },
-    gender: { type: String, enum: ["M", "F", "O"] },
+    gender: { type: String, enum: ["male", "female", "other"] },
     Nationalty: { type: String },
     phone: { type: String, required: true },
     photo: { type: String, default: null },

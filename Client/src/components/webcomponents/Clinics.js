@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ClinicListCard } from '../common-components/ClinicCard';
-import Aside from './Aside';
 import { axiosInstance } from '../../constants/utils';
 
 function Clinics(props) {
@@ -13,7 +12,6 @@ function Clinics(props) {
     const getAllClinics = async () => {
       try{
         let { data } = await axiosInstance.get('/all-clinics')
-        console.log('data', data)
         setClinics(data?.clinics)
       } catch(error){ console.error(error) }
     }
@@ -27,7 +25,6 @@ function Clinics(props) {
           style={{ background: "#f1f5fc" }}
           className="section section-padding aaside"
         >
-          <Aside />
           <div className="asidebox"></div>
           <div className="container">
             <div className="row mt-2 mb-2">
