@@ -141,7 +141,6 @@ const organizationDetails = async ( body, user, file ) => {
 
         if( detail?.specialization?.length ) detail.specialization = detail?.specialization?.map( s => ({ name: s.name}) )
 
-        console.log('detail', detail)
 
         await OrganizationModel.updateOne({ _id: detail._id}, {
             fee: detail?.fee,
@@ -150,7 +149,7 @@ const organizationDetails = async ( body, user, file ) => {
             // city: detail?.city,
             // state: detail?.state,
             specialization: detail?.specialization,
-            photo: file?.path,
+            photo: file?.filename,
             tab: { step: detail?.tab, isComplete: true }
         })
 
