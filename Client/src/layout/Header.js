@@ -114,9 +114,7 @@ const Header = () => {
                                 <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Welcome, Dr Samuel Deo</span></h6>
                             </li>
                             <li className="dropdown-divider"></li>
-                            <Item><span className="fs-14 p-2"><i className="flaticon-user me-2"></i> Profile</span></Item>
-                            <Item><span className="fs-14 p-2"><i className="flaticon-user me-2"></i> Inbox</span></Item>
-                            <Item><span className="fs-14 p-2"><i className="flaticon-user me-2"></i> Setting</span></Item>
+
                             <Item onClick={() => LockUser()}><span className="fs-14 p-2"><i className="flaticon-user me-2"></i>Lock</span></Item>
                             <Item onClick={() => Logout()}><span className="fs-14 p-2"><i className="flaticon-user me-2"></i> Logout</span></Item>
                         </Dropdown>

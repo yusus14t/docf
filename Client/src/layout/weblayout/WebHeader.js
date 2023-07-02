@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import Store from "../../redux/Store";
 import Avatar from '../../assets.app/img/dashboard/doctor-3.jpg'
-
 import logo from '../../assets.app/img/logo/logo.png'
 import WebSidebar from "./WebSidebar";
+import { Dropdown, Item } from "../../components/common-components/Dropdown";
 import { userRoutes } from "../../constants/constant";
 
 const WebHeader = () => {
   const userInfo = JSON.parse(localStorage.getItem('user'))
   const [isLogin] = useState(Boolean(userInfo))
-
-  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [isSideBbarOpen, setIsSidebarOpen] = useState(false);
-  const navigate = useNavigate();
+
   const Logout = () => {
     localStorage.clear()
-    navigate('/login')
+    window.location.replace('/login')
   }
+
   return (
     <>
       <WebSidebar isOpen={isSideBbarOpen} setIsOpen={setIsSidebarOpen} />
@@ -67,8 +65,26 @@ const WebHeader = () => {
 
           </ul>
         </div>
-
         {isLogin ? <div className="ms-nav-item ms-nav-user dropdown d-profile cursor-pointer">
+          <Dropdown
+            toggle={<img className="ms-user-img ms-img-round float-end avatar" src={Avatar} alt="people" />}
+          >
+            <li className="dropdown-menu-header">
+              <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Welcome, Dr Samuel Deo</span></h6>
+            </li>
+            <li className="dropdown-divider"></li>
+
+            {userInfo && <Item> <Link className="fs-14 p-2" to={userRoutes[userInfo.userType].path}> <span>Dashboard</span> </Link></Item>}
+            <Item onClick={() => Logout()}><span className="fs-14 p-2"><i className="flaticon-user"></i>Logout</span></Item>
+          </Dropdown>
+        </div>
+          :
+        <div className="login_button">
+          <Link to={"/login"}>Login/Signup</Link>
+        </div>
+        }
+{/* 
+          {isLogin ? <div className="ms-nav-item ms-nav-user dropdown d-profile cursor-pointer">
           <img className="ms-user-img ms-img-round float-end avatar " src={Avatar} alt="people" onClick={() => setDropdownOpen(!dropdownOpen)} />
           <ul className={`dropdown-menu dropdown-menu-end user-dropdown ${dropdownOpen ? 'show' : ''}`}>
             <li className="dropdown-menu-header">
@@ -94,7 +110,7 @@ const WebHeader = () => {
         </div> :
           <div className="login_button">
             <Link to={"/login"}>Login/Signup</Link>
-          </div>}
+          </div>} */}
         <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" data-bs-toggle="slideDown" data-bs-target="#ms-nav-options" onClick={() => { setIsSidebarOpen(!isSideBbarOpen) }}>
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>

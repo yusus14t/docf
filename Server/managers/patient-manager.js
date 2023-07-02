@@ -28,8 +28,23 @@ const setAppointmentStatus = async (body) => {
     }
 }
 
+const appointments = async (body, user) => {
+    try {
+        let appointments = await AppointmentModel.find({ _id: user._id })
+        .populate('doctorId', 'fullName organizationId')
+        .populate('dcotorId.organizaationId', 'name')
+        .sort({ createdAt: -1 })
+
+        console.log('appointments', appointments)
+        return Success({ appointments, message: 'Status update successfully' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     savePatientDetails,
     getPatientDetails,
     setAppointmentStatus,
+    appointments,
 }

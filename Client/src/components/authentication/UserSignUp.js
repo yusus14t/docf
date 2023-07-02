@@ -112,31 +112,36 @@ const UserSignUp = () => {
         <h3 className='mb-3'>Fill your Details</h3>
         <div className='mb-2'>
           <label htmlFor="">Mobile Number</label>
-          <h4 className='mb-2 text-disabled'>{details?.phone}</h4>
+          <h4 className='mb-2 text-disabled'>+91 {details?.phone?.slice(0,3)}-{details?.phone?.slice(3,6)}-{details?.phone?.slice(-4)}</h4>
         </div>
         <div className='col-12'>
           <div>
             <label htmlFor="" className='mb-2'  >Full Name</label>
-            <input type="text" className='form-control mb-2' placeholder='Full name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, fullName: e.target.value }) }} />
+            <input type="text" className='form-control mb-2' placeholder='Enter Full name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, fullName: e.target.value }) }} />
           </div>
         </div>
-        <div className='col-2 d-flex flex-row'>
-          <div style={{ marginRight: "50px" }} className=''>
+        <div className='col-12 d-flex flex-row'>
+          <div className='col-6 me-2'>
             <label htmlFor="" className='mb-2'>Age</label>
-            <input style={{ width: "166px" }} type="number" placeholder='enter age' onBlur={(e) => { if (e.target.value) setDetails({ ...details, age: e.target.value }) }} className='form-control mb-2 col-2' />
+            <input  type="number" placeholder='Enter Age' onBlur={(e) => { if (e.target.value) setDetails({ ...details, age: e.target.value }) }} className='form-control mb-2 col-2' />
           </div>
-          <div>
+          <div className=''>
             <label htmlFor="" className='mb-2'>Gender</label>
-            <input style={{ width: "166px" }} placeholder='enter gender' type="text" onBlur={(e) => { if (e.target.value) setDetails({ ...details, gender: e.target.value }) }} className='form-control mb-2 col-2' />
+            <select style={{ padding: '.475rem .75rem'}} className='form-control mb-2 col-2 w-100' onBlur={(e) => { if (e.target.value) setDetails({ ...details, gender: e.target.value }) }}>
+                <option value='male'>Male</option>
+                <option value='female'>Female</option>
+                <option value='other'>Other</option>
+            </select>
+            {/* <input style={{ width: "166px" }} placeholder='enter gender' type="text" onBlur={(e) => { if (e.target.value) setDetails({ ...details, gender: e.target.value }) }} className='form-control mb-2 col-2' /> */}
           </div>
         </div>
         <div className="mb-3">
           <label className='mb-2' htmlFor="">Father name</label>
-          <input type="text" placeholder='Enter father name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, father: e.target.value }) }} className="form-control" />
+          <input type="text" placeholder='Enter Father Name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, father: e.target.value }) }} className="form-control" />
         </div>
         <div className=" mb-3">
           <label className='mb-2' htmlFor="">Address</label>
-          <input type="text" placeholder='Etert name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, address: e.target.value }) }} className="form-control" />
+          <input type="text" placeholder='Enter Address' onBlur={(e) => { if (e.target.value) setDetails({ ...details, address: e.target.value }) }} className="form-control" />
         </div>
         <button className='btn btn1 btn-info' onClick={() => saveDetails()}>Save</button>
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Aside from '../Aside';
 import HospitalCard from './HospitalCard';
 
 const HospitalGrid = () => {
@@ -11,7 +10,6 @@ const HospitalGrid = () => {
         // style={{ background: "#f1f5fc" }}
         className="section section-padding aaside"
       >
-        <Aside />
         <div className="asidebox"></div>
         <div className="container">
           <div className="row mt-2 mb-2">

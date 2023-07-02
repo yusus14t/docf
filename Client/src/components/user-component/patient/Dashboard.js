@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Profie from './Profie';
 import Cardlist from './Cardlist';
 import Appointments from './Appointments';
-import Help from './Help';
 
 const Dashbaord = () => {
-  const [tab, setTab] = useState("STEP1");   
-   
-    
-
+  const [tab, setTab] = useState("PROFILE");   
     return (
       <div className="">
         <div className="ms-panel-body content-height">
@@ -23,11 +19,11 @@ const Dashbaord = () => {
                   <li
                     style={{ marginTop: "15px" }}
                     onClick={() => {
-                      setTab("STEP1");
+                      setTab("PROFILE");
                     }}
                     role="tab"
                     className={`${
-                      tab === "STEP1" ? "current" : "disabled"
+                      tab === "PROFILE" ? "current" : "disabled"
                     } cursor-pointer`}
                     aria-disabled="false"
                     aria-selected="False"
@@ -40,11 +36,11 @@ const Dashbaord = () => {
                 <li
                   style={{ marginTop: "15px" }}
                   onClick={() => {
-                    setTab("STEP2");
+                    setTab("APPOINTMENT");
                   }}
                   role="tab"
                   className={`${
-                    tab === "STEP2" ? "current" : "disabled"
+                    tab === "APPOINTMENT" ? "current" : "disabled"
                   } cursor-pointer`}
                   aria-disabled="true"
                 >
@@ -54,22 +50,22 @@ const Dashbaord = () => {
                 <li
                   style={{ marginTop: "15px" }}
                   onClick={() => {
-                    setTab("STEP3");
+                    setTab("CARDS");
                   }}
                   role="tab"
                   className={`${
-                    tab === "STEP3" ? "current" : "disabled"
+                    tab === "CARDS" ? "current" : "disabled"
                   } cursor-pointer`}
                   aria-disabled="true"
                 >
-                  <span className="tabName">Card List</span>
+                  <span className="tabName">Cards</span>
                 </li>
               </ul>
             </div>
             <div className="content ">
-              {tab === "STEP1" && <Profie tab={tab} />}
-              {tab === "STEP2" && <Appointments tab={tab} />}
-              {tab === "STEP2" && <Cardlist tab={tab} />}
+              {tab === "PROFILE" && <Profie tab={tab} />}
+              {tab === "APPOINTMENT" && <Appointments tab={tab} />}
+              {tab === "CARDS" && <Cardlist tab={tab} />}
             </div>
           </div>
         </div>

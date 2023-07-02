@@ -11,7 +11,11 @@ const organizationSchema = new Schema({
     address: { type: String },
     organizationType: { type: String, default: 'CL', enum: [ 'CL', 'HL' ] },
     photo: { type: String, default: null },
-    specialization: { type: String },
+    specialization: [
+        {
+            name: { type: String }
+        }
+    ],
     fee: { type: String, default: '0' },
     timing: { type: String },
     offDay: { type: String },

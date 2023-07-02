@@ -139,13 +139,17 @@ const organizationDetails = async ( body, user, file ) => {
         let detail = JSON.parse(JSON.stringify(body))
         if( detail ) detail = JSON.parse(detail.data)
 
+        if( detail?.specialization?.length ) detail.specialization = detail?.specialization?.map( s => ({ name: s.name}) )
+
+        console.log('detail', detail)
+
         await OrganizationModel.updateOne({ _id: detail._id}, {
             fee: detail?.fee,
             adddress: detail?.address,
             // pincode: detail?.pincode,
             // city: detail?.city,
             // state: detail?.state,
-            specialization: detail?.specialization?.id,
+            specialization: detail?.specialization,
             photo: file?.path,
             tab: { step: detail?.tab, isComplete: true }
         })
@@ -236,7 +240,6 @@ const clinicDetails = async ( body ) => {
             }
         ])
 
-        console.log(doctors)
         let detail = await OrganizationModel.findOne({ _id: ObjectId(body?._id)})
         
         let clinicDetail = { detail , doctors}
@@ -249,6 +252,50 @@ const getOrganization = async ( body ) => {
     try{
        let organization = await OrganizationModel.findOne({ _id: body?.organizationId })
        return Success({ organization })
+    } catch(error){ console.log(error) }
+}
+
+const waitingList = async ( body, user ) => {
+    try{
+        let today = new Date()
+        today.setHours(0,0,0,0)
+
+       let appointment = await AppointmentModel.aggregate([
+            {
+                $match: {
+                    doctorId: ObjectId(body._id),
+                    createdAt: {
+                        $gte:  today
+                    },
+                    status: 'waiting',
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            { $unwind: '$user' },
+            {
+                $project: {
+                    token: 1,
+                    fullName: '$user.fullName',
+                    phone: '$user.phone',
+                    address: '$user.address'
+                }
+            },
+            { 
+                $sort: { 
+                    createdAt: -1
+                }
+            }
+       ])
+
+       console.log('>>>>>>>', appointment)
+       return Success({ appointment })
     } catch(error){ console.log(error) }
 }
 
@@ -267,4 +314,5 @@ module.exports = {
     getAllClinics, 
     clinicDetails,
     getOrganization,
+    waitingList,
 }

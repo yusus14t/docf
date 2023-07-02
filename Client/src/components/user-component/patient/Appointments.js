@@ -1,6 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { axiosInstance } from '../../../constants/utils'
 
 const Appointments = () => {
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    getUserAppointments()
+  }, [])
+
+  const getUserAppointments = async () => {
+    try {
+      let { data } = await axiosInstance.get('/patient/appointments')
+      console.log('petient appointments',data)
+      setAppointments(data?.appointments)
+     } catch(error) { 
+      console.error(error)
+    }
+
+  }
   return (
     <div className='conatiner'>
 

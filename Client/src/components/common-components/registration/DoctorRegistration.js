@@ -15,17 +15,22 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
   const [doctors, setDoctors] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null)
   const [editImage, setEditImage] = useState(null)
+  const [specialization, setSpecialization] = useState([])
   const toasty = useToasty()
 
   useEffect(() => {
-    if( organization?._id ) getDoctorsInOrganization()
+    if( organization?._id ){
+      getDoctorsInOrganization()
+
+      let specializaion = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
+      setSpecialization(specializaion)
+    }
   }, [])
 
   const getDoctorsInOrganization = async () => {
     try {
       let { data } = await axiosInstance.get('/doctor/doctorsInOrganization', { params: { organizationId: organization._id }, ...getAuthHeader()})
       setDoctors(data?.doctors)
-      console.log(data?.doctors)
     } catch(error){ 
       console.error(error)
       toasty.error(error)
@@ -33,9 +38,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
   }
 
   const submit = async (values) => {
-    try {
-      console.log(values)
-      
+    try {      
 
       if(!values?._id){
         values['organizationId'] = organization._id
@@ -88,7 +91,6 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
     try {
       let { data } = await axiosInstance.post('/doctor/delete-doctor', {_id})
       setDoctors(old => old.filter(d => d._id !== _id))
-      console.log(data)
       toasty.success(data?.message)
     } catch(error){
       console.error(error)
@@ -197,12 +199,12 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                 <Controller
                   control={control}
                   name="specialization"
-                  // rules={{ required: 'Query must be select' }}
+                  rules={{ required: 'Query must be select' }}
                   render={({ field }) => (
                     <Select
                       {...field}
                       isMulti={false}
-                      options={[{ id: 'test', name: 'test',}]}
+                      options={specialization}
                       getOptionLabel={({ name }) => name}
                       getOptionValue={({ id }) => id}
                       className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}

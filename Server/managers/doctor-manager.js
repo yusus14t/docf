@@ -109,7 +109,7 @@ const getAllDoctors = async (body, user) => {
                 $project: {
                     fullName: 1,
                     clinic: { $first: '$clinic.name' },
-                    specialization: '$specialization',
+                    specialization: 1,
                     phone: 1,
                     photo: 1,
                     organizationId: 1,
@@ -278,6 +278,7 @@ const createDoctor = async (body, user, image) => {
                 address: body?.address,
                 aboutme: body?.aboutme,
                 organizationId: body?.organizationId,
+                specialization: body?.specialization?.name,
                 createdBy: user._id,
                 photo: image?.filename,
                 isActive: true,

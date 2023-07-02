@@ -126,6 +126,12 @@ const getOrganization = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const waitingList = async ( req, res ) => {
+    commonManager.waitingList( req.query, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     signUp,
     logIn,
@@ -146,5 +152,6 @@ module.exports = {
     allSpecializations,
     getAllClinics,
     clinicDetails,
-    getOrganization
+    getOrganization,
+    waitingList,
 }

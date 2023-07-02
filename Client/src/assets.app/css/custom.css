@@ -579,7 +579,7 @@ input::-webkit-inner-spin-button {
   text-align: center;
   width: 150px;
   height: 150px;
-  background-color: #0076d7;
+  background-color: #0076d738;
   border-radius: 6px;
 }
 /*---------------------------user card ends--------------------------*/
@@ -589,8 +589,7 @@ input::-webkit-inner-spin-button {
   margin-top: 10px;
   height: 80px;
   border-radius: 50px;
-  background-color: #0076d7;
-  margin-left: -50px;
+  background-color: #0076d738;
 }
 .token-list-item {
   width: 100%;
@@ -618,7 +617,6 @@ input::-webkit-inner-spin-button {
 }
 .token-list {
   width: 90%;
-  margin-top: 550px;
   /* background-color: green; */
 }
 .clinic-info-details{
@@ -626,7 +624,6 @@ input::-webkit-inner-spin-button {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   min-height: 150px;
   background-color: #236b71;
-  max-width: 98%;
   margin-bottom: 10px;
 }
 .description-clinic-detail{
@@ -641,7 +638,9 @@ input::-webkit-inner-spin-button {
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+.token-list-active {
+  border: 1px solid #00000085;
 }
 .Clinic-basic-details{
   padding-left: 40px;
