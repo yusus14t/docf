@@ -102,7 +102,7 @@ function Detail() {
         </div>
 
         <div className="">
-          <div className="row ">
+          <div className="row clinic-details-row mx-0">
             <div className="col-md-6 ">
               <div className="wating-area-clinic">
                 <h4 className="text-center mb-3">Waiting List</h4>

@@ -141,7 +141,7 @@ const organizationDetails = async ( body, user, file ) => {
 
         await OrganizationModel.updateOne({ _id: detail._id}, {
             fee: detail?.fee,
-            adddress: detail?.address,
+            address: detail?.address,
             // pincode: detail?.pincode,
             // city: detail?.city,
             // state: detail?.state,

@@ -7,8 +7,9 @@ export function DoctorListCard({ doctor }) {
   const [doctors] = useState([1, 2, 3, 4, 5, 6,7,8,9,10,11,12]);
   let navigate = useNavigate();
   const routeChange = () => {
-    let path = `/doctor-detail`;
+    let path ="/doctor-detail";
     navigate(path);
+    console.log(path);
   };
 
   return doctors.map((doctor, key) => (
@@ -21,16 +22,12 @@ export function DoctorListCard({ doctor }) {
 
           <div className="dr-details">
             <h2 className="">Dr Angel Yu Dicator</h2>
-            <p className="mb-1 dr-spelialization">
-              Neurologist
+            <p className="mb-1 dr-spelialization">Neurologist</p>
+            <p className="mb-1 experience-dr">Eperience : 8 Years</p>
+            <p className="dr-qualifiction mb-1">MBBS ,MD</p>
+            <p className="dr-address text-truncate ">
+              Apollo Hospital, Aligarh
             </p>
-            <p className="mb-1 experience-dr">
-              Eperience : 8 Years
-            </p>
-            <p className="dr-qualifiction mb-1">
-              MBBS ,MD
-            </p>
-            <p className="dr-address">Apollo Hospital, Aligarh</p>
           </div>
         </div>
       </div>

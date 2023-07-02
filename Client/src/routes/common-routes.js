@@ -18,6 +18,7 @@ import Gynae from "../components/webcomponents/Gynae";
 import Hospitals from "../components/webcomponents/Hospital/Hospitals";
 import LogIn from "../components/authentication/LogIn";
 import Detail from "../components/webcomponents/doctor/Detail";
+import HospitalDetails from "../components/webcomponents/Hospital/HospitalDetails";
 
 const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
 const isLock = JSON.parse(localStorage.getItem("email"));
@@ -35,6 +36,7 @@ const COMMON_ROUTE = [
   { path: "/after", element: <AfterSignup /> },
   { path: "/login2", element: <LogIn /> },
   { path: "/gynae", element: <Gynae /> },
+  { path: "/hospital-details", element: <HospitalDetails /> },
 
   {
     path: "/login",
@@ -52,7 +54,9 @@ const COMMON_ROUTE = [
       <Navigate
         to={userRouteConstant[getUserType()]?.path || "/patient-login"}
       />
-    ) : <UserSignUp />
+    ) : (
+      <UserSignUp />
+    ),
   },
 
   {
