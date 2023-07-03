@@ -18,7 +18,7 @@ const HospitalDetails = () => {
       </div>
       <div className="container-fluid">
         <div className="departments">
-          <DepartmentCard />
+          {/* <DepartmentCard /> */}
         </div>
 
         {/* contact card */}

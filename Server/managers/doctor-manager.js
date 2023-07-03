@@ -147,10 +147,9 @@ const addAppointment = async (body, user) => {
         let today = new Date()
         today.setHours(0,0,0,0)
 
-        console.log('body', body)
         let lastAppointment = await AppointmentModel.findOne({ doctorId: ObjectId(body.doctor._id), status: 'waiting', createdAt: { $gte: today } }, { token: 1 }).sort({ createdAt: -1 })
         let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
-        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' }, { fullName: 1, userType: 1, phone: 1 });
+        let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' }, { fullName: 1, userType: 1, phone: 1, address: 1 });
 
         if (!patient) {  patient = await UserModel({ ...body, userType: 'PT' }).save() }
 
@@ -169,6 +168,7 @@ const addAppointment = async (body, user) => {
                 _id: patient._id,
                 fullName: patient.fullName,
                 phone: patient.phone,
+                address: patient?.address
             }
         }
         eventEmitter.emit('new-appointment', { event: 'new-appointment', data: Obj });
@@ -203,7 +203,16 @@ const appointmentById = async (body, user) => {
 
 const reAppointment = async (body) => {
     try {
-        await AppointmentModel.updateOne({ _id: ObjectId(body?._id) }, { status: 'waiting' })
+        let appointment = await AppointmentModel.findOneAndUpdate({ _id: ObjectId(body?._id) }, { status: 'waiting' })
+            .populate('userId', 'fullName address phone')
+        console.log('appointment', appointment)
+        let Obj = {
+            user: appointment.userId,
+            token: appointment.token,
+            _id: appointment._id,
+         }
+        eventEmitter.emit('new-appointment', { event: 'new-appointment', data: Obj });
+
         return Success({ ...body, message: 'Re-appointment successfully' })
     } catch (error) {
         console.log(error)
@@ -311,7 +320,6 @@ const doctorsInOrganization = async (body) => {
 
 const deal = async (body, user) => {
     try {
-        console.log(body)
         let deal = await DealModel.findOne({ organizationId: body?.organizationId })
         if( !deal ){
             deal = await DealModel({ 
@@ -328,6 +336,18 @@ const deal = async (body, user) => {
     }
 }
 
+const setAppointmentStatus = async (body) => {
+    try {
+        await AppointmentModel.updateOne({ _id: ObjectId(body?._id) }, { status: body.status === 'reached' ? 'complete' : 'unreached' })
+        
+        eventEmitter.emit('status', { event: 'status', data: { appointmentId: body._id } });
+
+        return Success({ ...body, message: 'Status update successfully' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const EventHandler = (req, res) => {
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
@@ -335,13 +355,14 @@ const EventHandler = (req, res) => {
         'Access-Control-Allow-Origin': '*'
     });
 
-    const newAppointment = (data) => {
-        res.write("event: new-appointment\n");
+    const sendResponse = (data, event) => {
+        res.write(`event: ${event}\n`);
         res.write(`data: ${JSON.stringify(data)}`);
         res.write("\n\n");
     }
 
-    eventEmitter.on('new-appointment', (data) => newAppointment(data))
+    eventEmitter.on('new-appointment', (data) => sendResponse(data, 'new-appointment'))
+    eventEmitter.on('status', (data) => sendResponse(data, 'status'))
 }
 
 
@@ -357,5 +378,6 @@ module.exports = {
     createDoctor ,
     doctorsInOrganization,
     deal,
+    setAppointmentStatus,
     EventHandler
 }

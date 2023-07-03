@@ -19,14 +19,7 @@ const getPatientDetails = async (body) => {
     } catch (error) { console.log(error) }
 }
 
-const setAppointmentStatus = async (body) => {
-    try {
-        await AppointmentModel.updateOne({ _id: ObjectId(body?._id) }, { status: body.status === 'reached' ? 'complete' : 'unreached' })
-        return Success({ ...body, message: 'Status update successfully' })
-    } catch (error) {
-        console.log(error)
-    }
-}
+
 
 const appointments = async (body, user) => {
     try {
@@ -45,6 +38,5 @@ const appointments = async (body, user) => {
 module.exports = {
     savePatientDetails,
     getPatientDetails,
-    setAppointmentStatus,
     appointments,
 }
