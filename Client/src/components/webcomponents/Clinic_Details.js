@@ -16,12 +16,11 @@ import {
 
 function Detail() {
   const params = useParams();
-  const appointmentEvent = useEvent('new-appointment')
-  const statusEvent = useEvent('status')
+  const event = useEvent()
   const toasty = useToasty()
   const [clinicDetail, setClinicDetail] = useState({});
   const [waitingList, setWaitingList] = useState({});
-  const [token, setToken] = useState(0)
+  const [token, setToken] = useState('00')
   const [isOpen, setIsOpen] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
@@ -31,22 +30,33 @@ function Detail() {
   }, []);
 
   useEffect(() => {
-    if (appointmentEvent?.event === 'new-appointment' && appointmentEvent?.data) {
-        setWaitingList([ ...waitingList, { 
-          token: appointmentEvent?.data?.token,
-          fullName: appointmentEvent.data.user.fullName,  
-          phone: appointmentEvent.data.user.phone,  
-          address: appointmentEvent.data.user.address,  
-        }])
-    } 
-    if( statusEvent?.event === 'status' && statusEvent?.data ) {
-      let list = waitingList.filter( app => app._id !== statusEvent?.data?.appointmentId )
+    handleEventData()
+  }, [ event ])
+
+  const handleEventData = () => {
+    if ( ['re-appointment', 'new-appointment'].includes(event?.event) ) {
+      let eventData = event?.data
+      let LIST_OBJECT = { 
+        _id: eventData?._id,
+        token: eventData?.token,
+        fullName: eventData.user.fullName,  
+        phone: eventData.user.phone,  
+        address: eventData.user.address,  
+      }
+
+      if( !waitingList.some( list => String(list._id) === String(LIST_OBJECT._id) ) ) {
+        setWaitingList([ ...waitingList, LIST_OBJECT,])
+      }
+
+    } else if( event?.event === 'status' ) {
+
+      let list = waitingList.filter( app => app._id !== event?.data?.appointmentId )
       setWaitingList(list)
 
       setToken(list?.length ? list[0]?.token : '00')
 
     }
-  }, [appointmentEvent, statusEvent])
+  }
 
 
   useEffect(() => {
@@ -67,7 +77,7 @@ function Detail() {
       if(data?.clinicDetail?.doctors?.length){
         token = data?.clinicDetail?.doctors["0"]?.token?.length === 1  ? 
                 `0${data?.clinicDetail?.doctors["0"]?.token}` : 
-                data?.clinicDetail?.doctors["0"]?.token
+                data?.clinicDetail?.doctors["0"]?.token || '00'
       }
 
       setToken( token )
@@ -82,6 +92,7 @@ function Detail() {
         params: { _id: clinicDetail?.doctors[0]?._id },
         ...getAuthHeader(),
       });
+
       setWaitingList(data?.appointment)
     } catch (error) {
       console.error(error);
@@ -99,8 +110,9 @@ function Detail() {
   return (
     <>
       <div className="">
+        <div className="box"></div>
         <div
-          className="clinicbanner mt-8"
+          className="clinicbanner"
           style={{
             background: `url(${clinicDetail?.detail?.photo ? getFullPath(clinicDetail?.detail?.photo) : background})`,
             backgroundRepeat: "no-repeat",

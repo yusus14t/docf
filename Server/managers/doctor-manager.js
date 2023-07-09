@@ -6,6 +6,7 @@ const ObjectId = require('mongoose').Types.ObjectId
 const { EventEmitter } = require('events');
 const OrganizationModel = require('../models/organization-model');
 const DealModel = require('../models/deal-model');
+const DepartmentModel = require('../models/department-modal');
 const eventEmitter = new EventEmitter()
 
 const getAppointments = async (body, user) => {
@@ -13,9 +14,19 @@ const getAppointments = async (body, user) => {
         let status = body.status
         let today = new Date()
         today.setHours(0,0,0,0)
+        let doctors = await UserModel.find({ organizationId: user.organizationId, primary: false }, { _id: 1 })
+        doctors = doctors.map( d => ObjectId(d._id) )
+
+        let query = { createdAt: { $gte: today } }
+        
+        if( status ) query['status'] = status
+        
+        if( user.userType === 'PT' ) query['createdBy'] = user._id
+        else query['doctorId'] = { $in: doctors }
+
         let appointments = await AppointmentModel.aggregate([
             {
-                $match: { [user.userType === 'PT' ? 'createdBy' : 'doctorId']: user._id, status, createdAt: { $gte: today }   }
+                $match: query
             },
             {
                 $lookup: {
@@ -42,6 +53,7 @@ const getAppointments = async (body, user) => {
                 }
             },
         ])
+        console.log(appointments)
         return Success({ message: 'Appointment fetch successfully', appointments })
     } catch (error) {
         console.log(error)
@@ -87,6 +99,7 @@ const getAllDoctors = async (body, user) => {
                 $match: {
                     userType: 'DR',
                     isActive: true,
+                    primary: false,
                     ...query
                 },
             },
@@ -205,13 +218,14 @@ const reAppointment = async (body) => {
     try {
         let appointment = await AppointmentModel.findOneAndUpdate({ _id: ObjectId(body?._id) }, { status: 'waiting' })
             .populate('userId', 'fullName address phone')
-        console.log('appointment', appointment)
+
         let Obj = {
             user: appointment.userId,
             token: appointment.token,
             _id: appointment._id,
          }
-        eventEmitter.emit('new-appointment', { event: 'new-appointment', data: Obj });
+        
+        eventEmitter.emit('re-appointment', { event: 're-appointment', data: Obj });
 
         return Success({ ...body, message: 'Re-appointment successfully' })
     } catch (error) {
@@ -272,7 +286,7 @@ const createDoctor = async (body, user, image) => {
     try {
         body = JSON.parse(body?.data)
 
-        let doctor = await UserModel.findOne({ phone: body?.phone }) 
+        let doctor = await UserModel.findOne({ phone: body?.phone, primary: false }) 
         if( doctor ){
             if( doctor?.organizationId === body?.organizationId ) return Error({ message: 'Already added in your clinic/hospitals.', doctor })
             else return Error({ message: 'This phone already used try another phone.', doctor })
@@ -287,7 +301,7 @@ const createDoctor = async (body, user, image) => {
                 address: body?.address,
                 aboutme: body?.aboutme,
                 organizationId: body?.organizationId,
-                specialization: body?.specialization?.name,
+                specialization: body?.specialization,
                 createdBy: user._id,
                 photo: image?.filename,
                 isActive: true,
@@ -300,7 +314,7 @@ const createDoctor = async (body, user, image) => {
 
 const doctorsInOrganization = async (body) => {
     try {
-        let doctors = await UserModel.find({ organizationId: body?.organizationId }, { 
+        let doctors = await UserModel.find({ organizationId: body?.organizationId, primary: false }, { 
             fullName: 1,
             email: 1,
             phone: 1,
@@ -330,6 +344,7 @@ const deal = async (body, user) => {
             }).save()
         }
         await OrganizationModel.updateOne({ _id: body?.organizationId }, { tab: { step: body?.tab, isComplete: true }})
+        await UserModel.updateOne({ organizationId: body?.organizationId, primary: true }, { twoFactor: { isVerified: true } })
         return Success({ message: 'Successfull saved', deal })
     } catch (error) {
         console.log(error)
@@ -343,6 +358,86 @@ const setAppointmentStatus = async (body) => {
         eventEmitter.emit('status', { event: 'status', data: { appointmentId: body._id } });
 
         return Success({ ...body, message: 'Status update successfully' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const createDepartment = async (body, user) => {
+    try {
+        let department = await DepartmentModel.findOne({ organizationId: body?.organizationId, name: body?.name?.toLowerCase() })
+
+        if( !department ) {
+            department = await DepartmentModel({
+                organizationId: body.organizationId,
+                name: body?.name?.toLowerCase(),
+                room: body?.room,
+                timing: body?.timing,
+                createdBy: user._id,
+            }).save()
+            
+            return Success({ department, message: 'Department created successfully' })
+        }
+
+        return Success({ department, message: 'Department already created' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getDepartments = async (body, user) => {
+    try {
+        let departments = await DepartmentModel.find({ organizationId: body?.organizationId })
+
+        return Success({ departments, message: 'Department created successfully' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const deleteDepartment = async (body, user) => {
+    try {
+        await DepartmentModel.deleteOne({ _id: body?._id })
+
+        return Success({ message: 'Department deleted successfully' })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const patients = async (body, user) => {
+    try {
+        let patients = await AppointmentModel.aggregate([
+            {
+                $match:{
+                    doctorId: ObjectId(user._id)
+                }
+            },
+            {
+                $group: {
+                    _id: '$userId',
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: '_id',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            { $unwind: '$user' },
+            {
+                $project: { 
+                    fullName: '$user.fullName',
+                    age: '$user.age',
+                    phone: '$user.phone',
+                    gender: '$user.gender',
+                    address: '$user.address',
+                }
+            }
+        ])
+        return Success({ patients })
     } catch (error) {
         console.log(error)
     }
@@ -362,6 +457,7 @@ const EventHandler = (req, res) => {
     }
 
     eventEmitter.on('new-appointment', (data) => sendResponse(data, 'new-appointment'))
+    eventEmitter.on('re-appointment', (data) => sendResponse(data, 're-appointment'))
     eventEmitter.on('status', (data) => sendResponse(data, 'status'))
 }
 
@@ -379,5 +475,9 @@ module.exports = {
     doctorsInOrganization,
     deal,
     setAppointmentStatus,
+    createDepartment,
+    getDepartments,
+    deleteDepartment,
+    patients,
     EventHandler
 }

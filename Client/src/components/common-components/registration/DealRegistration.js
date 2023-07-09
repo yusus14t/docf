@@ -16,7 +16,7 @@ const DealRegistration = ({ tab, organization }) => {
             console.log(data)
             toasty.success(data?.message)
 
-            localStorage.removeItem('registerOrganizationId')
+            localStorage.removeItem('RID')
             window.location.reload()
         } catch(error){ 
             console.error(error)

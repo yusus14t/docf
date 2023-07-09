@@ -11,35 +11,40 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
   const { register, handleSubmit, formState: { errors }, reset, } = useForm({ onChange: true })
   const [organization, setOrganization] = useState({})
   const toasty = useToasty()
-  const organizationId = JSON.parse(localStorage.getItem('registerOrganizationId')) || null
+  const RID = JSON.parse(localStorage.getItem('RID')) || null
 
   useEffect(() => {
-    if( organizationId )  getOrganization()
+    if( RID )  getOrganization()
   }, [])
 
   const getOrganization = async () => {
     try{
-        let { data } = await axiosInstance.get('/common/organization', { params: { organizationId }, ...getAuthHeader()})
+        let { data } = await axiosInstance.get('/common/organization', { params: { RID }, ...getAuthHeader()})
         setOrganization(data?.organization)
-        console.log(data)
+
         let tabData = data?.organization?.tab 
         if( tabData?.step === 'STEP1' && tabData?.isComplete ) setTab('STEP2')
         else if( tabData?.step === 'STEP2' && tabData?.isComplete ) setTab('STEP3')
         else setTab(tabData?.step || 'FINAL')
+
     } catch(error) { 
         console.error(error)
         toasty.error(error?.message)
     }
   }
+   
   const submit = async (formData) => {
       try {
           formData['tab'] = tab
           let {data}  = await axiosInstance.post('/common/create-organization', formData )
-          reset({})
-          setOrganization(data?.organization)
-          localStorage.setItem('registerOrganizationId', JSON.stringify(data?.organization?._id))
-          setTab('STEP2')
-          toasty.success(data?.message)
+          if(data?.organization){
+              reset({})
+              setOrganization(data?.organization)
+              localStorage.setItem('RID', JSON.stringify(data?.organization?._id ))
+              setTab('STEP2')
+              toasty.success(data?.message)
+          }
+
       } catch (error) { 
           toasty.error(error?.message)
           console.log(error)
@@ -117,33 +122,6 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
                             </div>
                         </div>
                     </div>
-                    { !isSelfCreated && <div className="row">
-                        <div className="col-md-6 mb-3">
-                            <label className=''>Password</label>
-                            <div className="input-group">
-                                <input type="password"
-                                    className={`form-control ${errors?.password ? 'border-danger' : ''}`}
-                                    placeholder="Password"
-                                    {...register('password', {
-                                        required: 'Password is required'
-                                    })}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-md-6 mb-3">
-                            <label className=''>Confirm Password</label>
-                            <div className="input-group">
-                                <input type="password"
-                                    className={`form-control ${errors?.confirmPassword ? 'border-danger' : ''}`}
-                                    placeholder="Confirm Password"
-                                    {...register('confirmPassword', {
-                                        required: 'Confirm password is required'
-                                    })}
-                                    onChange={(event) => { }}
-                                />
-                            </div>
-                        </div>
-                    </div>}
                 </div>
                 <button className='btn btn-primary btn-md' type='submit'>Save</button>
             </form>

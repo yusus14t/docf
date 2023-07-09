@@ -109,11 +109,6 @@ const Notification = () => {
                                         </div>}
                                     </div>
                                 </div>                                
-                                {/* <div className="col ">
-                                    <span className="text-dark">
-                                        
-                                    </span>
-                                </div> */}
                             </div>)}
                             </div>
                             

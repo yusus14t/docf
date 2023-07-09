@@ -4,8 +4,8 @@ import Slider from '../../constants/Slider'
 const Gynae = () => {
   return (
     <>
-    <Slider />
-    
+      <div className='box'></div>
+      <Slider />    
     </>
   )
 }

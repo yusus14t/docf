@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { axiosInstance, formatPhone } from '../../../constants/utils'
 
 const Patients = () => {
+  const [ patients, setPatients] = useState([]);
+
+  useEffect(() => {
+    getPatients()
+  }, [])
+
+  const getPatients = async () => {
+    try {
+      let { data } = await axiosInstance.get('/doctor/patients')
+      setPatients(data?.patients)
+      console.log(data)
+    } catch(error){ console.error(error) }
+  }
   return (
       <div className="ms-content-wrapper ">
         <div className="row">
@@ -18,28 +32,22 @@ const Patients = () => {
                         <table id="data-table-2" className="table table-striped thead-primary w-100 dataTable no-footer" role="grid" aria-describedby="data-table-2_info" style={{ width: '1160px' }}>
                           <thead>
                             <tr role="row">
-                              <th  style={{ width: '200px' }}>Address</th>
                               <th  style={{ width: '84px' }}>Name</th>
-                              <th  style={{ width: '89px' }}>Disease</th>
-                              <th  style={{ width: '44px' }}>Age</th>
                               <th  style={{ width: '102px' }}>Phone</th>
-                              <th  style={{ width: '237px' }}>Email</th>
-                              <th  style={{ width: '65px' }}>Action</th>
+                              <th  style={{ width: '44px' }}>Age</th>
+                              <th  style={{ width: '44px' }}>gender</th>
+                              <th  style={{ width: '200px' }}>Address</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr role="row" className="odd">
+                            {patients?.length > 0 && patients.map( patient => <tr role="row" className="odd">
                               <td className="sorting_1">
-                                Angelica</td>
-                              <td>Linden Avenue, Orlando</td>
-                              <td>Liver Disease</td>
-                              <td>24</td>
-                              <td>	(797) 506 1265</td>
-                              <td>angelicaramos@example.com</td>
-                              <td><a href="#"><i className="fas fa-pencil-alt ms-text-primary" /></a>
-                                <a href="#"><i className="far fa-trash-alt ms-text-danger" /></a>
-                              </td>
-                            </tr>
+                                {patient.fullName}</td>
+                              <td>{formatPhone(patient?.phone)}</td>
+                              <td>{patient?.age || '-'}</td>
+                              <td>{patient?.gender || '-'}</td>
+                              <td>{patient?.address}</td>
+                            </tr>)}
                           </tbody>
                         </table>
                       </div>
