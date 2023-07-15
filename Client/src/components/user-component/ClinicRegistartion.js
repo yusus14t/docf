@@ -36,7 +36,7 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
   const submit = async (formData) => {
       try {
           formData['tab'] = tab
-          let {data}  = await axiosInstance.post('/common/create-organization', formData )
+          let {data}  = await axiosInstance.post('/common/create-clinic', formData )
           if(data?.organization){
               reset({})
               setOrganization(data?.organization)

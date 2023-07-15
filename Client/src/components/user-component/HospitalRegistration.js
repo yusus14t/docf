@@ -10,20 +10,20 @@ import { useForm } from 'react-hook-form';
 const HospitalRegistartion = () => {
   const [tab, setTab] = useState("STEP1")
   const [organization, setOrganization] = useState({})
-  const organizationId = JSON.parse(localStorage.getItem('RID')) || null
+  const RID = JSON.parse(localStorage.getItem('RID')) || null
 
   const { register, handleSubmit, formState: { errors }, reset, } = useForm({ onChange: true })
   const toasty = useToasty()
 
   useEffect(() => {
-    if( organizationId )  getOrganization()
+    if( RID )  getOrganization()
   }, [])
 
   const getOrganization = async () => {
     try{
-        let { data } = await axiosInstance.get('/common/organization', { params: { organizationId }, ...getAuthHeader()})
+        let { data } = await axiosInstance.get('/common/organization', { params: { RID }, ...getAuthHeader()})
+        console.log(data)
         setOrganization(data?.organization)
-
         let tabData = data?.organization?.tab 
         if( tabData?.step === 'STEP1' && tabData?.isComplete ) setTab('STEP2')
         else if( tabData?.step === 'STEP2' && tabData?.isComplete ) setTab('STEP3')
@@ -39,9 +39,8 @@ const HospitalRegistartion = () => {
   const submit = async (formData) => {
     try {
         formData['tab'] = tab
-        formData['source'] = 'Hospital'
-        let {data}  = await axiosInstance.post('/common/create-organization', formData )
-        console.log(data)
+
+        let {data}  = await axiosInstance.post('/common/create-hospital', formData )
         reset({})
         setTab('STEP2')
         localStorage.setItem('RID', JSON.stringify(data?.organization?._id))
@@ -130,7 +129,7 @@ const HospitalRegistartion = () => {
             </>}
             {tab === "STEP2" &&  <ClinicRegistartion2 source={'Hospital'} tab={tab} setTab={setTab} /> }
             {tab === "STEP3" && <DepartmentRegistration source={'Hospital'} tab={tab} setTab={setTab} />}
-            {tab === "STEP4" &&  <DoctorRegistration source={'Hospital'} tab={tab} setTab={setTab} /> }
+            {tab === "STEP4" &&  <DoctorRegistration source={'Hospital'} tab={tab} setTab={setTab} organization={organization} /> }
             {tab === "FINAL" && <DealRegistration source={'Hospital'} tab={tab} setTab={setTab} />}
           </div>
         </div>

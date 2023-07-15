@@ -3,14 +3,15 @@ import useToasty from '../../../hooks/toasty'
 import { axiosInstance } from "../../../constants/utils";
 
 
-const DealRegistration = ({ tab, organization }) => {
+const DealRegistration = ({ tab }) => {
     const { register, handleSubmit, formState: { errors } } = useForm({ onChange: true })
     const toasty = useToasty();
+    const RID = JSON.parse(localStorage.getItem('RID'))
 
     const submit = async (formData) => {
         try{
             formData['tab'] = tab
-            formData['organizationId'] = organization._id
+            formData['organizationId'] = RID
 
             let { data } = await  axiosInstance.post('/doctor/deal', formData )
             console.log(data)

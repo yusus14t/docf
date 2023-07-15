@@ -2,14 +2,14 @@ import { Line, Doughnut } from 'react-chartjs-2';
 import {  Chart as ChartJS, CategoryScale, LinearScale, PointElement,  LineElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 
 ChartJS.register(
-CategoryScale,
-LinearScale,
-PointElement,
-LineElement,
-ArcElement,
-Title,
-Tooltip,
-Legend
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend
 );
 
 

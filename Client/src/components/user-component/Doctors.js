@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-import profile from '../../assets.app/img/dashboard/doctor-1.jpg'
 import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils";
 import Modal from "../common-components/Modal";
 import { useForm } from "react-hook-form";

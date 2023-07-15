@@ -8,23 +8,38 @@ import Select from "react-select"
 import useToasty from '../../../hooks/toasty';
 
 
-const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
-  const { register, handleSubmit, reset, formState: { errors }, control } = useForm({ onChange: true })
+const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
+  const { register, handleSubmit, reset, formState: { errors }, control, watch } = useForm({ onChange: true })
 
   const [doctors, setDoctors] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null)
   const [editImage, setEditImage] = useState(null)
   const [specialization, setSpecialization] = useState([])
+  const [departments, setDepartments] = useState([]);
+
   const toasty = useToasty()
 
   useEffect(() => {
     if( organization?._id ){
       getDoctorsInOrganization()
+      getDepartments()
 
-      let specializaion = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
-      setSpecialization(specializaion)
+        let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
+        setSpecialization(specialization)
+      
     }
   }, [])
+
+  const getDepartments = async () => {
+    try {
+        let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: organization._id }, ...getAuthHeader() })
+        console.log(data)
+        let dep = data?.departments?.map( de => ({ name: de?.organizationId?.name, _id: de?.organizationId?._id, specialization: de?.organizationId?.specialization[0]?.id || null }))
+        setDepartments(dep)
+
+    } catch(error) { console.error(error) }
+}
+
 
   const getDoctorsInOrganization = async () => {
     try {
@@ -38,9 +53,9 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
 
   const submit = async (values) => {
     try {      
-
+      console.log(values)
       if(!values?._id){
-        values['organizationId'] = organization._id
+        values['organizationId'] = source === 'Hospital' ? values.department?._id : organization._id
         values['tab'] = tab
       }
       
@@ -110,6 +125,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
     setEditImage(getFullPath(doctor?.photo))
     reset(doctor)
   }
+
 
   return (
     <div className='row'>
@@ -192,6 +208,28 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                 />
               </div>
             </div>
+            {source === 'Hospital' &&
+              <div className="col-md-6 mb-3">
+                <label >Select Department</label>
+                <div className="">
+                  <Controller
+                    control={control}
+                    name="department"
+                    rules={{ required: 'Query must be select' }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        isMulti={false}
+                        options={departments}
+                        getOptionLabel={({ name }) => name}
+                        getOptionValue={({ _id }) => _id}
+                        className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
+                        classNamePrefix="select"
+                      />
+                    )}
+                  />
+                </div>
+              </div>}
             <div className="col-md-6 mb-3">
               <label >Specialization of Clininc</label>
               <div className="">
@@ -203,7 +241,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                     <Select
                       {...field}
                       isMulti={false}
-                      options={specialization}
+                      options={source === 'Hospital' ? specialization.filter( a => a.id === watch('department')?.specialization ) : specialization}
                       getOptionLabel={({ name }) => name}
                       getOptionValue={({ id }) => id}
                       className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
@@ -213,6 +251,8 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                 />
               </div>
             </div>
+
+           
        
             <div className="col-md-6 mb-3">
               <label >Experience</label>

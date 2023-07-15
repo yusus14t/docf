@@ -237,10 +237,16 @@ const analytics = async (body, user) => {
     try {
         let today = new Date()
         today.setHours(0, 0, 0, 0)
+
+        let doctorIds = await UserModel.find({ organizationId: user.organizationId, primary: false }, { _id: 1 }) 
+        doctorIds = doctorIds.map( d => ObjectId(d._id) )
+
         let analytics = await AppointmentModel.aggregate([
             {
                 $match: {
-                    doctorId: ObjectId(user?._id),
+                    doctorId: {
+                        $in: doctorIds
+                    },
                 }
             },
             {
@@ -285,7 +291,7 @@ const analytics = async (body, user) => {
 const createDoctor = async (body, user, image) => {
     try {
         body = JSON.parse(body?.data)
-
+        console.log(body)
         let doctor = await UserModel.findOne({ phone: body?.phone, primary: false }) 
         if( doctor ){
             if( doctor?.organizationId === body?.organizationId ) return Error({ message: 'Already added in your clinic/hospitals.', doctor })
@@ -300,7 +306,7 @@ const createDoctor = async (body, user, image) => {
                 experience: body?.experience,
                 address: body?.address,
                 aboutme: body?.aboutme,
-                organizationId: body?.organizationId,
+                organizationId: body?.organizationId ,
                 specialization: body?.specialization,
                 createdBy: user._id,
                 photo: image?.filename,
@@ -363,33 +369,62 @@ const setAppointmentStatus = async (body) => {
     }
 }
 
-const createDepartment = async (body, user) => {
-    try {
-        let department = await DepartmentModel.findOne({ organizationId: body?.organizationId, name: body?.name?.toLowerCase() })
-
-        if( !department ) {
-            department = await DepartmentModel({
-                organizationId: body.organizationId,
-                name: body?.name?.toLowerCase(),
-                room: body?.room,
+const createDepartment = async ( body, userInfo ) => {
+    try{ 
+        let organization  = await UserModel.findOne({ phone: body.phone }).lean();
+        if( !organization ){
+            organization = await OrganizationModel({ 
+                registration: body?.registration,
+                organizationType: 'Department',
+                tab: {
+                    step: body?.tab,
+                    isComplete: true
+                },
+                name: body?.name,
+                email: body?.email,
                 timing: body?.timing,
-                createdBy: user._id,
+                room: body?.room,
+                specialization: body?.specialization
             }).save()
-            
-            return Success({ department, message: 'Department created successfully' })
-        }
 
-        return Success({ department, message: 'Department already created' })
-    } catch (error) {
-        console.log(error)
+            let user = await UserModel({
+                phone: body?.phone,
+                organizationId: organization._id,
+                hospitalId: body.organizationId,
+                primary: true,
+                userType: "DP",
+                twoFactor: {
+                    isVerified: true,
+                }
+            }).save()
+
+            let returnObj = {
+                _id: organization._id,
+                userId: user._id,
+                tab: organization.tab,
+                ...organization,
+            }
+            
+            return Success({ message: 'Department Successfully created', department: returnObj })
+        } else {
+            return Error({ message: 'Department Already created', department: returnObj })
+        }
+        
+    } catch(error){ 
+        console.log(error) 
+        return Error();
     }
 }
 
 const getDepartments = async (body, user) => {
     try {
-        let departments = await DepartmentModel.find({ organizationId: body?.organizationId })
+        let query = { hospitalId: user?.organizationId}
+        if( user?.userType !== 'HL' ) query = { organizationId: body?.organizationId}
 
-        return Success({ departments, message: 'Department created successfully' })
+        let departments = await UserModel.find( query )
+        .populate('organizationId', 'photo name room specialization')
+        .populate('hospitalId', 'name email fee organizationType')
+        return Success({ departments })
     } catch (error) {
         console.log(error)
     }
@@ -397,7 +432,9 @@ const getDepartments = async (body, user) => {
 
 const deleteDepartment = async (body, user) => {
     try {
-        await DepartmentModel.deleteOne({ _id: body?._id })
+
+        await OrganizationModel.deleteOne({ _id: body?._id })
+        await UserModel.deleteMany({ organizationId: body?._id })
 
         return Success({ message: 'Department deleted successfully' })
     } catch (error) {
@@ -407,10 +444,15 @@ const deleteDepartment = async (body, user) => {
 
 const patients = async (body, user) => {
     try {
+        let doctorIds = await UserModel.find({ organizationId: user.organizationId, primary: false }, { _id: 1 }) 
+        doctorIds = doctorIds.map( d => ObjectId(d._id) )
+
         let patients = await AppointmentModel.aggregate([
             {
                 $match:{
-                    doctorId: ObjectId(user._id)
+                    doctorId: {
+                        $in: doctorIds
+                    }
                 }
             },
             {
@@ -438,6 +480,16 @@ const patients = async (body, user) => {
             }
         ])
         return Success({ patients })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const hospitalSpecialization = async (body, user) => {
+    try {
+        let organization = await OrganizationModel.findOne({ _id: body?.organizationId }, { specialization: 1 })
+        let specialization = organization?.specialization?.length ? organization?.specialization.map( spe => ({ name: spe.name, id: spe.name.toLocaleUpperCase() })) : []
+        return Success({ specialization })
     } catch (error) {
         console.log(error)
     }
@@ -479,5 +531,6 @@ module.exports = {
     getDepartments,
     deleteDepartment,
     patients,
+    hospitalSpecialization,
     EventHandler
 }

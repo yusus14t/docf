@@ -2251,8 +2251,8 @@ textarea {
 }
 
 .ms-form-group input.ms-form-input {
-  padding: 11px 14px;
-  border-radius: 25px;
+  padding: 6px 15px;
+  border-radius: 5px;
   border: 0;
   background: #f0f0f7;
   -webkit-transition: 0.3s;

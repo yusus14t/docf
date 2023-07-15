@@ -19,6 +19,7 @@ router.post('/create-department', DoctorController.createDepartment)
 router.post('/delete-department', DoctorController.deleteDepartment)
 router.get('/departments', DoctorController.getDepartments)
 router.get('/patients', DoctorController.patients)
+router.get('/hospital-specialization', DoctorController.hospitalSpecialization)
 
 
 

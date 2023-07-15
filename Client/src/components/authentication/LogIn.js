@@ -1,105 +1,150 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import {  axiosInstance } from '../../constants/utils'
-import {userRoutes} from '../../constants/constant'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react'
+import background from "../../assets.app/img/backgrounds/login.jpg"
+import { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { axiosInstance, getAuthHeader, NumberFormat } from '../../constants/utils';
 import useToasty from '../../hooks/toasty';
+import { Link, useLocation } from 'react-router-dom'
+import { userRoutes } from '../../constants/constant'
 
 const LogIn = () => {
-   const toasty = useToasty();
-   const { register, handleSubmit } = useForm({ onChange: true })
-   const navigate = useNavigate();
+  const { state: LocationState } = useLocation()
+  const inputRef = useRef(null)
+  const otpRef = useRef(null)
+  const toasty = useToasty()
+  const [otp, setOtp] = useState(false)
+  const [isUserForm, setIsUserForm] = useState(false)
+  const [patient, setPatient] = useState({})
+  const [details, setDetails] = useState({
+    fullName: "",
+    phone: "",
+    age: "",
+    gender: "",
+   })
 
-   const submit = async (formData) => {
-      try{
-         let response = await axiosInstance.post('/login', formData )
-         let data = response?.data
-         localStorage.setItem('token', JSON.stringify(data?.token))
-         localStorage.setItem('user', JSON.stringify(data?.user))
-         navigate(`${userRoutes[data?.user?.userType].path}`)
-      } catch(error){ 
-         toasty.error(error?.message)
-         console.log(error)
+
+  const patientSignup = async (value) => {
+    try {
+      if(!value){
+        toasty.error('Enter number')
+        return
       }
-   }
+
+      let { data } = await axiosInstance.post('/patient-signup', { ...details, phone: value, source: 'patient'  })
+      setPatient(data?.user)
+      setDetails({ ...details, phone: value })
+      setOtp(true)
+      toasty.success(data?.message)
+    } catch (error) {
+      toasty.error(error?.message)
+      console.error(error)
+    }
+  }
+  const handleEdit = () => {
+    setOtp(false)
+  }
+  const ValidateOTP = async () => {
+    try {
+      let { data } = await axiosInstance.post('/validate-otp', { otp: otpRef.current.value, userId: patient?._id, })
+      console.log(data)
+      localStorage.setItem('user', JSON.stringify(data?.user))
+      localStorage.setItem('token', JSON.stringify(data?.token))
+
+
+      if (data?.user?.twoFactor?.isVerified) {
+        if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
+        else window.location.replace(userRoutes[data?.user?.userType]?.path)
+        
+      } else {
+        setIsUserForm(true)
+      }
+      toasty.success(data?.message)
+    } catch (error) {
+      toasty.error(error?.message)
+      console.error(error)
+    }
+  }
+
+  const saveDetails = async () => {
+    try {
+      let formData = details
+      formData['_id'] = patient?._id
+      let { data } = await axiosInstance.post('/patient/patient-details', details, getAuthHeader())
+      localStorage.setItem('user', JSON.stringify(data?.user))
+
+      if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
+      else window.location.replace('/patient')
+
+    } catch (error) {
+      toasty.error(error?.message)
+      console.error(error)
+    }
+  }
   return (
-      <div className="parent">
-         <div className="ms-content-wrapper ms-auth">
-               <div className="ms-auth-container">
-                  <div className="ms-auth-col">
-                     <div className="ms-auth-bg"></div>
-                  </div>
-                  <div className="ms-auth-col">
-                     <div className="ms-auth-form">
-                        <form onSubmit={handleSubmit(submit)} >
-                           <h1>Login to Account</h1>
-                           <p>Please enter your email and password to continue</p>
-                           <div className="mb-3">
-                              <label for="validationCustom08">Email Address</label>
-                              <div className="input-group">
-                                 <input 
-                                    type="email" 
-                                    className="form-control" 
-                                    placeholder="Email Address" 
-                                    { ...register('email',{
-                                       required: 'Email is required'
-                                    })}
-                                 />
-                                 
-                              </div>
-                           </div>
-                           <div className="mb-2">
-                              <label for="validationCustom09">Password</label>
-                              <div className="input-group">
-                                 <input 
-                                    type="password" 
-                                    className="form-control" 
-                                    placeholder="Password" 
-                                    {...register('password', {
-                                       required: 'Password is required'
-                                    })}
-                                 />
-                                 
-                              </div>
-                           </div>
-                           <div className="form-group ml-2">
-                              <label className="ms-checkbox-wrap">
-                              <input className="form-check-input" type="checkbox" {...register('remember')} />
-                              <i className="ms-checkbox-check"></i>
-                              </label>
-                              <span>Remember Password </span>
-                              <label className="d-block mt-3"><Link to="/" className="btn-link" data-bs-toggle="modal" data-bs-target="/modal-12">Forgot Password?</Link></label>
-                           </div>
-                           <button className="btn btn-primary mt-4 d-block w-100 spinner spinner-7" type="submit">Sign In</button>
-                           
-                           <p className="mb-0 mt-3 text-center">Don't have an account? <Link className="btn-link" to="/signup">Create Account</Link> </p>
-                        </form>
-                     </div>
-                  </div>
-               </div>
-         </div>
-         {/* <!-- Forgot Password Modal --> */}
-         <div className="modal fade" id="modal-12" tabindex="-1" role="dialog" aria-labelledby="modal-12">
-            <div className="modal-dialog modal-dialog-centered modal-min" role="document">
-               <div className="modal-content">
-                  <div className="modal-body text-center">
-                     <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                     <i className="flaticon-secure-shield d-block"></i>
-                     <h1>Forgot Password?</h1>
-                     <p> Enter your email to recover your password </p>
-                     <form method="post">
-                        <div className="ms-form-group has-icon">
-                           <input type="text" placeholder="Email Address" className="form-control" name="forgot-password" value=""/>
-                           <i className="material-icons">email</i>
-                        </div>
-                        <button type="submit" className="btn btn-primary shadow-none">Reset Password</button>
-                     </form>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+    <div style={{ backgroundImage: `url(${background})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className='loginContainer'>
+
+      {!isUserForm && <div className="loginform col-3 d-flex flex-column">
+        <span className='h2 text-light mb-3'>LogIn / Sign Up</span>
+
+        {otp && <div className="mobile">
+          <p className='mb-1 text-disabled'>Mobile Number</p>
+          <h3>+91 {`${String(details?.phone || "").slice(0, 2)}-${String(details?.phone || "").slice(2, 4)}-${String(details?.phone || "").slice(4, 6)}-${String(details?.phone || "").slice(6, 10)}`} <span><FontAwesomeIcon onClick={handleEdit} className='cursor-pointer medit ml-1 text' icon={faEdit} /></span></h3>
+        </div>}
+        {!otp && <>
+          <label className='mb-2' htmlFor="Phone">Mobile Number</label>
+          <input id='Phone' className='form-control mb-2 letterSpcing' type="number" pattern='###-###-####' placeholder='822992255' ref={inputRef} onChange={NumberFormat} />
+          <span><button onClick={() => patientSignup(inputRef.current.value)} className='btn btn-light btn1'>Submit</button></span></>
+        }
+        {otp && <div className="otp mt-2">
+          <label htmlFor="" className='text-disabled'>Enter the OTP</label>
+          <input className='form-control mt-2 letterSpcing' type="number" name="OTP" id="" placeholder='X X X X' ref={otpRef} />
+          <button onClick={ValidateOTP} className='btn btn-light btn1 mt-4'>Log In</button>
+        </div>}
+        <span>
+          <Link to={'/department-login'}>
+            <p className='text-light mt-3'>Hospitals/ clinics are click on <span className='text-info'>Login</span></p>
+          </Link></span>
+      </div>}
+      {isUserForm && !patient?.isVerified && <div className="loginform mt-0 user-details col-3 d-flex flex-column">
+        <h3 className='mb-3'>Fill your Details</h3>
+        <div className='mb-2'>
+          <label htmlFor="">Mobile Number</label>
+          <h4 className='mb-2 text-disabled'>+91 {details?.phone?.slice(0,3)}-{details?.phone?.slice(3,6)}-{details?.phone?.slice(-4)}</h4>
+        </div>
+        <div className='col-12'>
+          <div>
+            <label htmlFor="" className='mb-2'  >Full Name</label>
+            <input type="text" className='form-control mb-2' placeholder='Enter Full name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, fullName: e.target.value }) }} />
+          </div>
+        </div>
+        <div className='col-12 d-flex flex-row'>
+          <div className='col-6 me-2'>
+            <label htmlFor="" className='mb-2'>Age</label>
+            <input  type="number" placeholder='Enter Age' onBlur={(e) => { if (e.target.value) setDetails({ ...details, age: e.target.value }) }} className='form-control mb-2 col-2' />
+          </div>
+          <div className=''>
+            <label htmlFor="" className='mb-2'>Gender</label>
+            <select style={{ padding: '.475rem .75rem'}} className='form-control mb-2 col-2 w-100' onBlur={(e) => { if (e.target.value) setDetails({ ...details, gender: e.target.value }) }}>
+                <option value='male'>Male</option>
+                <option value='female'>Female</option>
+                <option value='other'>Other</option>
+            </select>
+            {/* <input style={{ width: "166px" }} placeholder='enter gender' type="text" onBlur={(e) => { if (e.target.value) setDetails({ ...details, gender: e.target.value }) }} className='form-control mb-2 col-2' /> */}
+          </div>
+        </div>
+        <div className="mb-3">
+          <label className='mb-2' htmlFor="">Father name</label>
+          <input type="text" placeholder='Enter Father Name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, father: e.target.value }) }} className="form-control" />
+        </div>
+        <div className=" mb-3">
+          <label className='mb-2' htmlFor="">Address</label>
+          <input type="text" placeholder='Enter Address' onBlur={(e) => { if (e.target.value) setDetails({ ...details, address: e.target.value }) }} className="form-control" />
+        </div>
+        <button className='btn btn1 btn-info' onClick={() => saveDetails()}>Save</button>
+
+      </div>}
+    </div>
   )
 }
 

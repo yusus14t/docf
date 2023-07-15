@@ -6,7 +6,8 @@ const { upload } = require('../constants/utils')
 
 
 router.post('/checkDuplicateEmail',  commonController.checkDuplicateEmail);
-router.post('/create-organization', commonController.createOrganization);
+router.post('/create-clinic', commonController.createClinic);
+router.post('/create-hospital', commonController.createHospital);
 router.get('/organization', commonController.getOrganization);
 router.post('/organization-details', upload.single("image"), commonController.organizationDetails)
 router.get('/specializations', commonController.allSpecializations)

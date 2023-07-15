@@ -94,6 +94,12 @@ const patients = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const hospitalSpecialization = async ( req, res ) => {
+    DoctorManager.hospitalSpecialization( req.query, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     getAppointments,
     editDoctor,
@@ -111,4 +117,5 @@ module.exports = {
     getDepartments,
     deleteDepartment,
     patients,
+    hospitalSpecialization
 }

@@ -18,13 +18,13 @@ const sessionInfo = async ( body, user ) => {
     }
 }
 
-const createOrganization = async ( body, userInfo ) => {
+const createClinic = async ( body, userInfo ) => {
     try{ 
         let organization  = await UserModel.findOne({ phone: body.phone }).lean();
         if( !organization ){
             organization = await OrganizationModel({ 
                 registration: body?.registration,
-                organizationType: body?.source === 'Hospital' ? 'Hospital' : 'Clinic',
+                organizationType: body?.source === 'Hospital' ? 'Department' : 'Clinic',
                 tab: {
                     step: body?.tab,
                     isComplete: true
@@ -37,7 +37,46 @@ const createOrganization = async ( body, userInfo ) => {
                 phone: body?.phone,
                 organizationId: organization._id,
                 primary: true,
-                userType: 'DR',
+                userType: body?.source === 'Hospital' ? "DP" : "CL",
+            }).save()
+
+            let returnObj = {
+                _id: organization._id,
+                userId: user._id,
+                tab: organization.tab
+            }
+            
+            return Success({ message: 'Successfully created', organization: returnObj })
+        } else {
+            return Error({ message: 'Already created', organization: returnObj })
+        }
+        
+    } catch(error){ 
+        console.log(error) 
+        return Error();
+    }
+}
+
+const createHospital = async ( body, userInfo ) => {
+    try{ 
+        let organization  = await UserModel.findOne({ phone: body.phone }).lean();
+        if( !organization ){
+            organization = await OrganizationModel({ 
+                registration: body?.registration,
+                organizationType: 'Hospital',
+                tab: {
+                    step: body?.tab,
+                    isComplete: true
+                },
+                name: body?.name,
+                email: body?.email,
+            }).save()
+
+            let user = await UserModel({
+                phone: body?.phone,
+                organizationId: organization._id,
+                primary: true,
+                userType: "HL",
             }).save()
 
             let returnObj = {
@@ -175,7 +214,7 @@ const patientSignUp = async ( body, user ) => {
     try{
         const otp = randomOtp()
     
-        let user = await UserModel.findOne({ phone: body?.phone, $or: [{ userType: 'DR', primary: true }, {  userType: { $in: ['SA', 'MR', 'PT'] }, primary: false}]})
+        let user = await UserModel.findOne({ phone: body?.phone, $or: [{ primary: true }, {  userType: { $in: ['SA', 'MR', 'PT'] }, primary: false}]})
         if(user){
             await UserModel.updateOne({ phone: body?.phone }, { 'twoFactor.otp': otp })
         } else {
@@ -193,6 +232,7 @@ const patientSignUp = async ( body, user ) => {
 
 const validateOtp = async ( body ) => {
     try{
+        console.log('>>>>>', body)
         let user = await UserModel.findOne({_id: body?.userId }).populate('organizationId')
         if( user?.twoFactor?.otp === body?.otp ){
             await UserModel.updateOne({_id: user._id}, { 'twoFactor.otp':  0 })
@@ -318,7 +358,7 @@ module.exports = {
     logIn,
     signUp,
     sessionInfo,
-    createOrganization,
+    createClinic,
     appointmentDoctors,
     getPatientByNumber,
     getUserByEmail,
@@ -330,4 +370,5 @@ module.exports = {
     clinicDetails,
     getOrganization,
     waitingList,
+    createHospital,
 }

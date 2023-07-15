@@ -2,7 +2,9 @@ import { Navigate, useRoutes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import SUPER_ADMIN from "./super-admin-routes";
 import PATIENT from "./patient-routes";
-import DOCTOR from "./doctor-routes";
+import CLINIC from "./clinic-routes";
+import DEPARTMENT from "./department-routes";
+import HOSPITAL from "./hospital-routes";
 import MR from "./mr-routes";
 
 import COMMON_ROUTE from "./common-routes";
@@ -16,8 +18,10 @@ const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
 const USER_ROUTES = {
   SA: { path: "/super-admin", id: SUPER_ADMIN },
   PT: { path: "/patient", id: PATIENT },
-  DR: { path: "/doctor", id: DOCTOR },
+  CL: { path: "/clinic", id: CLINIC },
+  DP: { path: "/department", id: DEPARTMENT },
   MR: { path: "/mr", id: MR },
+  HL: { path: "/hospital", id: HOSPITAL },
 };
 
 export const AllRoutes = () => {

@@ -42,7 +42,7 @@ const DepartmentSignUp = () => {
         let route = userRoutes[data?.user?.userType]?.path
         window.location.replace(route)
       } else if( data?.user?.userType === 'DR' ) {
-        window.location.replace('/after')
+        // window.location.replace('/after')
       } 
       
       toasty.success(data?.message)

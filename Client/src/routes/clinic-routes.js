@@ -1,0 +1,21 @@
+import { Navigate } from "react-router-dom";
+import Patients from "../components/user-component/doctor/Patients";
+import Dashbaord from "../components/user-component/doctor/Dashboard";
+import Notification from "../components/common-components/Notification/Notification";
+import Support from "../components/common-components/Support/Support";
+import AppointmentList from "../components/common-components/Appointment/AppointmentList";
+import Settings from "../components/common-components/Settings/Settings";
+
+const CLINIC = [
+  { path: "/clinic", element: <Navigate to={"/clinic/dashboard"} /> },
+  { path: "/clinic/dashboard", element: <Dashbaord /> },
+  { path: "/clinic/profile", element: <h1>Profile</h1> },
+  { path: "/clinic/patient", element: <Patients /> },
+  { path: "/clinic/appointment", element: <AppointmentList /> },
+  { path: "/clinic/notification", element: <Notification /> },
+  { path: "/clinic/support", element: <Support /> },
+  { path: "/clinic/setting", element: <Settings /> },
+  { path: "/clinic/*", element: <Navigate to={"/clinic/dashboard"} /> },
+];
+
+export default CLINIC;

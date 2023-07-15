@@ -47,7 +47,7 @@ function DoctorsList(props) {
                           <div className="dr-details">
                             <h2 className="">{doctor?.fullName}</h2>
                             <p className="mb-1 dr-spelialization">
-                              {doctor?.specialization || "Specialization"}
+                              {doctor?.specialization?.name || "Specialization"}
                             </p>
                             <p className="mb-1 experience-dr">
                               Eperience : 8 Years
