@@ -7,7 +7,8 @@ import Appointment from "../components/common-components/Appointment/Appointment
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faBell, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 import useNotification from '../hooks/Notification';
-
+import { Link } from "react-router-dom";
+import { userRoutes } from "../constants/constant";
 
 const Header = () => {
     const notificationAPI = useNotification();
@@ -23,6 +24,7 @@ const Header = () => {
         'high': 'danger',
     }
 
+    const getUserPath = () =>  userRoutes[userInfo.userType]?.path
 
     useEffect(() => {
         getNotifications()
@@ -74,9 +76,9 @@ const Header = () => {
                     </li>}
                     
                     <li className="ms-nav-item ms-d-none">
-                        <div className="text-white cursor-pointer" >
+                        <div className="text-white" >
                         <Dropdown
-                            toggle={<> <FontAwesomeIcon className="Header-icon" icon={faBell} />{ unseenNotificationCount > 0 && <span class="badge rounded-pill badge-outline-light bell-badge ">{unseenNotificationCount}</span>} </>}
+                            toggle={<> <FontAwesomeIcon className="Header-icon cursor-pointer" icon={faBell} />{ unseenNotificationCount > 0 && <span class="badge rounded-pill badge-outline-light bell-badge ">{unseenNotificationCount}</span>} </>}
                         >
                             <li className="dropdown-menu-header">
                                 <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Notifications</span></h6>
@@ -85,7 +87,7 @@ const Header = () => {
                             {notifications.length ? 
                                 notifications.map( notification => 
                                     <Item>
-                                        <div className="row">
+                                        <div className="row cursor-pointer">
                                             <div className="col-2">
                                                 <span class={`badge badge-gradient-${PRIORITY_COLORS[notification.priority]}`} style={{ fontSize:"9px"}}>{notification.priority}</span>
                                             </div>
@@ -99,9 +101,11 @@ const Header = () => {
                             }
                             <li className="dropdown-divider m-0 fs-12"></li>
 
-                            <li className="dropdown-menu-header">
-                                <h6 className="dropdown-header ms-inline m-0 fs-12"><span className="text-disabled">View All </span></h6>
-                            </li>
+                            <Link to={`${getUserPath()}/notification`} className=" dropdown-menu-header">
+                                {/* <li className=""> */}
+                                    <h6 className="dropdown-header ms-inline m-0 fs-12"><span className="text-disabled">View All </span></h6>
+                                {/* </li> */}
+                            </Link>
     
                         </Dropdown>
                         </div>

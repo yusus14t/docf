@@ -31,7 +31,6 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
         try {
             let { data } = await axiosInstance.get('/doctor/hospital-specialization', { params: { organizationId: RID }})
             setSpecialization(data?.specialization)
-            console.log('getHospitalSpecialization', data)
         } catch(error){ console.error(error) }
     }
 

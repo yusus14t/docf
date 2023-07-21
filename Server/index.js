@@ -31,7 +31,7 @@ app.use('/images', express.static('uploads'))
 
 // All Routes
 app.use('/api',(req, res, next) => {
-    console.log('===>', req.method,  req.originalUrl)
+    console.log('===>', req.method,  req.originalUrl,  res.statusCode)
     next();
 }, routes);
 

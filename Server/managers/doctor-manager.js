@@ -2,11 +2,11 @@ const AppointmentModel = require('../models/appointment-model');
 const { Success, Error } = require('../constants/utils');
 const UserModel = require('../models/user-model');
 const ObjectId = require('mongoose').Types.ObjectId
-
 const { EventEmitter } = require('events');
 const OrganizationModel = require('../models/organization-model');
 const DealModel = require('../models/deal-model');
-const DepartmentModel = require('../models/department-modal');
+const { pipeline } = require('stream');
+
 const eventEmitter = new EventEmitter()
 
 const getAppointments = async (body, user) => {
@@ -14,15 +14,20 @@ const getAppointments = async (body, user) => {
         let status = body.status
         let today = new Date()
         today.setHours(0,0,0,0)
-        let doctors = await UserModel.find({ organizationId: user.organizationId, primary: false }, { _id: 1 })
-        doctors = doctors.map( d => ObjectId(d._id) )
+
+        let departmentIds = [ ObjectId(user.organizationId) ] 
+        if( user.userType === 'HL'){
+            departmentIds = await UserModel.find({ hospitalId: user.organizationId, primary: true }, { organizationId: 1 }) 
+            departmentIds = departmentIds.map( d => ObjectId(d.organizationId) )
+        }
+        
 
         let query = { createdAt: { $gte: today } }
         
         if( status ) query['status'] = status
         
         if( user.userType === 'PT' ) query['createdBy'] = user._id
-        else query['doctorId'] = { $in: doctors }
+        else query['departmentId'] = { $in: departmentIds }
 
         let appointments = await AppointmentModel.aggregate([
             {
@@ -45,15 +50,36 @@ const getAppointments = async (body, user) => {
                 }
             },
             {
+                $unwind: '$user'
+            },
+            {
+                $lookup: {
+                    from: 'organizations',
+                    localField: 'departmentId',
+                    foreignField: '_id', 
+                    as: 'department',
+                    pipeline: [
+                        {
+                            $project: {
+                                name: 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                $unwind: '$department'
+            },
+            {
                 $project: {
                     token: 1,
                     doctorId: 1,
-                    user: { $first: '$user' },
-                    status: 1
+                    user: '$user' ,
+                    status: 1,
+                    department: '$department.name'
                 }
             },
         ])
-        console.log(appointments)
         return Success({ message: 'Appointment fetch successfully', appointments })
     } catch (error) {
         console.log(error)
@@ -65,7 +91,6 @@ const editDoctor = async (body, user, file) => {
     try {
         body = JSON.parse(body?.data)
 
-        console.log(body?.createdBy, user._id)
         if (body._id !== user._id && user.userType !== 'SA' && body?.createdBy?.toString() !== user._id?.toString()) return Error({ message: 'You have not permission to edit.' })
 
         let userObj = {
@@ -160,22 +185,22 @@ const addAppointment = async (body, user) => {
         let today = new Date()
         today.setHours(0,0,0,0)
 
-        let lastAppointment = await AppointmentModel.findOne({ doctorId: ObjectId(body.doctor._id), status: 'waiting', createdAt: { $gte: today } }, { token: 1 }).sort({ createdAt: -1 })
+        let lastAppointment = await AppointmentModel.findOne({ departmentId: ObjectId(body.department.organizationId), status: 'waiting', createdAt: { $gte: today } }, { token: 1 }).sort({ createdAt: -1 })
         let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : '1';
         let patient = await UserModel.findOne({ phone: body.phone, userType: 'PT' }, { fullName: 1, userType: 1, phone: 1, address: 1 });
 
-        if (!patient) {  patient = await UserModel({ ...body, userType: 'PT' }).save() }
+        if (!patient) {  patient = await UserModel({ ...body, userType: 'PT', primary: true }).save() }
 
-        let appointment = await AppointmentModel.findOne({ userId: patient._id, doctorId: body.doctor._id, status:'waiting', createdAt: { $gte: today }})
+        let appointment = await AppointmentModel.findOne({ userId: patient._id, departmentId: body.department.organizationId, status:'waiting', createdAt: { $gte: today }})
         if( !appointment ){
-            appointment = await AppointmentModel({ token, userId: patient._id, doctorId: body.doctor._id, createdBy: user._id }).save()
+            appointment = await AppointmentModel({ token, userId: patient._id, departmentId: body.department.organizationId, createdBy: user._id }).save()
         } else {
             return Error({ message: 'Already in your waiting list.' })
         }
 
         let Obj = {
             _id: appointment._id,
-            doctorId: appointment.doctorId,
+            departmentId: appointment.departmentId,
             token,
             user: {
                 _id: patient._id,
@@ -197,15 +222,9 @@ const addAppointment = async (body, user) => {
 const appointmentById = async (body, user) => {
     try {
         let appointment = await AppointmentModel.findOne({ _id: ObjectId(body.appointmentId) })
-            .populate('userId', 'fullName age gender fatherName phone address')
-            .populate({
-                path: 'doctorId',
-                select: 'fullName organizationId',
-                populate: {
-                    path: 'organizationId',
-                    select: 'name'
-                }
-            })
+            .populate('userId', 'fullName age gender fatherName phone address bloodGroup gardianName')
+            .populate('departmentId', 'name')
+
         if (!appointment) return Error({ messsage: 'Oops! appointment not find.' })
         return Success({ appointment })
     } catch (error) {
@@ -238,15 +257,18 @@ const analytics = async (body, user) => {
         let today = new Date()
         today.setHours(0, 0, 0, 0)
 
-        let doctorIds = await UserModel.find({ organizationId: user.organizationId, primary: false }, { _id: 1 }) 
-        doctorIds = doctorIds.map( d => ObjectId(d._id) )
-
+        let departmentIds = [ ObjectId(user.organizationId) ] 
+        if( user.userType === 'HL'){
+            departmentIds = await UserModel.find({ hospitalId: user.organizationId, primary: true }, { organizationId: 1 }) 
+            departmentIds = departmentIds.map( d => ObjectId(d.organizationId) )
+        }
+        
         let analytics = await AppointmentModel.aggregate([
             {
                 $match: {
-                    doctorId: {
-                        $in: doctorIds
-                    },
+                    departmentId: {
+                        $in: departmentIds
+                    }
                 }
             },
             {
@@ -279,6 +301,7 @@ const analytics = async (body, user) => {
                     total: { $first: '$total.count' },
                     today: { $first: '$today.count' },
                     token: { $first: '$currentToken.token' },
+                    department: `${departmentIds?.length}`
                 }
             }
         ])
@@ -288,10 +311,84 @@ const analytics = async (body, user) => {
     }
 }
 
+const doghnutAnalytics = async (body, user) => {
+    try {
+        let departmentIds = [ ObjectId(user.organizationId) ] 
+        if( user.userType === 'HL'){
+            departmentIds = await UserModel.find({ hospitalId: user.organizationId, primary: true }, { organizationId: 1 }) 
+            departmentIds = departmentIds.map( d => ObjectId(d.organizationId) )
+        }
+
+        let analytics = await AppointmentModel.aggregate([
+            {
+                $match: {
+                    departmentId: {
+                        $in: departmentIds
+                    }
+                }
+            },
+            {
+                $facet: {
+                    gender: [
+                        {
+                            $lookup: {
+                                from: 'users',
+                                localField: 'userId',
+                                foreignField: '_id',
+                                as: 'user',
+                                pipeline: [
+                                    {
+                                        $project: {
+                                            gender: 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            $unwind: {
+                                path: '$user',
+                                preserveNullAndEmptyArrays: true,
+                            }
+                        },
+                        {
+                            $project: {
+                                user: 1
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: '$user.gender',
+                                count: {
+                                    $sum: 1
+                                },
+                            }
+                        },
+                    ],
+                    status: [
+                        {
+                            $group: {
+                                _id: '$status',
+                                count: {
+                                    $sum: 1
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            
+        ])
+
+        return Success({ analytic: analytics[0] })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const createDoctor = async (body, user, image) => {
     try {
         body = JSON.parse(body?.data)
-        console.log(body)
         let doctor = await UserModel.findOne({ phone: body?.phone, primary: false }) 
         if( doctor ){
             if( doctor?.organizationId === body?.organizationId ) return Error({ message: 'Already added in your clinic/hospitals.', doctor })
@@ -393,6 +490,7 @@ const createDepartment = async ( body, userInfo ) => {
                 hospitalId: body.organizationId,
                 primary: true,
                 userType: "DP",
+                isActive: true,
                 twoFactor: {
                     isVerified: true,
                 }
@@ -418,9 +516,11 @@ const createDepartment = async ( body, userInfo ) => {
 
 const getDepartments = async (body, user) => {
     try {
-        let query = { hospitalId: user?.organizationId}
+        let query = { hospitalId: user?.organizationId }
         if( user?.userType !== 'HL' ) query = { organizationId: body?.organizationId}
+        if( !query?.hospitalId && !query?.organizationId ) return Success({ departments: [] })
 
+        
         let departments = await UserModel.find( query )
         .populate('organizationId', 'photo name room specialization')
         .populate('hospitalId', 'name email fee organizationType')
@@ -444,14 +544,17 @@ const deleteDepartment = async (body, user) => {
 
 const patients = async (body, user) => {
     try {
-        let doctorIds = await UserModel.find({ organizationId: user.organizationId, primary: false }, { _id: 1 }) 
-        doctorIds = doctorIds.map( d => ObjectId(d._id) )
+        let departmentIds = [ ObjectId(user.organizationId) ] 
+        if( user.userType === 'HL'){
+            departmentIds = await UserModel.find({ hospitalId: user.organizationId, primary: true }, { organizationId: 1 }) 
+            departmentIds = departmentIds.map( d => ObjectId(d.organizationId) )
+        }
 
         let patients = await AppointmentModel.aggregate([
             {
                 $match:{
-                    doctorId: {
-                        $in: doctorIds
+                    departmentId:{
+                        $in: departmentIds
                     }
                 }
             },
@@ -487,9 +590,22 @@ const patients = async (body, user) => {
 
 const hospitalSpecialization = async (body, user) => {
     try {
-        let organization = await OrganizationModel.findOne({ _id: body?.organizationId }, { specialization: 1 })
+        let organization = await OrganizationModel.findOne({ _id: body?.organizationId || user.organizationId}, { specialization: 1 })
         let specialization = organization?.specialization?.length ? organization?.specialization.map( spe => ({ name: spe.name, id: spe.name.toLocaleUpperCase() })) : []
         return Success({ specialization })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const addSpecialization = async (body, user) => {
+    try {
+        let organization = await OrganizationModel.findOne({ _id: user?.organizationId, 'specialization.id': body?.name?.toUpperCase() })
+        if( !organization ){
+            await OrganizationModel.updateOne({ _id: user?.organizationId }, { $push: { specialization: { id: body?.name?.toUpperCase(), name: body?.name } }})
+            return Success({ specialization: {id: body?.name?.toUpperCase(), name: body?.name} })
+        }
+        return Error({ message: 'Specialization already created!' })
     } catch (error) {
         console.log(error)
     }
@@ -523,6 +639,7 @@ module.exports = {
     appointmentById,
     reAppointment,
     analytics,
+    doghnutAnalytics,
     createDoctor ,
     doctorsInOrganization,
     deal,
@@ -532,5 +649,6 @@ module.exports = {
     deleteDepartment,
     patients,
     hospitalSpecialization,
+    addSpecialization,
     EventHandler
 }

@@ -25,7 +25,7 @@ function Sidebar({isOpen, setIsOpen, mobileView}) {
                             <a href="/" className="text-center "> <img className="profile-image" src={Doctor} alt="logo" /></a>
                         </div>
                         <div className="">
-                            <h5 className="text-center text-white mt-2">{userInfo?.fullName || userInfo?.organizationId?.name }</h5>
+                            <h5 className="text-center text-white mt-2">{ ['SA', 'MR', 'PT'].includes(userInfo.userType) ?  userInfo?.fullName : userInfo?.organizationId?.name }</h5>
                             <h6 className="text-center text-white mb-3">{userInfo?.userType !== 'DR' ? userRoutes[userInfo?.userType].title : userInfo?.organizationId?.organizationType?.toUpperCase() }</h6>
                         </div>
                     </div>

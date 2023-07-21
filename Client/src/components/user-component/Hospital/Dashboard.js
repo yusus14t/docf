@@ -12,13 +12,11 @@ const Dashbaord = () => {
     const [isUserModalOpen, setIsUserModalOpen] = useState(false);
     const [appointments, setAppointments] = useState([]);
     const [unreachedData, setUnreachedData] = useState([]);
-    const [appointmentData, setAppointmentData] = useState({})
+    const [appointmentData, setAppointmentData] = useState({}) 
     const [isWeekChart, setIsWeekChart] = useState(true)
     const [chartData, setChartData] = useState({})
     const [analyticsData, setAnalyticsData] = useState({})
-    const [ genderData, setGenderData ] = useState([])
     const [ doghnutData, setDoghnutData ] = useState({ gender: [], status: [] })
-
     const event = useEvent();
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const toasty = useToasty();
@@ -125,8 +123,8 @@ const Dashbaord = () => {
                         <div class="ms-card card-gradient-custom ms-widget ms-infographics-widget ms-p-relative">
                             <div class="ms-card-body media">
                                 <div class="media-body">
-                                    <h6>Current Token</h6>
-                                    <div className='ms-card-change '><span className='fs-07 text-white'>Today </span>{analyticsData?.token || '0'}</div>
+                                    <h6>Departments</h6>
+                                    <div className='ms-card-change '><span className='fs-07 text-white'>Total </span>{analyticsData?.department || '0'}</div>
                                 </div>
                             </div>
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
@@ -197,23 +195,6 @@ const Dashbaord = () => {
                     <div class="ms-panel h-100">
                         <div class="ms-panel-header">
                             <div>
-                                <h6>Status</h6>
-                            </div>
-                        </div>
-                        <div class="ms-panel-body ">
-                            <div className='h4'>
-                                Appointment Status
-                            </div>
-                            <div className='text-center' style={{ height: '16rem', width: '16rem' }}>
-                                {doghnutData.gender && <DoughnutChart labelName={'Patient'} chartData={doghnutData.status} />}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
-                    <div class="ms-panel h-100">
-                        <div class="ms-panel-header">
-                            <div>
                                 <h6>Genders</h6>
                             </div>
                         </div>
@@ -222,7 +203,24 @@ const Dashbaord = () => {
                                 Patients By Gender
                             </div>
                             <div className='text-center' style={{ height: '16rem', width: '16rem' }}>
-                                {doghnutData.status && <DoughnutChart labelName={'Patient'} chartData={doghnutData.gender} />}
+                                {doghnutData?.gender && <DoughnutChart labelName={'Patient'} chartData={doghnutData.gender} />}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
+                    <div class="ms-panel h-100">
+                        <div class="ms-panel-header">
+                            <div>
+                                <h6>Status</h6>
+                            </div>
+                        </div>
+                        <div class="ms-panel-body ">
+                            <div className='h4'>
+                                Appointment Status
+                            </div>
+                            <div className='text-center' style={{ height: '16rem', width: '16rem' }}>
+                                {doghnutData?.status && <DoughnutChart labelName={'Patient'} chartData={doghnutData.status} />}
                             </div>
                         </div>
                     </div>
@@ -231,7 +229,7 @@ const Dashbaord = () => {
                     <div class="ms-panel ms-widget">
                         <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
                             <div>
-                                <h6>Today Appointments</h6>
+                                <h6>New Appointments</h6>
                             </div>
                             <div className="">
                                 <button className=" btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
@@ -242,9 +240,14 @@ const Dashbaord = () => {
                                 {appointments?.length > 0 ?
                                     appointments.map((appointment, i) => <li class="ms-list-item media">
                                         <img src={image} class="ms-img-small ms-img-round" alt="people" />
-                                        <div class="media-body mt-1 cursor-pointer" onClick={() => { setAppointmentData(appointment); setIsUserModalOpen(true); }}>
-                                            <h4>{appointment?.user.fullName || ""}</h4>
-                                            <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5, 10)}</span>
+                                        <div class="row media-body mt-1 cursor-pointer" onClick={() => { setAppointmentData(appointment); setIsUserModalOpen(true); }}>
+                                            <div className='col'>
+                                                <h4>{appointment?.user.fullName || ""}</h4>
+                                                <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5, 10)}</span>
+                                            </div>
+                                            <div className='col'>
+                                                <span>{ appointment?.department}</span>
+                                            </div>
                                         </div>
                                         <button type="button" class="ms-btn-icon btn-success" name="button">{appointment?.token} </button>
                                     </li>) : <span>No Data</span>
@@ -265,9 +268,14 @@ const Dashbaord = () => {
                                 {unreachedData?.length > 0 ?
                                     unreachedData.map((appointment, i) => <li class="ms-list-item media">
                                         <img src={image} class="ms-img-small ms-img-round" alt="people" />
-                                        <div class="media-body mt-1 cursor-pointer" onClick={() => { setAppointmentData(appointment); setIsUserModalOpen(true); }}>
-                                            <h4>{appointment?.user.fullName || ""}</h4>
-                                            <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5, 10)}</span>
+                                        <div class="row media-body mt-1 cursor-pointer" onClick={() => { setAppointmentData(appointment); setIsUserModalOpen(true); }}>
+                                            <div className='col'>
+                                                <h4>{appointment?.user.fullName || ""}</h4>
+                                                <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5, 10)}</span>
+                                            </div>
+                                            <div className='col'>
+                                                <span>{ appointment?.department}</span>
+                                            </div>
                                         </div>
                                         <button type="button" class="ms-btn-icon btn-success" name="button">{appointment?.token} </button>
                                     </li>) : <span className='text-centre'>No Data</span>

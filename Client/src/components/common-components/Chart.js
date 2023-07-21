@@ -48,15 +48,31 @@ export const LineChart = ({ filterType, labelName, chartData }) => {
 }
 
 
-export const DoughnutChart = () => {
+export const DoughnutChart = ({ chartData }) => {
+    const DoughnutChartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    font: {
+                        size: 16,
+                        color: '#000'
+                    },
+                }
+            },
+            
+        },
+    };
 
     const data = {
-        labels: ['Red', 'Blue', 'Yellow'],
+        labels: chartData?.length ? chartData.filter( e => e._id ).map( e => e._id ?? 'other') : [],
         datasets: [
           {
             label: 'Totals',
-            data: [2478,5267,734],
-            backgroundColor: ["#0B2447", "#8D72E1","#A5D7E8"],
+            data: chartData?.length ? chartData.filter( e => e._id ).map( e => e.count ) : [],
+            backgroundColor: ["#4A55A2", "#7895CB","#C5DFF8"] ,
             borderColor: '#fff',
             borderWidth: 3,
           },
@@ -65,7 +81,7 @@ export const DoughnutChart = () => {
 
     return(
         <Doughnut
-            options={chartOptions}
+            options={DoughnutChartOptions}
             data={data}
         />
     )

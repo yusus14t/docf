@@ -13,7 +13,7 @@ import Loader from "../layout/Loader";
 const WebLayout = lazy(() => import("../layout/weblayout/WebLayout"));
 const AppLayout = lazy(() => import("../layout/Index"));
 
-const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
+const getUser = () => JSON.parse(localStorage.getItem("user"))
 
 const USER_ROUTES = {
   SA: { path: "/super-admin", id: SUPER_ADMIN },
@@ -25,8 +25,13 @@ const USER_ROUTES = {
 };
 
 export const AllRoutes = () => {
-  let user = getUserType();
-  let userRoute = USER_ROUTES[user];
+  let user = getUser();
+  if( !user ) localStorage.clear()
+  if( !user?.isActive ){
+    localStorage.clear()
+    user = null
+  }
+  let userRoute = USER_ROUTES[user?.userType];
 
   let allUseRoutes = [
     {
@@ -36,11 +41,13 @@ export const AllRoutes = () => {
     },
   ];
 
-  allUseRoutes.push({
-    path: `/${userRoute?.path}`,
-    element: user ? <AppLayout /> : <Navigate to={"/login"} />,
-    children: user ? userRoute.id : [],
-  });
+  if( userRoute?.path ){
+    allUseRoutes.push({
+      path: `/${userRoute?.path}`,
+      element: user ? <AppLayout /> : <Navigate to={"/login"} />,
+      children: user ? userRoute.id : [],
+    });
+  }
 
   let routes = useRoutes(allUseRoutes);
 

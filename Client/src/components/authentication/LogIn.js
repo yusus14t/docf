@@ -7,15 +7,24 @@ import { axiosInstance, getAuthHeader, NumberFormat } from '../../constants/util
 import useToasty from '../../hooks/toasty';
 import { Link, useLocation } from 'react-router-dom'
 import { userRoutes } from '../../constants/constant'
+import { useForm } from 'react-hook-form'
 
 const LogIn = () => {
   const { state: LocationState } = useLocation()
+  const { register, reset, handleSubmit, formState: { errors }} = useForm({ onChange: true })
   const inputRef = useRef(null)
   const otpRef = useRef(null)
   const toasty = useToasty()
   const [otp, setOtp] = useState(false)
-  const [isUserForm, setIsUserForm] = useState(false)
-  const [patient, setPatient] = useState({})
+  const [user, setUser] = useState({})
+  const [type, setType] = useState({})
+  const COMPONENTS = { 
+    1: 'SIGNUP_FORM', 
+    2: 'USER_TYPES_FORM', 
+    3: 'PATIENT_FORM',
+    4: 'ORGANIZATION_FORM',  
+  }
+  const [component, setComponent] = useState(COMPONENTS['1'])
   const [details, setDetails] = useState({
     fullName: "",
     phone: "",
@@ -23,19 +32,21 @@ const LogIn = () => {
     gender: "",
    })
 
-
-  const patientSignup = async (value) => {
+  const userValidate = async (value) => {
     try {
       if(!value){
         toasty.error('Enter number')
         return
       }
 
-      let { data } = await axiosInstance.post('/patient-signup', { ...details, phone: value, source: 'patient'  })
-      setPatient(data?.user)
+      let { data } = await axiosInstance.post('/signup', { ...details, phone: value  })
+      setUser(data?.user)
       setDetails({ ...details, phone: value })
       setOtp(true)
-      toasty.success(data?.message)
+
+      if( data?.status_code === 411 ) toasty.error(data?.message)
+      else toasty.success(data?.message)
+
     } catch (error) {
       toasty.error(error?.message)
       console.error(error)
@@ -44,21 +55,22 @@ const LogIn = () => {
   const handleEdit = () => {
     setOtp(false)
   }
+  
   const ValidateOTP = async () => {
     try {
-      let { data } = await axiosInstance.post('/validate-otp', { otp: otpRef.current.value, userId: patient?._id, })
-      console.log(data)
+      let { data } = await axiosInstance.post('/validate-otp', { otp: otpRef.current.value, userId: user?._id, })
+
       localStorage.setItem('user', JSON.stringify(data?.user))
       localStorage.setItem('token', JSON.stringify(data?.token))
 
-
-      if (data?.user?.twoFactor?.isVerified) {
+      if (data?.user?.twoFactor?.isVerified && data?.user?.isActive) {
         if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
         else window.location.replace(userRoutes[data?.user?.userType]?.path)
-        
+  
       } else {
-        setIsUserForm(true)
+        setComponent(COMPONENTS['2'])
       }
+
       toasty.success(data?.message)
     } catch (error) {
       toasty.error(error?.message)
@@ -66,84 +78,233 @@ const LogIn = () => {
     }
   }
 
-  const saveDetails = async () => {
-    try {
-      let formData = details
-      formData['_id'] = patient?._id
-      let { data } = await axiosInstance.post('/patient/patient-details', details, getAuthHeader())
+  const handleTypes = async ( type ) => {
+    try{
+      let { data } = await axiosInstance.post('/common/set-usertype', { type, userId: user._id, organizationId: user?.organizationId }, getAuthHeader())
+      setType(type)
       localStorage.setItem('user', JSON.stringify(data?.user))
+      
+      if( type === 'patient' ) setComponent(COMPONENTS['3'])
+      else if( ['hospital', 'clinic'].includes(type)  ) setComponent(COMPONENTS['4'])
+      else window.location.replace(userRoutes[data?.user?.userType]?.path)
 
-      if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
-      else window.location.replace('/patient')
-
-    } catch (error) {
-      toasty.error(error?.message)
-      console.error(error)
-    }
+    } catch(error){ console.error(error) }
   }
+
+  // const saveDetails = async () => {
+  //   try {
+  //     let formData = details
+  //     formData['_id'] = user?._id
+  //     let { data } = await axiosInstance.post('/patient/patient-details', details, getAuthHeader())
+  //     localStorage.setItem('user', JSON.stringify(data?.user))
+
+  //     if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
+  //     else window.location.replace('/patient')
+
+  //   } catch (error) {
+  //     toasty.error(error?.message)
+  //     console.error(error)
+  //   }
+  // }
+
+  const submit = async ( formdata ) => {
+    try {
+      formdata['phone'] = user.phone
+      if( formdata.source === 'clinic'){
+        let { data } = await axiosInstance.post('common/create-hospital', formdata, getAuthHeader())
+        if( data?.isActive ){
+          localStorage.setItem('user', JSON.stringify(data?.organization))
+          window.location.reload()
+        }
+      } else if( formdata.source === 'patient' ){
+
+        formdata['_id'] = user?._id
+        let { data } = await axiosInstance.post('/patient/patient-details', formdata, getAuthHeader())
+
+        if( data?.isActive ){
+          localStorage.setItem('user', JSON.stringify(data?.user))
+  
+          if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
+          else window.location.replace('/patient')
+        }
+      }
+    } catch(error) { console.error (error) }
+  }
+
   return (
     <div style={{ backgroundImage: `url(${background})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }} className='loginContainer'>
 
-      {!isUserForm && <div className="loginform col-3 d-flex flex-column">
-        <span className='h2 text-light mb-3'>LogIn / Sign Up</span>
+      {component === COMPONENTS['1'] &&
+        <div className="loginform col-3 d-flex flex-column">
+          <span className='h2 text-light mb-3'>LogIn / Sign Up</span>
 
-        {otp && <div className="mobile">
-          <p className='mb-1 text-disabled'>Mobile Number</p>
-          <h3>+91 {`${String(details?.phone || "").slice(0, 2)}-${String(details?.phone || "").slice(2, 4)}-${String(details?.phone || "").slice(4, 6)}-${String(details?.phone || "").slice(6, 10)}`} <span><FontAwesomeIcon onClick={handleEdit} className='cursor-pointer medit ml-1 text' icon={faEdit} /></span></h3>
-        </div>}
-        {!otp && <>
-          <label className='mb-2' htmlFor="Phone">Mobile Number</label>
-          <input id='Phone' className='form-control mb-2 letterSpcing' type="number" pattern='###-###-####' placeholder='822992255' ref={inputRef} onChange={NumberFormat} />
-          <span><button onClick={() => patientSignup(inputRef.current.value)} className='btn btn-light btn1'>Submit</button></span></>
-        }
-        {otp && <div className="otp mt-2">
-          <label htmlFor="" className='text-disabled'>Enter the OTP</label>
-          <input className='form-control mt-2 letterSpcing' type="number" name="OTP" id="" placeholder='X X X X' ref={otpRef} />
-          <button onClick={ValidateOTP} className='btn btn-light btn1 mt-4'>Log In</button>
-        </div>}
-        <span>
-          <Link to={'/department-login'}>
-            <p className='text-light mt-3'>Hospitals/ clinics are click on <span className='text-info'>Login</span></p>
-          </Link></span>
-      </div>}
-      {isUserForm && !patient?.isVerified && <div className="loginform mt-0 user-details col-3 d-flex flex-column">
-        <h3 className='mb-3'>Fill your Details</h3>
-        <div className='mb-2'>
-          <label htmlFor="">Mobile Number</label>
-          <h4 className='mb-2 text-disabled'>+91 {details?.phone?.slice(0,3)}-{details?.phone?.slice(3,6)}-{details?.phone?.slice(-4)}</h4>
+          {otp ?
+            <>
+              <div className="mobile">
+                <p className='mb-1 text-disabled'>Mobile Number</p>
+                <h3>+91 {`${String(details?.phone || "").slice(0, 2)}-${String(details?.phone || "").slice(2, 4)}-${String(details?.phone || "").slice(4, 6)}-${String(details?.phone || "").slice(6, 10)}`}
+                  <span>
+                    <FontAwesomeIcon onClick={handleEdit} className='cursor-pointer medit ml-1 text' icon={faEdit} />
+                  </span>
+                </h3>
+              </div>
+              <div className="otp mt-2">
+                <label htmlFor="" className='text-disabled'>Enter the OTP</label>
+                <input className='form-control mt-2 letterSpcing' type="number" name="OTP" id="" placeholder='X X X X' ref={otpRef} />
+                <button onClick={ValidateOTP} className='btn btn-light btn1 mt-4'>Log In</button>
+              </div>
+            </> :
+            <>
+              <label className='mb-2' htmlFor="Phone">Mobile Number</label>
+              <input id='Phone' className='form-control mb-2 letterSpcing' type="number" pattern='###-###-####' placeholder='822992255' ref={inputRef} onChange={NumberFormat} />
+              <span>
+                <button onClick={() => userValidate(inputRef.current.value)} className='btn btn-light btn1'>Submit</button>
+              </span>
+            </>
+          }
         </div>
-        <div className='col-12'>
-          <div>
-            <label htmlFor="" className='mb-2'  >Full Name</label>
-            <input type="text" className='form-control mb-2' placeholder='Enter Full name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, fullName: e.target.value }) }} />
+      }
+
+      {component === COMPONENTS['2'] &&
+        <div className='loginform mt-0 user-details '>
+          <h4 className='py-3'>Select Anyone </h4>
+          <div className='col-3 d-flex flex-row justify-content-center'>
+            <div className='col p-4 cursor-pointer' style={{ border: '1px solid white', borderRadius: '5px' }} onClick={() => handleTypes('hospital')}>Hospital</div>
+            <div className='col p-4 mx-3 cursor-pointer' style={{ border: '1px solid white', borderRadius: '5px' }} onClick={() => handleTypes('clinic')}>Clinic</div>
+            <div className='col p-4 cursor-pointer' style={{ border: '1px solid white', borderRadius: '5px' }} onClick={() => handleTypes('patient')}>Patient</div>
           </div>
         </div>
-        <div className='col-12 d-flex flex-row'>
-          <div className='col-6 me-2'>
-            <label htmlFor="" className='mb-2'>Age</label>
-            <input  type="number" placeholder='Enter Age' onBlur={(e) => { if (e.target.value) setDetails({ ...details, age: e.target.value }) }} className='form-control mb-2 col-2' />
+      }
+
+      <form onSubmit={handleSubmit(submit)}>
+      
+        {/* Patient form */}
+        {component === COMPONENTS['3'] && <div className="loginform mt-0 user-details col-3 d-flex flex-column">
+          <h3 className='mb-3'>Fill your Details</h3>
+          <div className='mb-2'>
+            <label htmlFor="">Mobile Number</label>
+            <h4 className='mb-2 text-disabled'>+91 {details?.phone?.slice(0, 3)}-{details?.phone?.slice(3, 6)}-{details?.phone?.slice(-4)}</h4>
           </div>
-          <div className=''>
-            <label htmlFor="" className='mb-2'>Gender</label>
-            <select style={{ padding: '.475rem .75rem'}} className='form-control mb-2 col-2 w-100' onBlur={(e) => { if (e.target.value) setDetails({ ...details, gender: e.target.value }) }}>
+          <div className='col-12'>
+              <input 
+                  type="hidden"
+                  value={'patient'} 
+                  {...register('source')}
+              />  
+            <div>
+              <label htmlFor="" className='mb-2'  >Full Name</label>
+              <input 
+                  type="text" 
+                  className={`form-control mb-2 ${errors?.fullName ? 'border-danger' : ''}`}
+                  placeholder='Enter Full name' 
+                  {...register('fullName', {
+                    required: 'name is required'
+                })}
+              />       
+            </div>
+          </div>
+          <div className='col-12 d-flex flex-row'>
+            <div className='col-6 me-2'>
+              <label htmlFor="" className='mb-2'>Age</label>
+              <input 
+                  type="text" 
+                  className={`form-control mb-2 ${errors?.age ? 'border-danger' : ''}`}
+                  placeholder='Enter age' 
+                  {...register('age', {
+                    required: 'age is required'
+                })}
+                />
+            </div>
+
+            <div className=''>
+              <label htmlFor="" className='mb-2'>Gender</label>
+              <select style={{ padding: '.475rem .75rem' }} className={`form-control mb-2 col-2 w-100  ${errors?.age ? 'border-danger' : ''}`} {...register('gender', { required: 'Gender is required'})}>
                 <option value='male'>Male</option>
                 <option value='female'>Female</option>
                 <option value='other'>Other</option>
-            </select>
-            {/* <input style={{ width: "166px" }} placeholder='enter gender' type="text" onBlur={(e) => { if (e.target.value) setDetails({ ...details, gender: e.target.value }) }} className='form-control mb-2 col-2' /> */}
-          </div>
-        </div>
-        <div className="mb-3">
-          <label className='mb-2' htmlFor="">Father name</label>
-          <input type="text" placeholder='Enter Father Name' onBlur={(e) => { if (e.target.value) setDetails({ ...details, father: e.target.value }) }} className="form-control" />
-        </div>
-        <div className=" mb-3">
-          <label className='mb-2' htmlFor="">Address</label>
-          <input type="text" placeholder='Enter Address' onBlur={(e) => { if (e.target.value) setDetails({ ...details, address: e.target.value }) }} className="form-control" />
-        </div>
-        <button className='btn btn1 btn-info' onClick={() => saveDetails()}>Save</button>
+              </select>
+            </div>
 
-      </div>}
+          </div>
+          <div className="mb-3">
+            <label className='mb-2' htmlFor="">Father name</label>
+            <input 
+                  type="text" 
+                  className={`form-control mb-2 `}
+                  placeholder='Enter Full name' 
+                  {...register('fatherName')}
+            />            
+          </div>
+          <div className=" mb-3">
+            <label className='mb-2' htmlFor="">Address</label>
+            <input 
+                  type="text" 
+                  className={`form-control mb-2 ${errors?.address ? 'border-danger' : ''}`}
+                  placeholder='Enter Address' 
+                  {...register('address', {
+                    required: 'address is required'
+                })}
+            />
+          </div>
+          <button className='btn btn1 btn-info' type='submit'>Save</button>
+        </div>
+        }
+
+        {/* Organization form */}
+        {component === COMPONENTS['4'] && <div className="loginform mt-0 user-details col-3 d-flex flex-column">
+          <h3 className='mb-3'>Fill your details</h3>
+          <div className='mb-2'>
+            <label htmlFor="">Mobile Number</label>
+            <h4 className='mb-2 text-disabled'>+91 {details?.phone?.slice(0, 3)}-{details?.phone?.slice(3, 6)}-{details?.phone?.slice(-4)}</h4>
+          </div>
+            <div className='col-12'>
+              <div>
+                <input 
+                  type="hidden" 
+                  value={ type }
+                  placeholder='Enter Registration No.' 
+                  {...register('source')}
+                />
+              </div>
+              <div>
+                <label className='mb-2'  >Registration No.</label>
+                <input 
+                  type="text" 
+                  className={`form-control mb-2 ${errors?.registrationNo ? 'border-danger' : ''}`}
+                  placeholder='Enter Registration No.' 
+                  {...register('registrationNo', {
+                    required: 'Email is required'
+                })}
+                />
+              </div> 
+
+              <div>
+                <label className='mb-2'  >Name</label>
+                <input 
+                  type="text" 
+                  className={`form-control mb-2 ${errors?.name ? 'border-danger' : ''}`}
+                  placeholder='Enter Full name' 
+                  {...register('name', {
+                    required: 'Email is required'
+                })}
+                />
+              </div>
+              <div>
+                <label htmlFor="" className='mb-2' >Email</label>
+                <input 
+                  type="email" 
+                  className={`form-control mb-2 ${errors?.email ? 'border-danger' : ''}`}
+                  placeholder='Enter Email' 
+                  {...register('email', {
+                    required: 'Email is required'
+                })}
+                />
+              </div>
+            <button className='btn btn-primary btn-md' type='submit'>Save</button>
+            </div>
+        </div>
+        }
+        </form>
     </div>
   )
 }

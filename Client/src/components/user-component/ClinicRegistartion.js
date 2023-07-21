@@ -11,7 +11,7 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
   const { register, handleSubmit, formState: { errors }, reset, } = useForm({ onChange: true })
   const [organization, setOrganization] = useState({})
   const toasty = useToasty()
-  const RID = JSON.parse(localStorage.getItem('RID')) || null
+  const RID = JSON.parse(localStorage.getItem('RID'))?._id || null
 
   useEffect(() => {
     if( RID )  getOrganization()
@@ -23,7 +23,10 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
         setOrganization(data?.organization)
 
         let tabData = data?.organization?.tab 
-        if( tabData?.step === 'STEP1' && tabData?.isComplete ) setTab('STEP2')
+
+        if( data?.organization?.organizationType !== 'Clinic' ) return
+
+        if( tabData?.step === 'STEP1' && tabData?.isComplete  ) setTab('STEP2')
         else if( tabData?.step === 'STEP2' && tabData?.isComplete ) setTab('STEP3')
         else setTab(tabData?.step || 'FINAL')
 
@@ -40,7 +43,7 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
           if(data?.organization){
               reset({})
               setOrganization(data?.organization)
-              localStorage.setItem('RID', JSON.stringify(data?.organization?._id ))
+              localStorage.setItem('RID', JSON.stringify(data?.organization?._id))
               setTab('STEP2')
               toasty.success(data?.message)
           }

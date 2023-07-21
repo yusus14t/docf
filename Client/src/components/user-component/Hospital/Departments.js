@@ -14,7 +14,6 @@ const Departments = () => {
 
     useEffect(() => {
         getDepartments()
-
     }, [])
 
     const getDepartments = async () => {
@@ -67,6 +66,7 @@ const Departments = () => {
                                             </div>
                                         </div>
                                         <p className="fs-12 my-1 text-disabled">{department?.organizationId?.specialization?.length ? department?.organizationId?.specialization[0]?.name : '-'}</p>
+                                        <h6 className="fs-12 my-1">{department?.phone ? `( ${department?.phone.slice(0,3)} ) - ${department?.phone.slice(3,6)} - ${department?.phone.slice(-4)}` : '-'}</h6>
                                         <h6 className="mt-0">
                                             <span className="fs-14">
                                                 <i className="fas fa-map-marker-alt"></i>

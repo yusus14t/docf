@@ -34,7 +34,7 @@ const COMMON_ROUTE = [
     path: "/login",
     element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path || "/login"} /> : <LogIn />
   },
-  { path: "/*", element: <h1>Route Not Found</h1> },
+  { path: "/*", element: <h1>Not Found</h1> },
 ];
 
 export default COMMON_ROUTE;

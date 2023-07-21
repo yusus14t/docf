@@ -2,8 +2,8 @@ const { Schema, model} = require('mongoose');
 
 const organizationSchema = new Schema({
     registration: { type: String },
-    name: { required: true, type: String },
-    email: { required: true, type: String },
+    name: {  type: String },
+    email: { type: String },
 
     phone: { type: String },
     address: { type: String },

@@ -100,6 +100,18 @@ const hospitalSpecialization = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const addSpecialization = async ( req, res ) => {
+    DoctorManager.addSpecialization( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const doghnutAnalytics = async ( req, res ) => {
+    DoctorManager.doghnutAnalytics( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     getAppointments,
     editDoctor,
@@ -109,6 +121,7 @@ module.exports = {
     appointmentById,
     reAppointment,
     analytics,
+    doghnutAnalytics,
     createDoctor,
     doctorsInOrganization,
     deal,
@@ -117,5 +130,6 @@ module.exports = {
     getDepartments,
     deleteDepartment,
     patients,
-    hospitalSpecialization
+    hospitalSpecialization,
+    addSpecialization
 }

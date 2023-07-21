@@ -22,9 +22,12 @@ const HospitalRegistartion = () => {
   const getOrganization = async () => {
     try{
         let { data } = await axiosInstance.get('/common/organization', { params: { RID }, ...getAuthHeader()})
-        console.log(data)
+
         setOrganization(data?.organization)
         let tabData = data?.organization?.tab 
+
+        if( data?.organization?.organizationType !== 'Hospital' ) return
+
         if( tabData?.step === 'STEP1' && tabData?.isComplete ) setTab('STEP2')
         else if( tabData?.step === 'STEP2' && tabData?.isComplete ) setTab('STEP3')
         else setTab(tabData?.step || 'FINAL')

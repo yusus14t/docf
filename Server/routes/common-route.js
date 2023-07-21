@@ -11,9 +11,10 @@ router.post('/create-hospital', commonController.createHospital);
 router.get('/organization', commonController.getOrganization);
 router.post('/organization-details', upload.single("image"), commonController.organizationDetails)
 router.get('/specializations', commonController.allSpecializations)
+router.post('/set-usertype', commonController.setUserType);
 
 //Appointment
-router.get('/appointment-doctors',  commonController.appointmentDoctors);
+router.get('/appointment-departments',  commonController.appointmentDepartments);
 router.get('/get-patient-by-number', commonController.getPatientByNumber)
 
 //Notifications
