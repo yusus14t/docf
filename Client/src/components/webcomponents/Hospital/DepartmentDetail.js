@@ -1,11 +1,4 @@
-import background from "../../assets.app/img/user-profile-bg-1920x400.jpg";
-import drprofile from "../../assets.app/img/doctors-list/182x280-0.jpg";
-import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Appointment from "../common-components/Appointment/Appointment";
-import { useEvent } from "../../hooks/common-hook";
-import useToasty from "../../hooks/toasty";
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarPlus,
@@ -13,126 +6,28 @@ import {
   faMapMarker,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
-
-function Detail() {
-  const params = useParams();
-  const appointmentEvent = useEvent('new-appointment')
-  const statusEvent = useEvent('status')
-  const toasty = useToasty()
-  const [clinicDetail, setClinicDetail] = useState({});
-  const [waitingList, setWaitingList] = useState({});
-  const [token, setToken] = useState(0)
-  const [isOpen, setIsOpen] = useState(false);
-  const userInfo = JSON.parse(localStorage.getItem("user"));
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    getClinicDetail();
-  }, []);
-
-  useEffect(() => {
-    if (appointmentEvent?.event === 'new-appointment' && appointmentEvent?.data) {
-        setWaitingList([ ...waitingList, { 
-          token: appointmentEvent?.data?.token,
-          fullName: appointmentEvent.data.user.fullName,  
-          phone: appointmentEvent.data.user.phone,  
-          address: appointmentEvent.data.user.address,  
-        }])
-    } 
-    if( statusEvent?.event === 'status' && statusEvent?.data ) {
-      let list = waitingList.filter( app => app._id !== statusEvent?.data?.appointmentId )
-      setWaitingList(list)
-
-      setToken(list?.length ? list[0]?.token : '00')
-
-    }
-  }, [appointmentEvent, statusEvent])
+import { Navigate } from 'react-router-dom';
+import Appointment from '../../common-components/Appointment/Appointment';
+import img from "../../../assets.app/img/blog-grid/350x300-0.jpg";
 
 
-  useEffect(() => {
-    if( clinicDetail?.doctors?.length){
-      getWaitingList()
-    }
-  },[ clinicDetail?.doctors ])
-
-  const getClinicDetail = async () => {
-    try {
-      let { data } = await axiosInstance.get("/clinic-detail", {
-        params: { _id: params.id },
-        ...getAuthHeader(),
-      });
-      setClinicDetail(data?.clinicDetail);
-
-      let token = '00'
-      if(data?.clinicDetail?.doctors?.length){
-        token = data?.clinicDetail?.doctors["0"]?.token?.length === 1  ? 
-                `0${data?.clinicDetail?.doctors["0"]?.token}` : 
-                data?.clinicDetail?.doctors["0"]?.token
-      }
-
-      setToken( token )
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getWaitingList = async () => {
-    try {
-      let { data } = await axiosInstance.get("/waiting-list", {
-        params: { _id: clinicDetail?.doctors[0]?._id },
-        ...getAuthHeader(),
-      });
-      setWaitingList(data?.appointment)
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleAppointmentModal = () => {
-    if (!userInfo)
-      navigate("/patient-login", {
-        state: { redirectTo: window.location.pathname },
-      });
-    setIsOpen(true);
-  };
+const DepartmentDetail = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const handleAppointmentModal = () => {
+    //   if (!userInfo)
+    //     Navigate("/patient-login", {
+    //       state: { redirectTo: window.location.pathname },
+    //     });
+      return setIsOpen(true);
+    };
 
   return (
     <>
+      <div className="box"></div>
       <div className="">
-        <div
-          className="clinicbanner mt-8"
-          style={{
-            background: `url(${clinicDetail?.detail?.photo ? getFullPath(clinicDetail?.detail?.photo) : background})`,
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          <h4 className="clinic-detail-name">{clinicDetail?.detail?.name}</h4>
-          <div className="d-flex flex-row  clinic-detail-img-container ">
-            <div className="d-flex flex-row  justify-content-around  ">
-              <img className="clinic-detail-img" src={clinicDetail?.doctors && (clinicDetail?.doctors[0]?.photo ? getFullPath(clinicDetail?.doctors[0]?.photo) : drprofile)} alt="" />
-              <div className="mt-5 clinic-detail-mobile">
-                <h4 className="text-light clinic-detail-drName rounded mt-4">
-                  {(clinicDetail?.doctors &&
-                    clinicDetail?.doctors["0"]?.fullName) ||
-                    "Doctor Name"}
-                </h4>
-                <h6
-                  style={{ display: "inline-block" }}
-                  className="text-light clinic-detail-drName rounded"
-                >
-                  {clinicDetail?.specialization || "Specialization"}
-                </h6>
-              </div>
-            </div>
-            <div
-              className="current-clicnic-token ml-5 d-flex flex-row"
-              style={{ position: "relative" }}
-            >
-              <h1 style={{ position: "absolute", left: "15%", top: "15%" }}>
-                {token}
-              </h1>
-            </div>
-          </div>
+        <div className="hospital-banner">
+          <h4 className="clinic-detail-name">Lababa Juhsil Hospital</h4>
+          <img className="hopsiptal-banner-img" src={img} alt="" />
         </div>
 
         <div
@@ -148,19 +43,23 @@ function Detail() {
         </div>
 
         <div className="container-fluid">
-          <div className="row clinic-details-row mt-5 mx-0">
+          <div className="row clinic-details-row mx-0">
             {/* WAITING LIST */}
             <div className="col-md-6 ">
               <div className="wating-area-clinic">
                 <h4 className="text-center mb-3">Waiting List</h4>
                 <div className="token-list-container ">
-                  {waitingList?.length ? (
+                  {/* {waitingList?.length ? (
                     <ul className={`token-list $`}>
                       {waitingList.map((list) => (
                         <li className=" p-2">
                           <div className="mt-auto">
                             <div
-                              className={`token-list-item d-flex flex-row justify-content-around ${ list?.token == parseInt(token) ? "token-list-active" : "" }`}
+                              className={`token-list-item d-flex flex-row justify-content-around ${
+                                list?.token == parseInt(token)
+                                  ? "token-list-active"
+                                  : ""
+                              }`}
                             >
                               <div className="token ">
                                 <h4 className="token-list-number">
@@ -188,7 +87,8 @@ function Detail() {
                     </ul>
                   ) : (
                     <span>No Data</span>
-                  )}
+                  )} */}
+                  no data
                 </div>
               </div>
             </div>
@@ -200,7 +100,8 @@ function Detail() {
                 <h6 className="text-left text-light mx-2">
                   <span className="text-disabled">Consultation Fee</span> :
                   Rs&nbsp;
-                  {clinicDetail?.detail?.fee}
+                  {/* {clinicDetail?.detail?.fee} */}
+                  500
                 </h6>
                 <div className="description-clinic-detail mb-3 pe-2">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
@@ -276,7 +177,8 @@ function Detail() {
               <div class="sigma_info-description">
                 <p>Our Address</p>
                 <p class="secondary-color">
-                  <b>{clinicDetail?.detail?.address}</b>
+                    jamalpur nagla aligarh
+                  {/* <b>{clinicDetail?.detail?.address}</b> */}
                 </p>
               </div>
             </div>
@@ -294,9 +196,10 @@ function Detail() {
                 <p>Call Us</p>
                 <p class="secondary-color">
                   <b>
-                    {clinicDetail?.detail?.phone?.slice(0, 3)}-
+                    {/* {clinicDetail?.detail?.phone?.slice(0, 3)}-
                     {clinicDetail?.detail?.phone?.slice(4, 7)}-
-                    {clinicDetail?.detail?.phone?.slice(-4)}
+                    {clinicDetail?.detail?.phone?.slice(-4)} */}
+                    9463524326432
                   </b>
                 </p>
               </div>
@@ -313,7 +216,8 @@ function Detail() {
               <div class="sigma_info-description">
                 <p>Our Mail</p>
                 <p class="secondary-color">
-                  <b>{clinicDetail?.detail?.email}</b>
+                  {/* <b>{clinicDetail?.detail?.email}</b> */}
+                  your@gmail.com
                 </p>
               </div>
             </div>
@@ -324,7 +228,7 @@ function Detail() {
         <Appointment
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          doctors={clinicDetail?.doctors}
+        //   doctors={clinicDetail?.doctors}
           refresh={() => {}}
         />
       )}
@@ -332,4 +236,4 @@ function Detail() {
   );
 }
 
-export default Detail;
+export default DepartmentDetail

@@ -4,7 +4,7 @@ import DepartmentCard from "./DepartmentCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
-  faMapMarker,
+  faLocationDot,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -19,6 +19,7 @@ const HospitalDetails = () => {
       <div className="container-fluid">
         <div className="departments">
           {/* <DepartmentCard /> */}
+          <DepartmentCard />
         </div>
 
         {/* contact card */}
@@ -28,15 +29,13 @@ const HospitalDetails = () => {
               <span class="sigma_info-icon clinic-address-icon-container">
                 <FontAwesomeIcon
                   className="clinic-address-icon"
-                  icon={faMapMarker}
+                  icon={faLocationDot}
                 />
               </span>
             </div>
             <div class="sigma_info-description">
               <p>Our Address</p>
-              <p class="secondary-color">
-                Street 9, Ho Chi Minh city Vietman
-              </p>
+              <p class="secondary-color">Street 9, Ho Chi Minh city Vietman</p>
             </div>
           </div>
           <div class="sigma_info style-26 d-flex">
@@ -51,9 +50,7 @@ const HospitalDetails = () => {
             </div>
             <div class="sigma_info-description">
               <p>Call Us</p>
-              <p class="secondary-color">
-                +91 8889966365 
-              </p>
+              <p class="secondary-color">+91 8889966365</p>
             </div>
           </div>
           <div class="sigma_info style-26 d-flex">
@@ -67,9 +64,7 @@ const HospitalDetails = () => {
             </div>
             <div class="sigma_info-description">
               <p>Our Mail</p>
-              <p class="secondary-color">
-                youremail@gamil.com
-              </p>
+              <p class="secondary-color">youremail@gamil.com</p>
             </div>
           </div>
         </div>

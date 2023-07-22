@@ -12,9 +12,7 @@ const HospitalCard = ({ hospitals }) => {
   return hospitals.map((clinic, key) => (
     <div className="ml-2 col-lg-4 mb-4 col-md-4 mcard mt-2" key={key}>
       <div className="hospitalCard ">
-        <span className=" hospital-title">
-          Al-Samad Hospital
-        </span>
+        <span className=" hospital-title">Al-Samad Hospital</span>
         <div className="hospitalCard-background-img">
           {/* <div className="hospital-card-inner-header"></div> */}
           <img
@@ -42,7 +40,7 @@ const HospitalCard = ({ hospitals }) => {
             </div>
           </div>
           <div className="mt-3 hospital-card-timing">
-            <h6 className="text-disabled">Timming</h6>
+            <h6 className="hospital-timming-card">Timming</h6>
             <div className="d-flex flex-column justify-contant-between">
               <div className="">
                 <p className="clinic-timming mb-0">Morning : 08 AM to 11 PM</p>

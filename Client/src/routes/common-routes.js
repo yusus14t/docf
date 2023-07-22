@@ -19,6 +19,7 @@ import Hospitals from "../components/webcomponents/Hospital/Hospitals";
 import LogIn from "../components/authentication/LogIn";
 import Detail from "../components/webcomponents/doctor/Detail";
 import HospitalDetails from "../components/webcomponents/Hospital/HospitalDetails";
+import DepartmentDetail from "../components/webcomponents/Hospital/DepartmentDetail";
 
 const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
 const isLock = JSON.parse(localStorage.getItem("email"));
@@ -37,6 +38,7 @@ const COMMON_ROUTE = [
   { path: "/login2", element: <LogIn /> },
   { path: "/gynae", element: <Gynae /> },
   { path: "/hospital-details", element: <HospitalDetails /> },
+  { path: "/department-details", element: <DepartmentDetail /> },
 
   {
     path: "/login",
