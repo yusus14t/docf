@@ -20,12 +20,14 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
   const toasty = useToasty()
 
   useEffect(() => {
+
     if( organization?._id ){
       getDoctorsInOrganization()
       getDepartments()
       if( source === 'modal' ){
         getAllSpecialization()
       } else {
+        console.log('>>>>>>>>>>', organization?.specialization)
         let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
         setSpecialization(specialization)
       }

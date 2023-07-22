@@ -6,6 +6,7 @@ import Clinics from '../components/user-component/mr/Clinics';
 import Doctors from '../components/user-component/Doctors';
 import Support from '../components/common-components/Support/Support';
 import Notification from '../components/common-components/Notification/Notification';
+import Settings from '../components/common-components/Settings/Settings';
 
 const MR = [
     { path: "/mr", element: <Navigate to={'/mr/dashboard'} /> },
@@ -16,7 +17,7 @@ const MR = [
     { path: "/mr/hospital-registration", element: <HospitalRegistration /> },
     { path: "/mr/doctors", element: <Doctors /> },
     { path: "/mr/clinics", element:  <Clinics />},
-    { path: "/mr/setting", element:  <h1>Setting</h1>},
+    { path: "/mr/setting", element:  <Settings />},
     { path: "/mr/notification", element:  <Notification />},
     { path: "/mr/support", element:  <Support />},
     { path: "/mr/*", element: <Navigate to={'/mr'} /> },

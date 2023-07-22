@@ -519,11 +519,11 @@ const createDepartment = async ( body, userInfo ) => {
 
 const getDepartments = async (body, user) => {
     try {
-        let query = { hospitalId: user?.organizationId }
-        if( user?.userType !== 'HL' ) query = { organizationId: body?.organizationId}
+        let query = { hospitalId: body?.organizationId }
+        if( !['HL', 'MR'].includes(user?.userType)  ) query = { organizationId: body?.organizationId }
         if( !query?.hospitalId && !query?.organizationId ) return Success({ departments: [] })
 
-        
+        console.log('query', query)
         let departments = await UserModel.find( query )
         .populate('organizationId', 'photo name room specialization')
         .populate('hospitalId', 'name email fee organizationType')

@@ -58,7 +58,8 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
         try{    
             fromData['timing'] = timing
             fromData['organizationId'] = RID
-            let { data } = await axiosInstance.post('/doctor/create-department', fromData )
+            let { data } = await axiosInstance.post('/doctor/create-department', fromData , getAuthHeader())
+            console.log(data)
             setTiming([])
             setDays(DAYS)
             reset({ name: '', room: '', email: '', phone: '', specialization: '' })
