@@ -7,42 +7,25 @@ const userSchema = new Schema(
     age: { type: String },
     address: { type: String },
     gender: { type: String, enum: ["male", "female", "other"] },
-    Nationalty: { type: String },
+    // Nationalty: { type: String },
     phone: { type: String, required: true },
     photo: { type: String, default: null },
-    password: { type: String, default: null },
-    userType: { type: String, default: "PT", enum: ["PT", "MR", "SA", "DR"] },
+    // password: { type: String, default: null },
+    userType: { type: String, default: "PT", enum: [ "PT", "MR", "SA", "DR" ] },
     organizationId: { type: Schema.Types.ObjectId, ref: "organization" },
     isActive: { type: Boolean, default: false },
     qualification: { type: String },
     experience: { type: String },
-    specialization: { type: String },
+    specialization: {
+      id: { type: String },
+      name: { type: String }
+    },
     bloodGroup: { type: String },
-    isPortal: { type: Boolean, default: false },
+    primary: { type: Boolean, default: false },
     aboutme: { type: String }, 
     twoFactor: {
       otp: { type: String },
       isVerified: { type: Boolean, default: false },
-    },
-    relation: [
-      {
-        relationType: { type: String },
-        name: { type: String },
-        phone: { type: String },
-      },
-    ],
-
-    identity: [
-      {
-        type: { type: String },
-        number: { type: String },
-      },
-    ],
-
-    bank: {
-      name: { type: String },
-      account: { type: String },
-      isfc: { type: String },
     },
     createdBy: { type: Schema.Types.ObjectId },
   },

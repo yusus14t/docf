@@ -16,7 +16,7 @@ const Dashbaord = () => {
     const [isWeekChart, setIsWeekChart] = useState(true)
     const [chartData, setChartData] = useState({})
     const [analyticsData, setAnalyticsData] = useState({})
-    const event = useEvent('new-appointment')
+    const event = useEvent();
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const toasty = useToasty();
 
@@ -31,12 +31,13 @@ const Dashbaord = () => {
     }, [appointments, unreachedData])
 
     useEffect(() => {
-        console.log('>>>>>>>>>', event)
-        if (userInfo._id === event?.data?.doctorId) {
-            setAppointments([...appointments, event.data])
-            toasty.success('New Appointment Added')
+        if( ['new-appointment'].includes(event?.event) ){
+            if (userInfo._id === event?.data?.doctorId) {
+                setAppointments([...appointments, event.data])
+                toasty.success('New Appointment Added')
+            }
         }
-    }, [event?.data])
+    }, [event])
 
     const analytics = async () => {
         try{

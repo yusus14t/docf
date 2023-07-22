@@ -69,7 +69,31 @@ const setAppointmentStatus = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
-      
+
+const createDepartment = async ( req, res ) => {
+    DoctorManager.createDepartment( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const getDepartments = async ( req, res ) => {
+    DoctorManager.getDepartments( req.query, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const deleteDepartment = async ( req, res ) => {
+    DoctorManager.deleteDepartment( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const patients = async ( req, res ) => {
+    DoctorManager.patients( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     getAppointments,
     editDoctor,
@@ -83,4 +107,8 @@ module.exports = {
     doctorsInOrganization,
     deal,
     setAppointmentStatus,
+    createDepartment,
+    getDepartments,
+    deleteDepartment,
+    patients,
 }

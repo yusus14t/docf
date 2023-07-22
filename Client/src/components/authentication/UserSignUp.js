@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { axiosInstance, getAuthHeader, NumberFormat } from '../../constants/utils';
 import useToasty from '../../hooks/toasty';
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 // import store from '../../redux/Store'
 // import { SET_SESSION } from '../../redux/Reducer'
 // import { useDispatch } from 'react-redux'
+import { userRoutes } from '../../constants/constant'
 
 const UserSignUp = () => {
-  // const dispatch = useDispatch()
   const { state: LocationState } = useLocation()
   const inputRef = useRef(null)
   const otpRef = useRef(null)
@@ -34,7 +34,7 @@ const UserSignUp = () => {
         return
       }
 
-      let { data } = await axiosInstance.post('/patient-signup', { ...details, phone: value })
+      let { data } = await axiosInstance.post('/patient-signup', { ...details, phone: value, source: 'patient'  })
       setPatient(data?.user)
       setDetails({ ...details, phone: value })
       setOtp(true)
@@ -49,14 +49,15 @@ const UserSignUp = () => {
   }
   const ValidateOTP = async () => {
     try {
-      let { data } = await axiosInstance.post('/validate-otp', { otp: otpRef.current.value, userId: patient?._id })
+      let { data } = await axiosInstance.post('/validate-otp', { otp: otpRef.current.value, userId: patient?._id, })
+      console.log(data)
       localStorage.setItem('user', JSON.stringify(data?.user))
       localStorage.setItem('token', JSON.stringify(data?.token))
 
 
       if (data?.user?.twoFactor?.isVerified) {
         if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
-        else window.location.replace('/patient')
+        else window.location.replace(userRoutes[data?.user?.userType]?.path)
         
       } else {
         setIsUserForm(true)

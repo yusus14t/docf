@@ -15,6 +15,10 @@ router.get('/analytics', DoctorController.analytics)
 router.get('/doctorsInOrganization', DoctorController.doctorsInOrganization)
 router.post('/appointment-status', DoctorController.setAppointmentStatus)
 router.post('/deal', DoctorController.deal)
+router.post('/create-department', DoctorController.createDepartment)
+router.post('/delete-department', DoctorController.deleteDepartment)
+router.get('/departments', DoctorController.getDepartments)
+router.get('/patients', DoctorController.patients)
 
 
 

@@ -29,6 +29,10 @@ export const formatDate = ( value ) => {
     let date = new Date(value)
     return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
 }
+
+export const formatPhone = ( phone ) => {
+    return (phone ? `${phone.slice(0,3)} - ${phone.slice(3,6)} - ${phone.slice(-4)}` : '-')
+}
  
 export const dateFormat = (date) => `${date.getDate()} / ${ date.getMonth() + 1 } / ${ date.getFullYear() }` 
 

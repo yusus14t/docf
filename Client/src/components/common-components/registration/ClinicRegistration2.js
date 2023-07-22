@@ -37,7 +37,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
 
     const submit = async ( values ) => {
         try{
-            values['_id'] = organization?._id || JSON.parse(localStorage.getItem('registerOrganizationId'))
+            values['_id'] = organization?._id || JSON.parse(localStorage.getItem('RID'))
             values['tab'] = tab
 
             let formData = new FormData()

@@ -1,6 +1,5 @@
 import React, {  useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Drimg from "../../../assets.app/img/doctors-list/182x280-1.jpg"
 import { NumberFormat, axiosInstance, getAuthHeader, getFullPath } from '../../../constants/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
@@ -132,7 +131,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                     <FontAwesomeIcon className='ms-text-ligth cursor-pointer' icon={faTrash} onClick={() => handleDelete(doc._id)} />
                   </div>
                 </div>
-                <span className='text-light' style={{ fontSize: 'x-small'}}>{doc?.specialization || 'Specialization'}</span>
+                <span className='text-light' style={{ fontSize: 'x-small'}}>{doc?.specialization?.name || 'Specialization'}</span>
                 <br />
                 <span className='text-light' style={{ fontSize: 'x-small'}}>{doc?.address}</span>
               </div>
@@ -148,8 +147,8 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
               <label >Full Name</label>
               <div className="input-group">
                 <input type="text"
-                  className={`form-control ${errors.firstName ? 'border-danger' : ''}`}
-                  placeholder="JOHN"
+                  className={`form-control ${errors.fullName ? 'border-danger' : ''}`}
+                  placeholder="Enter Full Name"
                   {...register(`fullName`, {
                     required: 'First name is required'
                   })}
@@ -161,7 +160,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
               <div className="input-group">
                 <input type="text"
                   className={`form-control ${errors.email ? 'border-danger' : ''}`}
-                  placeholder="Eg. example@gmail.com"
+                  placeholder="Enter Email Address"
                   {...register(`email`, {
                     required: 'Email is required'
                   })}
@@ -173,7 +172,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
               <div className="input-group">
                 <input type="text"
                   className={`form-control ${errors.phone ? 'border-danger' : ''}`}
-                  placeholder="XXXX-XXX-XXX"
+                  placeholder="Enter Phone"
                   onInput={(e) => NumberFormat(e)}
                   {...register(`phone`, {
                     required: 'Phone is required'
@@ -186,7 +185,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
               <div className="input-group">
                 <input type="text"
                   className={`form-control ${errors.qualification ? 'border-danger' : ''}`}
-                  placeholder="Eg.: MBBS from RUSSIA"
+                  placeholder="Enter Qualifications"
                   {...register(`qualification`, {
                     required: 'Qualification is required'
                   })}
@@ -220,7 +219,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
               <div className="input-group">
                 <input type="text"
                   className={`form-control ${errors.experience ? 'border-danger' : ''}`}
-                  placeholder="Eg: 10 Years"
+                  placeholder="Enter Experience"
                   {...register(`experience`, {
                     required: 'Experience is required'
                   })}
@@ -232,7 +231,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
               <div className="input-group">
                 <input type="text"
                   className={`form-control ${errors.address ? 'border-danger' : ''}`}
-                  placeholder="Ex: Hamdard nagar 'A' jamalpur Aligarh "
+                  placeholder="Enter Address"
                   {...register(`address`, {
                     required: 'Address is required'
                   })}
@@ -244,7 +243,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
               <div className="input-group">
                 <textarea type="text" rows={7}
                   className={`form-control ${errors.aboutme ? 'border-danger' : ''}`}
-                  placeholder="Eg: I am in practice since 1995 "
+                  placeholder="Describe yourself"
                   {...register(`aboutme`, {
                     required: 'Address is required'
                   })}
