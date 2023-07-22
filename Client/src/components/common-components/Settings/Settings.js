@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance, getAuthHeader } from "../../../constants/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal";
 
 const Settings = () => {
  const userInfo = JSON.parse(localStorage.getItem('user')) 
- const [ tab, setTab] = useState(userInfo.userType === 'HL' ? 'SPECIALIZATION' : 'PROFILE')
+ const [ tab, setTab] = useState( ['HL', 'CL'].includes(userInfo.userType)  ? 'SPECIALIZATION' : 'PROFILE')
  const [ isOpen, setIsOpen ] = useState(false)
  const [ specialization, setSpecialization ] = useState({ name: null, error: null })
  const [ specializations, setSpecializations ] = useState([])
@@ -45,7 +45,7 @@ const Settings = () => {
           <div class="ms-panel mb-0 inner-content-height">
             <div class="ms-panel-header ms-panel-custome">
               <div>
-                { userInfo.userType === 'HL' && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
+                { ['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
                 <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
               </div>
             </div>
@@ -75,7 +75,9 @@ const Settings = () => {
                             <tr>
                               <td class="ms-table-f-w">{specialization.id}</td>
                               <td>{specialization.name}</td>
-                              <td>Fever</td>
+                              <td>
+                                <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => {}} icon={faTrash}></FontAwesomeIcon>
+                              </td>
                             </tr>
                           )}
                         </tbody>
