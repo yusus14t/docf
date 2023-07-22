@@ -5,9 +5,11 @@ import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils
 import Modal from "../common-components/Modal";
 import { useForm } from "react-hook-form";
 import useToasty from '../../hooks/toasty';
+import DoctorRegistration from "../common-components/registration/DoctorRegistration";
 
 const DoctorsList = () => {
     const [editModal, setEditModal] = useState(false);
+    const [doctorModal, setDoctorModal] = useState(false);
     const [doctors, setDoctors] = useState([]);
     const [editData, setEditData] = useState({})
     const [searchInput, setSearchInput] = useState('');
@@ -57,6 +59,7 @@ const DoctorsList = () => {
                     <div class="ms-form-group my-0 mb-0 has-icon fs-14">
                         <input type="search" class="ms-form-input" name="search" placeholder="Search for doctors" onInput={(e) => { setSearchInput(e.target.value); console.log(e.target.value) }} />
                         <i class="flaticon-search text-disabled"></i>
+                        <button className="btn btn-light shadow-none mx-2" onClick={() => setDoctorModal(true) }>+ Doctor</button>
                     </div>
 
                 </div>
@@ -172,6 +175,21 @@ const DoctorsList = () => {
                             <button type="submit" className="btn btn-primary shadow-none">Save</button>
                         </div>
                     </form>
+                </Modal>
+            }
+            {
+                <Modal
+                    isOpen={doctorModal}
+                    setIsOpen={setDoctorModal}
+                    title="Add Doctor"
+                    closeButton={false}
+                    submitButton={false}
+                >
+                    <DoctorRegistration 
+                        source={'modal'} 
+                        setModal={setDoctorModal} 
+                        refresh={() => getDoctors() } 
+                    />
                 </Modal>
             }
         </>

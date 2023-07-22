@@ -118,6 +118,9 @@ const getAllDoctors = async (body, user) => {
     try {
         let query = {}
         if (user?.userType === 'MR') query['createdBy'] = user?._id
+        if( ['CL', 'DP'].includes(user.userType)) {
+            query['organizationId'] = user.organizationId
+        }
 
         let doctors = await UserModel.aggregate([
             {
@@ -624,9 +627,9 @@ const EventHandler = (req, res) => {
         res.write("\n\n");
     }
 
-    eventEmitter.on('new-appointment', (data) => sendResponse(data, 'new-appointment'))
-    eventEmitter.on('re-appointment', (data) => sendResponse(data, 're-appointment'))
-    eventEmitter.on('status', (data) => sendResponse(data, 'status'))
+    eventEmitter.once('new-appointment', (data) => sendResponse(data, 'new-appointment'))
+    eventEmitter.once('re-appointment', (data) => sendResponse(data, 're-appointment'))
+    eventEmitter.once('status', (data) => sendResponse(data, 'status'))
 }
 
 

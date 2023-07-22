@@ -31,7 +31,7 @@ export const formatDate = ( value ) => {
 }
 
 export const formatPhone = ( phone ) => {
-    return (phone ? `${phone.slice(0,3)} - ${phone.slice(3,6)} - ${phone.slice(-4)}` : '-')
+    return (phone ? `( ${phone.slice(0,3)} ) - ${phone.slice(3,6)} - ${phone.slice(-4)}` : '-')
 }
  
 export const dateFormat = (date) => `${date.getDate()} / ${ date.getMonth() + 1 } / ${ date.getFullYear() }` 

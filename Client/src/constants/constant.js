@@ -3,9 +3,7 @@
 export const userRoutes = {
     PT: {path: '/patient', title: 'Patient'},
     SA: {path: '/super-admin', title: 'Super Admin'},
-    // MA: {path: '/master-admin', title: 'Master Admin'},
     MR: {path: '/mr', title: 'MR'},
-    // DR: {path: '/doctor', title: 'Doctor'},
     DP: {path: '/department', title: 'Department'},
     HL: {path: '/hospital', title: 'Hospital'},
     CL: {path: '/clinic', title: 'Clinic'},
@@ -19,7 +17,7 @@ export const MODULES = [
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MR']},
     {id: 'hospital-registration', title: 'Hospital Registration', pathname: '/hospital-registration', access: [ 'MR']},
     {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['SA', 'MR']},
-    {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'MR']},
+    {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'MR', 'HL', 'CL', 'DP']},
     {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
     {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
     {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},

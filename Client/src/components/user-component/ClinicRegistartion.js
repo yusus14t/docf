@@ -7,11 +7,11 @@ import { useForm } from 'react-hook-form';
 import { NumberFormat, axiosInstance, getAuthHeader } from '../../constants/utils';
 
 const ClinicRegistartion = ({isSelfCreated, source}) => {
-  const [tab, setTab] = useState(isSelfCreated ? "STEP2" : 'STEP1') 
+  const [tab, setTab] = useState(isSelfCreated ? "STEP2" : 'STEP3') 
   const { register, handleSubmit, formState: { errors }, reset, } = useForm({ onChange: true })
   const [organization, setOrganization] = useState({})
   const toasty = useToasty()
-  const RID = JSON.parse(localStorage.getItem('RID'))?._id || null
+  const RID = JSON.parse(localStorage.getItem('RID')) || null
 
   useEffect(() => {
     if( RID )  getOrganization()

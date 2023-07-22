@@ -8,7 +8,7 @@ import Select from "react-select"
 import useToasty from '../../../hooks/toasty';
 
 
-const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
+const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModal = () => {}, refresh = () => {} }) => {
   const { register, handleSubmit, reset, formState: { errors }, control, watch } = useForm({ onChange: true })
 
   const [doctors, setDoctors] = useState([]);
@@ -33,7 +33,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
   const getDepartments = async () => {
     try {
         let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: organization._id }, ...getAuthHeader() })
-        console.log(data)
+
         let dep = data?.departments?.map( de => ({ name: de?.organizationId?.name, _id: de?.organizationId?._id, specialization: de?.organizationId?.specialization[0]?.id || null }))
         setDepartments(dep)
 
@@ -53,7 +53,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
 
   const submit = async (values) => {
     try {      
-      console.log(values)
+
       if(!values?._id){
         values['organizationId'] = source === 'Hospital' ? values.department?._id : organization._id
         values['tab'] = tab
@@ -89,6 +89,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
         }
         
         setDoctors([...doctors, doctorObj ])
+        setModal(false)
       }
 
       setEditImage(null)
@@ -159,7 +160,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
         <div >
           <ImgUpload source={"doctor"} file={(image) => setSelectedImage(image)} editImage={editImage} />
           <div className="row mt-2">
-            <div className="col-md-6 mb-3">
+            <div className="col-6 mb-3">
               <label >Full Name</label>
               <div className="input-group">
                 <input type="text"
@@ -167,6 +168,19 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
                   placeholder="Enter Full Name"
                   {...register(`fullName`, {
                     required: 'First name is required'
+                  })}
+                />
+              </div>
+            </div>
+            <div className="col-6 mb-3">
+              <label className=''>Phone Number</label>
+              <div className="input-group">
+                <input type="text"
+                  className={`form-control ${errors.phone ? 'border-danger' : ''}`}
+                  placeholder="Enter Phone"
+                  onInput={(e) => NumberFormat(e)}
+                  {...register(`phone`, {
+                    required: 'Phone is required'
                   })}
                 />
               </div>
@@ -183,20 +197,8 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
                 />
               </div>
             </div>
-            <div className="col-md-6 mb-3">
-              <label className=''>Phone Number</label>
-              <div className="input-group">
-                <input type="text"
-                  className={`form-control ${errors.phone ? 'border-danger' : ''}`}
-                  placeholder="Enter Phone"
-                  onInput={(e) => NumberFormat(e)}
-                  {...register(`phone`, {
-                    required: 'Phone is required'
-                  })}
-                />
-              </div>
-            </div>
-            <div className="col-md-6 mb-3">
+            
+            <div className="col-6 mb-3">
               <label >Qualifications</label>
               <div className="input-group">
                 <input type="text"
@@ -208,8 +210,20 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
                 />
               </div>
             </div>
+            <div className="col-6 mb-3">
+              <label >Experience</label>
+              <div className="input-group">
+                <input type="text"
+                  className={`form-control ${errors.experience ? 'border-danger' : ''}`}
+                  placeholder="Enter Experience"
+                  {...register(`experience`, {
+                    required: 'Experience is required'
+                  })}
+                />
+              </div>
+            </div>
             {source === 'Hospital' &&
-              <div className="col-md-6 mb-3">
+              <div className="col-6 mb-3">
                 <label >Select Department</label>
                 <div className="">
                   <Controller
@@ -252,20 +266,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
               </div>
             </div>
 
-           
-       
-            <div className="col-md-6 mb-3">
-              <label >Experience</label>
-              <div className="input-group">
-                <input type="text"
-                  className={`form-control ${errors.experience ? 'border-danger' : ''}`}
-                  placeholder="Enter Experience"
-                  {...register(`experience`, {
-                    required: 'Experience is required'
-                  })}
-                />
-              </div>
-            </div>
+        
             <div className="col-md-6 mb-3">
               <label className=''>Address</label>
               <div className="input-group">
@@ -292,7 +293,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='' }) => {
             </div>
             <div className="actions btn-submit mb-2">
               <button type="submit" className="btn btn-primary shadow-none mx-2" >Save</button>
-              <button className="btn btn-primary shadow-none mx-2" onClick={() => { handleNext() }}>Next</button>
+              { source !== 'modal' && <button className="btn btn-primary shadow-none mx-2" onClick={() => { handleNext() }}>Next</button>}
             </div>
           </div>
         </div>

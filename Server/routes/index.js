@@ -14,6 +14,7 @@ const modules = [
     {'path' : 'common', 'module': 'common-route'},
     {'path' : 'doctor', 'module': 'doctor-route'},
     {'path' : 'patient', 'module': 'patient-route'},
+    {'path' : 'mr', 'module': 'mr-route'},
 ]
 
 // Return All Routes

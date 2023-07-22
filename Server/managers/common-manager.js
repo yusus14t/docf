@@ -37,7 +37,9 @@ const createClinic = async ( body, userInfo ) => {
                 phone: body?.phone,
                 organizationId: organization._id,
                 primary: true,
+                isActive: true,
                 userType: body?.source === 'Hospital' ? "DP" : "CL",
+                createdBy: userInfo?._id
             }).save()
 
             let returnObj = {
@@ -77,6 +79,7 @@ const createHospital = async ( body, userInfo ) => {
                 organizationId: organization._id,
                 primary: true,
                 userType: "HL",
+                isActive: true,
                 createdBy: userInfo?._id
             }).save()
 
