@@ -23,13 +23,24 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
     if( organization?._id ){
       getDoctorsInOrganization()
       getDepartments()
-
-        let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
-        setSpecialization(specialization)
+      getAllSpecialization()
+        // let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
+        // setSpecialization(specialization)
       
     }
   }, [])
 
+  const getAllSpecialization = async () => {
+    try{
+        let {data} = await axiosInstance.get('/doctor/hospital-specialization')
+        console.log(data)
+        setSpecialization(data?.specialization)
+    } catch(error){
+        console.error(error)
+    }
+  }
+
+  
   const getDepartments = async () => {
     try {
         let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: organization._id }, ...getAuthHeader() })
@@ -130,7 +141,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
 
   return (
     <div className='row'>
-      {doctors.map(doc => <div className="col-md-4 col-sm-6 mb-3">
+      {source !== 'modal' && doctors.map(doc => <div className="col-md-4 col-sm-6 mb-3">
         <div class="ms-card card-gradient-dark ms-infographics-widget ms-widget">
           <div class="ms-card-body">
             <div class="media fs-14" style={{ marginBottom: "0" }}>

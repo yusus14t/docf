@@ -15,6 +15,7 @@ const DoctorsList = () => {
     const [searchInput, setSearchInput] = useState('');
     const toasty = useToasty();
     const { register, handleSubmit, reset, formState:{ errors }} = useForm({ onChange: true })
+    const userInfo = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
         getDoctors()
@@ -189,6 +190,7 @@ const DoctorsList = () => {
                         source={'modal'} 
                         setModal={setDoctorModal} 
                         refresh={() => getDoctors() } 
+                        organization={userInfo?.organizationId}
                     />
                 </Modal>
             }
