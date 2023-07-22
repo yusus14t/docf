@@ -23,9 +23,12 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
     if( organization?._id ){
       getDoctorsInOrganization()
       getDepartments()
-      getAllSpecialization()
-        // let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
-        // setSpecialization(specialization)
+      if( source === 'modal' ){
+        getAllSpecialization()
+      } else {
+        let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
+        setSpecialization(specialization)
+      }
       
     }
   }, [])
