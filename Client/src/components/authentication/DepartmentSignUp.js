@@ -21,7 +21,7 @@ const DepartmentSignUp = () => {
         return
       }
 
-      let { data } = await axiosInstance.post('/patient-signup', { phone, source: 'department' })
+      let { data } = await axiosInstance.post('/signup', { phone, source: 'department' })
       setIsOtpSent(true)
       setUser(data?.user)
       toasty.success(data?.message)
@@ -42,7 +42,7 @@ const DepartmentSignUp = () => {
         let route = userRoutes[data?.user?.userType]?.path
         window.location.replace(route)
       } else if( data?.user?.userType === 'DR' ) {
-        window.location.replace('/after')
+        // window.location.replace('/after')
       } 
       
       toasty.success(data?.message)

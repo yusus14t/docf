@@ -40,8 +40,7 @@ const Error = ({message = 'Something went wrong!', code = 500, status = 'Fail', 
           'Cache-Control': "no-cache",
         }
       })
-      console.log('sms', sms)
-      console.log(data?.data)
+
       return data?.data
     } catch(error){ console.error(error) }
 

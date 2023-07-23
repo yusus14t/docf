@@ -2,7 +2,9 @@ import { Navigate, useRoutes } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import SUPER_ADMIN from "./super-admin-routes";
 import PATIENT from "./patient-routes";
-import DOCTOR from "./doctor-routes";
+import CLINIC from "./clinic-routes";
+import DEPARTMENT from "./department-routes";
+import HOSPITAL from "./hospital-routes";
 import MR from "./mr-routes";
 
 import COMMON_ROUTE from "./common-routes";
@@ -11,18 +13,25 @@ import Loader from "../layout/Loader";
 const WebLayout = lazy(() => import("../layout/weblayout/WebLayout"));
 const AppLayout = lazy(() => import("../layout/Index"));
 
-const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
+const getUser = () => JSON.parse(localStorage.getItem("user"))
 
 const USER_ROUTES = {
   SA: { path: "/super-admin", id: SUPER_ADMIN },
   PT: { path: "/patient", id: PATIENT },
-  DR: { path: "/doctor", id: DOCTOR },
+  CL: { path: "/clinic", id: CLINIC },
+  DP: { path: "/department", id: DEPARTMENT },
   MR: { path: "/mr", id: MR },
+  HL: { path: "/hospital", id: HOSPITAL },
 };
 
 export const AllRoutes = () => {
-  let user = getUserType();
-  let userRoute = USER_ROUTES[user];
+  let user = getUser();
+  if( !user ) localStorage.clear()
+  if( !user?.isActive ){
+    localStorage.clear()
+    user = null
+  }
+  let userRoute = USER_ROUTES[user?.userType];
 
   let allUseRoutes = [
     {
@@ -32,11 +41,13 @@ export const AllRoutes = () => {
     },
   ];
 
-  allUseRoutes.push({
-    path: `/${userRoute?.path}`,
-    element: user ? <AppLayout /> : <Navigate to={"/login"} />,
-    children: user ? userRoute.id : [],
-  });
+  if( userRoute?.path ){
+    allUseRoutes.push({
+      path: `/${userRoute?.path}`,
+      element: user ? <AppLayout /> : <Navigate to={"/login"} />,
+      children: user ? userRoute.id : [],
+    });
+  }
 
   let routes = useRoutes(allUseRoutes);
 

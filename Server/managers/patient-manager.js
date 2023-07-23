@@ -5,9 +5,9 @@ const ObjectId = require('mongoose').Types.ObjectId
 
 const savePatientDetails = async (body) => {
     try {
-        await UserModel.updateOne({ _id: ObjectId(body._id) }, { ...body, 'twoFactor.isVerified': true })
+        await UserModel.updateOne({ _id: ObjectId(body._id) }, { ...body, 'twoFactor.isVerified': true, isActive: true })
         let user = await UserModel.findOne({ _id: ObjectId(body?._id) })
-        return Success({ user, message: 'Update details successfull' })
+        return Success({ user, message: 'Update details successfull', isActive: true })
     } catch (error) { console.log(error) }
 }
 

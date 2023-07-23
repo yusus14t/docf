@@ -18,13 +18,13 @@ const sessionInfo = async ( body, user ) => {
     }
 }
 
-const createOrganization = async ( body, userInfo ) => {
+const createClinic = async ( body, userInfo ) => {
     try{ 
         let organization  = await UserModel.findOne({ phone: body.phone }).lean();
         if( !organization ){
             organization = await OrganizationModel({ 
                 registration: body?.registration,
-                organizationType: body?.source === 'Hospital' ? 'Hospital' : 'Clinic',
+                organizationType: body?.source === 'Hospital' ? 'Department' : 'Clinic',
                 tab: {
                     step: body?.tab,
                     isComplete: true
@@ -37,7 +37,9 @@ const createOrganization = async ( body, userInfo ) => {
                 phone: body?.phone,
                 organizationId: organization._id,
                 primary: true,
-                userType: 'DR',
+                isActive: true,
+                userType: body?.source === 'Hospital' ? "DP" : "CL",
+                createdBy: userInfo?._id
             }).save()
 
             let returnObj = {
@@ -57,21 +59,70 @@ const createOrganization = async ( body, userInfo ) => {
     }
 }
 
-const signUp = async ( body ) => {
-    try {
-        if( body.password === body.confirmPassword ) body.password = await encryptPassword(body.password)
-        else return Error({ message: 'Incorrect confirm password' })
+const createHospital = async ( body, userInfo ) => {
+    try{ 
+        let organization  = await UserModel.findOne({ phone: body.phone }).lean();
+        if( !organization ){
+            organization = await OrganizationModel({ 
+                registration: body?.registration,
+                organizationType: 'Hospital',
+                tab: {
+                    step: body?.tab,
+                    isComplete: true
+                },
+                name: body?.name,
+                email: body?.email,
+            }).save()
 
-        if( body.registrationType === 'CLINIC' ) body['userType'] = 'DR'
+            let user = await UserModel({
+                phone: body?.phone,
+                organizationId: organization._id,
+                primary: true,
+                userType: "HL",
+                isActive: true,
+                createdBy: userInfo?._id
+            }).save()
 
-        let user = await UserModel({ ...body }).save()
-        let token = createToken(user._id)
-        return Success({ message: 'Account created successfully', code: 201, user, token }) ;
-    } catch ( error ) { 
+            let returnObj = {
+                _id: organization._id,
+                userId: user._id,
+                tab: organization.tab
+            }
+            
+            return Success({ message: 'Successfully created', organization: returnObj })
+        } else {
+            await OrganizationModel.updateOne({ _id: organization.organizationId }, { 
+                registrationNo: body?.registrationNo, 
+                email: body?.email,
+                name: body?.name,
+            })
+            await UserModel.updateOne({ _id: organization._id }, { isActive: true })
+
+            organization =  await UserModel.findOne({ _id: organization._id }).populate('organizationId')
+            return Error({ message: 'Already created', isActive: true, organization })
+        }
+        
+    } catch(error){ 
         console.log(error) 
         return Error();
     }
 }
+
+// const signUp = async ( body ) => {
+//     try {
+//         if( body.password === body.confirmPassword ) body.password = await encryptPassword(body.password)
+//         else return Error({ message: 'Incorrect confirm password' })
+
+//         if( body.registrationType === 'CLINIC' ) body['userType'] = 'DR'
+
+//         let user = await UserModel({ ...body }).save()
+//         let token = createToken(user._id)
+//         return Success({ message: 'Account created successfully', code: 201, user, token }) ;
+//     } catch ( error ) { 
+//         console.log(error) 
+//         return Error();
+//     }
+// }
 
 const logIn = async ( body ) => {
     try{
@@ -91,17 +142,30 @@ const logIn = async ( body ) => {
 }
 
 
-const appointmentDoctors = async ( body, user ) => {
+const appointmentDepartments = async ( body, user ) => {
     try{
         let query = {}
 
-        if( ['DR', 'PT'].includes(user.userType) ){
-            query = { organizationId: ObjectId(body?.organizationId || user?.organizationId)   }
-        }
+        // if( ['DR', 'PT'].includes(user.userType) ){
+        //     query = { organizationId: ObjectId(body?.organizationId || user?.organizationId)   }
+        // }
 
-        let doctors = await UserModel.aggregate([
+        let departments = await UserModel.aggregate([
             {
-                $match: { userType: 'DR', isActive: true, ...query, primary: false },
+                // $match: { userType: 'DR', isActive: true, ...query, primary: false },
+                $match: {
+                    primary: true,
+                    $or: [
+                        {
+                            hospitalId: user.organizationId,
+                            userType: 'DP'
+                        },
+                        { 
+                            organizationId: user?.organizationId,
+                            userType: 'CL' 
+                        }
+                    ]
+                }
             },
             {
                 $lookup: {
@@ -128,7 +192,7 @@ const appointmentDoctors = async ( body, user ) => {
                 }
             }
         ])
-        return Success({ message: 'Successfull fetch doctor', doctors })
+        return Success({ message: 'Successfull fetch doctor', departments })
     } catch(error){ 
         console.log(error) 
         return Error();
@@ -171,21 +235,21 @@ const organizationDetails = async ( body, user, file ) => {
     } catch(error){ console.log(error) }
 }
 
-const patientSignUp = async ( body, user ) => {
+const signUp = async ( body, user ) => {
     try{
         const otp = randomOtp()
     
-        let user = await UserModel.findOne({ phone: body?.phone, $or: [{ userType: 'DR', primary: true }, {  userType: { $in: ['SA', 'MR', 'PT'] }, primary: false}]})
+        let user = await UserModel.findOne({ phone: body?.phone, $or: [{ primary: true }, {  userType: { $in: ['SA', 'MR', 'PT'] }, primary: false}]})
         if(user){
             await UserModel.updateOne({ phone: body?.phone }, { 'twoFactor.otp': otp })
         } else {
-            user = await UserModel({ phone: body.phone, twoFactor: { otp }, userType: body?.source === 'department' ? 'DR' : 'PT' }).save()
+            user = await UserModel({ phone: body.phone, twoFactor: { otp },  primary: true }).save()
         }
-        
-        let response = await smsService(`your otp is ${ otp } `, body.phone)
+        console.log('----------> OTP ', otp)
+        // let response = await smsService(`your otp is ${ otp } `, body.phone)
 
         let message = 'OTP Sent to your phone.'
-        if( response.status_code === 411 ) message = response?.message
+        // if( response?.status_code === 411 ) message = response?.message
 
         return Success({ message , user })
     } catch(error){ console.log(error) }
@@ -193,6 +257,7 @@ const patientSignUp = async ( body, user ) => {
 
 const validateOtp = async ( body ) => {
     try{
+        console.log('>>>>>', body)
         let user = await UserModel.findOne({_id: body?.userId }).populate('organizationId')
         if( user?.twoFactor?.otp === body?.otp ){
             await UserModel.updateOne({_id: user._id}, { 'twoFactor.otp':  0 })
@@ -314,20 +379,48 @@ const waitingList = async ( body, user ) => {
     } catch(error){ console.log(error) }
 }
 
+const setUserType = async ( body ) => {
+    try {
+
+        let userType = null
+        let organization = null
+        if (body.type === 'hospital') {
+            userType = 'HL'
+            if( !body?.organizationId ){
+                organization = await OrganizationModel({ organizationType: 'Hospital' }).save()
+            }
+        }
+        else if (body.type === 'clinic') {
+            userType = 'CL'
+            if( !body?.organizationId ){
+                organization = await OrganizationModel({ organizationType: 'Clinic' }).save()
+            }
+        }
+        else userType = 'PT'
+
+        let user = await UserModel.findOneAndUpdate({ _id: body?.userId }, { userType, 'twoFactor.isVerified': true, organizationId: organization?._id  })
+        user = JSON.parse(JSON.stringify(user))
+        user.userType = userType
+
+        return Success({ user })
+    } catch (error) { console.log(error) }
+}
+
 module.exports = {
     logIn,
     signUp,
     sessionInfo,
-    createOrganization,
-    appointmentDoctors,
+    createClinic,
+    appointmentDepartments,
     getPatientByNumber,
     getUserByEmail,
     organizationDetails,
-    patientSignUp,
     validateOtp,
     allSpecializations,
     getAllClinics, 
     clinicDetails,
     getOrganization,
     waitingList,
+    createHospital,
+    setUserType,
 }

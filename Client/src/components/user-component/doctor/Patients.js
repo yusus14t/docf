@@ -12,7 +12,7 @@ const Patients = () => {
     try {
       let { data } = await axiosInstance.get('/doctor/patients')
       setPatients(data?.patients)
-      console.log(data)
+
     } catch(error){ console.error(error) }
   }
   return (

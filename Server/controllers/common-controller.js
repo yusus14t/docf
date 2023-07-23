@@ -3,16 +3,22 @@ const notificationManager = require('../managers/notification-manager');
 const supportManager = require("../managers/support-manager")
 
 
-const signUp = async ( req, res ) => {
-    commonManager.signUp( req.body )
-        .then( data => res.status(data.code).send(data) )
-        .catch( err => res.status(500).send(err.data) )
-}
+// const signUp = async ( req, res ) => {
+//     commonManager.signUp( req.body )
+//         .then( data => res.status(data.code).send(data) )
+//         .catch( err => res.status(500).send(err.data) )
+// }
 
-const createOrganization = async ( req, res ) => {
-commonManager.createOrganization( req.body, req.user )
+const createClinic = async ( req, res ) => {
+commonManager.createClinic( req.body, req.user )
     .then( data => res.status(200).send(data) )
     .catch( err => res.status(500).send(err.data) )
+}
+
+const createHospital = async ( req, res ) => {
+    commonManager.createHospital( req.body, req.user )
+        .then( data => res.status(200).send(data) )
+        .catch( err => res.status(500).send(err.data) )
 }
 
 const checkDuplicateEmail = async ( req, res ) => {
@@ -33,8 +39,8 @@ const sessionInfo = async ( req, res ) => {
         .catch( err => res.status(500).send(err.data) )
 }
 
-const appointmentDoctors = async ( req, res ) => {
-    commonManager.appointmentDoctors( req.query, req.user )
+const appointmentDepartments = async ( req, res ) => {
+    commonManager.appointmentDepartments( req.query, req.user )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -90,8 +96,8 @@ const organizationDetails = async ( req, res ) => {
 
 
 
-const patientSignUp = async ( req, res ) => {
-    commonManager.patientSignUp( req.body, req.user, )
+const signUp = async ( req, res ) => {
+    commonManager.signUp( req.body, req.user, )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -132,12 +138,18 @@ const waitingList = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const setUserType = async ( req, res ) => {
+    commonManager.setUserType( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
-    signUp,
     logIn,
-    createOrganization,
+    signUp,
+    createClinic,
     checkDuplicateEmail,
-    appointmentDoctors,
+    appointmentDepartments,
     getPatientByNumber,
     getUserByEmail,
     allNotification,
@@ -147,11 +159,12 @@ module.exports = {
     allTickets,
     sessionInfo,
     organizationDetails,
-    patientSignUp,
     validateOtp,
     allSpecializations,
     getAllClinics,
     clinicDetails,
     getOrganization,
     waitingList,
+    createHospital,
+    setUserType,
 }

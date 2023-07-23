@@ -14,6 +14,7 @@ const modules = [
     {'path' : 'common', 'module': 'common-route'},
     {'path' : 'doctor', 'module': 'doctor-route'},
     {'path' : 'patient', 'module': 'patient-route'},
+    {'path' : 'mr', 'module': 'mr-route'},
 ]
 
 // Return All Routes
@@ -24,8 +25,8 @@ router.get('/', (req, res) => res.send('Hello AcadTech'));
 
 router.post('/session-info', jwt_verify, commonController.sessionInfo);
 // Un verify routes
-router.post('/signup', commonController.signUp);
-router.post('/patient-signup', commonController.patientSignUp)
+// router.post('/signup', commonController.signUp);
+router.post('/signup', commonController.signUp)
 router.post('/validate-otp', commonController.validateOtp)
 router.post('/login', commonController.logIn);
 router.get('/user-by-email', commonController.getUserByEmail);

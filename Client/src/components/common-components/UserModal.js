@@ -15,6 +15,7 @@ const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
     const getAppointmentById = async () => {
       try{
         let {data} = await axiosInstance.get('/doctor/appointment', { params: { appointmentId }})
+        console.log( data)
         setAppointment(data?.appointment)
       } catch(error){
         console.error(error)
@@ -56,12 +57,9 @@ const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
         title="Appointment Card">
         <div className="Appointment-header">
           <div>
-            <h4 className="text-center mb-2 m-0 fw-800">{appointment?.doctorId?.organizationId?.name || ""}</h4>
+            <h4 className="text-center mb-2 m-0 fw-800">{appointment?.departmentId?.name || ""}</h4>
             <div className="d-flex flex-row justify-content-between">
-              {appointment?.userId?.address && <p className="mb-0">
-                <span className="text-info">Address : </span> 
-                {appointment?.userId?.address || ""}
-              </p>}
+              
               <p className="mt-2 mb-0">Date : {dateFormat(new Date(appointment?.createdAt))}</p>
             </div>
             <hr />
@@ -78,12 +76,16 @@ const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
 
                   <h6 className="font-weight-bold">
                     <span className="m-0 text-dark">Age : </span>
-                    {appointment?.userId?.age || ""}
+                    {appointment?.userId?.age || " - "}
                   </h6>
 
                   <h6 className="font-weight-bold">
                     <span className="m-0 text-dark">Gender : </span>
-                    {appointment?.userId?.gender || "" }
+                    {appointment?.userId?.gender || " - " }
+                  </h6>
+                  <h6 className="font-weight-bold">
+                    <span className="m-0 text-dark">Blood Group : </span>
+                    {appointment?.userId?.bloodGroup || " - " }
                   </h6>
                 </div>
                 <div className="user-token m-auto ">
@@ -96,8 +98,10 @@ const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
           </div>
           <div className="basic-details">
             <h2 className="font-weight-bold">Basic Details</h2>
-            {appointment?.userId?.phone && <p className="mb-0 text-dark">Father Name : {appointment?.userId?.fatherName}</p>}
-            <p className="mb-0 text-dark">Mobile Number : +91 {appointment?.userId?.phone}</p>
+            {appointment?.userId?.phone && <p className="mb-0 text-dark">Guardian Name : {appointment?.userId?.gardianName}</p>}
+            <p className="mb-0 text-dark">Mobile Number : +91 {appointment?.userId?.phone || '-'}</p>
+            <p className="mb-0 text-dark">Address : { appointment?.userId?.address || '-'}</p>
+           
           </div>
           <hr />
           { appointment.status !== 'unreached' ? <div className='d-flex float-right' >

@@ -95,19 +95,19 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-3 mb-3">
-                            <label className=''>Landmark & Street</label>
+                        <div className="col-md-6 mb-3">
+                            <label className=''>Address</label>
                             <div className="input-group">
                                 <input type="text"
                                     className={`form-control ${errors.address ? 'border-danger' : ''}`}
-                                    placeholder="Eg:Near Abdullah women's college "
+                                    placeholder="Enter Full Address"
                                     {...register('address', {
-                                        required: 'Clinic address is required'
+                                        required: 'Address is required'
                                     })}
                                 />
                             </div>
                         </div>
-                        <div className="col-md-3 mb-3">
+                        {/* <div className="col-md-3 mb-3">
                             <label className=''>Pincode</label>
                             <div className="input-group">
                                 <input type="text"
@@ -142,7 +142,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                                     })}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     { source === 'Clinic' && <div className="col-md-6 mb-3">
                         <div className="row input-group mt-4">
@@ -278,7 +278,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                         {errors?.parking && <div className="text-danger ">{errors?.parking.message}</div>}
                     </div>}
 
-                    {Array(timingNo).fill(0).map((v, i) =>
+                    {/* {Array(timingNo).fill(0).map((v, i) =>
                     (<div className="row">
                         <div className="col-md-12 mb-3">
                             <label className=''>Timming</label>
@@ -310,7 +310,6 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                                     />
                                 </div>
 
-                                {/* evening */}
 
                                 <div className="col-1 text-end"><p style={{ marginTop: "25px" }}>Evening</p></div>
                                 <div className='col '>
@@ -334,6 +333,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
 
                                     />
                                 </div>
+                    
                                 <div className='col '>
                                     {i < 7 && <button type='button' style={{ minWidth: "60px" }} className='btn-1 btn btn-primary mt-4 p-1 px-1'
                                         onClick={() => setTimingNo((old) => {
@@ -354,7 +354,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                             {errors?.timing && <div className="text-danger ">{errors?.timing.message}</div>}
 
                         </div>
-                    </div>))}
+                    </div>))} */}
                 </div>
               <button type="submit" className="btn btn-primary shadow-none mx-2" >Save</button>
             </div>

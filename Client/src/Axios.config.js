@@ -9,5 +9,5 @@ axiosInstance.interceptors.request.use( request => {
 axiosInstance.interceptors.response.use( response => {
     return { data: response.data, code: response.status, status: response.statusText }
 }, async error  => {
-    if( error ) return Promise.reject({ ...error.response.data })
+    if( error ) return Promise.reject({ ...error?.response?.data })
 })

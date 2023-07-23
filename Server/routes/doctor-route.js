@@ -12,13 +12,16 @@ router.post('/add-appointment', DoctorController.addAppointment)
 router.post('/re-appointment', DoctorController.reAppointment)
 router.post('/create-doctor', upload.single('image'), DoctorController.createDoctor)
 router.get('/analytics', DoctorController.analytics)
+router.get('/doghnut-analytics', DoctorController.doghnutAnalytics)
 router.get('/doctorsInOrganization', DoctorController.doctorsInOrganization)
 router.post('/appointment-status', DoctorController.setAppointmentStatus)
 router.post('/deal', DoctorController.deal)
 router.post('/create-department', DoctorController.createDepartment)
 router.post('/delete-department', DoctorController.deleteDepartment)
 router.get('/departments', DoctorController.getDepartments)
+router.post('/specialization', DoctorController.addSpecialization)
 router.get('/patients', DoctorController.patients)
+router.get('/hospital-specialization', DoctorController.hospitalSpecialization)
 
 
 

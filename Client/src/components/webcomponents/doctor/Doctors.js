@@ -55,17 +55,19 @@ const handle = ()=>{
                               />
                             </div>
 
-                            <div className="dr-details">
-                              <h2 className="">{doctor?.fullName}</h2>
-                              <p className="mb-1 dr-spelialization">
-                                {doctor?.specialization || "Specialization"}
-                              </p>
-                              <p className="mb-1 experience-dr">
-                                Eperience : 8 Years
-                              </p>
-                              <p className="dr-qualifiction mb-1">MBBS ,MD</p>
-                              <p className="dr-address">{doctor?.address}</p>
-                            </div>
+                          <div className="dr-details">
+                            <h2 className="">{doctor?.fullName}</h2>
+                            <p className="mb-1 dr-spelialization">
+                              {doctor?.specialization?.name || "Specialization"}
+                            </p>
+                            <p className="mb-1 experience-dr">
+                              Eperience : 8 Years
+                            </p>
+                            <p className="dr-qualifiction mb-1">MBBS ,MD</p>
+                            <p className="dr-address">
+                              {doctor?.address}
+                            </p>
+                          </div>
                           </div>
                         </Link>
                       </div>

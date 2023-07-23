@@ -23,7 +23,10 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
         setOrganization(data?.organization)
 
         let tabData = data?.organization?.tab 
-        if( tabData?.step === 'STEP1' && tabData?.isComplete ) setTab('STEP2')
+
+        if( data?.organization?.organizationType !== 'Clinic' ) return
+
+        if( tabData?.step === 'STEP1' && tabData?.isComplete  ) setTab('STEP2')
         else if( tabData?.step === 'STEP2' && tabData?.isComplete ) setTab('STEP3')
         else setTab(tabData?.step || 'FINAL')
 
@@ -36,11 +39,11 @@ const ClinicRegistartion = ({isSelfCreated, source}) => {
   const submit = async (formData) => {
       try {
           formData['tab'] = tab
-          let {data}  = await axiosInstance.post('/common/create-organization', formData )
+          let {data}  = await axiosInstance.post('/common/create-clinic', formData )
           if(data?.organization){
               reset({})
               setOrganization(data?.organization)
-              localStorage.setItem('RID', JSON.stringify(data?.organization?._id ))
+              localStorage.setItem('RID', JSON.stringify(data?.organization?._id))
               setTab('STEP2')
               toasty.success(data?.message)
           }

@@ -8,23 +8,54 @@ import Select from "react-select"
 import useToasty from '../../../hooks/toasty';
 
 
-const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
-  const { register, handleSubmit, reset, formState: { errors }, control } = useForm({ onChange: true })
+const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModal = () => {}, refresh = () => {} }) => {
+  const { register, handleSubmit, reset, formState: { errors }, control, watch } = useForm({ onChange: true })
 
   const [doctors, setDoctors] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null)
   const [editImage, setEditImage] = useState(null)
   const [specialization, setSpecialization] = useState([])
+  const [departments, setDepartments] = useState([]);
+
   const toasty = useToasty()
 
   useEffect(() => {
+
     if( organization?._id ){
       getDoctorsInOrganization()
-
-      let specializaion = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
-      setSpecialization(specializaion)
+      getDepartments()
+      if( source === 'modal' ){
+        getAllSpecialization()
+      } else {
+        console.log('>>>>>>>>>>', organization?.specialization)
+        let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
+        setSpecialization(specialization)
+      }
+      
     }
   }, [])
+
+  const getAllSpecialization = async () => {
+    try{
+        let {data} = await axiosInstance.get('/doctor/hospital-specialization')
+        console.log(data)
+        setSpecialization(data?.specialization)
+    } catch(error){
+        console.error(error)
+    }
+  }
+
+  
+  const getDepartments = async () => {
+    try {
+        let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: organization._id }, ...getAuthHeader() })
+
+        let dep = data?.departments?.map( de => ({ name: de?.organizationId?.name, _id: de?.organizationId?._id, specialization: de?.organizationId?.specialization[0]?.id || null }))
+        setDepartments(dep)
+
+    } catch(error) { console.error(error) }
+}
+
 
   const getDoctorsInOrganization = async () => {
     try {
@@ -40,7 +71,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
     try {      
 
       if(!values?._id){
-        values['organizationId'] = organization._id
+        values['organizationId'] = source === 'Hospital' ? values.department?._id : organization._id
         values['tab'] = tab
       }
       
@@ -74,6 +105,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
         }
         
         setDoctors([...doctors, doctorObj ])
+        setModal(false)
       }
 
       setEditImage(null)
@@ -111,9 +143,10 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
     reset(doctor)
   }
 
+
   return (
     <div className='row'>
-      {doctors.map(doc => <div className="col-md-4 col-sm-6 mb-3">
+      {source !== 'modal' && doctors.map(doc => <div className="col-md-4 col-sm-6 mb-3">
         <div class="ms-card card-gradient-dark ms-infographics-widget ms-widget">
           <div class="ms-card-body">
             <div class="media fs-14" style={{ marginBottom: "0" }}>
@@ -143,7 +176,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
         <div >
           <ImgUpload source={"doctor"} file={(image) => setSelectedImage(image)} editImage={editImage} />
           <div className="row mt-2">
-            <div className="col-md-6 mb-3">
+            <div className="col-6 mb-3">
               <label >Full Name</label>
               <div className="input-group">
                 <input type="text"
@@ -151,6 +184,19 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                   placeholder="Enter Full Name"
                   {...register(`fullName`, {
                     required: 'First name is required'
+                  })}
+                />
+              </div>
+            </div>
+            <div className="col-6 mb-3">
+              <label className=''>Phone Number</label>
+              <div className="input-group">
+                <input type="text"
+                  className={`form-control ${errors.phone ? 'border-danger' : ''}`}
+                  placeholder="Enter Phone"
+                  onInput={(e) => NumberFormat(e)}
+                  {...register(`phone`, {
+                    required: 'Phone is required'
                   })}
                 />
               </div>
@@ -167,20 +213,8 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                 />
               </div>
             </div>
-            <div className="col-md-6 mb-3">
-              <label className=''>Phone Number</label>
-              <div className="input-group">
-                <input type="text"
-                  className={`form-control ${errors.phone ? 'border-danger' : ''}`}
-                  placeholder="Enter Phone"
-                  onInput={(e) => NumberFormat(e)}
-                  {...register(`phone`, {
-                    required: 'Phone is required'
-                  })}
-                />
-              </div>
-            </div>
-            <div className="col-md-6 mb-3">
+            
+            <div className="col-6 mb-3">
               <label >Qualifications</label>
               <div className="input-group">
                 <input type="text"
@@ -192,29 +226,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                 />
               </div>
             </div>
-            <div className="col-md-6 mb-3">
-              <label >Specialization of Clininc</label>
-              <div className="">
-                <Controller
-                  control={control}
-                  name="specialization"
-                  rules={{ required: 'Query must be select' }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      isMulti={false}
-                      options={specialization}
-                      getOptionLabel={({ name }) => name}
-                      getOptionValue={({ id }) => id}
-                      className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
-                      classNamePrefix="select"
-                    />
-                  )}
-                />
-              </div>
-            </div>
-       
-            <div className="col-md-6 mb-3">
+            <div className="col-6 mb-3">
               <label >Experience</label>
               <div className="input-group">
                 <input type="text"
@@ -226,6 +238,51 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
                 />
               </div>
             </div>
+            {source === 'Hospital' &&
+              <div className="col-6 mb-3">
+                <label >Select Department</label>
+                <div className="">
+                  <Controller
+                    control={control}
+                    name="department"
+                    rules={{ required: 'Query must be select' }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        isMulti={false}
+                        options={departments}
+                        getOptionLabel={({ name }) => name}
+                        getOptionValue={({ _id }) => _id}
+                        className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
+                        classNamePrefix="select"
+                      />
+                    )}
+                  />
+                </div>
+              </div>}
+            <div className="col-md-6 mb-3">
+              <label >Specialization of Clininc</label>
+              <div className="">
+                <Controller
+                  control={control}
+                  name="specialization"
+                  rules={{ required: 'Query must be select' }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      isMulti={false}
+                      options={source === 'Hospital' ? specialization.filter( a => a.id === watch('department')?.specialization ) : specialization}
+                      getOptionLabel={({ name }) => name}
+                      getOptionValue={({ id }) => id}
+                      className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
+                      classNamePrefix="select"
+                    />
+                  )}
+                />
+              </div>
+            </div>
+
+        
             <div className="col-md-6 mb-3">
               <label className=''>Address</label>
               <div className="input-group">
@@ -252,7 +309,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {} }) => {
             </div>
             <div className="actions btn-submit mb-2">
               <button type="submit" className="btn btn-primary shadow-none mx-2" >Save</button>
-              <button className="btn btn-primary shadow-none mx-2" onClick={() => { handleNext() }}>Next</button>
+              { source !== 'modal' && <button className="btn btn-primary shadow-none mx-2" onClick={() => { handleNext() }}>Next</button>}
             </div>
           </div>
         </div>
