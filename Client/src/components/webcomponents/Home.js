@@ -4,6 +4,7 @@ import Doctors from './doctor/Doctors';
 import Clinics from './Clinics'
 import Hospitals from './Hospital/Hospitals';
 import Search from '../common-components/Search';
+import Specializations from './Hospital/Specializations';
 
 function Home() {
     return (
@@ -13,6 +14,7 @@ function Home() {
         <Doctors />
         <Clinics style={{margin:"0"}} />
         <Hospitals/>
+        <Specializations/>
 
         <Services />
       </>
