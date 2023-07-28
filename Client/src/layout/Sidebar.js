@@ -16,7 +16,7 @@ function Sidebar({isOpen, setIsOpen, mobileView}) {
     
 
     return (
-            <aside className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ${ !isOpen ? 'ms-aside-left' : '' } `}>
+            <aside className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ${ !isOpen ? 'ms-aside-left' : '' } `} style={{ paddingBottom: '6rem'}}>
                 {/* <!-- Logo --> */}
                 <div className="logo-sn ms-d-block-lg">
                     <a className="ps-0 ms-0 text-center" href="index.html"> <img src={Logo} alt="logo" /> </a>

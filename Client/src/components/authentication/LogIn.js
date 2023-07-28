@@ -91,26 +91,11 @@ const LogIn = () => {
     } catch(error){ console.error(error) }
   }
 
-  // const saveDetails = async () => {
-  //   try {
-  //     let formData = details
-  //     formData['_id'] = user?._id
-  //     let { data } = await axiosInstance.post('/patient/patient-details', details, getAuthHeader())
-  //     localStorage.setItem('user', JSON.stringify(data?.user))
-
-  //     if( LocationState?.redirectTo ) window.location.replace( LocationState.redirectTo )
-  //     else window.location.replace('/patient')
-
-  //   } catch (error) {
-  //     toasty.error(error?.message)
-  //     console.error(error)
-  //   }
-  // }
 
   const submit = async ( formdata ) => {
     try {
       formdata['phone'] = user.phone
-      if( formdata.source === 'clinic'){
+      if( ['hospital', 'clinic'].includes(formdata.source)  ){
         let { data } = await axiosInstance.post('common/create-hospital', formdata, getAuthHeader())
         if( data?.isActive ){
           localStorage.setItem('user', JSON.stringify(data?.organization))
@@ -270,6 +255,7 @@ const LogIn = () => {
                 <label className='mb-2'  >Registration No.</label>
                 <input 
                   type="text" 
+                  name='registration no'
                   className={`form-control mb-2 ${errors?.registrationNo ? 'border-danger' : ''}`}
                   placeholder='Enter Registration No.' 
                   {...register('registrationNo', {
@@ -282,6 +268,7 @@ const LogIn = () => {
                 <label className='mb-2'  >Name</label>
                 <input 
                   type="text" 
+                  name="name"
                   className={`form-control mb-2 ${errors?.name ? 'border-danger' : ''}`}
                   placeholder='Enter Full name' 
                   {...register('name', {
@@ -293,6 +280,7 @@ const LogIn = () => {
                 <label htmlFor="" className='mb-2' >Email</label>
                 <input 
                   type="email" 
+                  name='email'
                   className={`form-control mb-2 ${errors?.email ? 'border-danger' : ''}`}
                   placeholder='Enter Email' 
                   {...register('email', {
@@ -300,7 +288,7 @@ const LogIn = () => {
                 })}
                 />
               </div>
-            <button className='btn btn-primary btn-md' type='submit'>Save</button>
+            <button className='btn btn-primary btn-md shadow-none' type='submit'>Save</button>
             </div>
         </div>
         }

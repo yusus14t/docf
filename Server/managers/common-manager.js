@@ -245,19 +245,21 @@ const signUp = async ( body, user ) => {
         } else {
             user = await UserModel({ phone: body.phone, twoFactor: { otp },  primary: true }).save()
         }
+
         console.log('----------> OTP ', otp)
-        // let response = await smsService(`your otp is ${ otp } `, body.phone)
+        let response = await smsService(`your otp is ${ otp } `, body.phone)
 
-        let message = 'OTP Sent to your phone.'
-        // if( response?.status_code === 411 ) message = response?.message
+        if( process.env.ENVIRONMENT !== 'development' ){
+            if(!response?.message) return Error({ message: `Network Connection Refuse`, user })
+            if( response?.status_code === 411 ) return Error({ message: `${response?.message} - ${otp}`, user })
+        }
 
-        return Success({ message , user })
+        return Success({ message: `${response?.message} - ${ otp }`, user })
     } catch(error){ console.log(error) }
 }
 
 const validateOtp = async ( body ) => {
     try{
-        console.log('>>>>>', body)
         let user = await UserModel.findOne({_id: body?.userId }).populate('organizationId')
         if( user?.twoFactor?.otp === body?.otp ){
             await UserModel.updateOne({_id: user._id}, { 'twoFactor.otp':  0 })
