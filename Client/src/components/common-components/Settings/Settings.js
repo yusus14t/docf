@@ -3,6 +3,8 @@ import { axiosInstance, getAuthHeader } from "../../../constants/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal";
+import Profile from "./Profile";
+
 
 const Settings = () => {
  const userInfo = JSON.parse(localStorage.getItem('user')) 
@@ -19,7 +21,6 @@ const Settings = () => {
  const getAllSpecialization = async () => {
   try{
       let {data} = await axiosInstance.get('/doctor/hospital-specialization')
-      console.log(data)
       setSpecializations(data?.specialization)
   } catch(error){
       console.error(error)
@@ -86,6 +87,7 @@ const Settings = () => {
                   </div>
                 </>
               }
+              { tab === 'PROFILE' && <Profile /> }
             </div>
           </div>
         </div>

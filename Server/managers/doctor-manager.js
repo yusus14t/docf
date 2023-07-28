@@ -623,7 +623,6 @@ const getDepartments = async (body, user) => {
     if (!query?.hospitalId && !query?.organizationId)
       return Success({ departments: [] });
 
-    console.log("query", query);
     let departments = await UserModel.find(query)
       .populate("organizationId", "photo name room specialization")
       .populate("hospitalId", "name email fee organizationType");

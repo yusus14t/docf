@@ -7,7 +7,7 @@ export const getAuthHeader = () => {
 
 // axios instance 
 export const axiosInstance = axios.create({
-    baseURL: `http://${window.location.hostname}:5000/api`,
+    baseURL:  `http://${window.location.hostname}/api`,
     headers: {
         'Access-Control-Allow-Origin': '*',
         'auth-token': getAuthHeader()['headers']['auth-token']

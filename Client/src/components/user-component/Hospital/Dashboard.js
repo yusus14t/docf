@@ -202,7 +202,7 @@ const Dashbaord = () => {
                             <div className='h4'>
                                 Patients By Gender
                             </div>
-                            <div className='text-center' style={{ height: '16rem', width: '16rem' }}>
+                            <div className='text-center' style={{ height: '14rem', width: '14rem' }}>
                                 {doghnutData?.gender && <DoughnutChart labelName={'Patient'} chartData={doghnutData.gender} />}
                             </div>
                         </div>
@@ -219,7 +219,7 @@ const Dashbaord = () => {
                             <div className='h4'>
                                 Appointment Status
                             </div>
-                            <div className='text-center' style={{ height: '16rem', width: '16rem' }}>
+                            <div className='text-center' style={{ height: '14rem', width: '14rem' }}>
                                 {doghnutData?.status && <DoughnutChart labelName={'Patient'} chartData={doghnutData.status} />}
                             </div>
                         </div>
