@@ -203,7 +203,6 @@ const addAppointment = async (body, user) => {
     let lastAppointment = await AppointmentModel.findOne(
       {
         departmentId: ObjectId(body.department.organizationId),
-        status: "waiting",
         createdAt: { $gte: today },
       },
       { token: 1 }

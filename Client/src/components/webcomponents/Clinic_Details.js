@@ -88,10 +88,7 @@ function Detail() {
 
   const getWaitingList = async () => {
     try {
-      let { data } = await axiosInstance.get("/waiting-list", {
-        params: { _id: clinicDetail?.doctors[0]?._id },
-        ...getAuthHeader(),
-      });
+      let { data } = await axiosInstance.get(`/waiting-list/${params.id}`, getAuthHeader());
 
       setWaitingList(data?.appointment)
     } catch (error) {
@@ -101,7 +98,7 @@ function Detail() {
 
   const handleAppointmentModal = () => {
     if (!userInfo)
-      navigate("/patient-login", {
+      navigate("/login", {
         state: { redirectTo: window.location.pathname },
       });
     setIsOpen(true);
@@ -147,7 +144,7 @@ function Detail() {
           </div>
         </div>
 
-        <div
+        { userInfo?.userType === "PT" || !userInfo && <div
           className="bookappoint cursor-pointer"
           onClick={() => handleAppointmentModal()}
         >
@@ -157,7 +154,7 @@ function Detail() {
           />
 
           <h5 className="p-2">Book Appointment</h5>
-        </div>
+        </div>}
 
         <div className="container-fluid">
           <div className="row clinic-details-row mt-5 mx-0">

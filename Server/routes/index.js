@@ -31,12 +31,12 @@ router.post('/login', commonController.logIn);
 router.get('/user-by-email', commonController.getUserByEmail);
 router.get('/all-clinics', commonController.getAllClinics);
 router.get('/clinic-detail', commonController.clinicDetails);
-router.get('/waiting-list', commonController.waitingList);
+router.get('/waiting-list/:id', commonController.waitingList);
 router.get("/all-doctors", doctorContoller.getAllDoctors);
 
 //hospitals
 router.get('/hospitals', commonController.getAllHospitals);
-router.get('/hospital/:id', commonController.hospitalDetails);
+router.get('/hospital-details/:id', commonController.hospitalDetails);
 
 // stream: Event Driven  
 router.get('/stream', EventHandler )

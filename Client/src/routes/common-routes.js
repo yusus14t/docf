@@ -13,7 +13,6 @@ import Gynae from "../components/webcomponents/Gynae";
 import Hospitals from "../components/webcomponents/Hospital/Hospitals";
 import Detail from "../components/webcomponents/doctor/Detail";
 import HospitalDetails from "../components/webcomponents/Hospital/HospitalDetails";
-import DepartmentDetail from "../components/webcomponents/Hospital/DepartmentDetail";
 import LogIn from "../components/authentication/LogIn";
 
 const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
@@ -31,7 +30,7 @@ const COMMON_ROUTE = [
   { path: "/after", element: <AfterSignup /> },
   { path: "/gynae", element: <Gynae /> },
   { path: "/hospital/:id", element: <HospitalDetails /> },
-  { path: "/department-details", element: <DepartmentDetail /> },
+  { path: "/department/:id", element: <ClinicDetail /> },
 
   {
     path: "/login",

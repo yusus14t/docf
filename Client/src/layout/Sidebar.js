@@ -34,7 +34,7 @@ function Sidebar({isOpen, setIsOpen, mobileView}) {
     
                 <ul className="accordion ms-main-aside fs-14 overflow-auto">
   
-                    {MODULES.filter((m) => m.access.includes(userInfo?.userType)).map( (module, key) => <li className={`menu-item ${activeNav === module.id && 'nav-link-active'}`} onClick={() => { mobileView && setIsOpen(!setIsOpen)}} key={key}>
+                    {MODULES.filter((m) => m.access.includes(userInfo?.userType)).map( (module, key) => <li className={`menu-item ${activeNav === module.id && 'nav-link-active'}`} onClick={() => { mobileView && setIsOpen(false)}} key={key}>
                         <Link to={`/${pathname[1]}${module.pathname}`} className="has-chevron"  >
                             <span>{module.title}</span>
                         </Link>

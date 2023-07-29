@@ -224,9 +224,10 @@ const signUp = async ( body, user ) => {
         }
 
         console.log('----------> OTP ', otp)
-        let response = await smsService(`your otp is ${ otp } `, body.phone)
-
+        
+        let response = { message: 'otp Sent'}
         if( process.env.ENVIRONMENT !== 'development' ){
+            response = await smsService(`your otp is ${ otp } `, body.phone)
             if(!response?.message) return Error({ message: `Network Connection Refuse`, user })
             if( response?.status_code === 411 ) return Error({ message: `${response?.message} - ${otp}`, user })
         }
@@ -323,7 +324,7 @@ const waitingList = async ( body, user ) => {
        let appointment = await AppointmentModel.aggregate([
             {
                 $match: {
-                    doctorId: ObjectId(body._id),
+                    departmentId: ObjectId(body.id),
                     createdAt: {
                         $gte:  today
                     },
@@ -396,9 +397,9 @@ const getAllHospitals = async ( body ) => {
 const hospitalDetails = async ( body ) => {
     try{
        let details = await OrganizationModel.findOne({ _id: body.id })
-       let departments = await OrganizationModel.find({})
-
-       return Success({ details })
+       let departments = await UserModel.find({ hospitalId: body.id }, { organizationId: 1 })
+       .populate('organizationId', 'name room specialization photo')
+       return Success({ details, departments })
     } catch(error){ console.log(error) }
 }
 
