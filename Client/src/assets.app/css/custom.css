@@ -984,11 +984,10 @@ input::-webkit-inner-spin-button {
   width: 200px;
   text-align: justify;
   font-weight: bold;
-  
 }
-.hospital-address:hover{
-  text-overflow:ellipsis;
-  overflow:hidden;
+.hospital-address:hover {
+  text-overflow: ellipsis;
+  overflow: hidden;
   display: -webkit-box !important;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -999,7 +998,7 @@ input::-webkit-inner-spin-button {
   width: 100%;
   object-fit: cover;
 }
-.hospital-timming-card{
+.hospital-timming-card {
   font-weight: 900;
 }
 .hospital-btn {
@@ -1070,37 +1069,38 @@ input::-webkit-inner-spin-button {
 /*---------------------ends-----------------------*/
 
 /*-------------------------Gynae Page start*/
-.hero-banner{
+.hero-banner {
   margin-top: 10px;
   width: 100%;
   padding: 30px;
   height: 400px;
   border-radius: 12px;
-  margin-bottom:10px ;
-
+  margin-bottom: 10px;
 }
-.gynae-button-hero{
+.hero-banner-img {
+  width: 100%;
+  height: 400px;
+}
+.gynae-button-hero {
   font-size: 18px;
   position: relative;
   top: 90%;
-  padding:10px ;
+  padding: 10px;
   left: 100px;
   width: 300px;
-
 }
 
-.gynae-slide{
+.gynae-slide {
   height: 500px;
-
 }
 /*gynae sevices card*/
-.gynae-services-cards-container{
+.gynae-services-cards-container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   padding: 20px;
 }
-.gynae-services-card{
+.gynae-services-card {
   height: 300x;
   width: 350px;
   border: 1px solid #fff;
@@ -1108,69 +1108,97 @@ input::-webkit-inner-spin-button {
   margin: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.btn-gynae{
+.btn-gynae {
   background-color: white;
   width: 200px;
   margin-bottom: 10px;
 }
-.gynae-circle{
+.gynae-circle {
   display: inline-block;
   width: 85px;
   height: 85px;
   border: 2px solid #fff;
   border-radius: 50%;
-
 }
-.gynae-services-icon{
+.gynae-services-icon {
   font-size: 50px;
   margin-top: 18px;
 }
-.gynae-pink-layer{
+.gynae-pink-layer {
   /* background: radial-gradient(283px at 1.7% 8.6%, rgba(141, 254, 235, 0.516) 50%, rgba(232, 176, 254, 0.615) 50%); */
   background-color: #ffc1d4d7;
   /* z-index: 999; */
 }
-
+/* .middle-text {
+  width: "50%";
+  text-align: "center";
+  border-bottom: "20px solid #000";
+  line-height: "0.1rem";
+  margin: "10px 0 20px";
+} */
+.middle-text span {
+  background: "#fff";
+  padding: "0 10px ";
+}
 /*------------------------end----------------------------*/
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 767px) {
 
-  /* --------gynae-----------*/
-  .hero-banner{
-    height: 150px;
+
+  /*loginforn*/
+  .loginContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0;
   }
-.gynae-button-hero{
-  font-size: 14px;
-  padding: 5px;
-  top: 85%;
-  
-}
-.gynae-slide{
-  height: 200px;
-  object-fit: cover;
+  .loginform{
+    margin-top: 0;
+    width: 70%;
+    margin-left: 0;
+  }
+  /* --------gynae-----------*/
+  .hero-banner {
+    height: 200px;
+  }
+  /* .hero-banner-img{
+    width: 100%;
+    height: auto;
+  } */
+  .gynae-button-hero {
+    font-size: 12px;
+    padding: 1px;
+    width: 130px;
+    top: 90%;
+    left: 10px;
+  }
 
-
-}
-.gynae-services-cards-container{
-  /* flex-direction: column; */
-  flex-wrap: wrap;
-}
-.gynae-services-card{
-  width: 380px;
-  margin-left: 0;
-}
+  .gynae-slide {
+    height: 200px;
+    object-fit: cover;
+  }
+  .gynae-services-cards-container {
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+  }
+  .gynae-services-card {
+    width: 380px;
+    margin-left: 0;
+    padding: 0;
+    margin-right: 0;
+  }
 
   /*--------hospital-card-----------*/
   .hospital-title {
   }
-  .hopsiptal-banner-img{
+  .hopsiptal-banner-img {
     height: 200px;
   }
   /* .wating-area-clinic{
     margin-top: 50px;
   } */
-  .clinic-address-icon{
-    font-size: 25px ;
+  .clinic-address-icon {
+    font-size: 25px;
     margin: 5px;
   }
   .clinic-info-details {
@@ -1189,11 +1217,10 @@ input::-webkit-inner-spin-button {
     flex-direction: column;
   }
   /*----------------specialization ---------------*/
-  .category-h{
+  .category-h {
     text-align: left;
     padding: 30px 20px 20px;
     margin: 35px 0 30px;
-    
   }
   /*--------token-list---------*/
   .token-list {
