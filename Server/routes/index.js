@@ -2,11 +2,9 @@ const express = require('express');
 const router = express();
 const commonController = require(`../controllers/common-controller`);
 const doctorContoller = require(`../controllers/doctor-controller`);
-// const Events = require(`./events`);
-// const { EventHandler } = require('./events')
+
 const { EventHandler } = require('../managers/doctor-manager')
 const { jwt_verify } = require('../middlewares/common-middleware');
-const {  PINCODES } = require('../seeds/pincode-seed'); 
 
 // List Of Modules
 const modules = [
@@ -15,6 +13,7 @@ const modules = [
     {'path' : 'doctor', 'module': 'doctor-route'},
     {'path' : 'patient', 'module': 'patient-route'},
     {'path' : 'mr', 'module': 'mr-route'},
+    {'path' : 'hospital', 'module': 'hospital-route'},
 ]
 
 // Return All Routes
@@ -34,6 +33,12 @@ router.get('/all-clinics', commonController.getAllClinics);
 router.get('/clinic-detail', commonController.clinicDetails);
 router.get('/waiting-list', commonController.waitingList);
 router.get("/all-doctors", doctorContoller.getAllDoctors);
+
+//hospitals
+router.get('/hospitals', commonController.getAllHospitals);
+router.get('/hospital/:id', commonController.hospitalDetails);
+
+// stream: Event Driven  
 router.get('/stream', EventHandler )
 
 

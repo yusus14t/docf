@@ -144,6 +144,18 @@ const setUserType = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const getAllHospitals = async ( req, res ) => {
+    commonManager.getAllHospitals( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const hospitalDetails = async ( req, res ) => {
+    commonManager.hospitalDetails( req.params, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -167,4 +179,6 @@ module.exports = {
     waitingList,
     createHospital,
     setUserType,
+    getAllHospitals,
+    hospitalDetails,
 }

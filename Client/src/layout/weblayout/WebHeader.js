@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Avatar from '../../assets.app/img/dashboard/doctor-3.jpg'
 import logo from '../../assets.app/img/logo/logo.png'
 import WebSidebar from "./WebSidebar";
