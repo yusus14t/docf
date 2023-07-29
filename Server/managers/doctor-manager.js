@@ -129,7 +129,7 @@ const getAllDoctors = async (body, user) => {
   try {
     let query = {};
     if (user?.userType === "MR") query["createdBy"] = user?._id;
-    if (["CL", "DP"].includes(user.userType)) {
+    if (["CL", "DP"].includes(user?.userType)) {
       query["organizationId"] = user.organizationId;
     }
 

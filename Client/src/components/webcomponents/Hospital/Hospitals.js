@@ -1,16 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HospitalCard from './HospitalCard';
-
+import { axiosInstance, getAuthHeader } from '../../../constants/utils'
 const HospitalGrid = () => {
-  const [hospitals] = useState([1, 2, 3, 4, 5, 6]);
+  const [ hospitals, setHospitals] = useState([]);
+
+  useEffect(() => {
+    getHospitals()
+  }, [])
+
+  const getHospitals = async () => {
+    try {
+      let { data } = await axiosInstance.get('/hospitals')
+      setHospitals(data?.organization)
+      console.log('data',data)
+    } catch(error){ console.error(error) }
+  }
   return (
     <div>
       <div className="box"></div>
-      <div
-        // style={{ background: "#f1f5fc" }}
-        className="section section-padding aaside"
-      >
-        <div className="asidebox"></div>
+      <div className="section section-padding aaside" >
         <div className="container">
           <div className="row mt-2 mb-2">
             <div className="col-12">

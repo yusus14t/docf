@@ -30,7 +30,7 @@ const COMMON_ROUTE = [
   { path: "/hospitals", element: <Hospitals /> },
   { path: "/after", element: <AfterSignup /> },
   { path: "/gynae", element: <Gynae /> },
-  { path: "/hospital-details", element: <HospitalDetails /> },
+  { path: "/hospital/:id", element: <HospitalDetails /> },
   { path: "/department-details", element: <DepartmentDetail /> },
 
   {
