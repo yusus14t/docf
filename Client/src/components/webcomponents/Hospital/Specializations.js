@@ -1,6 +1,8 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { fa1 } from "@fortawesome/free-solid-svg-icons";
 const Specializations = () => {
   return (
     <div>
@@ -15,12 +17,13 @@ const Specializations = () => {
       >
         <div>
           <div className="slide slide1 d-flex flex-row" >
-            <div class="col-lg-3 col-md-4 col-sm-6 border">
-              <div class="sigma_service style-16">
-                <div class="sigma_service-thumb">
-                  <i class="flaticon-stethoscope"></i>
+            <div className="col-lg-3 col-md-4 col-sm-6 border">
+              <div className="category-h style-16">
+                <div className="sigma_service-thumb">
+                    <FontAwesomeIcon icon={fa1}/>
+                  <i className="flaticon-stethoscope"></i>
                 </div>
-                <div class="sigma_service-body">
+                <div className="sigma_service-body">
                   <h5>
                     <a href="service-details.html">Therapiya</a>
                   </h5>
@@ -28,30 +31,9 @@ const Specializations = () => {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit, sed
                     do eiusmod
                   </p>
-                  <a href="service-details.html" class="btn-link primary-color">
+                  <a href="service-details.html" className="btn-link primary-color">
                     Read More
-                    <i class="far fa-long-arrow-alt-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-sm-6 ">
-              <div class="sigma_service style-16">
-                <div class="sigma_service-thumb">
-                  <i class="flaticon-stethoscope"></i>
-                </div>
-                <div class="sigma_service-body">
-                  <h5>
-                    <a href="service-details.html">Therapiya</a>
-                  </h5>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit, sed
-                    do eiusmod
-                  </p>
-                  <a href="service-details.html" class="btn-link primary-color">
-                    Read More
-                    <i class="far fa-long-arrow-alt-right"></i>
+                    <i className="far fa-long-arrow-alt-right"></i>
                   </a>
                 </div>
               </div>
