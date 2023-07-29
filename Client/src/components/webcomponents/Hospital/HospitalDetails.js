@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import background from "../../../assets.app/img/user-profile-bg-1920x400.jpg";
 import DepartmentCard from "./DepartmentCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEnvelope,
-  faMapMarker,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faMapMarker, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { axiosInstance, getFullPath } from "../../../constants/utils";
+import { useParams } from "react-router-dom";
 
 const HospitalDetails = () => {
+  const [ hospital, setHospital] = useState({});
+  const params = useParams();
+
+  useEffect(() => {
+    getHospital();
+  }, [])
+
+  const getHospital = async () => {
+    try{
+      console.log('params', params)
+      let { data } = await axiosInstance.get(`/hospital/${params.id}`)
+      setHospital(data?.details)
+      console.log(data)
+    } catch(error) { console.error(error) }
+  }
+
   return (
     <>
       <div className="box"></div>
       <div className="hospital-banner">
-        <h4 className="clinic-detail-name">Lababa Juhsil Hospital</h4>
-        <img className="hopsiptal-banner-img" src={background} alt="" />
+        <h4 className="clinic-detail-name">{hospital?.name}</h4>
+        <img className="hopsiptal-banner-img" src={hospital?.photo ? getFullPath(hospital?.photo) : background} alt="" />
       </div>
       <div className="container-fluid">
         <div className="departments">

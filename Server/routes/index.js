@@ -33,6 +33,12 @@ router.get('/all-clinics', commonController.getAllClinics);
 router.get('/clinic-detail', commonController.clinicDetails);
 router.get('/waiting-list', commonController.waitingList);
 router.get("/all-doctors", doctorContoller.getAllDoctors);
+
+//hospitals
+router.get('/hospitals', commonController.getAllHospitals);
+router.get('/hospital/:id', commonController.hospitalDetails);
+
+// stream: Event Driven  
 router.get('/stream', EventHandler )
 
 

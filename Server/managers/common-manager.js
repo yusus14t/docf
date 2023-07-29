@@ -108,22 +108,6 @@ const createHospital = async ( body, userInfo ) => {
     }
 }
 
-// const signUp = async ( body ) => {
-//     try {
-//         if( body.password === body.confirmPassword ) body.password = await encryptPassword(body.password)
-//         else return Error({ message: 'Incorrect confirm password' })
-
-//         if( body.registrationType === 'CLINIC' ) body['userType'] = 'DR'
-
-//         let user = await UserModel({ ...body }).save()
-//         let token = createToken(user._id)
-//         return Success({ message: 'Account created successfully', code: 201, user, token }) ;
-//     } catch ( error ) { 
-//         console.log(error) 
-//         return Error();
-//     }
-// }
-
 const logIn = async ( body ) => {
     try{
         let user = await UserModel.findOne({ email: body.email })
@@ -144,15 +128,8 @@ const logIn = async ( body ) => {
 
 const appointmentDepartments = async ( body, user ) => {
     try{
-        let query = {}
-
-        // if( ['DR', 'PT'].includes(user.userType) ){
-        //     query = { organizationId: ObjectId(body?.organizationId || user?.organizationId)   }
-        // }
-
         let departments = await UserModel.aggregate([
             {
-                // $match: { userType: 'DR', isActive: true, ...query, primary: false },
                 $match: {
                     primary: true,
                     $or: [
@@ -408,6 +385,23 @@ const setUserType = async ( body ) => {
     } catch (error) { console.log(error) }
 }
 
+const getAllHospitals = async ( body ) => {
+    try{
+       let organization = await OrganizationModel.find({ organizationType: 'Hospital'}, { name: 1, specialization: 1, email: 1, address: 1, photo: 1 })
+
+       return Success({ organization })
+    } catch(error){ console.log(error) }
+}
+
+const hospitalDetails = async ( body ) => {
+    try{
+       let details = await OrganizationModel.findOne({ _id: body.id })
+       let departments = await OrganizationModel.find({})
+
+       return Success({ details })
+    } catch(error){ console.log(error) }
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -425,4 +419,6 @@ module.exports = {
     waitingList,
     createHospital,
     setUserType,
+    getAllHospitals,
+    hospitalDetails,
 }

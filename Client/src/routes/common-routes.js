@@ -29,7 +29,7 @@ const COMMON_ROUTE = [
   { path: "/hospitals", element: <Hospitals /> },
   { path: "/after", element: <AfterSignup /> },
   { path: "/gynae", element: <Gynae /> },
-  { path: "/hospital-details", element: <HospitalDetails /> },
+  { path: "/hospital/:id", element: <HospitalDetails /> },
   {
     path: "/login",
     element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path || "/login"} /> : <LogIn />
