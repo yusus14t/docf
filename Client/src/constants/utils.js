@@ -5,6 +5,7 @@ export const getAuthHeader = () => {
     let token = JSON.parse(localStorage.getItem('token'))
     return { headers: {'auth-token': token} }
 }
+console.log(`http://${window.location.hostname}${ ENVIRONMENT === 'development' ? ':5000' : '' }/api`)
 
 // axios instance 
 export const axiosInstance = axios.create({
