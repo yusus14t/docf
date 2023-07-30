@@ -2,21 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHospital,
   faLocationDot,
   faPhone,
   faStethoscope,
 } from "@fortawesome/free-solid-svg-icons";
-import img from "../../assets.app/img/blog-standard/730x415.jpg";
 import banner from "../../assets.app/img/gynae/gynacard-image.png";
-import Hospitals from "../../components/webcomponents/Hospital/Hospitals";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import clinicPhoto2 from "../../assets.app/img/backgrounds/hos.jpg";
 
 import slide1 from "../../assets.web/img/home-1/1920x1280-1.jpg";
-// import slide1 from "../../"
 import slide2 from "../../assets.web/img/home-1/1920x1280-2.jpg";
 import slide3 from "../../assets.web/img/home-1/1920x1280-3.jpg";
 
@@ -68,10 +64,10 @@ const Gynae = () => {
           <div
             className="hero-banner"
             style={{
+              backgroundColor: "blue",
               backgroundImage: `url(${banner})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
-              objectFit: "conver",
             }}
           >
             <span className="btn btn-primary  gynae-button-hero">
@@ -81,24 +77,7 @@ const Gynae = () => {
         </div>
         {/*------services-------  */}
         <div className="gynae-services ">
-          <div className="row text-center text-light d-flex justify-center">
-            <div className="" style={{ marginLeft: "25%" }}>
-              <h2
-                style={{
-                  width: "50%",
-                  textAlign: "center",
-                  borderBottom: "1px solid #000",
-                  lineHeight: "0.1rem",
-                  margin: "10px 0 20px",
-                }}
-              >
-                <hr />
-                <span style={{ background: "#fff", padding: "0 10px " }}>
-                  Health Care Services
-                </span>
-              </h2>
-            </div>
-          </div>
+          <h2 className="text-center">Health care services</h2>
           <div className="gynae-services-cards-container ">
             {card.map((x) => {
               return (
@@ -136,9 +115,10 @@ const Gynae = () => {
             </span>
           </div>
         </div>
-        <div className="partner px-3">
-          <h3>Our Partners</h3>
-          <div className="row">
+        <h3>Our Partners</h3>
+
+        <div className="partner row">
+          <div className="row m-auto">
             <h2 className="text-center">Hospitals</h2>
             {[1, 2, 3].map((Hospital) => {
               return (
@@ -213,7 +193,7 @@ const Gynae = () => {
             })}
             <div className="col-sm-5"></div>
           </div>
-          <div className="row">
+          <div className="row m-auto">
             <h2 className="text-center">Clinics</h2>
 
             {clinics.length > 0 &&
