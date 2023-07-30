@@ -1,7 +1,5 @@
-import Header from "./Header";
-import "../assets.app/css/style.css"
-import "../assets.app/css/custom.css"
 import { Outlet } from "react-router-dom";
+import Header from "./Header";
 import ClinicRegistartion from "../components/user-component/ClinicRegistartion";
 
 const Layout = () => {

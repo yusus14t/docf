@@ -328,12 +328,12 @@ function Detail() {
             </div>
           </div>
         </div>
-      </div>
+      </div>{console.log(clinicDetail)}
       {isOpen && (
         <Appointment
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          doctors={clinicDetail?.doctors}
+          departmentId={clinicDetail?.detail?._id}
           refresh={() => {}}
         />
       )}

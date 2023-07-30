@@ -1,5 +1,9 @@
 import { AllRoutes } from './routes';
-import './assets.app/css/bootstrap.min.css';
+
+import "./assets.app/css/bootstrap.min.css";
+import "./assets.app/css/style.css";
+import "./assets.app/css/custom.css";
+
 import SnackbarProvider from 'react-simple-snackbar'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux';

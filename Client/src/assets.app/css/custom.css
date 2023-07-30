@@ -98,10 +98,9 @@
   height: 40px;
 }
 .login_button {
-  background-color: #ffffff78;
+  background-color: #ffff;
   padding: 10px;
   border-radius: 8px;
-  cursor: pointer;
 }
 
 .login_button a {
@@ -303,7 +302,7 @@
 
 /* LoginConatent start */
 .loginContainer {
-  height: 100vh;
+  height: 94.8vh;
   padding-top: 10rem;
 }
 .loginform {

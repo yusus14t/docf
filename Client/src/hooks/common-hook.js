@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
+import { SERVER_URL } from "../configs/env"
 
 export const useEvent = () => {
     const [callbackData, setCallbackData] = useState(null)
     useEffect(() => {
-        const Source = new EventSource(`http://${window.location.hostname}:5000/api/stream`)
+        const Source = new EventSource(`${ SERVER_URL }/api/stream`)
         Source.addEventListener('new-appointment', function(event){
             setCallbackData(JSON.parse(event.data))
         });

@@ -37,4 +37,14 @@ export const DAYS = [
     { id:4, value: 'FRI', day: 'Friday' },
     { id:5, value: 'SAT', day: 'Saturday' },
     { id:6, value: 'SUN', day: 'Sunday' },
-  ]
+]
+
+export const WEB_MENU_ITEMS = [
+    {id: 'home', name: 'Home', path: '/'},
+    {id: 'gynae', name: 'Gynae', path: '/gynae'},
+    {id: 'hospitals', name: 'Hospitals', path: '/hospitals'},
+    {id: 'clinic', name: 'Clinics', path: '/clinic'},
+    {id: 'doctors', name: 'Doctors', path: '/doctors'},
+    {id: 'about', name: 'About Us', path: '/about'},
+    {id: 'contact', name: 'Contact Us', path: '/contact'},
+]
