@@ -144,7 +144,7 @@ function Detail() {
           </div>
         </div>
 
-        { userInfo?.userType === "PT" || !userInfo && <div
+        { (userInfo?.userType === "PT" || !userInfo) && <div
           className="bookappoint cursor-pointer"
           onClick={() => handleAppointmentModal()}
         >
