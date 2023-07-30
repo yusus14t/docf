@@ -111,17 +111,7 @@ const Header = () => {
                         </div>
                     </li>
                     <li className="ms-nav-item ms-nav-user dropdown">
-                        <Dropdown
-                            toggle={<img className="ms-user-img ms-img-round float-end" src={Avatar} alt="people" />}
-                        >
-                            <li className="dropdown-menu-header">
-                                <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Welcome, Dr Samuel Deo</span></h6>
-                            </li>
-                            <li className="dropdown-divider"></li>
-
-                            <Item onClick={() => LockUser()}><span className="fs-14 p-2"><i className="flaticon-user me-2"></i>Lock</span></Item>
-                            <Item onClick={() => Logout()}><span className="fs-14 p-2"><i className="flaticon-user me-2"></i> Logout</span></Item>
-                        </Dropdown>
+                        <button className="btn  btn-light btn-md" onClick={() => Logout()}>Logout</button>
                     </li>
                 </ul>
                 <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" onClick={() => setIsSidebarOpen((old) => !old)}>

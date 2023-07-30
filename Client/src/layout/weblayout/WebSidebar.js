@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAnglesRight} from '@fortawesome/free-solid-svg-icons'
 import { userRoutes } from '../../constants/constant';
+import { getFullPath } from '../../constants/utils';
 
 function WebSidebar({isOpen}) {
 
@@ -31,7 +32,7 @@ function WebSidebar({isOpen}) {
             <div className="">
               <Link to="/" className="text-center">
                 {" "}
-                <img className="profile-image" src={Doctor} alt="logo" />
+                <img className="profile-image" src={ userInfo?.organizationId?.photo ? getFullPath(userInfo?.organizationId?.photo) : Doctor} alt="logo" />
               </Link>
               <p className="m-title">Arif Mohd</p>
             </div>

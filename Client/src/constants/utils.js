@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ENVIRONMENT } from '../configs/env';
 
 export const getAuthHeader = () => {
     let token = JSON.parse(localStorage.getItem('token'))
@@ -7,7 +8,7 @@ export const getAuthHeader = () => {
 
 // axios instance 
 export const axiosInstance = axios.create({
-    baseURL:  `http://${window.location.hostname}:5000/api`,
+    baseURL:  `http://${window.location.hostname}${ ENVIRONMENT === 'development' ? ':5000' : '' }/api`,
     headers: {
         'Access-Control-Allow-Origin': '*',
         'auth-token': getAuthHeader()['headers']['auth-token']

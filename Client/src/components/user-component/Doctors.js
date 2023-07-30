@@ -30,7 +30,7 @@ const DoctorsList = () => {
 
     const handleDelete = async (doctor) => {
         try {
-            let { data } = await axiosInstance.post('/doctor/delete-doctor', { _id: doctor._id }, getAuthHeader());
+            await axiosInstance.post('/doctor/delete-doctor', { _id: doctor._id }, getAuthHeader());
             setDoctors((old) => old.filter(d => d._id !== doctor._id))
             toasty.success()
         } catch (error) { console.log(error) }
@@ -60,7 +60,7 @@ const DoctorsList = () => {
                     <div class="ms-form-group my-0 mb-0 has-icon fs-14">
                         { userInfo.userType === 'SA' && <input type="search" class="ms-form-input" name="search" placeholder="Search for doctors" onInput={(e) => { setSearchInput(e.target.value); console.log(e.target.value) }} />}
                         <i class="flaticon-search text-disabled"></i>
-                        { ['DP', 'CL'].includes(userInfo.userType) && <button className="btn btn-light shadow-none mx-2" onClick={() => setDoctorModal(true) }>+ Doctor</button>}
+                        { ['CL', 'HL'].includes(userInfo.userType) && <button className="btn btn-light shadow-none mx-2" onClick={() => setDoctorModal(true) }>+ Doctor</button>}
                     </div>
 
                 </div>

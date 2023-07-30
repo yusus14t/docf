@@ -128,9 +128,20 @@ const editDoctor = async (body, user, file) => {
 const getAllDoctors = async (body, user) => {
   try {
     let query = {};
+
     if (user?.userType === "MR") query["createdBy"] = user?._id;
-    if (["CL", "DP"].includes(user?.userType)) {
+
+    else if (["CL", "DP"].includes(user?.userType)) {
       query["organizationId"] = user.organizationId;
+
+    } else if( user.userType === 'HL' ){
+      let departmentIds = await UserModel.find(
+        { hospitalId: user.organizationId, primary: true },
+        { organizationId: 1 }
+      );
+
+      departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
+      query['organizationId'] = { $in: departmentIds }
     }
 
     let doctors = await UserModel.aggregate([
@@ -711,24 +722,32 @@ const hospitalSpecialization = async (body, user) => {
 
 const addSpecialization = async (body, user) => {
   try {
-    let organization = await OrganizationModel.findOne({
-      _id: user?.organizationId,
-      "specialization.id": body?.name?.toUpperCase(),
-    });
-    if (!organization) {
-      await OrganizationModel.updateOne(
-        { _id: user?.organizationId },
-        {
-          $push: {
-            specialization: { id: body?.name?.toUpperCase(), name: body?.name },
-          },
+
+    let updatedSpecializations = []
+
+    if (body.specializations?.length) {
+      for (let specialization of body.specializations) {
+
+        let organization = await OrganizationModel.findOne({
+          _id: user?.organizationId,
+          "specialization.id": specialization.value.toUpperCase(),
+        });
+
+        if (!organization) {
+          await OrganizationModel.updateOne(
+            { _id: user?.organizationId },
+            {
+              $push: {
+                specialization: { id: specialization.value?.toUpperCase(), name: specialization.label },
+              },
+            }
+          );
+          updatedSpecializations.push({ name: specialization.label, id: specialization.value?.toUpperCase() })
         }
-      );
-      return Success({
-        specialization: { id: body?.name?.toUpperCase(), name: body?.name },
-      });
+      }
     }
-    return Error({ message: "Specialization already created!" });
+    return Success({ message: 'Specialization created succesfully.', specializations: updatedSpecializations });
+
   } catch (error) {
     console.log(error);
   }
