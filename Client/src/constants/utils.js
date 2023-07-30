@@ -9,7 +9,7 @@ console.log(`http://${window.location.hostname}${ ENVIRONMENT === 'development' 
 
 // axios instance 
 export const axiosInstance = axios.create({
-    baseURL:  `http://${window.location.hostname}${ ENVIRONMENT === 'development' ? ':5000' : '' }/api`,
+    baseURL:  `http://${window.location.hostname}/api`,
     headers: {
         'Access-Control-Allow-Origin': '*',
         'auth-token': getAuthHeader()['headers']['auth-token']
