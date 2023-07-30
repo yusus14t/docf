@@ -761,6 +761,7 @@ const EventHandler = (req, res) => {
   });
 
   const sendResponse = (data, event) => {
+    console.log('>>>', data, event)
     res.write(`event: ${event}\n`);
     res.write(`data: ${JSON.stringify(data)}`);
     res.write("\n\n");
