@@ -1141,18 +1141,123 @@ input::-webkit-inner-spin-button {
   padding: "0 10px ";
 }
 /*------------------------end----------------------------*/
+/*---------------specialization category-----------------*/
+.specialization-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: start;
+  padding: 20px;
+}
+.specialization-card {
+  width: 300px;
+  margin: 10px;
+  height: 200px !important;
+  border: 0.5px solid grey;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.spe-circle {
+  width: 75px;
+  height: 75px;
+  border: 1px solid grey;
+  border-radius: 50%;
+}
+
+/*-----------------------------end--------------------------*/
+
+/*----------------------home--------*/
+.advantages {
+  width: 100%;
+  /* border: 2px solid black; */
+  margin-bottom: 20px;
+
+  height: 100px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 15px;
+  /* border-top-right-radius: 300px ; */
+  
+  background-color: #0076d721;
+}
+.underline{
+  width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 10px 0 20px;
+}
+.under {
+      background:#fff; 
+    padding:0 10px;
+    }
+   .home-search{
+    width: 93%;
+    color: grey;
+    height: 55px;
+    border: none;
+    border-top-left-radius:12px ;
+    border-bottom-left-radius:12px ;
+    font-size: 20px;
+    margin-left: 10px;
+    padding-left: 2rem;
+   }
+   .home-search:focus{
+    outline: none;  
+   }
+   .search-contianer-home{
+    background-color: #fff;
+    border-radius: 12px;
+    width: 50%;
+   }
+   .hero-container{
+    height: 500px;
+    
+   }
+   .home-search-icon{
+    font-size: 30px;
+    padding-top: 14px;
+    margin-right: 3px;
+
+   }
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 767px) {
 
 
+  /* --home-- */
+  .hero-container{
+    height: 300px;
+    align-items: normal;
+  }
+  
+  .hero-content h1{
+    font-size: 28px;
+
+  }
+  .hjj{
+    width: 200px;
+    font-size: 15px;
+  }
+  .search-contianer-home{
+    width: 200px;
+    height: 30px;
+  }
+  .home-search{
+    font-size: 10px;
+    padding: 0;
+    height: 30px;
+    width: 170px;
+  }
+     .home-search-icon{
+      padding-top: 4px;
+      font-size: 14px;
+     }
   /*loginforn*/
-  .loginContainer{
+  .loginContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 0;
   }
-  .loginform{
+  .loginform {
     margin-top: 0;
     width: 70%;
     margin-left: 0;
