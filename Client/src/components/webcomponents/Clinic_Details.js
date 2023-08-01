@@ -35,6 +35,7 @@ function Detail() {
 
   const handleEventData = () => {
     if ( ['re-appointment', 'new-appointment'].includes(event?.event) ) {
+      console.log('<<<<<<<<<<<< event', event)
       let eventData = event?.data
       let LIST_OBJECT = { 
         _id: eventData?._id,

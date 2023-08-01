@@ -6,6 +6,7 @@ export const useEvent = () => {
     useEffect(() => {
         const Source = new EventSource(`${ SERVER_URL }/api/stream`)
         Source.addEventListener('new-appointment', function(event){
+            console.log('>>>>>>>>>', event)
             setCallbackData(JSON.parse(event.data))
         });
         Source.addEventListener('status', function(event){
