@@ -1,6 +1,5 @@
 import { memo, useEffect, useState } from "react"
 import Logo from '../assets.app/img/logo/logo.png'
-import Avatar from '../assets.app/img/dashboard/doctor-3.jpg'
 import Sidebar from "./Sidebar"
 import { Dropdown, Item } from '../components/common-components/Dropdown';
 import Appointment from "../components/common-components/Appointment/Appointment";
@@ -48,12 +47,6 @@ const Header = () => {
         } catch(error){ console.log(error) }
     }
 
-    const LockUser = () => {
-        let user = JSON.parse( localStorage.getItem('user'))
-        localStorage.clear()
-        localStorage.setItem('email', JSON.stringify(user.email))
-        window.location.replace('/login')
-    }
 
     return (
         <>

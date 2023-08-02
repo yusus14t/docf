@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
 import { useEvent } from "../../hooks/common-hook";
-import useToasty from "../../hooks/toasty";
+import eventsource from "../../events";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarPlus,
@@ -17,7 +17,6 @@ import {
 function Detail() {
   const params = useParams();
   const event = useEvent()
-  const toasty = useToasty()
   const [clinicDetail, setClinicDetail] = useState({});
   const [waitingList, setWaitingList] = useState({});
   const [token, setToken] = useState('00')
@@ -31,11 +30,13 @@ function Detail() {
 
   useEffect(() => {
     handleEventData()
-  }, [ event ])
+  }, [event])
 
   const handleEventData = () => {
+
+    eventsource.addEventListener('new-appointment', ( event ) => console.log('new-appointment', event)) 
+
     if ( ['re-appointment', 'new-appointment'].includes(event?.event) ) {
-      console.log('<<<<<<<<<<<< event', event)
       let eventData = event?.data
       let LIST_OBJECT = { 
         _id: eventData?._id,
@@ -64,7 +65,7 @@ function Detail() {
     if( clinicDetail?.doctors?.length){
       getWaitingList()
     }
-  },[ clinicDetail?.doctors ])
+  }, [clinicDetail])
 
   const getClinicDetail = async () => {
     try {
@@ -166,8 +167,8 @@ function Detail() {
                 <div className="token-list-container ">
                   {waitingList?.length ? (
                     <ul className={`token-list $`}>
-                      {waitingList.map((list) => (
-                        <li className=" p-2">
+                      {waitingList.map((list, key) => (
+                        <li className=" p-2" key={key}>
                           <div className="mt-auto">
                             <div
                               className={`token-list-item d-flex flex-row justify-content-around ${ list?.token == parseInt(token) ? "token-list-active" : "" }`}
@@ -220,9 +221,9 @@ function Detail() {
                 </div>
               </div>
               <div className="text-center">
-                <div class="pr-2 ">
-                  <table class="table  table-bordered">
-                    <thead class="thead-light">
+                <div className="pr-2 ">
+                  <table className="table  table-bordered">
+                    <thead className="thead-light">
                       <tr>
                         <th>Session</th>
                         <th>Morning</th>
@@ -273,36 +274,36 @@ function Detail() {
           </div>
 
           {/* CONTACT CARD */}
-          <div class="contact-details-clinic">
-            <div class="sigma_info style-26 d-flex">
-              <div class="sigma_info-title">
-                <span class="sigma_info-icon clinic-address-icon-container">
+          <div className="contact-details-clinic">
+            <div className="sigma_info style-26 d-flex">
+              <div className="sigma_info-title">
+                <span className="sigma_info-icon clinic-address-icon-container">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faMapMarker}
                   />
                 </span>
               </div>
-              <div class="sigma_info-description">
+              <div className="sigma_info-description">
                 <p>Our Address</p>
-                <p class="secondary-color">
+                <p className="secondary-color">
                   <b>{clinicDetail?.detail?.address}</b>
                 </p>
               </div>
             </div>
-            <div class="sigma_info style-26 d-flex">
-              <div class="sigma_info-title d-flex">
-                <span class="sigma_info-icon clinic-address-icon-container">
+            <div className="sigma_info style-26 d-flex">
+              <div className="sigma_info-title d-flex">
+                <span className="sigma_info-icon clinic-address-icon-container">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faPhone}
                   />
-                  <i class="fal fa-phone"></i>
+                  <i className="fal fa-phone"></i>
                 </span>
               </div>
-              <div class="sigma_info-description">
+              <div className="sigma_info-description">
                 <p>Call Us</p>
-                <p class="secondary-color">
+                <p className="secondary-color">
                   <b>
                     {clinicDetail?.detail?.phone?.slice(0, 3)}-
                     {clinicDetail?.detail?.phone?.slice(4, 7)}-
@@ -311,25 +312,25 @@ function Detail() {
                 </p>
               </div>
             </div>
-            <div class="sigma_info style-26 d-flex">
-              <div class="sigma_info-title">
-                <span class="sigma_info-icon clinic-address-icon-container">
+            <div className="sigma_info style-26 d-flex">
+              <div className="sigma_info-title">
+                <span className="sigma_info-icon clinic-address-icon-container">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faEnvelope}
                   />
                 </span>
               </div>
-              <div class="sigma_info-description">
+              <div className="sigma_info-description">
                 <p>Our Mail</p>
-                <p class="secondary-color">
+                <p className="secondary-color">
                   <b>{clinicDetail?.detail?.email}</b>
                 </p>
               </div>
             </div>
           </div>
         </div>
-      </div>{console.log(clinicDetail)}
+      </div>
       {isOpen && (
         <Appointment
           isOpen={isOpen}

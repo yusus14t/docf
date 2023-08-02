@@ -52,7 +52,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                 formData['department'] = { organizationId: userInfo.organizationId._id }
 
             } else if ( userInfo.userType === 'PT' ) formData['department'] = { organizationId: departmentId }
-            console.log('formData,', formData)
+
             let { data } = await axiosInstance.post('/doctor/add-appointment', formData,);
             setAppointments(data?.appointment)
 

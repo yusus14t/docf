@@ -768,14 +768,17 @@ const EventHandler = (req, res) => {
     res.write("\n\n");
   };
 
-  eventEmitter.once("new-appointment", (data) =>
+  eventEmitter.on("new-appointment", (data) =>
     sendResponse(data, "new-appointment")
   );
-  eventEmitter.once("re-appointment", (data) =>
-    sendResponse(data, "re-appointment")
-  );
-  eventEmitter.once("status", (data) => sendResponse(data, "status"));
-  return res;
+
+  
+
+
+  // eventEmitter.once("re-appointment", (data) =>
+  //   sendResponse(data, "re-appointment")
+  // );
+  // eventEmitter.once("status", (data) => sendResponse(data, "status"));
 };
 
 module.exports = {
