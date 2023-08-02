@@ -4,7 +4,8 @@ var eventsource
 (() => {
     try{
         console.log('Event Source file work')
-        eventsource = new EventSource(`${ SERVER_URL }/api/stream`)     
+        // eventsource = new EventSource(`${ SERVER_URL }/api/stream`)     
+        eventsource = new EventSource(`/api/stream`)     
         eventsource.addEventListener('open', ( ) => console.log( 'connection open' ) )
         eventsource.addEventListener('error', ( ) => console.log( 'event error' ) )
     } catch(error){ console.log(error) }
