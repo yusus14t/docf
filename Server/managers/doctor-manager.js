@@ -758,7 +758,7 @@ const EventHandler = (req, res) => {
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",
     "Connection": "keep-alive",
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": "*"
   });
 
   const sendResponse = (data, event) => {
@@ -768,7 +768,7 @@ const EventHandler = (req, res) => {
     res.write("\n\n");
   };
 
-  eventEmitter.on("new-appointment", (data) =>
+  eventEmitter.addListener("new-appointment", (data) =>
     sendResponse(data, "new-appointment")
   );
 
