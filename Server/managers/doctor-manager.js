@@ -775,6 +775,7 @@ const EventHandler = (req, res) => {
     sendResponse(data, "re-appointment")
   );
   eventEmitter.once("status", (data) => sendResponse(data, "status"));
+  return res;
 };
 
 module.exports = {
