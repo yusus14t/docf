@@ -757,7 +757,8 @@ const EventHandler = (req, res) => {
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",
-    "Access-Control-Allow-Origin": "*",
+    "Connection": "keep-alive",
+    "Access-Control-Allow-Origin": "*"
   });
 
   const sendResponse = (data, event) => {
@@ -767,13 +768,17 @@ const EventHandler = (req, res) => {
     res.write("\n\n");
   };
 
-  eventEmitter.once("new-appointment", (data) =>
+  eventEmitter.addListener("new-appointment", (data) =>
     sendResponse(data, "new-appointment")
   );
-  eventEmitter.once("re-appointment", (data) =>
-    sendResponse(data, "re-appointment")
-  );
-  eventEmitter.once("status", (data) => sendResponse(data, "status"));
+
+  
+
+
+  // eventEmitter.once("re-appointment", (data) =>
+  //   sendResponse(data, "re-appointment")
+  // );
+  // eventEmitter.once("status", (data) => sendResponse(data, "status"));
 };
 
 module.exports = {
