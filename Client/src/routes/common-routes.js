@@ -15,6 +15,8 @@ import Detail from "../components/webcomponents/doctor/Detail";
 import HospitalDetails from "../components/webcomponents/Hospital/HospitalDetails";
 import DepartmentDetail from "../components/webcomponents/Hospital/DepartmentDetail";
 import LogIn from "../components/authentication/LogIn";
+import SpecializationDetails from "../components/webcomponents/Specializations/SpecializationDetails";
+import { Ultrasound } from "../components/webcomponents/Ultrasound";
 
 const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
 
@@ -32,10 +34,16 @@ const COMMON_ROUTE = [
   { path: "/gynae", element: <Gynae /> },
   { path: "/hospital/:id", element: <HospitalDetails /> },
   { path: "/department-details", element: <DepartmentDetail /> },
+  { path: "/ultrasound", element: <Ultrasound /> },
+  { path: "/specialization-deatils", element: <SpecializationDetails /> },
 
   {
     path: "/login",
-    element: getUserType() ? <Navigate to={userRouteConstant[getUserType()]?.path || "/login"} /> : <LogIn />
+    element: getUserType() ? (
+      <Navigate to={userRouteConstant[getUserType()]?.path || "/login"} />
+    ) : (
+      <LogIn />
+    ),
   },
   { path: "/*", element: <h1>Not Found</h1> },
 ];

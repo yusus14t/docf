@@ -11,8 +11,10 @@ const WebLayout = () => {
   return (
     <>
       <WebHeader />
-          <Outlet />
-      <WebFooter />
+      <Outlet />
+      <div style={{position:'relative',bottom:"0"}} className="">
+        <WebFooter />
+      </div>
     </>
   );
 };

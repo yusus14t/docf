@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Avatar from '../../assets.app/img/dashboard/doctor-3.jpg'
 import logo from '../../assets.app/img/logo/logo.png'
 import WebSidebar from "./WebSidebar";
@@ -20,12 +20,12 @@ const WebHeader = () => {
     <>
       <WebSidebar isOpen={isSideBbarOpen} setIsOpen={setIsSidebarOpen} />
       <nav className="navbar ms-navbar">
-        <div className="ms-aside-toggler ms-toggler ps-0" >
+        <div className="ms-aside-toggler ms-toggler ps-0">
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>
         </div>
-        <div className="docfind-logo" >
+        <div className="docfind-logo">
           <Link className="sigma_logo" to="/">
             <img className="logo" src={logo} alt="logo" />
           </Link>
@@ -33,57 +33,98 @@ const WebHeader = () => {
 
         <div className="menu_item">
           <ul className="ms-nav-list ms-inline mb-0" id="ms-nav-options">
-
             <li className="ms-nav-item  ms-d-none">
-              <Link to="/" className="text-white" data-bs-toggle="modal">Home</Link>
+              <NavLink to="/" className="text-white " data-bs-toggle="modal">
+                Home
+              </NavLink>
             </li>
 
             <li className="ms-nav-item ms-d-none">
-              <Link to="/gynae" className="text-white" data-bs-toggle="modal">Gynae</Link>
+              <NavLink to="/gynae" className="text-white" data-bs-toggle="modal">
+                Gynae
+              </NavLink>
             </li>
 
             <li className="ms-nav-item ms-d-none">
-              <Link to="/hospitals" className="text-white" data-bs-toggle="modal"> Hospitals</Link>
+              <NavLink
+                to="/hospitals"
+                className="text-white"
+                data-bs-toggle="modal"
+              >
+                Hospitals
+              </NavLink>
             </li>
 
             <li className="ms-nav-item ms-d-none">
-              <Link to="/clinic" className="text-white" data-bs-toggle="modal">Clinics</Link>
+              <NavLink to="/clinic" className="text-white" data-bs-toggle="modal">
+                Clinics
+              </NavLink>
             </li>
 
             <li className="ms-nav-item ms-d-none">
-              <Link to="/doctors" className="text-white" data-bs-toggle="modal">Doctors</Link>
+              <NavLink to="/doctors" className="text-white" data-bs-toggle="modal">
+                Doctors
+              </NavLink>
+            </li>
+            <li className="ms-nav-item ms-d-none">
+              <NavLink to="/ultrasound" className="text-white" data-bs-toggle="modal">
+                Ultrasound
+              </NavLink>
             </li>
 
             <li className="ms-nav-item ms-d-none">
-              <Link to="/about" className="text-white" data-bs-toggle="modal">About Us</Link>
+              <NavLink to="/about" className="text-white" data-bs-toggle="modal">
+                About Us
+              </NavLink>
             </li>
             <li className="ms-nav-item ms-d-none">
-              <Link to="/contact" className="text-white" data-bs-toggle="modal">Contact</Link>
+              <NavLink to="/contact" className="text-white" data-bs-toggle="modal">
+                Contact
+              </NavLink>
             </li>
-
-
-
           </ul>
         </div>
-        {isLogin ? <div className="ms-nav-item ms-nav-user dropdown d-profile cursor-pointer">
-          <Dropdown
-            toggle={<img className="ms-user-img ms-img-round float-end avatar" src={Avatar} alt="people" />}
-          >
-            <li className="dropdown-menu-header">
-              <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Welcome, Dr Samuel Deo</span></h6>
-            </li>
-            <li className="dropdown-divider"></li>
+        {isLogin ? (
+          <div className="ms-nav-item ms-nav-user dropdown d-profile cursor-pointer">
+            <Dropdown
+              toggle={
+                <img
+                  className="ms-user-img ms-img-round float-end avatar"
+                  src={Avatar}
+                  alt="people"
+                />
+              }
+            >
+              <li className="dropdown-menu-header">
+                <h6 className="dropdown-header ms-inline m-0">
+                  <span className="text-disabled">Welcome, Dr Samuel Deo</span>
+                </h6>
+              </li>
+              <li className="dropdown-divider"></li>
 
-            {userInfo && <Item> <Link className="fs-14 p-2" to={userRoutes[userInfo.userType].path}> <span>Dashboard</span> </Link></Item>}
-            <Item onClick={() => Logout()}><span className="fs-14 p-2"><i className="flaticon-user"></i>Logout</span></Item>
-          </Dropdown>
-        </div>
-          :
-        <div className="login_button">
-          <Link to={"/login"}>Login/Signup</Link>
-        </div>
-        }
-{/* 
+              {userInfo && (
+                <Item>
+                  <Link
+                    className="fs-14 p-2"
+                    to={userRoutes[userInfo.userType].path}
+                  >
+                    <span>Dashboard</span>{" "}
+                  </Link>
+                </Item>
+              )}
+              <Item onClick={() => Logout()}>
+                <span className="fs-14 p-2">
+                  <i className="flaticon-user"></i>Logout
+                </span>
+              </Item>
+            </Dropdown>
+          </div>
+        ) : (
+          <div className="login_button">
+            <Link to={"/login"}>Login/Signup</Link>
+          </div>
+        )}
+        {/* 
           {isLogin ? <div className="ms-nav-item ms-nav-user dropdown d-profile cursor-pointer">
           <img className="ms-user-img ms-img-round float-end avatar " src={Avatar} alt="people" onClick={() => setDropdownOpen(!dropdownOpen)} />
           <ul className={`dropdown-menu dropdown-menu-end user-dropdown ${dropdownOpen ? 'show' : ''}`}>
@@ -111,7 +152,14 @@ const WebHeader = () => {
           <div className="login_button">
             <Link to={"/login"}>Login/Signup</Link>
           </div>} */}
-        <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" data-bs-toggle="slideDown" data-bs-target="#ms-nav-options" onClick={() => { setIsSidebarOpen(!isSideBbarOpen) }}>
+        <div
+          className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler"
+          data-bs-toggle="slideDown"
+          data-bs-target="#ms-nav-options"
+          onClick={() => {
+            setIsSidebarOpen(!isSideBbarOpen);
+          }}
+        >
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>

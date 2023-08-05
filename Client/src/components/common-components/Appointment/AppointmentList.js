@@ -37,7 +37,7 @@ const Patients = () => {
                                                         <th >Phone</th>
                                                         <th >Age</th>
                                                         <th >gender</th>
-                                                        <th >Address</th>
+                                                        <th >Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
