@@ -1,22 +1,22 @@
+import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import { userRoutes as userRouteConstant } from "../constants/constant";
 
-import ClinicDetail from  '../components/webcomponents/Clinic_Details';
-import Doctors from  '../components/webcomponents/doctor/Doctors';
-import Clinics from  "../components/webcomponents/Clinics";
-import Home from  "../components/webcomponents/Home.js";
-import About from "../components/webcomponents/About.js";
-import Contact from '../components/webcomponents/Contact';
-import DepartmentSignUp from '../components/authentication/DepartmentSignUp';
-import AfterSignup from '../components/process/AfterSignup';
-import Gynae from "../components/webcomponents/Gynae";
-import Hospitals from "../components/webcomponents/Hospital/Hospitals";
-import Detail from "../components/webcomponents/doctor/Detail";
-import HospitalDetails from "../components/webcomponents/Hospital/HospitalDetails";
-import DepartmentDetail from "../components/webcomponents/Hospital/DepartmentDetail";
-import LogIn from "../components/authentication/LogIn";
-import SpecializationDetails from "../components/webcomponents/Specializations/SpecializationDetails";
-import { Ultrasound } from "../components/webcomponents/Ultrasound";
+const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
+const Doctors = lazy(() => import( '../components/webcomponents/doctor/Doctors'))
+const Clinics = lazy(() => import( "../components/webcomponents/Clinics"))
+const Home = lazy(() => import( "../components/webcomponents/Home.js"))
+const About = lazy(() => import("../components/webcomponents/About.js"))
+const Contact = lazy(() => import('../components/webcomponents/Contact'))
+const DepartmentSignUp = lazy(() => import('../components/authentication/DepartmentSignUp'))
+const AfterSignup = lazy(() => import('../components/process/AfterSignup'))
+const Gynae = lazy(() => import("../components/webcomponents/Gynae"))
+const Hospitals = lazy(() => import("../components/webcomponents/Hospital/Hospitals"))
+const Detail = lazy(() => import("../components/webcomponents/doctor/Detail"))
+const HospitalDetails = lazy(() => import("../components/webcomponents/Hospital/HospitalDetails"))
+const LogIn = lazy(() => import("../components/authentication/LogIn"));
+const Ultrasound = lazy(() => import("../components/webcomponents/Ultrasound"));
+const SpecializationDetails = lazy(() => import('../components/webcomponents/Specializations/SpecializationDetails'))
 
 const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
 
@@ -33,7 +33,7 @@ const COMMON_ROUTE = [
   { path: "/after", element: <AfterSignup /> },
   { path: "/gynae", element: <Gynae /> },
   { path: "/hospital/:id", element: <HospitalDetails /> },
-  { path: "/department-details", element: <DepartmentDetail /> },
+  { path: "/department/:id", element: <ClinicDetail /> },
   { path: "/ultrasound", element: <Ultrasound /> },
   { path: "/specialization-deatils", element: <SpecializationDetails /> },
 

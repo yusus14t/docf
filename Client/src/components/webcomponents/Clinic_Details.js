@@ -4,66 +4,38 @@ import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
-import { useEvent } from "../../hooks/common-hook";
-import useToasty from "../../hooks/toasty";
+import events from "../../events";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarPlus,
-  faEnvelope,
-  faMapMarker,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCalendarPlus, faEnvelope, faMapMarker,  faPhone, } from "@fortawesome/free-solid-svg-icons";
 
 function Detail() {
   const params = useParams();
-  const event = useEvent()
-  const toasty = useToasty()
   const [clinicDetail, setClinicDetail] = useState({});
-  const [waitingList, setWaitingList] = useState({});
+  const [waitingList, setWaitingList] = useState([]);
   const [token, setToken] = useState('00')
   const [isOpen, setIsOpen] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
   useEffect(() => {
+    getWaitingList();
     getClinicDetail();
+    
+    events.addEventListener('re-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) )) 
+    events.addEventListener('new-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) ))
+    events.addEventListener('status', ( event ) => statusEventHandler( JSON.parse(event.data) )) 
+    
+
   }, []);
 
-  useEffect(() => {
-    handleEventData()
-  }, [ event ])
-
-  const handleEventData = () => {
-    if ( ['re-appointment', 'new-appointment'].includes(event?.event) ) {
-      let eventData = event?.data
-      let LIST_OBJECT = { 
-        _id: eventData?._id,
-        token: eventData?.token,
-        fullName: eventData.user.fullName,  
-        phone: eventData.user.phone,  
-        address: eventData.user.address,  
-      }
-
-      if( !waitingList.some( list => String(list._id) === String(LIST_OBJECT._id) ) ) {
-        setWaitingList([ ...waitingList, LIST_OBJECT,])
-      }
-
-    } else if( event?.event === 'status' ) {
-
-      let list = waitingList.filter( app => app._id !== event?.data?.appointmentId )
-      setWaitingList(list)
-
-      setToken(list?.length ? list[0]?.token : '00')
-
-    }
+  let newAppointmentHandler = ( event ) => {
+    getWaitingList()
   }
 
+  const statusEventHandler = ( event ) => {
+      setToken('00')
+  }
 
-  useEffect(() => {
-    if( clinicDetail?.doctors?.length){
-      getWaitingList()
-    }
-  },[ clinicDetail?.doctors ])
 
   const getClinicDetail = async () => {
     try {
@@ -88,10 +60,7 @@ function Detail() {
 
   const getWaitingList = async () => {
     try {
-      let { data } = await axiosInstance.get("/waiting-list", {
-        params: { _id: clinicDetail?.doctors[0]?._id },
-        ...getAuthHeader(),
-      });
+      let { data } = await axiosInstance.get(`/waiting-list/${params.id}`, getAuthHeader());
 
       setWaitingList(data?.appointment)
     } catch (error) {
@@ -101,7 +70,7 @@ function Detail() {
 
   const handleAppointmentModal = () => {
     if (!userInfo)
-      navigate("/patient-login", {
+      navigate("/login", {
         state: { redirectTo: window.location.pathname },
       });
     setIsOpen(true);
@@ -125,7 +94,7 @@ function Detail() {
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {(clinicDetail?.doctors &&
-                    clinicDetail?.doctors["0"]?.fullName) ||
+                    clinicDetail?.doctors["0"]?.name) ||
                     "Doctor Name"}
                 </h4>
                 <h6
@@ -147,7 +116,7 @@ function Detail() {
           </div>
         </div>
 
-        <div
+        { (userInfo?.userType === "PT" || !userInfo) && <div
           className="bookappoint cursor-pointer"
           onClick={() => handleAppointmentModal()}
         >
@@ -157,7 +126,7 @@ function Detail() {
           />
 
           <h5 className="p-2">Book Appointment</h5>
-        </div>
+        </div>}
 
         <div className="container-fluid">
           <div className="row clinic-details-row mt-5 mx-0">
@@ -168,8 +137,8 @@ function Detail() {
                 <div className="token-list-container ">
                   {waitingList?.length ? (
                     <ul className={`token-list $`}>
-                      {waitingList.map((list) => (
-                        <li className=" p-2">
+                      {waitingList.map((list, key) => (
+                        <li className=" p-2" key={key}>
                           <div className="mt-auto">
                             <div
                               className={`token-list-item d-flex flex-row justify-content-around ${ list?.token == parseInt(token) ? "token-list-active" : "" }`}
@@ -181,7 +150,7 @@ function Detail() {
                               </div>
                               <div className="token-list-detail">
                                 <h4 className="list-patient-name mb-1">
-                                  {list?.fullName}
+                                  {list?.name}
                                 </h4>
                                 <p className="mb-0 list-mobile-no">
                                   Mobile Number : +91{" "}
@@ -222,9 +191,9 @@ function Detail() {
                 </div>
               </div>
               <div className="text-center">
-                <div class="pr-2 ">
-                  <table class="table  table-bordered">
-                    <thead class="thead-light">
+                <div className="pr-2 ">
+                  <table className="table  table-bordered">
+                    <thead className="thead-light">
                       <tr>
                         <th>Session</th>
                         <th>Morning</th>
@@ -275,36 +244,36 @@ function Detail() {
           </div>
 
           {/* CONTACT CARD */}
-          <div class="contact-details-clinic">
-            <div class="sigma_info style-26 d-flex">
-              <div class="sigma_info-title">
-                <span class="sigma_info-icon clinic-address-icon-container">
+          <div className="contact-details-clinic">
+            <div className="sigma_info style-26 d-flex">
+              <div className="sigma_info-title">
+                <span className="sigma_info-icon clinic-address-icon-container">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faMapMarker}
                   />
                 </span>
               </div>
-              <div class="sigma_info-description">
+              <div className="sigma_info-description">
                 <p>Our Address</p>
-                <p class="secondary-color">
+                <p className="secondary-color">
                   <b>{clinicDetail?.detail?.address}</b>
                 </p>
               </div>
             </div>
-            <div class="sigma_info style-26 d-flex">
-              <div class="sigma_info-title d-flex">
-                <span class="sigma_info-icon clinic-address-icon-container">
+            <div className="sigma_info style-26 d-flex">
+              <div className="sigma_info-title d-flex">
+                <span className="sigma_info-icon clinic-address-icon-container">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faPhone}
                   />
-                  <i class="fal fa-phone"></i>
+                  <i className="fal fa-phone"></i>
                 </span>
               </div>
-              <div class="sigma_info-description">
+              <div className="sigma_info-description">
                 <p>Call Us</p>
-                <p class="secondary-color">
+                <p className="secondary-color">
                   <b>
                     {clinicDetail?.detail?.phone?.slice(0, 3)}-
                     {clinicDetail?.detail?.phone?.slice(4, 7)}-
@@ -313,18 +282,18 @@ function Detail() {
                 </p>
               </div>
             </div>
-            <div class="sigma_info style-26 d-flex">
-              <div class="sigma_info-title">
-                <span class="sigma_info-icon clinic-address-icon-container">
+            <div className="sigma_info style-26 d-flex">
+              <div className="sigma_info-title">
+                <span className="sigma_info-icon clinic-address-icon-container">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faEnvelope}
                   />
                 </span>
               </div>
-              <div class="sigma_info-description">
+              <div className="sigma_info-description">
                 <p>Our Mail</p>
-                <p class="secondary-color">
+                <p className="secondary-color">
                   <b>{clinicDetail?.detail?.email}</b>
                 </p>
               </div>
@@ -336,7 +305,7 @@ function Detail() {
         <Appointment
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          doctors={clinicDetail?.doctors}
+          departmentId={clinicDetail?.detail?._id}
           refresh={() => {}}
         />
       )}

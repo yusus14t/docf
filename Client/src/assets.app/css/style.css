@@ -5058,6 +5058,7 @@ a .badge[class*='badge-outline-'] {
 .ms-list-item.media img {
   width: 40px;
   margin-right: 1rem;
+  height: 40px;
 }
 
 /* Draggables */

@@ -26,7 +26,7 @@ const LogIn = () => {
   }
   const [component, setComponent] = useState(COMPONENTS['1'])
   const [details, setDetails] = useState({
-    fullName: "",
+    name: "",
     phone: "",
     age: "",
     gender: "",
@@ -180,9 +180,9 @@ const LogIn = () => {
               <label htmlFor="" className='mb-2'  >Full Name</label>
               <input 
                   type="text" 
-                  className={`form-control mb-2 ${errors?.fullName ? 'border-danger' : ''}`}
+                  className={`form-control mb-2 ${errors?.name ? 'border-danger' : ''}`}
                   placeholder='Enter Full name' 
-                  {...register('fullName', {
+                  {...register('name', {
                     required: 'name is required'
                 })}
               />       

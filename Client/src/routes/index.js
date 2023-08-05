@@ -1,5 +1,5 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import SUPER_ADMIN from "./super-admin-routes";
 import PATIENT from "./patient-routes";
 import CLINIC from "./clinic-routes";
@@ -10,8 +10,8 @@ import MR from "./mr-routes";
 import COMMON_ROUTE from "./common-routes";
 import Loader from "../layout/Loader";
 
-const WebLayout = lazy(() => import("../layout/weblayout/WebLayout"));
-const AppLayout = lazy(() => import("../layout/Index"));
+import WebLayout from  "../layout/weblayout/WebLayout";
+import AppLayout from "../layout/Index";
 
 const getUser = () => JSON.parse(localStorage.getItem("user"))
 

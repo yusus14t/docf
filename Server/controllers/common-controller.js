@@ -133,7 +133,7 @@ const getOrganization = async ( req, res ) => {
 }
 
 const waitingList = async ( req, res ) => {
-    commonManager.waitingList( req.query, req.user )
+    commonManager.waitingList( req.params, req.user )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -151,7 +151,7 @@ const getAllHospitals = async ( req, res ) => {
 }
 
 const hospitalDetails = async ( req, res ) => {
-    commonManager.hospitalDetails( req.params, req.user )
+    commonManager.hospitalDetails( req.params )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }

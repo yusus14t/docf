@@ -2,11 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import clinicPhoto2 from "../../../assets.app/img/backgrounds/hos.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPhone,
-  faEnvelope,
-  faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getFullPath } from "../../../constants/utils";
 
 const HospitalCard = ({ hospitals }) => {

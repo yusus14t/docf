@@ -30,7 +30,7 @@ const DoctorsList = () => {
 
     const handleDelete = async (doctor) => {
         try {
-            let { data } = await axiosInstance.post('/doctor/delete-doctor', { _id: doctor._id }, getAuthHeader());
+            await axiosInstance.post('/doctor/delete-doctor', { _id: doctor._id }, getAuthHeader());
             setDoctors((old) => old.filter(d => d._id !== doctor._id))
             toasty.success()
         } catch (error) { console.log(error) }
@@ -60,7 +60,7 @@ const DoctorsList = () => {
                     <div class="ms-form-group my-0 mb-0 has-icon fs-14">
                         { userInfo.userType === 'SA' && <input type="search" class="ms-form-input" name="search" placeholder="Search for doctors" onInput={(e) => { setSearchInput(e.target.value); console.log(e.target.value) }} />}
                         <i class="flaticon-search text-disabled"></i>
-                        { ['DP', 'CL'].includes(userInfo.userType) && <button className="btn btn-light shadow-none mx-2" onClick={() => setDoctorModal(true) }>+ Doctor</button>}
+                        { ['CL', 'HL'].includes(userInfo.userType) && <button className="btn btn-light shadow-none mx-2" onClick={() => setDoctorModal(true) }>+ Doctor</button>}
                     </div>
 
                 </div>
@@ -74,7 +74,7 @@ const DoctorsList = () => {
                                             <img src={getFullPath(doctor.photo)} className="ms-img-round" alt="people" />
                                         </div>
                                         <div className="media-body">
-                                            <h6>{doctor?.fullName}</h6>
+                                            <h6>{doctor?.name}</h6>
                                             <div className="float-end d-flex-colum justify-content-between">
                                                 <div className="div">
                                                     <span style={{ marginBottom: "50%" }} class="badge badge-outline-danger">{doctor.isActive ? 'Active' : 'Inactive'}</span>
@@ -102,7 +102,7 @@ const DoctorsList = () => {
                 <Modal
                     isOpen={editModal}
                     setIsOpen={setEditModal}
-                    title={` Edit ${ editData.fullName }`}
+                    title={` Edit ${ editData.name }`}
                     closeButton={false}
                     submitButton={false}
                 >
@@ -112,9 +112,9 @@ const DoctorsList = () => {
                                 <label className=''>Full Name</label>
                                 <div className="input-group">
                                     <input type="text"
-                                        className={`form-control ${errors?.fullName ? 'border-danger' : ''}`}
+                                        className={`form-control ${errors?.name ? 'border-danger' : ''}`}
                                         placeholder="Andy America"
-                                        {...register('fullName', {
+                                        {...register('name', {
                                             required: 'Full name is required'
                                         })}
                                     />

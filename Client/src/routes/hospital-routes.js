@@ -6,6 +6,8 @@ import Support from "../components/common-components/Support/Support";
 import AppointmentList from "../components/common-components/Appointment/AppointmentList";
 import Settings from "../components/common-components/Settings/Settings";
 import Departments from "../components/user-component/Hospital/Departments";
+import Doctors from "../components/user-component/Doctors";
+
 
 const HOSPITAL = [
   { path: "/hospital", element: <Navigate to={"/hospital/dashboard"} /> },
@@ -15,6 +17,7 @@ const HOSPITAL = [
   { path: "/hospital/appointment", element: <AppointmentList /> },
   { path: "/hospital/notification", element: <Notification /> },
   { path: "/hospital/support", element: <Support /> },
+  { path: "/hospital/doctors", element: <Doctors /> },
   { path: "/hospital/setting", element: <Settings /> },
   { path: "/hospital/departments", element: <Departments /> },
   { path: "/hospital/*", element: <Navigate to={"/hospital/dashboard"} /> },

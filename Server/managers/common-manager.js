@@ -161,7 +161,7 @@ const appointmentDepartments = async ( body, user ) => {
             },
             {
                 $project: {
-                    fullName: 1,
+                    name: 1,
                     clinic: { $first: '$clinic.name' },
                     specialization: '$specialization',
                     phone: 1,
@@ -180,7 +180,7 @@ const appointmentDepartments = async ( body, user ) => {
 const getPatientByNumber = async ( body, user ) => {
     try{
         if( user.userType !== 'DR') return Error({ message: 'You are not access' })
-        let patient = await UserModel.find({ phone: body.phone, userType: 'PT' },{ fullName: 1, phone: 1, gender: 1, bloodGroup: 1, address: 1 })
+        let patient = await UserModel.find({ phone: body.phone, userType: 'PT' },{ name: 1, phone: 1, gender: 1, bloodGroup: 1, address: 1 })
         return Success({ patient })
     } catch(error){ console.log(error) }
 }
@@ -224,9 +224,10 @@ const signUp = async ( body, user ) => {
         }
 
         console.log('----------> OTP ', otp)
-        let response = await smsService(`your otp is ${ otp } `, body.phone)
-
+        
+        let response = { message: 'otp Sent'}
         if( process.env.ENVIRONMENT !== 'development' ){
+            response = await smsService(`your otp is ${ otp } `, body.phone)
             if(!response?.message) return Error({ message: `Network Connection Refuse`, user })
             if( response?.status_code === 411 ) return Error({ message: `${response?.message} - ${otp}`, user })
         }
@@ -291,7 +292,7 @@ const clinicDetails = async ( body ) => {
             },
             {
                 $project: {
-                    fullName: 1,
+                    name: 1,
                     phone: 1,
                     photo: 1,
                     token: {$first: '$appointment.token'},
@@ -323,7 +324,7 @@ const waitingList = async ( body, user ) => {
        let appointment = await AppointmentModel.aggregate([
             {
                 $match: {
-                    doctorId: ObjectId(body._id),
+                    departmentId: ObjectId(body.id),
                     createdAt: {
                         $gte:  today
                     },
@@ -342,7 +343,7 @@ const waitingList = async ( body, user ) => {
             {
                 $project: {
                     token: 1,
-                    fullName: '$user.fullName',
+                    name: '$user.name',
                     phone: '$user.phone',
                     address: '$user.address'
                 }
@@ -396,9 +397,9 @@ const getAllHospitals = async ( body ) => {
 const hospitalDetails = async ( body ) => {
     try{
        let details = await OrganizationModel.findOne({ _id: body.id })
-       let departments = await OrganizationModel.find({})
-
-       return Success({ details })
+       let departments = await UserModel.find({ hospitalId: body.id }, { organizationId: 1 })
+       .populate('organizationId', 'name room specialization photo')
+       return Success({ details, departments })
     } catch(error){ console.log(error) }
 }
 

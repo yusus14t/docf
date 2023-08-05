@@ -1,6 +1,6 @@
 import React, {  useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { NumberFormat, axiosInstance, getAuthHeader, getFullPath } from '../../../constants/utils'
+import { NumberFormat, axiosInstance, getAuthHeader, getFullPath, userInfo } from '../../../constants/utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
 import ImgUpload from '../Imgupload';
@@ -24,10 +24,9 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
     if( organization?._id ){
       getDoctorsInOrganization()
       getDepartments()
-      if( source === 'modal' ){
+      if( ['modal'].includes(source) ){
         getAllSpecialization()
       } else {
-        console.log('>>>>>>>>>>', organization?.specialization)
         let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
         setSpecialization(specialization)
       }
@@ -71,7 +70,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
     try {      
 
       if(!values?._id){
-        values['organizationId'] = source === 'Hospital' ? values.department?._id : organization._id
+        values['organizationId'] = source === 'Hospital' || userInfo.userType === 'HL'? values.department?._id : organization._id
         values['tab'] = tab
       }
       
@@ -93,7 +92,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
         
         let data = response?.data
         let doctorObj = {
-          fullName: data?.doctor?.fullName,
+          name: data?.doctor?.name,
           email: data?.doctor?.email,
           phone: data?.doctor?.phone,
           qualification: data?.doctor?.qualification,
@@ -106,10 +105,11 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
         
         setDoctors([...doctors, doctorObj ])
         setModal(false)
+        refresh()
       }
 
       setEditImage(null)
-      reset({ fullName: null, email: null, qualification: null, experience: null, aboutme: null, specialization: null, address: null, phone: null })
+      reset({ name: null, email: null, qualification: null, experience: null, aboutme: null, specialization: null, address: null, phone: null })
       toasty.success(response?.data?.message)
     } catch (error) { 
       console.log(error)
@@ -146,7 +146,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
 
   return (
     <div className='row'>
-      {source !== 'modal' && doctors.map(doc => <div className="col-md-4 col-sm-6 mb-3">
+      { !['modal'].includes(source)  && doctors.map(doc => <div className="col-md-4 col-sm-6 mb-3">
         <div class="ms-card card-gradient-dark ms-infographics-widget ms-widget">
           <div class="ms-card-body">
             <div class="media fs-14" style={{ marginBottom: "0" }}>
@@ -157,7 +157,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
               <div class="media-body">
                 <div className='d-flex justify-content-between'>
                   <div>
-                    <h6>{doc.fullName}</h6>
+                    <h6>{doc.name}</h6>
                   </div>
                   <div>
                     <FontAwesomeIcon className='ms-text-ligth mx-3 cursor-pointer' icon={faPencil} onClick={() => handleEdit(doc)} />
@@ -180,9 +180,9 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
               <label >Full Name</label>
               <div className="input-group">
                 <input type="text"
-                  className={`form-control ${errors.fullName ? 'border-danger' : ''}`}
+                  className={`form-control ${errors.name ? 'border-danger' : ''}`}
                   placeholder="Enter Full Name"
-                  {...register(`fullName`, {
+                  {...register(`name`, {
                     required: 'First name is required'
                   })}
                 />
@@ -238,7 +238,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
                 />
               </div>
             </div>
-            {source === 'Hospital' &&
+            {source === 'Hospital' || userInfo.userType === 'HL' &&
               <div className="col-6 mb-3">
                 <label >Select Department</label>
                 <div className="">
@@ -271,7 +271,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
                     <Select
                       {...field}
                       isMulti={false}
-                      options={source === 'Hospital' ? specialization.filter( a => a.id === watch('department')?.specialization ) : specialization}
+                      options={source === 'Hospital' || userInfo.userType === 'HL' ? specialization.filter( a => a.id === watch('department')?.specialization ) : specialization}
                       getOptionLabel={({ name }) => name}
                       getOptionValue={({ id }) => id}
                       className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
@@ -309,7 +309,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
             </div>
             <div className="actions btn-submit mb-2">
               <button type="submit" className="btn btn-primary shadow-none mx-2" >Save</button>
-              { source !== 'modal' && <button className="btn btn-primary shadow-none mx-2" onClick={() => { handleNext() }}>Next</button>}
+              { !['modal'].includes(source) && <button className="btn btn-primary shadow-none mx-2" onClick={() => { handleNext() }}>Next</button>}
             </div>
           </div>
         </div>

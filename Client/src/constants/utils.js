@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SERVER_URL } from '../configs/env';
 
 export const getAuthHeader = () => {
     let token = JSON.parse(localStorage.getItem('token'))
@@ -7,7 +8,7 @@ export const getAuthHeader = () => {
 
 // axios instance 
 export const axiosInstance = axios.create({
-    baseURL:  `http://${window.location.hostname}:5000/api`,
+    baseURL:  `${ SERVER_URL }/api`,
     headers: {
         'Access-Control-Allow-Origin': '*',
         'auth-token': getAuthHeader()['headers']['auth-token']
@@ -43,6 +44,6 @@ export const NumberFormat = ( e ) =>  {
     return e.target.value
 }
 
-export const getFullPath = (filename) => `http://${window.location.hostname}:5000/images/${filename}`
+export const getFullPath = (filename) => `${ SERVER_URL }/images/${filename}`
 
 export const userInfo = JSON.parse(localStorage.getItem('user'))

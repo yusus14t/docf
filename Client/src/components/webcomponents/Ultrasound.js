@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import img from "../../assets.app/img/clinic-grid/348x350-2.jpg";
 import Search from '../common-components/Search';
 
-export const Ultrasound = () => {
+const Ultrasound = () => {
   return (
     <>
       <div className="box"></div>
@@ -53,3 +53,5 @@ export const Ultrasound = () => {
     </>
   );
 }
+
+export default Ultrasound;

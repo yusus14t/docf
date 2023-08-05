@@ -99,10 +99,9 @@
   height: 40px;
 }
 .login_button {
-  background-color: #ffffff78;
+  background-color: #ffff;
   padding: 10px;
   border-radius: 8px;
-  cursor: pointer;
 }
 
 .login_button a {
@@ -304,7 +303,7 @@
 
 /* LoginConatent start */
 .loginContainer {
-  height: 100vh;
+  height: 94.8vh;
   padding-top: 10rem;
 }
 .loginform {
@@ -1319,6 +1318,10 @@ input::-webkit-inner-spin-button {
   height: 50px;
   width: 50px;
 
+   }
+
+.d-contents {
+  display: contents;
 }
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 767px) {

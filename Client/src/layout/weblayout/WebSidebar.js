@@ -4,8 +4,22 @@ import Doctor from '../../assets.app/img/dashboard/doctor-3.jpg';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAnglesRight} from '@fortawesome/free-solid-svg-icons'
+import { userRoutes } from '../../constants/constant';
+import { getFullPath } from '../../constants/utils';
 
-function WebSidebar({isOpen}) {        
+function WebSidebar({isOpen}) {
+
+    const MENU_ITEM = [
+      { id: 'home', name: 'Home', path: '/' },
+      { id: 'hospitals', name: 'Hospitals', path: '/hospitals' },
+      { id: 'clinics', name: 'Clinics', path: '/clinics' },
+      { id: 'doctors', name: 'Doctors', path: '/doctors' },
+      { id: 'aboutus', name: 'About Us', path: '/about-us' },
+      { id: 'contactus', name: 'Contact Us', path: '/contact-us' },
+    ]    
+
+    const userInfo = JSON.parse(localStorage.getItem('user'))
+    
     return (
       <aside
         className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y  ${
@@ -18,90 +32,45 @@ function WebSidebar({isOpen}) {
             <div className="">
               <Link to="/" className="text-center">
                 {" "}
-                <img className="profile-image" src={Doctor} alt="logo" />
+                <img className="profile-image" src={ userInfo?.organizationId?.photo ? getFullPath(userInfo?.organizationId?.photo) : Doctor} alt="logo" />
               </Link>
               <p className="m-title">Arif Mohd</p>
             </div>
             <div className="m-footer">
-              <Link to={"/login"} className="m-login">
+              { userInfo ? 
+                <Link to={`${userRoutes[userInfo?.userType]?.path}/dashboard`} className="m-login">
+                  Dashboard
+                </Link> 
+                :
+                <Link to={"/login"} className="m-login">
                 Login/Signup
               </Link>
+              }
               {/* <Link>logout</Link> */}
             </div>
             <div className="">
               <ul className="m-menu">
-                <li className="m-menu-item">
-                  <Link to="/" className="text-white">
-                    Home{" "}
-                    <FontAwesomeIcon
-                      style={{ marginLeft: "100px" }}
-                      className="m-icon"
-                      icon={faAnglesRight}
-                    />
-                    <hr className="underline" />
-                  </Link>
-                </li>
-
-                <li className="m-menu-item">
-                  <Link to="/hospitals" className="text-white">
-                    {" "}
-                    Hospitals{" "}
-                    <FontAwesomeIcon
-                      style={{ marginLeft: "66px" }}
-                      className=" m-icon"
-                      icon={faAnglesRight}
-                    />
-                    <hr className="underline" />
-                  </Link>
-                </li>
-
-                <li className="m-menu-item">
-                  <Link to="/clinic" className="text-white">
-                    Clinics
-                    <FontAwesomeIcon
-                      style={{ marginLeft: "101px" }}
-                      className="m-icon"
-                      icon={faAnglesRight}
-                    />{" "}
-                    <hr className="underline" />
-                  </Link>
-                </li>
-
-                <li className="m-menu-item">
-                  <Link to="/doctors" className="text-white">
-                    Doctors{" "}
-                    <FontAwesomeIcon
-                      style={{ marginLeft: "78px" }}
-                      className="m-icon"
-                      icon={faAnglesRight}
-                    />{" "}
-                    <hr className="underline" />
-                  </Link>
-                </li>
-
-                <li className="m-menu-item">
-                  <Link to="/clinic" className="text-white">
-                    About Us
-                    <FontAwesomeIcon
-                      style={{ marginLeft: "70px" }}
-                      className="m-icon"
-                      icon={faAnglesRight}
-                    />
-                    <hr className="underline" />
-                  </Link>
-                </li>
-                <li className="m-menu-item">
-                  <Link to="/clinic" className="text-white">
-                    Contact
-                    <FontAwesomeIcon
-                      style={{ marginLeft: "86px" }}
-                      className="m-icon"
-                      icon={faAnglesRight}
-                    />
-                    <hr className="underline" />
-                  </Link>
-                </li>
-                
+                {
+                  MENU_ITEM.map( item => (
+                    <li className="m-menu-item">
+                      <Link to={ item.path } className="text-white" key={item.id} >
+                        <div className=' d-flex justify-content-between' >
+                            <div>
+                              { item.name } 
+                            </div>
+                            <div>
+                              <FontAwesomeIcon
+                                // style={{ marginLeft: "100px" }}
+                                className="m-icon"
+                                icon={faAnglesRight}
+                              />
+                            </div>
+                        </div>
+                        {/* <hr className="underline" /> */}
+                      </Link>
+                    </li>
+                  ))
+                }
               </ul>
             </div>
           </div>

@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 
 const HospitalDetails = () => {
   const [ hospital, setHospital] = useState({});
+  const [ departments, setDepartments] = useState([]);
   const params = useParams();
 
   useEffect(() => {
@@ -16,9 +17,9 @@ const HospitalDetails = () => {
 
   const getHospital = async () => {
     try{
-      console.log('params', params)
-      let { data } = await axiosInstance.get(`/hospital/${params.id}`)
+      let { data } = await axiosInstance.get(`/hospital-details/${params.id}`)
       setHospital(data?.details)
+      setDepartments(data?.departments)
       console.log(data)
     } catch(error) { console.error(error) }
   }
@@ -33,7 +34,7 @@ const HospitalDetails = () => {
       <div className="container-fluid">
         <div className="departments">
           {/* <DepartmentCard /> */}
-          <DepartmentCard />
+          {departments.length > 0 && <DepartmentCard departments={departments} />}
         </div>
 
         {/* contact card */}
