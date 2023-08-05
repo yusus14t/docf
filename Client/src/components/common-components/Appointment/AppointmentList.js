@@ -44,7 +44,7 @@ const Patients = () => {
                                                     {appointments?.length > 0 && appointments.map( appointment => <tr role="row" className="odd">
                                                         <td>{appointment?.token}</td>
                                                         <td>
-                                                            {appointment.user?.fullName}</td>
+                                                            {appointment.user?.name}</td>
                                                         <td>{formatPhone(appointment?.user?.phone)}</td>
                                                         <td>{appointment?.age || '-'}</td>
                                                         <td>{appointment?.user?.gender || '-'}</td>

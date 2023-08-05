@@ -44,7 +44,7 @@ const getAppointments = async (body, user) => {
           pipeline: [
             {
               $project: {
-                fullName: 1,
+                name: 1,
                 gender: 1,
                 bloodGroup: 1,
                 phone: 1,
@@ -103,7 +103,7 @@ const editDoctor = async (body, user, file) => {
       return Error({ message: "You have not permission to edit." });
 
     let userObj = {
-      fullName: body?.fullName,
+      name: body?.name,
       email: body?.email,
       phone: body?.phone,
       qualification: body?.qualification,
@@ -134,7 +134,7 @@ const getAllDoctors = async (body, user) => {
     else if (["CL", "DP"].includes(user?.userType)) {
       query["organizationId"] = user.organizationId;
 
-    } else if( user.userType === 'HL' ){
+    } else if( user?.userType === 'HL' ){
       let departmentIds = await UserModel.find(
         { hospitalId: user.organizationId, primary: true },
         { organizationId: 1 }
@@ -170,7 +170,7 @@ const getAllDoctors = async (body, user) => {
       },
       {
         $project: {
-          fullName: 1,
+          name: 1,
           clinic: { $first: "$clinic.name" },
           specialization: 1,
           phone: 1,
@@ -223,7 +223,7 @@ const addAppointment = async (body, user) => {
       : "1";
     let patient = await UserModel.findOne(
       { phone: body.phone, userType: "PT" },
-      { fullName: 1, userType: 1, phone: 1, address: 1 }
+      { name: 1, userType: 1, phone: 1, address: 1 }
     );
 
     if (!patient) {
@@ -257,7 +257,7 @@ const addAppointment = async (body, user) => {
       token,
       user: {
         _id: patient._id,
-        fullName: patient.fullName,
+        name: patient.name,
         phone: patient.phone,
         address: patient?.address,
       },
@@ -284,7 +284,7 @@ const appointmentById = async (body, user) => {
     })
       .populate(
         "userId",
-        "fullName age gender fatherName phone address bloodGroup gardianName"
+        "name age gender fatherName phone address bloodGroup gardianName"
       )
       .populate("departmentId", "name");
 
@@ -301,7 +301,7 @@ const reAppointment = async (body) => {
     let appointment = await AppointmentModel.findOneAndUpdate(
       { _id: ObjectId(body?._id) },
       { status: "waiting" }
-    ).populate("userId", "fullName address phone");
+    ).populate("userId", "name address phone");
 
     let Obj = {
       user: appointment.userId,
@@ -477,7 +477,7 @@ const createDoctor = async (body, user, image) => {
     } else {
       doctor = await UserModel({
         userType: "DR",
-        fullName: body?.fullName,
+        name: body?.name,
         email: body?.email,
         phone: body?.phone,
         qualification: body?.qualification,
@@ -506,7 +506,7 @@ const doctorsInOrganization = async (body) => {
     let doctors = await UserModel.find(
       { organizationId: body?.organizationId, primary: false },
       {
-        fullName: 1,
+        name: 1,
         email: 1,
         phone: 1,
         qualification: 1,
@@ -688,7 +688,7 @@ const patients = async (body, user) => {
       { $unwind: "$user" },
       {
         $project: {
-          fullName: "$user.fullName",
+          name: "$user.name",
           age: "$user.age",
           phone: "$user.phone",
           gender: "$user.gender",
@@ -757,28 +757,24 @@ const EventHandler = (req, res) => {
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",
-    "Connection": "keep-alive",
+    // "Connection": "keep-alive",
     "Access-Control-Allow-Origin": "*"
   });
 
   const sendResponse = (data, event) => {
-    console.log('>>>', data, event)
     res.write(`event: ${event}\n`);
     res.write(`data: ${JSON.stringify(data)}`);
     res.write("\n\n");
   };
 
-  eventEmitter.addListener("new-appointment", (data) =>
+  eventEmitter.on("new-appointment", (data) =>
     sendResponse(data, "new-appointment")
   );
 
-  
-
-
-  // eventEmitter.once("re-appointment", (data) =>
-  //   sendResponse(data, "re-appointment")
-  // );
-  // eventEmitter.once("status", (data) => sendResponse(data, "status"));
+  eventEmitter.on("re-appointment", (data) =>
+    sendResponse(data, "re-appointment")
+  );
+  eventEmitter.on("status", (data) => sendResponse(data, "status"));
 };
 
 module.exports = {

@@ -92,7 +92,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
         
         let data = response?.data
         let doctorObj = {
-          fullName: data?.doctor?.fullName,
+          name: data?.doctor?.name,
           email: data?.doctor?.email,
           phone: data?.doctor?.phone,
           qualification: data?.doctor?.qualification,
@@ -109,7 +109,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
       }
 
       setEditImage(null)
-      reset({ fullName: null, email: null, qualification: null, experience: null, aboutme: null, specialization: null, address: null, phone: null })
+      reset({ name: null, email: null, qualification: null, experience: null, aboutme: null, specialization: null, address: null, phone: null })
       toasty.success(response?.data?.message)
     } catch (error) { 
       console.log(error)
@@ -157,7 +157,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
               <div class="media-body">
                 <div className='d-flex justify-content-between'>
                   <div>
-                    <h6>{doc.fullName}</h6>
+                    <h6>{doc.name}</h6>
                   </div>
                   <div>
                     <FontAwesomeIcon className='ms-text-ligth mx-3 cursor-pointer' icon={faPencil} onClick={() => handleEdit(doc)} />
@@ -180,9 +180,9 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
               <label >Full Name</label>
               <div className="input-group">
                 <input type="text"
-                  className={`form-control ${errors.fullName ? 'border-danger' : ''}`}
+                  className={`form-control ${errors.name ? 'border-danger' : ''}`}
                   placeholder="Enter Full Name"
-                  {...register(`fullName`, {
+                  {...register(`name`, {
                     required: 'First name is required'
                   })}
                 />

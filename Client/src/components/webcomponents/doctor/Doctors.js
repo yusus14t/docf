@@ -16,7 +16,7 @@ function DoctorsList(props) {
       let { data } = await axiosInstance.get("/all-doctors");
       setDoctors(data?.doctors);
     } catch(error){ 
-      console.erroe(error)
+      console.error(error)
     }
   };
 const handle = ()=>{
@@ -56,7 +56,7 @@ const handle = ()=>{
                             </div>
 
                           <div className="dr-details">
-                            <h2 className="">{doctor?.fullName}</h2>
+                            <h2 className="">{doctor?.name}</h2>
                             <p className="mb-1 dr-spelialization">
                               {doctor?.specialization?.name || "Specialization"}
                             </p>

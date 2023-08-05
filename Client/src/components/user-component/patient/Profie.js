@@ -12,7 +12,7 @@ const Profie = () => {
         <div className="row mt-4">
           <div className=".col-xs-6 col-md-6  ">
             <h5>
-              <span>Full Name</span> : {userInfo?.fullName}
+              <span>Full Name</span> : {userInfo?.name}
             </h5>
           </div>
           <div className="col-xs-6 col-md-6 ">

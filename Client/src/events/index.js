@@ -1,14 +1,14 @@
 import { SERVER_URL } from "../configs/env"
 
-var eventsource 
+let events 
 (() => {
     try{
         console.log('Event Source file work')
-        // eventsource = new EventSource(`${ SERVER_URL }/api/stream`)     
-        eventsource = new EventSource(`/api/stream`)     
-        eventsource.addEventListener('open', ( data ) => console.log( 'connection open', data ) )
-        eventsource.addEventListener('error', ( error ) => console.log( 'event error', error ) )
+        events = new EventSource(`${ SERVER_URL }/api/stream`)     
+        // events = new EventSource(`/api/stream`)     
+        events.addEventListener('open', ( data ) => console.log( 'connection open', data ) )
+        events.addEventListener('error', ( error ) => console.log( 'event error', error ) )
     } catch(error){ console.log(error) }
 })()
 
-export default eventsource;
+export default events;

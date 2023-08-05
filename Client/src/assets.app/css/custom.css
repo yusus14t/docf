@@ -1217,6 +1217,10 @@ input::-webkit-inner-spin-button {
     margin-right: 3px;
 
    }
+
+.d-contents {
+  display: contents;
+}
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 767px) {
 

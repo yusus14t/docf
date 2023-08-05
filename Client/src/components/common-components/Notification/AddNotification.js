@@ -64,11 +64,11 @@ const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
                                         options={doctors}
                                         className={`form-control p-0 ${errors.assignedTo ? 'border-danger' : ''}`}
                                         classNamePrefix="select"
-                                        getOptionLabel={({fullName}) => fullName}
+                                        getOptionLabel={({name}) => name}
                                         getOptionValue={({_id}) => _id}
                                         formatOptionLabel={(option, meta) => 
                                             <div className='d-flex justify-content-between'>
-                                                <div><span>{option.fullName}</span></div>
+                                                <div><span>{option.name}</span></div>
                                             </div>
                                         }
                                     />

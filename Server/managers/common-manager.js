@@ -161,7 +161,7 @@ const appointmentDepartments = async ( body, user ) => {
             },
             {
                 $project: {
-                    fullName: 1,
+                    name: 1,
                     clinic: { $first: '$clinic.name' },
                     specialization: '$specialization',
                     phone: 1,
@@ -180,7 +180,7 @@ const appointmentDepartments = async ( body, user ) => {
 const getPatientByNumber = async ( body, user ) => {
     try{
         if( user.userType !== 'DR') return Error({ message: 'You are not access' })
-        let patient = await UserModel.find({ phone: body.phone, userType: 'PT' },{ fullName: 1, phone: 1, gender: 1, bloodGroup: 1, address: 1 })
+        let patient = await UserModel.find({ phone: body.phone, userType: 'PT' },{ name: 1, phone: 1, gender: 1, bloodGroup: 1, address: 1 })
         return Success({ patient })
     } catch(error){ console.log(error) }
 }
@@ -292,7 +292,7 @@ const clinicDetails = async ( body ) => {
             },
             {
                 $project: {
-                    fullName: 1,
+                    name: 1,
                     phone: 1,
                     photo: 1,
                     token: {$first: '$appointment.token'},
@@ -343,7 +343,7 @@ const waitingList = async ( body, user ) => {
             {
                 $project: {
                     token: 1,
-                    fullName: '$user.fullName',
+                    name: '$user.name',
                     phone: '$user.phone',
                     address: '$user.address'
                 }

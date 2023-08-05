@@ -24,7 +24,7 @@ const getPatientDetails = async (body) => {
 const appointments = async (body, user) => {
     try {
         let appointments = await AppointmentModel.find({ _id: user._id })
-        .populate('doctorId', 'fullName organizationId')
+        .populate('doctorId', 'name organizationId')
         .populate('dcotorId.organizaationId', 'name')
         .sort({ createdAt: -1 })
 

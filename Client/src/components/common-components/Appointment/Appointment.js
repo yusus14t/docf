@@ -83,9 +83,9 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                             <label className=''>Full Name</label>
                             <div className="input-group">
                                 <input type="text"
-                                    className={`form-control ${errors?.fullName ? 'border-danger' : ''}`}
+                                    className={`form-control ${errors?.name ? 'border-danger' : ''}`}
                                     placeholder="Enter Full Name"
-                                    {...register('fullName', {
+                                    {...register('name', {
                                         required: !selected && 'Full name is required'
                                     })}
                                 />
@@ -181,7 +181,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                                             classNamePrefix="select"
                                             formatOptionLabel={(option) =>
                                                 <div className='d-flex justify-content-between'>
-                                                    <div><span>{option.fullName}</span></div>
+                                                    <div><span>{option.name}</span></div>
                                                     <div><span style={{ fontWeight: 'bold', letterSpacing: '1.2px', color: '#000' }}>{option.clinic}</span></div>
                                                     <div></div>
                                                 </div>
@@ -201,7 +201,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                                                 <div class="media-body">
                                                     <div className='row'>
                                                         <div className='col-6'>
-                                                            <h6>{patient?.fullName}</h6>
+                                                            <h6>{patient?.name}</h6>
                                                             <p class="fs-12">XXXX-XXX-{patient?.phone?.slice(5, 10)}</p>
                                                         </div>
                                                         <div className='col-6 dflex'>
@@ -230,7 +230,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                                             <div class="media-body">
                                                 <div className='row'>
                                                     <div className='col-6'>
-                                                        <h6>{userInfo.fullName || ""}</h6>
+                                                        <h6>{userInfo.name || ""}</h6>
                                                         <p class="fs-12">{userInfo?.phone || ""}</p>
                                                         <p class="fs-12">{userInfo?.address || ""}</p>
                                                     </div>

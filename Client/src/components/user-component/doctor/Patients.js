@@ -42,7 +42,7 @@ const Patients = () => {
                           <tbody>
                             {patients?.length > 0 && patients.map( patient => <tr role="row" className="odd">
                               <td className="sorting_1">
-                                {patient.fullName}</td>
+                                {patient.name}</td>
                               <td>{formatPhone(patient?.phone)}</td>
                               <td>{patient?.age || '-'}</td>
                               <td>{patient?.gender || '-'}</td>
