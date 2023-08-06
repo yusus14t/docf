@@ -41,12 +41,35 @@ export const DAYS = [
 ]
 
 export const WEB_MENU_ITEMS = [
-         { id: "home", name: "Home", path: "/" },
-         { id: "gynae", name: "Gynae", path: "/gynae" },
-         { id: "hospitals", name: "Hospitals", path: "/hospitals" },
-         { id: "clinic", name: "Clinics", path: "/clinic" },
-         { id: "doctors", name: "Doctors", path: "/doctors" },
-         { id: "ultrasound", name: "Ultrasound", path: "/ultrasound" },
-         { id: "about", name: "About Us", path: "/about" },
-         { id: "contact", name: "Contact Us", path: "/contact" },
-       ];
+    { id: "home", name: "Home", path: "/" },
+    { id: "gynae", name: "Gynae", path: "/gynae" },
+    { id: "hospitals", name: "Hospitals", path: "/hospitals" },
+    { id: "clinic", name: "Clinics", path: "/clinic" },
+    { id: "doctors", name: "Doctors", path: "/doctors" },
+    { id: "ultrasound", name: "Ultrasound", path: "/ultrasound" },
+    { id: "about", name: "About Us", path: "/about" },
+    { id: "contact", name: "Contact Us", path: "/contact" },
+];
+
+export const SERVICES = [
+    { id: 'PARKING', name: 'Parking' },
+    { id: 'AMBULANCE', name: 'Ambulance' },
+    { id: 'WAITING', name: 'Waiting' },
+    { id: 'FOOD_FOR_PATIENT', name: 'Fooding for Patients' },
+    { id: 'ECHO', name: 'ECHO' },
+    { id: 'CARE_TAKER', name: 'Care Taker' },
+    { id: 'ENDOSCOPY', name: 'ENDOSCOPY' },
+    { id: 'NICU', name: 'NICU' },
+    { id: 'CATHLAB', name: 'CATHLAB' },
+    { id: 'OPERATION_THEATRE', name: 'Operation Theatre' },
+    { id: 'VENTILATOR', name: 'Ventilator' },
+    { id: 'ULTRASOUND', name: 'Ultrasound' },
+    { id: 'ECG', name: 'ECG Services' },
+    { id: 'PHARMACY', name: 'Pharmacy' },
+    { id: 'ROOM_FACILITY', name: 'Room Facility' },
+    { id: 'MRI', name: 'MRI' },
+    { id: 'CT_SCAN', name: 'CT Scan' },
+    { id: 'BLOOD_BANK', name: 'Blood Bank' },
+    { id: 'ICU', name: 'ICU' },
+    { id: 'OXYGEN', name: 'Oxygen' },
+]

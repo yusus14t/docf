@@ -69,6 +69,7 @@
 .profile-image {
   border-radius: 50%;
   height: 5rem;
+  width: 5rem;
   border: 3px white solid;
 }
 .nav-link-active {
@@ -1094,9 +1095,9 @@ input::-webkit-inner-spin-button {
 .gynae-slide {
   height: 500px;
 }
-.mobile {
+/* .mobile {
   display: none;
-}
+} */
 .btn-slider {
   width: 50px;
   height: 30px;

@@ -135,13 +135,13 @@ const LogIn = () => {
               </div>
               <div className="otp mt-2">
                 <label htmlFor="" className='text-disabled'>Enter the OTP</label>
-                <input className='form-control mt-2 letterSpcing' type="number" name="OTP" id="" placeholder='X X X X' ref={otpRef} />
+                <input className='form-control mt-2 letterSpcing' type="text" maxLength={10} name="OTP" id="" placeholder='X X X X' ref={otpRef} />
                 <button onClick={ValidateOTP} className='btn btn-light btn1 mt-4'>Log In</button>
               </div>
             </> :
             <>
               <label className='mb-2' htmlFor="Phone">Mobile Number</label>
-              <input id='Phone' className='form-control mb-2 letterSpcing' type="number" pattern='###-###-####' placeholder='822992255' ref={inputRef} onChange={NumberFormat} />
+              <input id='Phone' className='form-control mb-2 letterSpcing' type="text" maxLength={10} pattern='###-###-####' placeholder='822992255' ref={inputRef} onChange={NumberFormat} />
               <span>
                 <button onClick={() => userValidate(inputRef.current.value)} className='btn btn-light btn1'>Submit</button>
               </span>

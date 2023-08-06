@@ -1,5 +1,4 @@
 import React, {  useEffect, useState } from 'react';
-import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 
 import { Link } from 'react-router-dom';
