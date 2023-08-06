@@ -612,8 +612,7 @@ const createDepartment = async (body, userInfo) => {
       });
     } else {
       return Error({
-        message: "Department Already created",
-        department: returnObj,
+        message: "This phone already used. ",
       });
     }
   } catch (error) {
@@ -624,7 +623,8 @@ const createDepartment = async (body, userInfo) => {
 
 const getDepartments = async (body, user) => {
   try {
-    let organizations = await OrganizationModel.find({ organizationType: 'Clinic' })
+
+    let organizations = await UserModel.find({ hospitalId: body?.organizationId, userType: 'DP' }).populate('organizationId')
     return Success({ organizations });
   } catch (error) {
     console.log(error);

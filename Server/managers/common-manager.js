@@ -31,6 +31,8 @@ const createClinic = async ( body, userInfo ) => {
                 },
                 name: body?.name,
                 email: body?.email,
+                phone: body?.phone,
+                createdBy: userInfo?._id
             }).save()
 
             let user = await UserModel({
@@ -50,7 +52,7 @@ const createClinic = async ( body, userInfo ) => {
             
             return Success({ message: 'Successfully created', organization: returnObj })
         } else {
-            return Error({ message: 'Already created', organization: returnObj })
+            return Error({ message: 'Already created' })
         }
         
     } catch(error){ 
@@ -72,6 +74,7 @@ const createHospital = async ( body, userInfo ) => {
                 },
                 name: body?.name,
                 email: body?.email,
+                createdBy: userInfo?._id,
             }).save()
 
             let user = await UserModel({
@@ -91,15 +94,16 @@ const createHospital = async ( body, userInfo ) => {
             
             return Success({ message: 'Successfully created', organization: returnObj })
         } else {
-            await OrganizationModel.updateOne({ _id: organization.organizationId }, { 
-                registrationNo: body?.registrationNo, 
-                email: body?.email,
-                name: body?.name,
-            })
-            await UserModel.updateOne({ _id: organization._id }, { isActive: true })
+            // await OrganizationModel.updateOne({ _id: organization.organizationId }, { 
+            //     registrationNo: body?.registrationNo, 
+            //     email: body?.email,
+            //     name: body?.name,
+            // })
+            // await UserModel.updateOne({ _id: organization._id }, { isActive: true })
 
-            organization =  await UserModel.findOne({ _id: organization._id }).populate('organizationId')
-            return Error({ message: 'Already created', isActive: true, organization })
+            // organization =  await UserModel.findOne({ _id: organization._id }).populate('organizationId')
+            // return Error({ message: 'Already created', isActive: true, organization })
+            return Error({ message: 'Already created' })
         }
         
     } catch(error){ 
