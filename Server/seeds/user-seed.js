@@ -1,4 +1,8 @@
 const UserModel = require('../models/user-model');
+const AppointmentModel = require('../models/appointment-model');
+const DealModel = require('../models/deal-model');
+const OrganizationModel = require('../models/organization-model');
+
 let user = {
   data: [
     {
@@ -31,6 +35,11 @@ let user = {
   function: async () => {
     await UserModel.deleteMany({});
     await UserModel.insertMany(user.data);
+
+    await AppointmentModel.deleteMany({});
+    await OrganizationModel.deleteMany({});
+    await DealModel.deleteMany({});
+    
     console.log("Seeded Successfull.");
   },
 };
