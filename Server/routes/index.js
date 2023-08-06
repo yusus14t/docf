@@ -33,7 +33,7 @@ router.get('/all-clinics', commonController.getAllClinics);
 router.get('/clinic-detail', commonController.clinicDetails);
 router.get('/waiting-list/:id', commonController.waitingList);
 router.get("/all-doctors", doctorContoller.getAllDoctors);
-
+router.get("/get-specializations", commonController.allSpecializations);
 //hospitals
 router.get('/hospitals', commonController.getAllHospitals);
 router.get('/hospital-details/:id', commonController.hospitalDetails);

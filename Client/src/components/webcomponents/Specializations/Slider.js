@@ -9,7 +9,10 @@ import Card from "./Card";
 function Slider() {
   return (
     <>
-      <div style={{background:"#2929",marginBottom:"200px"}} className="mb-2">
+      <div
+        style={{ background: "#29", marginBottom: "200px" }}
+        className="mb-2"
+      >
         <div
           style={{ background: "tr" }}
           className="d-flex flex-row justify-content-between container mb-0  pt-3 px-4"
@@ -25,7 +28,7 @@ function Slider() {
           </div>
         </div>
         <Carousel
-          dynamicHeight={true}
+          dynamicHeight={false}
           autoPlay={true}
           showThumbs={false}
           infiniteLoop={true}
@@ -36,36 +39,28 @@ function Slider() {
           <div className="slide">
             <div className="d-flex justify-center">
               <div className="specialization-card-container container">
-                {[1, 2, 3, 4].map((x) => {
-                  return <Card />;
-                })}
+                <Card source={"slider1"} />
               </div>
             </div>
           </div>
           <div className="slide">
             <div className="d-flex justify-center">
               <div className="specialization-card-container container">
-                {[1, 2, 3, 4].map((x) => {
-                  return <Card />;
-                })}
+                <Card source={"slider2"} />
               </div>
             </div>
           </div>
           <div className="slide">
             <div className="d-flex justify-center">
               <div className="specialization-card-container container">
-                {[1, 2, 3, 4].map((x) => {
-                  return <Card />;
-                })}
+                <Card source={"slider3"} />
               </div>
             </div>
           </div>
           <div className="slide">
             <div className="d-flex justify-center">
               <div className="specialization-card-container container">
-                {[1, 2, 3, 4].map((x) => {
-                  return <Card />;
-                })}
+                <Card source={"slider4"} />
               </div>
             </div>
           </div>

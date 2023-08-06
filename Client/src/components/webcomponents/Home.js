@@ -9,14 +9,17 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Slider from "./Specializations/Slider";
 import DoctorsList from "./doctor/Doctors";
 import Testamonilas from "./Testamonilas";
-
-
+import Search from "../common-components/Search";
+import { axiosInstance } from "../../constants/utils";
+import { useEffect } from "react";
 
 function Home() {
+  
   return (
+
     <>
       <div className="box"></div>
-
+      <Search/>
       {/* hero section */}
       <div
         className=" hero-container"
@@ -62,20 +65,13 @@ function Home() {
 
       {/* <Clinics style={{ margin: "0" }} /> */}
       <div className="container">
-        <h3 className="text-center underline">
-          <span className="under">Doctors</span>
-        </h3>
         <div className="row">
-          <DoctorsList />
+          <DoctorsList source={"homepage"} />
         </div>
-        <h3 className="text-center underline">
-          <span className="under">Clinics</span>
-        </h3>
-        <Clinics />
-        <h3 className="text-center underline">
-          <span className="under">Hospitals</span>
-        </h3>
-        <Hospitals />
+
+        <Clinics source={"homepage"} />
+
+        <Hospitals source={"homepage"} />
       </div>
 
       {/* advantages or featurs */}
@@ -83,24 +79,12 @@ function Home() {
         <h3 className="text-center underline">
           <span className="under">Why Choose Us</span>
         </h3>
-        <div className="row">
+        <div className="row mt-2">
           <div className="col-sm-6">
-            <div
-              className="col-5 advantages"
-              style={{ borderBottomRightRadius: "300px" }}
-            ></div>
-            <div
-              className="col-5 advantages"
-              style={{ borderTopRightRadius: "300px" }}
-            ></div>
-            <div
-              className="col-5 advantages"
-              style={{ borderBottomRightRadius: "300px" }}
-            ></div>
-            <div
-              className="col-5 advantages"
-              style={{ borderTopRightRadius: "300px" }}
-            ></div>
+            <div className="col-5 advantages"></div>
+            <div className="col-5 advantages"></div>
+            <div className="col-5 advantages"></div>
+            <div className="col-5 advantages"></div>
           </div>
           <div className="col-sm-6 advantages-side-img">
             <img
