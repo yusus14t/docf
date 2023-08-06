@@ -624,14 +624,25 @@ const createDepartment = async (body, userInfo) => {
 
 const getDepartments = async (body, user) => {
   try {
+    let organizations = await OrganizationModel.find({ organizationType: 'Clinic' })
+    return Success({ organizations });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+const getClinics = async (body, user) => {
+  try {
     let query = { hospitalId: body?.organizationId };
 
     if (user?.userType === "HL") {
       query = { hospitalId: user?.organizationId, userType: "DP" };
-    } else if (!["MR"].includes(user?.userType))
+    } else if( user.userType === 'SA' ){
+      query = { userType: body?.source ? 'CL' : 'DP' }
+    } else if (!["MR"].includes(user?.userType)){
       query = { organizationId: body?.organizationId };
-    if (!query?.hospitalId && !query?.organizationId)
-      return Success({ departments: [] });
+    } 
 
     let departments = await UserModel.find(query)
       .populate("organizationId", "photo name room specialization")
@@ -797,5 +808,6 @@ module.exports = {
   patients,
   hospitalSpecialization,
   addSpecialization,
+  getClinics,
   EventHandler,
 };

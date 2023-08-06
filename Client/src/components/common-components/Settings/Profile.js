@@ -4,7 +4,7 @@ import ImgUpload from '../Imgupload';
 import  useToasty  from '../../../hooks/toasty';
 import { useState } from 'react';
 
-const Profile = () => {
+const Profile = ({ source, setIsOpen }) => {
     const { register, handleSubmit, formState: { errors } } = useForm({ onchange: true })
     const [ selectedFile, setSelectedFile ] = useState({})
     const toasty =  useToasty()
@@ -16,20 +16,29 @@ const Profile = () => {
         formData.append('image', selectedFile )
 
         let header = getAuthHeader()
-        header.headers['Content-Type'] = 'multipart/form-data'            
-        let { data } = await axiosInstance.post('/hospital/edit-profile', formData, header)
-        console.log(data)
+        header.headers['Content-Type'] = 'multipart/form-data'  
+        
+        let response = null
+        if( source === 'addMR' ){
+            response = await axiosInstance.post('/super-admin/mr', formData, header) 
+        } else {
+            response = await axiosInstance.post('/hospital/edit-profile', formData, header)
+            console.log(response)
 
-        toasty.success(data?.message)
+        }
+
+
+        toasty.success(response?.data?.message)
+        setIsOpen(false)
     }
     return(
-        <div className="ms-panel-body content-height">
+        <div className={`ms-panel-body ${ source === 'addMR' ? 'p-0' : 'content-height' }`}>
             <div className="content ">
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-12 ">< ImgUpload source={'clinic'} file={(image) => { setSelectedFile(image) }} /></div>
                 </div>
                 <form onSubmit={handleSubmit(submit)} >
-                    <div className="row mt-3">
+                    <div className="row my-3 ">
                         <div className="col-md-6 mb-3">
                             <label className=''>Name</label>
                             <div className="input-group">
@@ -45,10 +54,11 @@ const Profile = () => {
                         <div className="col-md-6 mb-3">
                             <label className=''>Phone Number</label>
                             <div className="input-group">
-                                <input type="Number"
+                                <input type="text"
                                     className={`form-control ${errors?.phone ? 'border-danger' : ''}`}
                                     placeholder="Enter Phone Number"
                                     onInput={(e) => NumberFormat(e)}
+                                    maxLength={10}
                                     {...register('phone', {
                                         required: 'Phone number is required'
                                     })}
@@ -67,7 +77,7 @@ const Profile = () => {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-6 mb-3">
+                        { source !== 'addMR' && <div className="col-md-6 mb-3">
                             <label >Consultant Fee</label>
                             <div className="input-group">
                                 <input 
@@ -79,7 +89,33 @@ const Profile = () => {
                                     placeholder="Ex: 200"
                                 />
                             </div>
-                        </div>
+                        </div>}
+                        {source === 'addMR' &&
+                            <>
+                                <div className="col-md-6 mb-3">
+                                    <label >Age</label>
+                                    <div className="input-group">
+                                        <input
+                                            {...register('age', {
+                                                required: 'Age is required'
+                                            })}
+                                            type="number"
+                                            className={`form-control ${errors.age ? 'border-danger' : ''}`}
+                                            placeholder="Enter Age"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className='col-md-6 mb-3'>
+                                    <label >Gender</label>
+                                    <select style={{ padding: '.475rem .75rem' }} className={`form-control mb-2 col-2 w-100  ${errors?.gender ? 'border-danger' : ''}`} {...register('gender', { required: 'Gender is required' })}>
+                                        <option value='male'>Male</option>
+                                        <option value='female'>Female</option>
+                                        <option value='other'>Other</option>
+                                    </select>
+                                </div>
+                            </>
+                        }
                         <div className="col-md-6 mb-3">
                             <label className=''>Address</label>
                             <div className="input-group">
@@ -93,6 +129,7 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
+                    { source === 'addMR' && <button className='btn btn-light btn-md mx-2' onClick={() => setIsOpen(false) }>Cancel</button>}
                     <button className='btn btn-primary btn-md' type='submit'>Save</button>
                 </form>
             </div>

@@ -13,7 +13,7 @@ const HOSPITAL = [
   { path: "/hospital", element: <Navigate to={"/hospital/dashboard"} /> },
   { path: "/hospital/dashboard", element: <Dashbaord /> },
   { path: "/hospital/profile", element: <h1>Profile</h1> },
-  { path: "/hospital/patient", element: <Patients /> },
+  { path: "/hospital/patients", element: <Patients /> },
   { path: "/hospital/appointment", element: <AppointmentList /> },
   { path: "/hospital/notification", element: <Notification /> },
   { path: "/hospital/support", element: <Support /> },
