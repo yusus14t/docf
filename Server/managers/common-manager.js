@@ -41,7 +41,11 @@ const createClinic = async ( body, userInfo ) => {
                 primary: true,
                 isActive: true,
                 userType: body?.source === 'Hospital' ? "DP" : "CL",
-                createdBy: userInfo?._id
+                createdBy: userInfo?._id,
+                twoFactor: {
+                    isVerified: true,
+                    otp: 0
+                }
             }).save()
 
             let returnObj = {
@@ -83,7 +87,11 @@ const createHospital = async ( body, userInfo ) => {
                 primary: true,
                 userType: "HL",
                 isActive: true,
-                createdBy: userInfo?._id
+                createdBy: userInfo?._id,
+                ...( body.isLogin ? {twoFactor: {
+                    isVerified: true,
+                    otp: 0
+                }} : {})
             }).save()
 
             let returnObj = {
@@ -93,16 +101,17 @@ const createHospital = async ( body, userInfo ) => {
             }
             
             return Success({ message: 'Successfully created', organization: returnObj })
-        } else {
-            // await OrganizationModel.updateOne({ _id: organization.organizationId }, { 
-            //     registrationNo: body?.registrationNo, 
-            //     email: body?.email,
-            //     name: body?.name,
-            // })
-            // await UserModel.updateOne({ _id: organization._id }, { isActive: true })
+        } else if( body.isLogin ) {
+            await OrganizationModel.updateOne({ _id: organization.organizationId }, { 
+                registrationNo: body?.registrationNo, 
+                email: body?.email,
+                name: body?.name,
+            })
+            await UserModel.updateOne({ _id: organization._id }, { isActive: true })
 
-            // organization =  await UserModel.findOne({ _id: organization._id }).populate('organizationId')
-            // return Error({ message: 'Already created', isActive: true, organization })
+            organization =  await UserModel.findOne({ _id: organization._id }).populate('organizationId')
+            return Error({ message: 'Already created', isActive: true, organization })
+        } else {
             return Error({ message: 'Already created' })
         }
         
@@ -260,7 +269,7 @@ const allSpecializations = async ( body ) => {
 
 const getAllClinics = async ( body ) => {
     try{
-       let clinics = await OrganizationModel.find({ organizationType: 'CL',  })
+       let clinics = await OrganizationModel.find({ organizationType: 'Clinic'  })
        return Success({ clinics })
     } catch(error){ console.log(error) }
 }

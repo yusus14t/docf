@@ -624,7 +624,7 @@ const createDepartment = async (body, userInfo) => {
 const getDepartments = async (body, user) => {
   try {
 
-    let organizations = await UserModel.find({ hospitalId: body?.organizationId, userType: 'DP' }).populate('organizationId')
+    let organizations = await UserModel.find({ hospitalId: user.userType === 'HL' ? user.organizationId :  body?.organizationId, userType: 'DP' }).populate('organizationId')
     return Success({ organizations });
   } catch (error) {
     console.log(error);

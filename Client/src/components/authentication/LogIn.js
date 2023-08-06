@@ -96,6 +96,7 @@ const LogIn = () => {
     try {
       formdata['phone'] = user.phone
       if( ['hospital', 'clinic'].includes(formdata.source)  ){
+        formdata.isLogin = true
         let { data } = await axiosInstance.post('common/create-hospital', formdata, getAuthHeader())
         if( data?.isActive ){
           localStorage.setItem('user', JSON.stringify(data?.organization))

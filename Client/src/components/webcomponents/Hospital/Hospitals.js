@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import HospitalCard from './HospitalCard';
-import { axiosInstance, getAuthHeader } from '../../../constants/utils'
+import { axiosInstance } from '../../../constants/utils'
 
 import { Link } from "react-router-dom";
 import clinicPhoto2 from "../../../assets.app/img/backgrounds/hos.jpg";
