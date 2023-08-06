@@ -6,15 +6,19 @@ import filter from '../../assets.app/img/icons/filter.png'
 const Search = () => {
   return (
     <>
-      <div className="seacrh-bar-container container">
+      <div className="box"></div>
+      <div
+        style={{ position: "fixed", zIndex: "999" }}
+        className="seacrh-bar-container w-100 "
+      >
         <ul className="d-flex flex-row justify-content-center seacrh-ul  p-2">
           <li>
             <label htmlFor="">
               <img
-                style={{ width: "20px", height: "20px" }}
+                style={{ width: "30px", height: "40px", marginRight: "10px" }}
                 src={filter}
                 alt=""
-              />{" "}
+              />
             </label>
           </li>
           <li>
@@ -33,7 +37,7 @@ const Search = () => {
                 placeholder="Doctors, Clinics and Hospitals etc"
                 type="text"
               />
-              <FontAwesomeIcon icon={faSearch} />
+              <FontAwesomeIcon className="search-ico" icon={faSearch} />
             </div>
           </li>
         </ul>

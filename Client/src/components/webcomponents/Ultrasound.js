@@ -9,7 +9,6 @@ const Ultrasound = () => {
       <div className="box"></div>
       <div className=" banner text-center text-dark">
         <h3 className="title pt-3">Ultrasound</h3>
-        <Search />
       </div>
       <div className="container">
         <div className="row">

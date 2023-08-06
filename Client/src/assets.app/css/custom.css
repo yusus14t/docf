@@ -440,6 +440,9 @@
 }
 .seacrh-bar-container {
   height: 60px;
+  background: #ffffff;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 }
 .dsearch-doctor {
   width: 600px;
@@ -1368,7 +1371,17 @@ input::-webkit-inner-spin-button {
   display: contents;
 }
 /*==================*************************media queries*******************==========================*/
+
 @media (max-width: 767px) {
+  .seacrh-bar-container{
+    z-index: 99;
+  }
+  .search-bar{
+    width: 200px;
+  }
+  .search-ico{
+    padding-right: 5px;
+  }
   /* patient */
   .pdash {
     flex-direction: column;
@@ -1404,6 +1417,9 @@ input::-webkit-inner-spin-button {
     padding-top: 4px;
     font-size: 14px;
   }
+  .d-search{
+    width: 100%;
+  }
   /*loginforn*/
   .loginContainer {
     display: flex;
@@ -1414,7 +1430,10 @@ input::-webkit-inner-spin-button {
   .loginform {
     margin-top: 0;
     width: 70%;
-    margin-left: 0;
+    margin-left: 15%;
+  }
+  .loginContainer form{
+    width: 100%;
   }
   /* --------gynae-----------*/
   .hero-banner {
@@ -1538,6 +1557,7 @@ input::-webkit-inner-spin-button {
   }
   .dr-spelialization {
     font-size: 15px !important;
+    width: 150px;
     padding: 2px;
     border-radius: 3px;
   }
