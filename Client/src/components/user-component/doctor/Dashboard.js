@@ -4,8 +4,8 @@ import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 import Appointment from '../../common-components/Appointment/Appointment';
 import UserModal from '../../common-components/UserModal';
 import { DoughnutChart, LineChart } from '../../common-components/Chart';
-import { useEvent } from '../../../hooks/common-hook';
 import useToasty from '../../../hooks/toasty';
+import events from '../../../events';
 
 const Dashbaord = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +19,6 @@ const Dashbaord = () => {
     const [ genderData, setGenderData ] = useState([])
     const [ doghnutData, setDoghnutData ] = useState({ gender: [], status: [] })
 
-    const event = useEvent();
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const toasty = useToasty();
 
@@ -28,20 +27,19 @@ const Dashbaord = () => {
         getAppointments('waiting')
         getAppointments('unreached')
         getGenderData()
+
+        events.addEventListener('new-appointment', ( event ) => eventHandler( event ))
     },[])
 
     useEffect(() => {
         analytics()
     }, [appointments])
 
-    useEffect(() => {
-        if( ['new-appointment'].includes(event?.event) ){
-            if (userInfo._id === event?.data?.doctorId) {
-                setAppointments([...appointments, event.data])
-                toasty.success('New Appointment Added')
-            }
-        }
-    }, [event])
+    const eventHandler = ( event ) => {
+        toasty.success('New Appointment Added')
+        getAppointments('waiting')
+    }
+
 
     const analytics = async () => {
         try{
@@ -243,7 +241,7 @@ const Dashbaord = () => {
                                     appointments.map((appointment, i) => <li class="ms-list-item media">
                                         <img src={image} class="ms-img-small ms-img-round" alt="people" />
                                         <div class="media-body mt-1 cursor-pointer" onClick={() => { setAppointmentData(appointment); setIsUserModalOpen(true); }}>
-                                            <h4>{appointment?.user.fullName || ""}</h4>
+                                            <h4>{appointment?.user.name || ""}</h4>
                                             <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5, 10)}</span>
                                         </div>
                                         <button type="button" class="ms-btn-icon btn-success" name="button">{appointment?.token} </button>
@@ -266,7 +264,7 @@ const Dashbaord = () => {
                                     unreachedData.map((appointment, i) => <li class="ms-list-item media">
                                         <img src={image} class="ms-img-small ms-img-round" alt="people" />
                                         <div class="media-body mt-1 cursor-pointer" onClick={() => { setAppointmentData(appointment); setIsUserModalOpen(true); }}>
-                                            <h4>{appointment?.user.fullName || ""}</h4>
+                                            <h4>{appointment?.user.name || ""}</h4>
                                             <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5, 10)}</span>
                                         </div>
                                         <button type="button" class="ms-btn-icon btn-success" name="button">{appointment?.token} </button>

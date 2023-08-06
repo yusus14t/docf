@@ -20,12 +20,12 @@ const WebHeader = () => {
     <>
       <WebSidebar isOpen={isSideBbarOpen} setIsOpen={setIsSidebarOpen} />
       <nav className="navbar ms-navbar">
-        <div className="ms-aside-toggler ms-toggler ps-0" >
+        <div className="ms-aside-toggler ms-toggler ps-0">
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>
         </div>
-        <div className="docfind-logo" >
+        <div className="docfind-logo">
           <Link className="sigma_logo" to="/">
             <img className="logo" src={logo} alt="logo" />
           </Link>
@@ -42,19 +42,28 @@ const WebHeader = () => {
             } 
           </ul>
         </div>
-        {isLogin ? <div className="ms-nav-item ms-nav-user dropdown d-profile cursor-pointer">
-          <Dropdown
-            toggle={<img className="ms-user-img ms-img-round float-end avatar" src={Avatar} alt="people" />}
-          >
-            <li className="dropdown-menu-header">
-              <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Welcome, Dr Samuel Deo</span></h6>
-            </li>
-            <li className="dropdown-divider"></li>
+        {isLogin ? (
+          <div className="ms-nav-item ms-nav-user dropdown d-profile cursor-pointer">
+            <Dropdown
+              toggle={
+                <img
+                  className="ms-user-img ms-img-round float-end avatar"
+                  src={Avatar}
+                  alt="people"
+                />
+              }
+            >
+              <li className="dropdown-menu-header">
+                <h6 className="dropdown-header ms-inline m-0">
+                  <span className="text-disabled">Welcome, Dr Samuel Deo</span>
+                </h6>
+              </li>
+              <li className="dropdown-divider"></li>
 
             {userInfo && <Item> <Link className="fs-14 p-2" to={userRoutes[userInfo.userType].path}> <span>Dashboard</span> </Link></Item>}
             <Item onClick={() => Logout()}><span className="fs-14 p-2"><i className="flaticon-user"></i>Logout</span></Item>
           </Dropdown>
-        </div>
+        </div>)
           :
          <Link to={"/login"} className="login_button">Login/Signup</Link>
         }

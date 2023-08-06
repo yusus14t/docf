@@ -77,7 +77,11 @@ const Gynae = () => {
         </div>
         {/*------services-------  */}
         <div className="gynae-services ">
-          <h2 className="text-center">Health care services</h2>
+          <div className="container">
+            <h3 className="text-center underline">
+              <span className="under">Health Care Services</span>
+            </h3>
+          </div>
           <div className="gynae-services-cards-container ">
             {card.map((x) => {
               return (
@@ -119,7 +123,11 @@ const Gynae = () => {
 
         <div className="partner row">
           <div className="row m-auto">
-            <h2 className="text-center">Hospitals</h2>
+            <div className="container">
+              <h3 className="text-center underline">
+                <span className="under">Hospitals</span>
+              </h3>
+            </div>
             {[1, 2, 3].map((Hospital) => {
               return (
                 <div
@@ -194,7 +202,11 @@ const Gynae = () => {
             <div className="col-sm-5"></div>
           </div>
           <div className="row m-auto">
-            <h2 className="text-center">Clinics</h2>
+            <div className="container">
+              <h3 className="text-center underline">
+                <span className="under">Clinics</span>
+              </h3>
+            </div>
 
             {clinics.length > 0 &&
               clinics

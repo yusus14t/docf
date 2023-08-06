@@ -71,7 +71,7 @@ const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
                 <div className="user-details m-auto d-flex flex-column">
                   <h6 className="font-weight-bold">
                     <span className="m-0 text-dark">Name : </span>
-                    { appointment?.userId?.fullName || ""}
+                    { appointment?.userId?.name || ""}
                   </h6>
 
                   <h6 className="font-weight-bold">

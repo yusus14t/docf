@@ -11,13 +11,14 @@ export const userRoutes = {
 
 export const MODULES = [
     {id: 'dashboard', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR']},
-    {id: 'patient', title: 'patient', pathname: '/patient', access: ['CL', 'DP', 'HL', 'SA', 'MA' ]},
+    {id: 'patient', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA', 'MA' ]},
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['CL', 'DP', 'HL', 'PT',]},
     {id: 'departments', title: 'Departments', pathname: '/departments', access: ['HL', 'SA']},
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MR']},
     {id: 'hospital-registration', title: 'Hospital Registration', pathname: '/hospital-registration', access: [ 'MR']},
     {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['SA', 'MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'HL', 'CL', 'DP']},
+    {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'MA']},
     {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'PT']},
     {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
     {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
@@ -40,11 +41,35 @@ export const DAYS = [
 ]
 
 export const WEB_MENU_ITEMS = [
-    {id: 'home', name: 'Home', path: '/'},
-    {id: 'gynae', name: 'Gynae', path: '/gynae'},
-    {id: 'hospitals', name: 'Hospitals', path: '/hospitals'},
-    {id: 'clinic', name: 'Clinics', path: '/clinic'},
-    {id: 'doctors', name: 'Doctors', path: '/doctors'},
-    {id: 'about', name: 'About Us', path: '/about'},
-    {id: 'contact', name: 'Contact Us', path: '/contact'},
+    { id: "home", name: "Home", path: "/" },
+    { id: "gynae", name: "Gynae", path: "/gynae" },
+    { id: "hospitals", name: "Hospitals", path: "/hospitals" },
+    { id: "clinic", name: "Clinics", path: "/clinic" },
+    { id: "doctors", name: "Doctors", path: "/doctors" },
+    { id: "ultrasound", name: "Ultrasound", path: "/ultrasound" },
+    { id: "about", name: "About Us", path: "/about" },
+    { id: "contact", name: "Contact Us", path: "/contact" },
+];
+
+export const SERVICES = [
+    { id: 'PARKING', name: 'Parking' },
+    { id: 'AMBULANCE', name: 'Ambulance' },
+    { id: 'WAITING', name: 'Waiting' },
+    { id: 'FOOD_FOR_PATIENT', name: 'Fooding for Patients' },
+    { id: 'ECHO', name: 'ECHO' },
+    { id: 'CARE_TAKER', name: 'Care Taker' },
+    { id: 'ENDOSCOPY', name: 'ENDOSCOPY' },
+    { id: 'NICU', name: 'NICU' },
+    { id: 'CATHLAB', name: 'CATHLAB' },
+    { id: 'OPERATION_THEATRE', name: 'Operation Theatre' },
+    { id: 'VENTILATOR', name: 'Ventilator' },
+    { id: 'ULTRASOUND', name: 'Ultrasound' },
+    { id: 'ECG', name: 'ECG Services' },
+    { id: 'PHARMACY', name: 'Pharmacy' },
+    { id: 'ROOM_FACILITY', name: 'Room Facility' },
+    { id: 'MRI', name: 'MRI' },
+    { id: 'CT_SCAN', name: 'CT Scan' },
+    { id: 'BLOOD_BANK', name: 'Blood Bank' },
+    { id: 'ICU', name: 'ICU' },
+    { id: 'OXYGEN', name: 'Oxygen' },
 ]

@@ -4,7 +4,7 @@ import ClinicRegistartion2 from '../common-components/registration/ClinicRegistr
 import DealRegistration from '../common-components/registration/DealRegistration';
 import DepartmentRegistration from '../common-components/registration/DepartmentRegistration';
 import useToasty from '../../hooks/toasty';
-import { NumberFormat, axiosInstance, getAuthHeader } from '../../constants/utils';
+import { NumberFormat, axiosInstance, getAuthHeader, userInfo } from '../../constants/utils';
 import { useForm } from 'react-hook-form';
 
 const HospitalRegistartion = () => {
@@ -16,57 +16,72 @@ const HospitalRegistartion = () => {
   const toasty = useToasty()
 
   useEffect(() => {
-    if( RID )  getOrganization()
+    if (RID) getOrganization()
   }, [])
 
   const getOrganization = async () => {
-    try{
-        let { data } = await axiosInstance.get('/common/organization', { params: { RID }, ...getAuthHeader()})
+    try {
+      let { data } = await axiosInstance.get('/common/organization', { params: { RID }, ...getAuthHeader() })
 
-        setOrganization(data?.organization)
-        let tabData = data?.organization?.tab 
+      setOrganization(data?.organization)
+      let tabData = data?.organization?.tab
 
-        if( data?.organization?.organizationType !== 'Hospital' ) return
+      if (data?.organization?.organizationType !== 'Hospital') return
 
-        if( tabData?.step === 'STEP1' && tabData?.isComplete ) setTab('STEP2')
-        else if( tabData?.step === 'STEP2' && tabData?.isComplete ) setTab('STEP3')
-        else setTab(tabData?.step || 'FINAL')
+      if (tabData?.step === 'STEP1' && tabData?.isComplete) setTab('STEP2')
+      else if (tabData?.step === 'STEP2' && tabData?.isComplete) setTab('STEP3')
+      else setTab(tabData?.step || 'FINAL')
 
-    } catch(error) { 
-        console.error(error)
-        toasty.error(error?.message)
+    } catch (error) {
+      console.error(error)
+      toasty.error(error?.message)
     }
   }
 
 
   const submit = async (formData) => {
     try {
-        formData['tab'] = tab
+      formData['tab'] = tab
 
-        let {data}  = await axiosInstance.post('/common/create-hospital', formData )
+      let { data } = await axiosInstance.post('/common/create-hospital', formData)
+      if (data?.organization) {
         reset({})
         setTab('STEP2')
         localStorage.setItem('RID', JSON.stringify(data?.organization?._id))
         toasty.success(data?.message)
-    } catch (error) { 
-        toasty.error(error?.message)
-        console.log(error)
+      } else {
+        toasty.error(data.message)
+      }
+    } catch (error) {
+      toasty.error(error?.message)
+      console.log(error)
     }
-}
+  }
+
+  const exit = () => {
+    localStorage.removeItem('RID')
+    setTab('STEP1')
+  }
+
 
   return (
     <div>
       <div className="ms-panel-body">
-        <div className="ms-form-wizard style1-wizard wizard form-content"  role="application">
+        <div className="ms-form-wizard style1-wizard wizard form-content" role="application">
           <div className="steps  " >
             <ul role="tablist" >
-              <li style={{marginTop:"15px"}} role="tab" className={`${tab === "STEP1" ? "current" : "disabled"} cursor-pointer`} aria-disabled="false" aria-selected="False"><span className="current-info audible tabName ">Registration </span></li>
-              <li style={{marginTop:"15px"}} role="tab" className={`${tab === "STEP2" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"> <span className='tabName'>Details</span> </li>
-              <li style={{marginTop:"15px"}} role="tab" className={`${tab === "STEP3" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Deartments</span></li>
-              <li style={{marginTop:"15px"}} role="tab" className={`${tab === "STEP4" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Doctors</span></li>
-              <li style={{marginTop:"15px"}} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Final</span></li>
+              <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "STEP1" ? "current" : "disabled"} cursor-pointer`} aria-disabled="false" aria-selected="False"><span className="current-info audible tabName ">Registration </span></li>
+              <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "STEP2" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"> <span className='tabName'>Details</span> </li>
+              <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "STEP3" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Deartments</span></li>
+              <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "STEP4" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Doctors</span></li>
+              <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Final</span></li>
             </ul>
           </div>
+          { tab !== 'STEP1' && <div className='d-flex justify-content-end mb-2'>
+            <div>
+              <button className='btn btn-primary btn-md shadow-none' onClick={() => exit()}>Exit</button>
+            </div>
+          </div>}
           <div className="content ">
             <h3 id="default-wizard-h-0" tabIndex={-1} className="title current">Registration</h3>
             {tab === "STEP1" && <>
@@ -103,7 +118,9 @@ const HospitalRegistartion = () => {
                     <div className="col-md-6 mb-3">
                       <label className=''>Phone Number</label>
                       <div className="input-group">
-                        <input type="Number"
+                        <input type="text"
+                          maxLength={10}
+                          name='phone number'
                           className={`form-control ${errors?.phone ? 'border-danger' : ''}`}
                           placeholder="Enter Phone Number"
                           onInput={(e) => NumberFormat(e)}
@@ -127,12 +144,12 @@ const HospitalRegistartion = () => {
                     </div>
                   </div>
                 </div>
-                <button className='btn btn-primary btn-md' type='submit'>Save</button>
+                <button className='btn btn-primary btn-md shadow-none' type='submit'>Save</button>
               </form>
             </>}
-            {tab === "STEP2" &&  <ClinicRegistartion2 source={'Hospital'} tab={tab} setTab={setTab} /> }
+            {tab === "STEP2" && <ClinicRegistartion2 source={'Hospital'} tab={tab} setTab={setTab} />}
             {tab === "STEP3" && <DepartmentRegistration source={'Hospital'} tab={tab} setTab={setTab} />}
-            {tab === "STEP4" &&  <DoctorRegistration source={'Hospital'} tab={tab} setTab={setTab} organization={organization} /> }
+            {tab === "STEP4" && <DoctorRegistration source={'Hospital'} tab={tab} setTab={setTab} organization={organization} />}
             {tab === "FINAL" && <DealRegistration source={'Hospital'} tab={tab} setTab={setTab} />}
           </div>
         </div>

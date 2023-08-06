@@ -4,8 +4,8 @@ import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 import Appointment from '../../common-components/Appointment/Appointment';
 import UserModal from '../../common-components/UserModal';
 import { DoughnutChart, LineChart } from '../../common-components/Chart';
-import { useEvent } from '../../../hooks/common-hook';
 import useToasty from '../../../hooks/toasty';
+import events from '../../../events';
 
 const Dashbaord = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +17,6 @@ const Dashbaord = () => {
     const [chartData, setChartData] = useState({})
     const [analyticsData, setAnalyticsData] = useState({})
     const [ doghnutData, setDoghnutData ] = useState({ gender: [], status: [] })
-    const event = useEvent();
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const toasty = useToasty();
 
@@ -26,20 +25,20 @@ const Dashbaord = () => {
         getAppointments('waiting')
         getAppointments('unreached')
         getGenderData()
+        
+        
+        events.addEventListener('new-appointment', ( event ) => eventHandler( event ))
+        return(() => events.removeEventListener('new-appointment', () => {}))
     },[])
 
     useEffect(() => {
         analytics()
     }, [appointments])
 
-    useEffect(() => {
-        if( ['new-appointment'].includes(event?.event) ){
-            if (userInfo._id === event?.data?.doctorId) {
-                setAppointments([...appointments, event.data])
-                toasty.success('New Appointment Added')
-            }
-        }
-    }, [event])
+    const eventHandler = ( event ) => {
+        getAppointments('waiting')
+    }
+
 
     const analytics = async () => {
         try{
@@ -242,7 +241,7 @@ const Dashbaord = () => {
                                         <img src={image} class="ms-img-small ms-img-round" alt="people" />
                                         <div class="row media-body mt-1 cursor-pointer" onClick={() => { setAppointmentData(appointment); setIsUserModalOpen(true); }}>
                                             <div className='col'>
-                                                <h4>{appointment?.user.fullName || ""}</h4>
+                                                <h4>{appointment?.user.name || ""}</h4>
                                                 <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5, 10)}</span>
                                             </div>
                                             <div className='col'>
@@ -270,7 +269,7 @@ const Dashbaord = () => {
                                         <img src={image} class="ms-img-small ms-img-round" alt="people" />
                                         <div class="row media-body mt-1 cursor-pointer" onClick={() => { setAppointmentData(appointment); setIsUserModalOpen(true); }}>
                                             <div className='col'>
-                                                <h4>{appointment?.user.fullName || ""}</h4>
+                                                <h4>{appointment?.user.name || ""}</h4>
                                                 <span class="fs-12">XXXX-XXX-{appointment?.user.phone.slice(5, 10)}</span>
                                             </div>
                                             <div className='col'>

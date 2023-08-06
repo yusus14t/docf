@@ -7,7 +7,7 @@ const ObjectId = require('mongoose').Types.ObjectId
 const allNotification = async ( body, user ) => {
     try{
         let query = {
-           $or : [ { senderId: user._id }, { assigneeIds: user._id }]  
+           $or : [ { senderId: user?._id }, { assigneeIds: user?._id }]  
         }
 
         let notifications = await NotificatioModel.find(query).populate('assigneeIds', 'firstName lastName')

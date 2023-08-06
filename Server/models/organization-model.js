@@ -31,6 +31,7 @@ const organizationSchema = new Schema({
         step: { type: String },
         isComplete: { type: Boolean },
     },
+    createdBy: { type: Schema.Types.ObjectId },
 
 },{ timestamps:  true })
 

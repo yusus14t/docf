@@ -74,7 +74,7 @@ const DoctorsList = () => {
                                             <img src={getFullPath(doctor.photo)} className="ms-img-round" alt="people" />
                                         </div>
                                         <div className="media-body">
-                                            <h6>{doctor?.fullName}</h6>
+                                            <h6>{doctor?.name}</h6>
                                             <div className="float-end d-flex-colum justify-content-between">
                                                 <div className="div">
                                                     <span style={{ marginBottom: "50%" }} class="badge badge-outline-danger">{doctor.isActive ? 'Active' : 'Inactive'}</span>
@@ -102,7 +102,7 @@ const DoctorsList = () => {
                 <Modal
                     isOpen={editModal}
                     setIsOpen={setEditModal}
-                    title={` Edit ${ editData.fullName }`}
+                    title={` Edit ${ editData.name }`}
                     closeButton={false}
                     submitButton={false}
                 >
@@ -112,9 +112,9 @@ const DoctorsList = () => {
                                 <label className=''>Full Name</label>
                                 <div className="input-group">
                                     <input type="text"
-                                        className={`form-control ${errors?.fullName ? 'border-danger' : ''}`}
+                                        className={`form-control ${errors?.name ? 'border-danger' : ''}`}
                                         placeholder="Andy America"
-                                        {...register('fullName', {
+                                        {...register('name', {
                                             required: 'Full name is required'
                                         })}
                                     />

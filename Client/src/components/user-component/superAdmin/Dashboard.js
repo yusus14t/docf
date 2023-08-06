@@ -1,23 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import image from "../../../assets.app/img/dashboard/doctor-1.jpg";
+import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 import toasty from '../../../hooks/toasty'
-import { axiosInstance, getAuthHeader } from '../../../constants/utils';
+import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from '../../../constants/utils';
+import { DoughnutChart, LineChart } from '../../common-components/Chart';
 
 const Dashbaord = () => {
     const [ analyticsData, setAnalyticsData ] = useState({});
+    const [ hospitals, setHospitals ] = useState([])
+    const [ clinics, setClinics ] = useState([])
+    const [ patients, setPatients ] = useState([])
+
     useEffect(() => {
         analytics()
+        getHospitals()
+        getClinics()
+        getPatients()
     },[])
 
     const analytics = async () => {
         try{
             let { data } = await axiosInstance.get('/super-admin/analytics', getAuthHeader())
-            console.log(data)
+            setAnalyticsData(data?.analyticsData)
         } catch(error){ 
             console.error(error) 
             toasty.error(error?.message)
         }
     }
+
+    const getHospitals = async () => {
+        try{
+            let { data } = await axiosInstance.get('/super-admin/hospitals', {params: { istoday: true } , ...getAuthHeader()})
+            setHospitals(data.hospitals)
+        } catch(error){ console.error(error) }
+    }
+
+    const getClinics = async () => {
+        try{
+            let { data } = await axiosInstance.get('/super-admin/clinics', {params: { istoday: true } , ...getAuthHeader()})
+            setClinics(data.clinics)
+        } catch(error){ console.error(error) }
+    }
+
+    const getPatients = async () => {
+        try{
+            let { data } = await axiosInstance.get('/super-admin/patients', {params: { istoday: true } , ...getAuthHeader()})
+            console.log('  patiients', data)
+            setPatients(data.patients)
+        } catch(error){ console.error(error) }
+    }
+
     return (
         <div className='ms-content-wrapper'>
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
@@ -90,23 +121,153 @@ const Dashbaord = () => {
                         </div>
                     </a>
                 </div>
-                <div class="col-xl-6 col-md-6 h-100">
+                <div class="col-xl-6 col-md-6 col-sm-12 mb-4">
+                    <div class="ms-panel">
+                        <div class="ms-panel-header">
+                            <div className='d-flex justify-content-between'>
+                                <div>
+                                    <h6>Total Doctors</h6>
+                                </div>
+                                <div>
+                                    <div className='form-ontrol'>
+                                        <select class="form-control"
+                                        >
+                                            <option value="clinics">Patient</option>
+                                            <option value="doctors">Reached</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="ms-panel-body">
+                            <span className='h6'>Week</span>
+                            <label class="ms-switch mx-2">
+                                <input type="checkbox"
+                                />
+                                <span class="ms-switch-slider ms-switch-dark round"></span>
+                            </label>
+                            <span className='h6'>Year</span>
+                            {<LineChart filterType={'week'} labelName={'Patient'} chartData={[]} />}
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
+                    <div class="ms-panel h-100">
+                        <div class="ms-panel-header">
+                            <div>
+                                <h6>Genders</h6>
+                            </div>
+                        </div>
+                        <div class="ms-panel-body ">
+                            <div className='h4'>
+                                Users
+                            </div>
+                            <div className='text-center' style={{ height: '14rem', width: '14rem' }}>
+                                {  <DoughnutChart labelName={'Patient'} chartData={analyticsData.total_users} />}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
+                    <div class="ms-panel h-100">
+                        <div class="ms-panel-header">
+                            <div>
+                                <h6>Status</h6>
+                            </div>
+                        </div>
+                        <div class="ms-panel-body ">
+                            <div className='h4'>
+                                Appointment Status
+                            </div>
+                            <div className='text-center' style={{ height: '14rem', width: '14rem' }}>
+                                { <DoughnutChart labelName={'Patient'} chartData={[]} />}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 h-100 mb-4">
                     <div class="ms-panel ms-panel-fh ms-widget">
                         <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
                             <div>
-                                <h6>Patients List</h6>
+                                <h6>Today Patients</h6>
                             </div>
                         </div>
                         <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">
                             <ul class="ms-followers ms-list ms-scrollable ps">
-                                {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => <li class="ms-list-item media">
-                                    <img src={image} class="ms-img-small ms-img-round" alt="people" />
-                                    <div class="media-body mt-1">
-                                        <h4>Micheal</h4>
-                                        <span class="fs-12">MBBS, MD</span>
-                                    </div>
-                                    <button type="button" class="ms-btn-icon btn-success" name="button"> </button>
-                                </li>)}
+                                {patients?.length > 0 && patients.map((patient, key) =>
+                                    <li class="ms-list-item media" key={key} >
+                                        <img src={patient?.photo ? getFullPath(patient.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
+                                        <div class="media-body mt-1">
+                                            <div className='d-flex justify-content-between'>
+                                                <div>
+                                                    <h4>{patient?.name}</h4>
+                                                    <span class="fs-12">{patient.address}</span>
+                                                </div> 
+                                                <div className='d-contents'>
+                                                    <h4 class="fs-12">{formatPhone(patient.phone)}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>)}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 h-100 mb-4">
+                    <div class="ms-panel ms-panel-fh ms-widget">
+                        <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
+                            <div>
+                                <h6>Today Clinics</h6>
+                            </div>
+                        </div>
+                        <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">
+                            <ul class="ms-followers ms-list ms-scrollable ps">
+                                {clinics?.length > 0 && clinics.map((clinic, key) =>
+                                    <li class="ms-list-item media" key={key} >
+                                        <img src={clinic?.photo ? getFullPath(clinic.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
+                                        <div class="media-body mt-1">
+                                            <div className='d-flex justify-content-between'>
+                                                <div>
+                                                    <h4>{clinic?.name}</h4>
+                                                    <span class="fs-12">{clinic?.email}</span>
+                                                </div> 
+                                                <div className='d-contents'>
+                                                    <h4 class="fs-12">{formatPhone(clinic?.phone)}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>)}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 h-100 mb-4">
+                    <div class="ms-panel ms-panel-fh ms-widget">
+                        <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
+                            <div>
+                                <h6>Today Hospitals</h6>
+                            </div>
+                        </div>
+                        <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">
+                            <ul class="ms-followers ms-list ms-scrollable ps">
+                                {hospitals?.length > 0 && hospitals.map((hospital, key) =>
+                                    <li class="ms-list-item media" key={key} >
+                                        <img src={hospital.photo ? getFullPath(hospital.photo) : NO_PHOTO } class="ms-img-small ms-img-round" alt="people" />
+                                        <div class="media-body mt-1">
+                                            <div className='d-flex justify-content-between'>
+                                                <div>
+                                                    <h4>{hospital?.name}</h4>
+                                                    <span class="fs-12">{hospital.email}</span>
+                                                </div> 
+                                                <div className='d-contents'>
+                                                    <h4 class="fs-12">{formatPhone(hospital.phone)}</h4>
+                                                    <h4 class="fs-12">{hospital.fee == 0 ? '-' : `₹ ${hospital.fee}`}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>)}
                             </ul>
                         </div>
                     </div>

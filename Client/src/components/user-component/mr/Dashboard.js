@@ -1,19 +1,39 @@
 import React, {  useEffect, useState } from 'react';
-import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
+import NO_PHOTO from "../../../assets.app/images/no-photo.png";
+
 import { Link } from 'react-router-dom';
-import UserModal from '../../common-components/UserModal';  
 import { LineChart, DoughnutChart } from '../../common-components/Chart';
+import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from '../../../constants/utils'
 
 const Dashbaord = () => {
-    const [isUserModalOpen, setUserModalOpen] = useState(false)
     const [doctor, setDoctor] = useState({})
     const [isWeekChart, setIsWeekChart] = useState(true) 
     const [chartData, setChartData] = useState({})
+    const [hospitals, setHospitals] = useState({})
+    const [clinics, setClinics] = useState({})
 
     useEffect(() => {
         changeFilter('clinics')
+        getHospitals()
+        getClinics()
     }, [])
+
+    const getHospitals =  async () => {
+        try{ 
+            let { data } = await axiosInstance.get('/mr/organiztions', { params: { organizationType: 'Hospital', istoday: false }, ...getAuthHeader()})
+            console.log('data hospitals', data)
+            setHospitals(data.organizations)
+        } catch(error){ console.error(error) }
+    }
     
+    const getClinics =  async () => {
+        try{ 
+            let { data } = await axiosInstance.get('/mr/organiztions', { params: { organizationType: 'Clinic', istoday: false }, ...getAuthHeader()})
+            console.log('data', data)
+            setClinics(data.organizations)
+        } catch(error){ console.error(error) }
+    }
+
     const changeFilter = (value) => {
         let data = {
             week: [],
@@ -116,7 +136,7 @@ const Dashbaord = () => {
                         </div>
                     </a>
                 </div>
-                <div class="col-xl-6 col-md-6 col-sm-12">
+                <div class="col-xl-6 col-md-6 col-sm-12 mb-3">
                     <div class="ms-panel">
                         <div class="ms-panel-header">
                             <div className='d-flex justify-content-between'>
@@ -152,7 +172,7 @@ const Dashbaord = () => {
                         
                     </div>
                 </div>
-                <div class="col-xl-6 col-md-6 col-sm-12">
+                <div class="col-xl-6 col-md-6 col-sm-12 mb-3">
                     <div class="ms-panel h-100">
                         <div class="ms-panel-header">
                             <div>
@@ -178,35 +198,67 @@ const Dashbaord = () => {
                     <div class="ms-panel ms-panel-fh ms-widget">
                         <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
                             <div>
-                                <h6>Latest Doctors</h6>
+                            <h6>Hospitals <span className='text-disabled'>{ new Date().toDateString() }</span></h6>
                             </div>
                             <div className="">
-                                <Link to={'/mr/clinic-registration'} className='btn btn btn-info btn-md'>Add Clinic</Link>
+                                <Link to={'/mr/hospital-registration'} className='btn btn btn-info btn-md'>+ Hospital</Link>
                             </div>
                         </div>
-                        <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">
+                        <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">{ console.log('hospitals', hospitals)}
                             <ul class="ms-followers ms-list ms-scrollable ps">
-                                {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => <li class="ms-list-item media">
-                                    
-                                    <img src={image} class="ms-img-small ms-img-round" alt="people" />
-                                    <div class="media-body mt-1"  onClick={() => {setUserModalOpen(true); setDoctor(e)}}>
-                                        <h4>Micheal</h4>
-                                        <span class="fs-12">MBBS, MD</span>
+                                {hospitals?.length > 0 && hospitals.map((hospital, key) => 
+                                    <li class="ms-list-item media" key={key} >
+                                    <img src={hospital?.photo ? getFullPath(hospital.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
+                                    <div class="media-body mt-1">
+                                        <div className='d-flex justify-content-between'>
+                                            <div>
+                                                <h4>{hospital?.name}</h4>
+                                                <span class="fs-12">{hospital.address}</span>
+                                            </div> 
+                                            <div className='d-contents'>
+                                                <h4 class="fs-12">{formatPhone(hospital.phone)}</h4>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button type="button" class="ms-btn-icon btn-success" name="button"> </button>
-                                </li>)}
+                                    </li>
+                                )}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 h-100">
+                    <div class="ms-panel ms-panel-fh ms-widget">
+                        <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
+                            <div>
+                                <h6>Clinics <span className='text-disabled'>{ new Date().toDateString() }</span></h6>
+                            </div>
+                            <div className="">
+                                <Link to={'/mr/clinic-registration'} className='btn btn btn-info btn-md'>+ Clinic</Link>
+                            </div>
+                        </div>
+                        <div style={{ overflowY: "scroll" }} class="ms-panel-body h20 p-0">
+                            <ul class="ms-followers ms-list ms-scrollable ps">
+                                {clinics?.length > 0 && clinics.map((clinics, key) =>
+                                    <li class="ms-list-item media" key={key} >
+                                        <img src={clinics?.photo ? getFullPath(clinics.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
+                                        <div class="media-body mt-1">
+                                            <div className='d-flex justify-content-between'>
+                                                <div>
+                                                    <h4>{clinics?.name}</h4>
+                                                    <span class="fs-12">{clinics.address}</span>
+                                                </div>
+                                                <div className='d-contents'>
+                                                    <h4 class="fs-12">{formatPhone(clinics.phone)}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            {
-                isUserModalOpen && <UserModal
-                    isOpen={isUserModalOpen}
-                    setIsOpen={setUserModalOpen}
-                    appointmentData={{}}
-                />
-            }
         </div>
 
     )

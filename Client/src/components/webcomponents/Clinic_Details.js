@@ -4,68 +4,38 @@ import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
-import { useEvent } from "../../hooks/common-hook";
-import eventsource from "../../events";
+import events from "../../events";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarPlus,
-  faEnvelope,
-  faMapMarker,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCalendarPlus, faEnvelope, faMapMarker,  faPhone, } from "@fortawesome/free-solid-svg-icons";
 
 function Detail() {
   const params = useParams();
-  const event = useEvent()
   const [clinicDetail, setClinicDetail] = useState({});
-  const [waitingList, setWaitingList] = useState({});
+  const [waitingList, setWaitingList] = useState([]);
   const [token, setToken] = useState('00')
   const [isOpen, setIsOpen] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
   useEffect(() => {
+    getWaitingList();
     getClinicDetail();
+    
+    events.addEventListener('re-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) )) 
+    events.addEventListener('new-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) ))
+    events.addEventListener('status', ( event ) => statusEventHandler( JSON.parse(event.data) )) 
+    
+
   }, []);
 
-  useEffect(() => {
-    handleEventData()
-  }, [event])
-
-  const handleEventData = () => {
-
-    eventsource.addEventListener('new-appointment', ( event ) => console.log('new-appointment', event)) 
-
-    if ( ['re-appointment', 'new-appointment'].includes(event?.event) ) {
-      let eventData = event?.data
-      let LIST_OBJECT = { 
-        _id: eventData?._id,
-        token: eventData?.token,
-        fullName: eventData.user.fullName,  
-        phone: eventData.user.phone,  
-        address: eventData.user.address,  
-      }
-
-      if( !waitingList.some( list => String(list._id) === String(LIST_OBJECT._id) ) ) {
-        setWaitingList([ ...waitingList, LIST_OBJECT,])
-      }
-
-    } else if( event?.event === 'status' ) {
-
-      let list = waitingList.filter( app => app._id !== event?.data?.appointmentId )
-      setWaitingList(list)
-
-      setToken(list?.length ? list[0]?.token : '00')
-
-    }
+  let newAppointmentHandler = ( event ) => {
+    getWaitingList()
   }
 
+  const statusEventHandler = ( event ) => {
+      setToken('00')
+  }
 
-  useEffect(() => {
-    if( clinicDetail?.doctors?.length){
-      getWaitingList()
-    }
-  }, [clinicDetail])
 
   const getClinicDetail = async () => {
     try {
@@ -124,7 +94,7 @@ function Detail() {
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {(clinicDetail?.doctors &&
-                    clinicDetail?.doctors["0"]?.fullName) ||
+                    clinicDetail?.doctors["0"]?.name) ||
                     "Doctor Name"}
                 </h4>
                 <h6
@@ -180,7 +150,7 @@ function Detail() {
                               </div>
                               <div className="token-list-detail">
                                 <h4 className="list-patient-name mb-1">
-                                  {list?.fullName}
+                                  {list?.name}
                                 </h4>
                                 <p className="mb-0 list-mobile-no">
                                   Mobile Number : +91{" "}

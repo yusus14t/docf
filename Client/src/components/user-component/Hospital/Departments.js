@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { axiosInstance, getFullPath } from "../../../constants/utils";
-import DoctorImage from "../../../assets.app/img/dashboard/doctor-1.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../common-components/Modal";
 import AddDepartment from "./AddDepartment";
+import NO_PHOTO from '../../../assets.app/images/no-photo.png';
 
 const Departments = () => {
     const [departments, setDepartments] = useState([])
     const [deleteModal, setDeleteModal] = useState(false)
     const [department, setDepartment] = useState({})
     const [addDepartment, setAddDepartment] = useState(false)
+    const userInfo = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
         getDepartments()
@@ -18,8 +19,8 @@ const Departments = () => {
 
     const getDepartments = async () => {
         try{
-            let { data } = await axiosInstance.get('/doctor/departments')
-            setDepartments(data?.departments)
+            let { data } = await axiosInstance.get('/doctor/departments', )
+            setDepartments(data?.organizations)
         } catch(error){
             console.error(error)
         }
@@ -35,12 +36,12 @@ const Departments = () => {
 
     return (
         <div className="ms-content-wrapper mx-2">
-            <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
+            <div className="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                 <div><h6>Doctors List</h6></div>
-                <div class="ms-form-group my-0 mb-0 has-icon fs-14 d-flex justify-content-center">
-                    <input type="search" class="ms-form-input" name="search" placeholder="Search for departments" />
-                    <i class="flaticon-search text-disabled"></i>
-                <button class=" mx-3 btn btn-info btn-md shadow-none" onClick={() =>  setAddDepartment(true)}>Add Department</button>
+                <div className="ms-form-group my-0 mb-0 has-icon fs-14 d-flex justify-content-center">
+                    <input type="search" className="ms-form-input d-search" name="search" placeholder="Search for departments" />
+                    <i className="flaticon-search text-disabled"></i>
+                { userInfo.userType === 'HL' && <button className=" mx-3 btn btn-info btn-md shadow-none" onClick={() =>  setAddDepartment(true)}>Add Department</button>}
                 </div>
 
 
@@ -52,13 +53,13 @@ const Departments = () => {
                             <div className="ms-card-body" style={{ borderLeft: '5px solid #112c2f'}}>
                                 <div className="media mb-0 fs-14">
                                     <div className="me-2 align-self-center">
-                                        <img src={department?.organizationId?.photo ? getFullPath(department?.organizationId?.photo) :  DoctorImage} className="ms-img-round" alt="people" />
+                                        <img src={department?.organizationId?.photo ? getFullPath(department?.organizationId?.photo) :  NO_PHOTO} className="ms-img-round" alt="people" />
                                     </div>
                                     <div className="media-body" >
                                         <h6 style={{ maxWidth: '70%'}}>{department?.organizationId?.name}</h6>
                                         <div className="float-end d-flex-colum justify-content-between">
                                             <div className="div">
-                                                <span style={{ marginBottom: "50%" }} class="badge badge-outline-danger">{department?.isActive ? 'Active' : 'Inactive'}</span>
+                                                <span style={{ marginBottom: "50%" }} className="badge badge-outline-danger">{department?.isActive ? 'Active' : 'Inactive'}</span>
                                             </div>
                                             <div style={{ marginLeft: "15px" }} className="float-last">
                                                 <FontAwesomeIcon className="cursor-pointer"  icon={faEdit}></FontAwesomeIcon>
@@ -67,11 +68,6 @@ const Departments = () => {
                                         </div>
                                         <p className="fs-12 my-1 text-disabled">{department?.organizationId?.specialization?.length ? department?.organizationId?.specialization[0]?.name : '-'}</p>
                                         <h6 className="fs-12 my-1">{department?.phone ? `( ${department?.phone.slice(0,3)} ) - ${department?.phone.slice(3,6)} - ${department?.phone.slice(-4)}` : '-'}</h6>
-                                        {/* <h6 className="mt-0">
-                                            <span className="fs-14">
-                                                <i className="fas fa-map-marker-alt"></i>
-                                            </span>
-                                            {department?.hospitalId?.name || '-'}</h6> */}
                                     </div>
                                 </div>
                             </div>

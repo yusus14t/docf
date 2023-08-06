@@ -38,10 +38,7 @@ export const formatPhone = ( phone ) => {
 export const dateFormat = (date) => `${date.getDate()} / ${ date.getMonth() + 1 } / ${ date.getFullYear() }` 
 
 export const NumberFormat = ( e ) =>  {
-    if(Number(e.target.value) && String(e.target.value).length < 10) e.target.value = e.target.value
-    else if(Number(e.target.value)) e.target.value = e.target.value.slice(0,10)
-    else e.target.value = ''
-    return e.target.value
+    if( !Number(e.target.value) ) return e.target.value = e.target.value.slice(0, -1)
 }
 
 export const getFullPath = (filename) => `${ SERVER_URL }/images/${filename}`
