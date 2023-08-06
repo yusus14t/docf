@@ -19,7 +19,6 @@ function Home() {
 
     <>
       <div className="box"></div>
-      <Search/>
       {/* hero section */}
       <div
         className=" hero-container"
