@@ -11,7 +11,7 @@ const DEPARTMENT = [
   { path: "/department", element: <Navigate to={"/department/dashboard"} /> },
   { path: "/department/dashboard", element: <Dashbaord /> },
   { path: "/department/profile", element: <h1>Profile</h1> },
-  { path: "/department/patient", element: <Patients /> },
+  { path: "/department/patients", element: <Patients /> },
   { path: "/department/appointment", element: <AppointmentList /> },
   { path: "/department/notification", element: <Notification /> },
   { path: "/department/doctors", element: <Doctors /> },

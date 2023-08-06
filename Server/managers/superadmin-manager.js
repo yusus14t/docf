@@ -75,8 +75,7 @@ const patients = async ( body ) => {
     try {
         let today = new Date()
         today.setHours(0, 0, 0, 0)
-        console.log({ userType: 'PT', ...( !!body.istoday ? { createdAt: { $gte: today } } : {} )  })
-        let patients = await UserModel.find({ userType: 'PT', ...( !!body.istoday ? { createdAt: { $gte: today } } : {} )  }, { name: 1, email: 1, photo: 1, address: 1, phone: 1, gender: 1, bloodGroup: 1, gardianName: 1 })
+        let patients = await UserModel.find({ userType: 'PT', ...( !!body.istoday ? { createdAt: { $gte: today } } : {} )  }, { name: 1, email: 1, photo: 1, address: 1, phone: 1, gender: 1, bloodGroup: 1, gardianName: 1, age: 1 })
         return Success({ patients });
     } catch ( error ) { 
         console.log(error)
@@ -84,6 +83,46 @@ const patients = async ( body ) => {
     }
 }
 
+const MRs = async ( body ) => {
+    try {
+        let MRs = await UserModel.find({ userType: 'MR'  }, { name: 1, email: 1, photo: 1, address: 1, phone: 1, gender: 1, bloodGroup: 1, gardianName: 1, age: 1 })
+        return Success({ MRs });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const createMR = async ( body, file ) => {
+    try {
+        body = JSON.parse(body.data)
+        let MRs = await UserModel({
+            ...body,
+            photo: file?.filename,
+            isActive: true,
+            primary: true,
+            userType: 'MR',
+            twoFactor: {
+                isVerified: true,
+                otp: 0
+            }
+        }).save()
+        return Success({ MRs });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const deleteMR = async ( body ) => {
+    try {
+        await UserModel.deleteOne({ _id: body.id })
+        return Success({ message: 'Successfully deleted.' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
 
 module.exports = {
     getProfile,
@@ -91,4 +130,7 @@ module.exports = {
     hospitals,
     clinics,
     patients,
+    MRs,
+    createMR,
+    deleteMR
 }

@@ -82,6 +82,12 @@ const getDepartments = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const getClinics = async ( req, res ) => {
+    DoctorManager.getClinics( req.query, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 const deleteDepartment = async ( req, res ) => {
     DoctorManager.deleteDepartment( req.body, req.user )
     .then( result => res.status(result.code).send(result) )
@@ -131,5 +137,6 @@ module.exports = {
     deleteDepartment,
     patients,
     hospitalSpecialization,
-    addSpecialization
+    addSpecialization,
+    getClinics
 }

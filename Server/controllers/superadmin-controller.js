@@ -31,6 +31,25 @@ const patients = async (req, res) => {
         .catch(err => res.status(500).send(err.data))
 }
 
+const MRs = async (req, res) => {
+    superAdminManager.MRs(req.query)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+
+const createMR = async (req, res) => {
+    superAdminManager.createMR(req.body, req.file)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+const deleteMR = async (req, res) => {
+    superAdminManager.deleteMR(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
         
 module.exports = {
     getProfile,
@@ -38,4 +57,7 @@ module.exports = {
     hospitals,
     clinics,
     patients,
+    MRs,
+    createMR,
+    deleteMR,
 }

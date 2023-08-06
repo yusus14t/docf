@@ -3,14 +3,14 @@ import { axiosInstance, formatPhone } from '../../../constants/utils'
 
 const Patients = () => {
   const [ patients, setPatients] = useState([]);
-
+  const userInfo = JSON.parse(localStorage.getItem('user'))
   useEffect(() => {
     getPatients()
   }, [])
 
   const getPatients = async () => {
     try {
-      let { data } = await axiosInstance.get('/doctor/patients')
+      let { data } = await axiosInstance.get( userInfo.userType === 'SA' ? '/super-admin/patients' : '/doctor/patients')
       setPatients(data?.patients)
 
     } catch(error){ console.error(error) }
@@ -22,7 +22,6 @@ const Patients = () => {
             <div className="ms-panel inner-content-height">
               <div className="ms-panel-header ms-panel-custome">
                 <h6>Patient List</h6>
-                <a href="add-patient.html" className="ms-text-primary">Add Patient</a>
               </div>
               <div className="ms-panel-body p-0 ">
                 <div className="table-responsive">

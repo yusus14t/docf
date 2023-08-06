@@ -4,14 +4,11 @@ import DoctorImage from "../../../assets.app/img/dashboard/doctor-1.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../common-components/Modal";
-import AddDepartment from "./AddDepartment";
 
-const Departments = () => {
+const Clinics = () => {
     const [departments, setDepartments] = useState([])
     const [deleteModal, setDeleteModal] = useState(false)
     const [department, setDepartment] = useState({})
-    const [addDepartment, setAddDepartment] = useState(false)
-    const userInfo = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
         getDepartments()
@@ -19,7 +16,7 @@ const Departments = () => {
 
     const getDepartments = async () => {
         try{
-            let { data } = await axiosInstance.get('/doctor/departments')
+            let { data } = await axiosInstance.get('/doctor/clinics')
             
             setDepartments(data?.departments)
         } catch(error){
@@ -42,7 +39,6 @@ const Departments = () => {
                 <div class="ms-form-group my-0 mb-0 has-icon fs-14 d-flex justify-content-center">
                     <input type="search" class="ms-form-input" name="search" placeholder="Search for departments" />
                     <i class="flaticon-search text-disabled"></i>
-                { userInfo.userType === 'HL' && <button class=" mx-3 btn btn-info btn-md shadow-none" onClick={() =>  setAddDepartment(true)}>Add Department</button>}
                 </div>
 
 
@@ -85,14 +81,7 @@ const Departments = () => {
                 Do you want to delete this department?
             </Modal>}
 
-            { addDepartment &&
-                <AddDepartment
-                    isOpen={addDepartment}
-                    setIsOpen={setAddDepartment}
-                />
-            }
-
         </div>
     )
 }
-export default Departments;
+export default Clinics;

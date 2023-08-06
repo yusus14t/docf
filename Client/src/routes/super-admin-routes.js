@@ -4,6 +4,11 @@ import Doctors from '../components/user-component/Doctors';
 import Notification from '../components/common-components/Notification/Notification';
 import Support from '../components/common-components/Support/Support';
 import Settings from '../components/common-components/Settings/Settings';
+import Patients from "../components/user-component/doctor/Patients";
+import Departments from "../components/user-component/Hospital/Departments";
+import Clinics from "../components/user-component/superAdmin/Clinics";
+import MR from "../components/user-component/superAdmin/MR";
+
 
 
 const SUPER_ADMIN = [
@@ -11,10 +16,13 @@ const SUPER_ADMIN = [
     { path: "/super-admin/profile", element: <h1>Profile</h1> },
     { path: "/super-admin/user", element: <h1>user</h1> },
     { path: "/super-admin/doctors", element: <Doctors /> },
+    { path: "/super-admin/patients", element: <Patients /> },
+    { path: "/super-admin/departments", element: <Departments /> },
     { path: "/super-admin/notification", element: <Notification /> },
     { path: "/super-admin/support", element: <Support /> },
     { path: "/super-admin/setting", element: <Settings /> },
-    { path: "/super-admin/clinics", element: <Settings /> },
+    { path: "/super-admin/clinics", element: <Clinics /> },
+    { path: "/super-admin/mr", element: <MR /> },
     { path: "/super-admin/*", element: <Navigate to={'/super-admin'} /> },
 ]
 

@@ -11,13 +11,14 @@ export const userRoutes = {
 
 export const MODULES = [
     {id: 'dashboard', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR']},
-    {id: 'patient', title: 'patient', pathname: '/patient', access: ['CL', 'DP', 'HL', 'SA', 'MA' ]},
+    {id: 'patient', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA', 'MA' ]},
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['CL', 'DP', 'HL', 'PT',]},
     {id: 'departments', title: 'Departments', pathname: '/departments', access: ['HL', 'SA']},
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MR']},
     {id: 'hospital-registration', title: 'Hospital Registration', pathname: '/hospital-registration', access: [ 'MR']},
     {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['SA', 'MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'HL', 'CL', 'DP']},
+    {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'MA']},
     {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'PT']},
     {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
     {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
