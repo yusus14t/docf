@@ -1,22 +1,48 @@
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { axiosInstance } from "../../../constants/utils";
 
-const Card = () => {
+const Card = ({source}) => {
+  useEffect(() => {
+    getSpecialization();
+  }, []);
+
+  const [specialisations, setSpecialization] = useState([]);
+  const getSpecialization = async () => {
+    let { data } = await axiosInstance.get("/get-specializations");
+    setSpecialization(data?.specializations);
+    console.log(data);
+  };
   return (
     <>
-      <Link to="/specialization-deatils">
-        <div className="specialization-card">
-          <div className="spe-circle mx-auto mt-3">
-            <FontAwesomeIcon
-              style={{ fontSize: "50px", marginTop: "20%" }}
-              icon={faHeart}
-            />
-          </div>
-          <h2>Cardiologist</h2>
-        </div>
-      </Link>
+      {specialisations
+        .filter(
+          (card, index) =>
+            (source === "slider1" && index <= 3) ||
+            (source === "slider2" && index >= 4 && index <= 5) ||
+            (source === "slider3" && index >= 8 && index <= 11) ||
+            (source === "slider4" && index >= 13 && index <=16) ||
+            (source === "slider2" && index >= 17 && index <=20)
+        )
+        .map((specialisation) => {
+          return (
+            <Link to="/specialization-deatils">
+              <div className="specialization-card">
+                <div className="">
+                  <div className="spe-circle mx-auto ">
+                    <FontAwesomeIcon
+                      style={{ fontSize: "50px", marginTop: "20%" }}
+                      icon={faHeart}
+                    />
+                  </div>
+                  <h2>{specialisation.name}</h2>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
     </>
   );
 };

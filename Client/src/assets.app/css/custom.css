@@ -385,7 +385,47 @@
   text-align: center;
   overflow: hidden;
 }
+.search-bar{
+  width: 400px;
+  border-radius: 6px;
+  height: 40px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.city-filter{
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  border: 1px solid black;
+  height: 40px;
+  border-radius: 6px;
+}
+.city-filter select{
+  font-size: 18px;
+  width: 80px;
+  border: 2px solid transparent;
+}
+.city-filter select:focus{
+  outline: none;
+}
+.city-filter option{
+  background: none
+  ;
+}
 
+.search-bar input{
+  width: 350px;
+  padding: 0 5px;
+  border: none;
+}
+.search-bar input:focus{
+  outline: none;
+
+}
 .search-icon {
   margin-left: 10px;
   font-size: 16px;
@@ -1164,13 +1204,16 @@ input::-webkit-inner-spin-button {
 .specialization-card {
   width: 300px;
   margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 200px !important;
   border: 0.5px solid grey;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .spe-circle {
-  width: 75px;
-  height: 75px;
+  width: 85px;
+  height: 85px;
   border: 1px solid grey;
   border-radius: 50%;
 }

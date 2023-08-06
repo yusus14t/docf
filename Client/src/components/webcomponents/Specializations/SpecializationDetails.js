@@ -12,11 +12,17 @@ import Search from '../../common-components/Search'
 
 
 const SpecializationDetails = () => {
-    const [clinics, setClinics] = useState([]);
+
+  
+  
+
+  
+   const [clinics, setClinics] = useState([]);
     useEffect(() => {
       getAllClinics();
     }, []);
 
+   
     const getAllClinics = async () => {
       try {
         let { data } = await axiosInstance.get("/all-clinics");
@@ -33,7 +39,7 @@ const SpecializationDetails = () => {
         <h3 className="title pt-3">Cardiology</h3>
         <Search />
       </div>
-      <div className="splz-deatial container mt-3">
+      {<div className="splz-deatial container mt-3">
         <span className="mb-0">
           <img className="specialization-image" src={banner} alt="" />
         </span>
@@ -76,6 +82,10 @@ const SpecializationDetails = () => {
             Delectus ipsa aut, laborum fugiat aliquam corporis tempore!
           </p>
         </div>
+
+
+
+
         <div className="">
           <h2 className="text-center">Hospitals</h2>
           <div className="row">
@@ -236,7 +246,7 @@ const SpecializationDetails = () => {
                 })}
           </div>
         </div>
-      </div>
+      </div>}
     </>
   );
 };
