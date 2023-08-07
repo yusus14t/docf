@@ -1,4 +1,4 @@
-const UserModel = require('../models/user-model');
+const UserModel = require("../models/user-model");
 let user = {
   data: [
     {
@@ -6,10 +6,10 @@ let user = {
       primary: true,
       twoFactor: { isVerified: true, otp: "0" },
       age: 21,
-      name: "Lina Erika",
-      gender: "female",
-      email: "erikawarner@kinetica.com",
-      phone: "1111111111",
+      name: "Yusuf",
+      gender: "Male",
+      email: "Yusuf14t@gmail.com",
+      phone: "8474986168",
       address: "688 Royce Street, Hardyville, Wisconsin, 324",
       userType: "SA",
     },
@@ -19,11 +19,11 @@ let user = {
       isActive: true,
       age: 35,
       eyeColor: "brown",
-      name: "Lauren Maxine",
+      name: "Test Mr1",
       lastName: "",
       gender: "female",
       email: "maxinewarner@kinetica.com",
-      phone: "2222222222",
+      phone: "82183978550",
       address: "643 Love Lane, Lowell, Arizona, 729",
       userType: "MR",
     },
@@ -35,4 +35,4 @@ let user = {
   },
 };
 
-module.exports = { user }
+module.exports = { user };
