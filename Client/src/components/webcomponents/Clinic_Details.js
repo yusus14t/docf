@@ -33,7 +33,8 @@ function Detail() {
   }
 
   const statusEventHandler = ( event ) => {
-      setToken('00')
+    getClinicDetail()
+    getWaitingList()
   }
 
 
@@ -43,14 +44,13 @@ function Detail() {
         params: { _id: params.id },
         ...getAuthHeader(),
       });
-      setClinicDetail(data?.clinicDetail);
+      setClinicDetail(data?.detail);
+      let detail = data?.detail
 
       let token = '00'
-      if(data?.clinicDetail?.doctors?.length){
-        token = data?.clinicDetail?.doctors["0"]?.token?.length === 1  ? 
-                `0${data?.clinicDetail?.doctors["0"]?.token}` : 
-                data?.clinicDetail?.doctors["0"]?.token || '00'
-      }
+      token = detail?.token?.length === 1  ? 
+              `0${detail?.token}` : 
+              detail?.token || '00'
 
       setToken( token )
     } catch (error) {
@@ -83,25 +83,23 @@ function Detail() {
         <div
           className="clinicbanner"
           style={{
-            background: `url(${clinicDetail?.detail?.photo ? getFullPath(clinicDetail?.detail?.photo) : background})`,
+            background: `url(${clinicDetail?.photo ? getFullPath(clinicDetail?.photo) : background})`,
             backgroundRepeat: "no-repeat",
           }}
         >
-          <h4 className="clinic-detail-name">{clinicDetail?.detail?.name}</h4>
+          <h4 className="clinic-detail-name">{clinicDetail?.name}</h4>
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-around  ">
-              <img className="clinic-detail-img" src={clinicDetail?.doctors && (clinicDetail?.doctors[0]?.photo ? getFullPath(clinicDetail?.doctors[0]?.photo) : drprofile)} alt="" />
+              <img className="clinic-detail-img" src={clinicDetail?.doctors && (clinicDetail?.photo ? getFullPath(clinicDetail?.doctors[0]?.photo) : drprofile)} alt="" />
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
-                  {(clinicDetail?.doctors &&
-                    clinicDetail?.doctors["0"]?.name) ||
-                    "Doctor Name"}
+                  {clinicDetail?.name}
                 </h4>
                 <h6
                   style={{ display: "inline-block" }}
                   className="text-light clinic-detail-drName rounded"
                 >
-                  {clinicDetail?.specialization || "Specialization"}
+                  {clinicDetail?.specialization?.map( spe => spe.name) || "Specialization"}
                 </h6>
               </div>
             </div>

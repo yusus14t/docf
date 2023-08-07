@@ -16,10 +16,8 @@ const Dashbaord = () => {
     const [isWeekChart, setIsWeekChart] = useState(true)
     const [chartData, setChartData] = useState({})
     const [analyticsData, setAnalyticsData] = useState({})
-    const [ genderData, setGenderData ] = useState([])
     const [ doghnutData, setDoghnutData ] = useState({ gender: [], status: [] })
 
-    const userInfo = JSON.parse(localStorage.getItem('user'))
     const toasty = useToasty();
 
     useEffect(() => {
@@ -29,6 +27,12 @@ const Dashbaord = () => {
         getGenderData()
 
         events.addEventListener('new-appointment', ( event ) => eventHandler( event ))
+        events.addEventListener('re-appointment', ( event ) => eventHandler( event ))
+        events.addEventListener('status', ( event ) => eventHandler( event ))
+
+        return(() => {
+            ['new-appointment', 're-appointment', 'status'].map( name => events.removeEventListener( name, () => {} ))
+        })
     },[])
 
     useEffect(() => {

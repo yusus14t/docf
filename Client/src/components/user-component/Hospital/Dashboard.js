@@ -28,7 +28,13 @@ const Dashbaord = () => {
         
         
         events.addEventListener('new-appointment', ( event ) => eventHandler( event ))
-        return(() => events.removeEventListener('new-appointment', () => {}))
+        events.addEventListener('re-appointment', ( event ) => eventHandler( event ))
+        events.addEventListener('status', ( event ) => eventHandler( event ))
+        return(() => {
+            events.removeEventListener('new-appointment', () => {})
+            events.removeEventListener('re-appointment', () => {})
+            events.removeEventListener('status', () => {})
+        })
     },[])
 
     useEffect(() => {
@@ -36,6 +42,7 @@ const Dashbaord = () => {
     }, [appointments])
 
     const eventHandler = ( event ) => {
+        toasty.success('New appointment added')
         getAppointments('waiting')
     }
 

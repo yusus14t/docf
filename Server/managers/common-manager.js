@@ -279,21 +279,21 @@ const clinicDetails = async ( body ) => {
         let today = new Date
         today.setHours(0,0,0,0)
 
-        let doctors = await UserModel.aggregate([
+        let detail = await OrganizationModel.aggregate([
             {
                 $match: {
-                    organizationId: ObjectId(body?._id),
+                    _id: ObjectId(body?._id),
                 }
             },
             {
                 $lookup: {
                     from: 'appointments',
-                    let: { 'doctor': '$_id' },
+                    let: { 'department': '$_id' },
                     pipeline:[
                         {
                             $match: {
                                 $expr: {
-                                    $eq: ['$doctorId', '$$doctor'],
+                                    $eq: ['$departmentId', '$$department'],
                                 },
                                 createdAt: { $gte: today },
                                 status: 'waiting',
@@ -308,16 +308,16 @@ const clinicDetails = async ( body ) => {
                     name: 1,
                     phone: 1,
                     photo: 1,
+                    email: 1,
+                    specialization: 1,
                     token: {$first: '$appointment.token'},
                 }
             }
         ])
 
-        let detail = await OrganizationModel.findOne({ _id: ObjectId(body?._id)})
         
-        let clinicDetail = { detail , doctors}
 
-       return Success({ clinicDetail })
+       return Success({ detail: detail[0] })
     } catch(error){ console.log(error) }
 }
 
