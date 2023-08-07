@@ -69,7 +69,7 @@ const MR = () => {
                                                 <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer"  icon={faTrash} onClick={() => {setMR(mr); setDeleteModal(true)}}></FontAwesomeIcon>
                                             </div>
                                         </div>
-                                        <p className="fs-12 my-1 text-disabled">Test</p>
+                                        <p className="fs-12 my-1 text-disabled">{ mr.address }</p>
                                         <h6 className="fs-12 my-1">{mr?.phone ? `( ${mr?.phone.slice(0,3)} ) - ${mr?.phone.slice(3,6)} - ${mr?.phone.slice(-4)}` : '-'}</h6>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@ const MR = () => {
                 submitButton={false}
                 closeButton={false}
             >
-                <Profile source='addMR' setIsOpen={setAddModal} />
+                <Profile source='addMR' setIsOpen={setAddModal} refresh={() => getMRs()} />
             </Modal>}
 
         </div>

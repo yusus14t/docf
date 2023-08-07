@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import {  Controller, useForm } from "react-hook-form"
 import { DAYS } from "../../../constants/constant";
-import { NumberFormat, axiosInstance, getAuthHeader } from "../../../constants/utils";
+import { NumberFormat, axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
 import useToasty from '../../../hooks/toasty';
-import Select from 'react-select'
+import Select from 'react-select';
+import NO_PHOTO from '../../../assets.app/images/no-photo.png'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
+
 
 const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}) => {
-    const { register, handleSubmit,  formState: { errors, }, setError, getValues, reset, control } = useForm({ onChange: true })
+    const { register, handleSubmit,  formState: { errors, }, setError, getValues, setValue, reset, control } = useForm({ onChange: true })
     const [specialization, setSpecialization] = useState([]);
     const [departments, setDepartments] = useState([]);
     const [ timing, setTiming ] = useState([]);
@@ -22,8 +26,8 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
     const getDepartments = async () => {
         try {
             let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: RID }, ...getAuthHeader() })
-
-            setDepartments(data?.departments)
+            console.log('data', data)
+            setDepartments(data?.organizations)
         } catch(error) { console.error(error) }
     }
 
@@ -45,7 +49,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
         if( !day && time?.day && time?.open && time?.close ){
             setTiming([ ...timing, JSON.parse(JSON.stringify(time)) ])
             setDays( old => old.filter( d => d.value !== time.day ))
-            reset({ timing: { day: '', open: '', close: ''}})
+            setValue('timing', { day: '', open: '', close: ''})
         }
     }
 
@@ -59,22 +63,24 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
             fromData['timing'] = timing
             fromData['organizationId'] = RID
             let { data } = await axiosInstance.post('/doctor/create-department', fromData , getAuthHeader())
-            console.log(data)
+            reset({ name: '', room: '', email: '', phone: '', specialization: '' })
             setTiming([])
             setDays(DAYS)
-            reset({ name: '', room: '', email: '', phone: '', specialization: '' })
+            toasty.success(data?.message)
 
             if( source === 'modal' ) setIsOpen(false)
             else getDepartments()
     
-            toasty.success(data?.message)
-        } catch(error){ console.error(error) }
+        } catch(error){ 
+            console.error(error) 
+            toasty.error(error.message)
+        }
     }
 
     const deleteDepartment = async ( _id ) => {
         try {
             let { data } = await axiosInstance.post('/doctor/delete-department', { _id })
-            setDepartments( old => old.filter( department => String(department._id) !== String(_id)) )
+            setDepartments( old => old.filter( department => String(department.organizationId._id) !== String(_id)) )
             toasty.success(data?.message)
         } catch(error) { console.error(error) }
     }
@@ -82,11 +88,35 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
     
     return (
         <>
-            { source !== 'modal' &&<div className="row">
-                { departments.length > 0 && departments.map( (department, i) => <div className="col-6" key={i}>
-                    <div className="border-primary" onClick={() => deleteDepartment(department.organizationId?._id)}>Department{`--- ${i+1} =====>>>>>> `} {department.organizationId?.name}-{ department.organizationId?.room }</div>
+            {source !== 'modal' && <div className="row">
+                {departments?.length > 0 && departments.map(department => <div className="col-md-4 col-sm-6 mb-3">
+                    <div class="ms-card card-gradient-dark ms-infographics-widget ms-widget">
+                        <div class="ms-card-body">
+                            <div class="media fs-14" style={{ marginBottom: "0" }}>
+                                <div class="me-2 align-self-center">
+                                    <img src={department?.organizationId.photo ? getFullPath(department?.organizationId.photo) : NO_PHOTO} class="ms-img-curved" alt="people" />
+                                </div>
+                                <div class="media-body">
+                                    <div className='d-flex justify-content-between'>
+                                        <div>
+                                            <h6>{department?.organizationId?.name}</h6>
+                                        </div>
+                                        <div>
+                                            <FontAwesomeIcon className='ms-text-ligth mx-3 cursor-pointer' icon={faPencil} onClick={() => { }} />
+                                            <FontAwesomeIcon className='ms-text-ligth cursor-pointer' icon={faTrash} onClick={() => deleteDepartment(department.organizationId._id)} />
+                                        </div>
+                                    </div>
+                                    <span className='text-light' style={{ fontSize: 'x-small' }}>{department?.organizationId?.specialization?.name || 'Specialization'}</span>
+                                    <br />
+                                    <span className='text-light' style={{ fontSize: 'x-small' }}>{department?.organizationId?.address}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>)}
-            </div>}
+            </div>
+            }
+
             <form onSubmit={handleSubmit(submit)}>
                 <div className='row'>
                     <div className="col-md-6 mb-3">
@@ -105,6 +135,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
                         <label >Phone</label>
                         <div className="input-group">
                             <input type="text"
+                                maxLength={10}
                                 className={`form-control ${errors?.phone ? 'border-danger' : ''}`} 
                                 placeholder="Enter Phone"
                                 onInput={(e) => NumberFormat(e)}
@@ -218,7 +249,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
                 </div>
                 <div className="mt-3">
                     { source === 'modal' && <button type="submit" className="btn btn1 btn-light mx-3" onClick={() =>  setIsOpen(false)}>Cancel</button>}
-                    <button type="submit" className="btn btn1 btn-primary">Save</button>
+                    <button type="submit" className="btn btn1 btn-primary shadow-none">Save</button>
                     { source !== 'modal' && <button type="submit" className="btn btn1 btn-primary mx-3" onClick={() => setTab('STEP4')} disabled={!Boolean(departments?.length)}>Next</button>}
                 </div>
             </form>

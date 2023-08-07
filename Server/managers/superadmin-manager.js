@@ -85,7 +85,7 @@ const patients = async ( body ) => {
 
 const MRs = async ( body ) => {
     try {
-        let MRs = await UserModel.find({ userType: 'MR'  }, { name: 1, email: 1, photo: 1, address: 1, phone: 1, gender: 1, bloodGroup: 1, gardianName: 1, age: 1 })
+        let MRs = await UserModel.find({ userType: 'MR'  }, { name: 1, email: 1, photo: 1, address: 1, phone: 1, gender: 1, bloodGroup: 1, gardianName: 1, age: 1, isActive: 1 })
         return Success({ MRs });
     } catch ( error ) { 
         console.log(error)

@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter, faLocationDot, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faSearch } from "@fortawesome/free-solid-svg-icons";
 import filter from '../../assets.app/img/icons/filter.png'
 
 const Search = () => {

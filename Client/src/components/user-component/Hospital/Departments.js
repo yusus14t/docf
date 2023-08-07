@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { axiosInstance, getFullPath } from "../../../constants/utils";
-import DoctorImage from "../../../assets.app/img/dashboard/doctor-1.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../common-components/Modal";
 import AddDepartment from "./AddDepartment";
+import NO_PHOTO from '../../../assets.app/images/no-photo.png';
 
 const Departments = () => {
     const [departments, setDepartments] = useState([])
@@ -19,9 +19,8 @@ const Departments = () => {
 
     const getDepartments = async () => {
         try{
-            let { data } = await axiosInstance.get('/doctor/departments')
-            
-            setDepartments(data?.departments)
+            let { data } = await axiosInstance.get('/doctor/departments', )
+            setDepartments(data?.organizations)
         } catch(error){
             console.error(error)
         }
@@ -54,7 +53,7 @@ const Departments = () => {
                             <div className="ms-card-body" style={{ borderLeft: '5px solid #112c2f'}}>
                                 <div className="media mb-0 fs-14">
                                     <div className="me-2 align-self-center">
-                                        <img src={department?.organizationId?.photo ? getFullPath(department?.organizationId?.photo) :  DoctorImage} className="ms-img-round" alt="people" />
+                                        <img src={department?.organizationId?.photo ? getFullPath(department?.organizationId?.photo) :  NO_PHOTO} className="ms-img-round" alt="people" />
                                     </div>
                                     <div className="media-body" >
                                         <h6 style={{ maxWidth: '70%'}}>{department?.organizationId?.name}</h6>

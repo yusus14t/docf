@@ -13,14 +13,14 @@ const clinics = async ( body, user ) => {
     } catch( error ){ console.error(error) }
 }
 
-const organizations = async ( body ) => {
+const organizations = async ( body, user ) => {
     try{
         if( !body.organizationType ) return Error()
 
         let today = new Date()
         today.setHours(0, 0, 0, 0)
 
-        let organizations = await OrganizationModel.find({ organizationType: body.organizationType, ...(body.istoday == 'true' ? {createdAt: { $gte: today }} : {} ) })
+        let organizations = await OrganizationModel.find({ organizationType: body.organizationType, ...(body.istoday == 'true' ? {createdAt: { $gte: today }} : {} ), createdBy: user._id })
         return Success({ organizations })
     } catch( error ){ console.log(error) }
 }
@@ -29,6 +29,7 @@ const deleteOrganization = async ( body ) => {
     try{
        
         await OrganizationModel.deleteOne({ _id: body.id })
+        await UserModel.deleteOne({$or: [{ organizationId: body.id }, { hospitalId: body.id }]})
         return Success({ message: 'Delete succesfully'})
     } catch( error ){ console.log(error) }
 }

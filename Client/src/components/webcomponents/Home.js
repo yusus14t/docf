@@ -1,5 +1,3 @@
-// import Services from "./Services";
-// import Doctors from "./doctor/Doctors";
 import Clinics from "./Clinics";
 import Hospitals from "./Hospital/Hospitals";
 import dr from "../../assets.app/img/home/portrait-doctor.jpg";
@@ -10,8 +8,6 @@ import Slider from "./Specializations/Slider";
 import DoctorsList from "./doctor/Doctors";
 import Testamonilas from "./Testamonilas";
 import Search from "../common-components/Search";
-import { axiosInstance } from "../../constants/utils";
-import { useEffect } from "react";
 
 function Home() {
   

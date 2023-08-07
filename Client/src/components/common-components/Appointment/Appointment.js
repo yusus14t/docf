@@ -95,6 +95,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                             <label className=''>Phone</label>
                             <div className="input-group">
                                 <input type="text"
+                                    maxLength={10}
                                     className={`form-control ${errors?.phone ? 'border-danger' : ''}`}
                                     placeholder="Enter Phone Number"
                                     onInput={(e) => NumberFormat(e)}

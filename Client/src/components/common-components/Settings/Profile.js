@@ -4,7 +4,7 @@ import ImgUpload from '../Imgupload';
 import  useToasty  from '../../../hooks/toasty';
 import { useState } from 'react';
 
-const Profile = ({ source, setIsOpen }) => {
+const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
     const { register, handleSubmit, formState: { errors } } = useForm({ onchange: true })
     const [ selectedFile, setSelectedFile ] = useState({})
     const toasty =  useToasty()
@@ -21,10 +21,9 @@ const Profile = ({ source, setIsOpen }) => {
         let response = null
         if( source === 'addMR' ){
             response = await axiosInstance.post('/super-admin/mr', formData, header) 
+            refresh()
         } else {
             response = await axiosInstance.post('/hospital/edit-profile', formData, header)
-            console.log(response)
-
         }
 
 

@@ -16,6 +16,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
   const [editImage, setEditImage] = useState(null)
   const [specialization, setSpecialization] = useState([])
   const [departments, setDepartments] = useState([]);
+  const RID = JSON.parse(localStorage.getItem('RID'))
 
   const toasty = useToasty()
 
@@ -37,7 +38,6 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
   const getAllSpecialization = async () => {
     try{
         let {data} = await axiosInstance.get('/doctor/hospital-specialization')
-        console.log(data)
         setSpecialization(data?.specialization)
     } catch(error){
         console.error(error)
@@ -47,9 +47,9 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
   
   const getDepartments = async () => {
     try {
-        let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: organization._id }, ...getAuthHeader() })
+        let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: RID }, ...getAuthHeader() })
 
-        let dep = data?.departments?.map( de => ({ name: de?.organizationId?.name, _id: de?.organizationId?._id, specialization: de?.organizationId?.specialization[0]?.id || null }))
+        let dep = data?.organizations?.map( de => ({ name: de?.organizationId?.name, _id: de?.organizationId?._id, specialization: de?.organizationId?.specialization[0]?.id || null }))
         setDepartments(dep)
 
     } catch(error) { console.error(error) }
@@ -194,6 +194,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
                 <input type="text"
                   className={`form-control ${errors.phone ? 'border-danger' : ''}`}
                   placeholder="Enter Phone"
+                  maxLength={10}
                   onInput={(e) => NumberFormat(e)}
                   {...register(`phone`, {
                     required: 'Phone is required'
@@ -238,7 +239,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
                 />
               </div>
             </div>
-            {source === 'Hospital' || userInfo.userType === 'HL' &&
+            {(source === 'Hospital' || userInfo.userType === 'HL') &&
               <div className="col-6 mb-3">
                 <label >Select Department</label>
                 <div className="">
@@ -261,7 +262,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
                 </div>
               </div>}
             <div className="col-md-6 mb-3">
-              <label >Specialization of Clininc</label>
+              <label >Specialization of Clinic</label>
               <div className="">
                 <Controller
                   control={control}
