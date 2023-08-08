@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.a88f0e0f.css",
-    "main.js": "/static/js/main.71489079.js",
+    "main.js": "/static/js/main.c53efacf.js",
     "static/js/237.cf729bab.chunk.js": "/static/js/237.cf729bab.chunk.js",
     "static/js/19.4753bf44.chunk.js": "/static/js/19.4753bf44.chunk.js",
     "static/js/716.5217be47.chunk.js": "/static/js/716.5217be47.chunk.js",
@@ -48,7 +48,7 @@
     "static/media/hospital.png": "/static/media/hospital.6a68f755782c503bf9d3.png",
     "index.html": "/index.html",
     "main.a88f0e0f.css.map": "/static/css/main.a88f0e0f.css.map",
-    "main.71489079.js.map": "/static/js/main.71489079.js.map",
+    "main.c53efacf.js.map": "/static/js/main.c53efacf.js.map",
     "237.cf729bab.chunk.js.map": "/static/js/237.cf729bab.chunk.js.map",
     "19.4753bf44.chunk.js.map": "/static/js/19.4753bf44.chunk.js.map",
     "716.5217be47.chunk.js.map": "/static/js/716.5217be47.chunk.js.map",
@@ -71,6 +71,6 @@
   },
   "entrypoints": [
     "static/css/main.a88f0e0f.css",
-    "static/js/main.71489079.js"
+    "static/js/main.c53efacf.js"
   ]
 }
