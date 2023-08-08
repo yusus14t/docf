@@ -36,7 +36,7 @@ let user = {
       name: "Test Mr1",
       lastName: "",
       email: "maxinewarner@kinetica.com",
-      phone: "82183978550",
+      phone: "8218397850",
       address: "643 Love Lane, Lowell, Arizona, 729",
       userType: "MR",
     },
