@@ -1,7 +1,7 @@
-const UserModel = require('../models/user-model');
-const AppointmentModel = require('../models/appointment-model');
-const DealModel = require('../models/deal-model');
-const OrganizationModel = require('../models/organization-model');
+const UserModel = require("../models/user-model");
+const AppointmentModel = require("../models/appointment-model");
+const DealModel = require("../models/deal-model");
+const OrganizationModel = require("../models/organization-model");
 
 let user = {
   data: [
@@ -11,7 +11,6 @@ let user = {
       twoFactor: { isVerified: true, otp: "0" },
       age: 21,
       name: "Yusuf",
-      gender: "Male",
       email: "Yusuf14t@gmail.com",
       phone: "8474986168",
       address: "688 Royce Street, Hardyville, Wisconsin, 324",
@@ -23,7 +22,6 @@ let user = {
       twoFactor: { isVerified: true, otp: "0" },
       age: 21,
       name: "Abdul",
-      gender: "Male",
       email: "realhamson@gmail.com",
       phone: "8273237781",
       address: "688 Royce Street, Hardyville, Wisconsin, 324",
@@ -37,9 +35,8 @@ let user = {
       eyeColor: "brown",
       name: "Test Mr1",
       lastName: "",
-      gender: "female",
       email: "maxinewarner@kinetica.com",
-      phone: "82183978550",
+      phone: "8218397850",
       address: "643 Love Lane, Lowell, Arizona, 729",
       userType: "MR",
     },
@@ -51,7 +48,7 @@ let user = {
     await AppointmentModel.deleteMany({});
     await OrganizationModel.deleteMany({});
     await DealModel.deleteMany({});
-    
+
     console.log("Seeded Successfull.");
   },
 };
