@@ -8,7 +8,7 @@ const Search = () => {
     <>
       <div className="box"></div>
       <div
-        style={{ position: "fixed", zIndex: "999" }}
+        style={{ position: "fixed" }}
         className="seacrh-bar-container w-100 "
       >
         <ul className="d-flex flex-row justify-content-center seacrh-ul  p-2">

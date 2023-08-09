@@ -5,6 +5,8 @@ const cors = require('cors');
 const env = require('dotenv/config');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
+
 
 //  Data Base Connection
 mongoose.set('strictQuery', false)
@@ -28,7 +30,7 @@ app.use(
 );
 
 // Static Routes
-app.use('/images', express.static('uploads'))
+app.use('/images', express.static(path.join(__dirname, './uploads')))
 
 
 // All Routes

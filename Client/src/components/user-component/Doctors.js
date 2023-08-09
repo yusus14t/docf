@@ -56,7 +56,7 @@ const DoctorsList = () => {
         <>
             <div className="ms-content-wrapper mx-2">
                 <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
-                    <div><h6>Doctors List</h6></div>
+                    <div><h6>Doctors</h6></div>
                     <div class="ms-form-group my-0 mb-0 has-icon fs-14">
                         { userInfo.userType === 'SA' && <input type="search" class="ms-form-input" name="search" placeholder="Search for doctors" onInput={(e) => { setSearchInput(e.target.value); console.log(e.target.value) }} />}
                         <i class="flaticon-search text-disabled"></i>

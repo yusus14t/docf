@@ -3,11 +3,6 @@ const notificationManager = require('../managers/notification-manager');
 const supportManager = require("../managers/support-manager")
 
 
-// const signUp = async ( req, res ) => {
-//     commonManager.signUp( req.body )
-//         .then( data => res.status(data.code).send(data) )
-//         .catch( err => res.status(500).send(err.data) )
-// }
 
 const createClinic = async ( req, res ) => {
 commonManager.createClinic( req.body, req.user )

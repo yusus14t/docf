@@ -9,13 +9,10 @@ const { specialization } = require('../seeds/specialization-seed')
 
 
 const sessionInfo = async ( body, user ) => {
-    try{ 
-        delete(user.password)
-        return Success({ user })
-    } catch(error){ 
-        console.log(error) 
-        return Error({ message: 'Something went wrong'});
-    }
+    try{
+        let info = await UserModel.findOne({ _id: user._id }).populate('organizationId')
+        return Success({ user: info })
+    }catch(error){ console.log(error) }    
 }
 
 const createClinic = async ( body, userInfo ) => {

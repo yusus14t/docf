@@ -1,15 +1,16 @@
 const UserModel = require("../models/user-model")
-const AppointmentModel = require("../models/appointment-model")
 const { Success } = require("../constants/utils")
+const organizationModel = require("../models/organization-model")
 const ObjectId = require('mongoose').Types.ObjectId
 
 const editProfile = async ( body, user, file ) => {
     try{
         let detail = JSON.parse(JSON.stringify(body))
         if( detail ) detail = JSON.parse(detail.data)
+        
 
+        let hospital = await UserModel.findOne({ phone: detail?.phone, _id: { $ne: user._id } })
 
-        let hospital = await UserModel.find({ phone: detail?.phone, _id: { $ne: user._id } })
         if( hospital ) return({ message: 'Phone already used.'})
         
         let obj = {
@@ -21,7 +22,11 @@ const editProfile = async ( body, user, file ) => {
         }
 
         if ( file ) obj['photo'] = file?.filename
-        await OrganizationModel.updateOne({ _id: user.organizationId }, obj)
+
+        console.log('obj', obj)
+        
+        await organizationModel.updateOne({ _id: user.organizationId }, obj)
+        if( obj.phone ) await UserModel.updateOne({ _id: user._id }, { phone: obj.phone })
 
         return Success({ message: 'Details saved successfully' })
     } catch(error){ console.log(error) }

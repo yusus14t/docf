@@ -7,6 +7,7 @@ import Appointment from "../common-components/Appointment/Appointment";
 import events from "../../events";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarPlus, faEnvelope, faMapMarker,  faPhone, } from "@fortawesome/free-solid-svg-icons";
+import NO_PHOTO from '../../assets.app/images/no-photo.png'
 
 function Detail() {
   const params = useParams();
@@ -90,7 +91,7 @@ function Detail() {
           <h4 className="clinic-detail-name">{clinicDetail?.name}</h4>
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-around  ">
-              <img className="clinic-detail-img" src={clinicDetail?.doctors && (clinicDetail?.photo ? getFullPath(clinicDetail?.doctors[0]?.photo) : drprofile)} alt="" />
+              <img className="clinic-detail-img" src={clinicDetail?.doctors && (clinicDetail?.photo ? getFullPath(clinicDetail?.doctors[0]?.photo) : NO_PHOTO)} alt="" />
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {clinicDetail?.name}

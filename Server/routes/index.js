@@ -3,7 +3,7 @@ const router = express();
 const commonController = require(`../controllers/common-controller`);
 const doctorContoller = require(`../controllers/doctor-controller`);
 
-const { EventHandler } = require('../managers/doctor-manager')
+const { EventHandler } = require('../managers/doctor-manager');
 const { jwt_verify } = require('../middlewares/common-middleware');
 
 // List Of Modules

@@ -1,13 +1,29 @@
 import { useForm } from 'react-hook-form';
-import { NumberFormat, axiosInstance, getAuthHeader } from '../../../constants/utils';
+import { NumberFormat, axiosInstance, getAuthHeader, updateUser } from '../../../constants/utils';
 import ImgUpload from '../Imgupload';
 import  useToasty  from '../../../hooks/toasty';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({ onchange: true })
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ onchange: true })
     const [ selectedFile, setSelectedFile ] = useState({})
     const toasty =  useToasty()
+    const userInfo = JSON.parse(localStorage.getItem('user'))
+
+    useEffect(() => {
+        let obj = {}
+        if( ['HL', 'CL', 'DP'].includes(userInfo.userType)){
+            obj = {
+                name: userInfo.organizationId.name,
+                phone: userInfo.phone,
+                email: userInfo.organizationId.email,
+                fee: userInfo.organizationId.fee,
+                address: userInfo.organizationId.address,
+            }
+        } else { obj = { ...userInfo }}
+
+        reset(obj)
+    }, [])
 
     const submit = async (values) => {
 
@@ -18,6 +34,7 @@ const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
         let header = getAuthHeader()
         header.headers['Content-Type'] = 'multipart/form-data'  
         
+        
         let response = null
         if( source === 'addMR' ){
             response = await axiosInstance.post('/super-admin/mr', formData, header) 
@@ -26,7 +43,7 @@ const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
             response = await axiosInstance.post('/hospital/edit-profile', formData, header)
         }
 
-
+        await updateUser()
         toasty.success(response?.data?.message)
         setIsOpen(false)
     }
@@ -76,7 +93,7 @@ const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
                                 />
                             </div>
                         </div>
-                        { source !== 'addMR' && <div className="col-md-6 mb-3">
+                        { source !== 'addMR' && ['HL', 'CL', 'DP'].includes(userInfo.userType) && <div className="col-md-6 mb-3">
                             <label >Consultant Fee</label>
                             <div className="input-group">
                                 <input 
@@ -129,7 +146,7 @@ const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
                         </div>
                     </div>
                     { source === 'addMR' && <button className='btn btn-light btn-md mx-2' onClick={() => setIsOpen(false) }>Cancel</button>}
-                    <button className='btn btn-primary btn-md' type='submit'>Save</button>
+                    <button className='btn btn-primary btn-md shadow-none' type='submit'>Save</button>
                 </form>
             </div>
         </div>

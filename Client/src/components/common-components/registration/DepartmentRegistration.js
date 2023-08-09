@@ -4,15 +4,15 @@ import { DAYS } from "../../../constants/constant";
 import { NumberFormat, axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
 import useToasty from '../../../hooks/toasty';
 import Select from 'react-select';
-import NO_PHOTO from '../../../assets.app/images/no-photo.png'
+import NO_PHOTO from '../../../assets.app/images/no-photo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
 
 
 const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}) => {
     const { register, handleSubmit,  formState: { errors, }, setError, getValues, setValue, reset, control } = useForm({ onChange: true })
-    const [specialization, setSpecialization] = useState([]);
-    const [departments, setDepartments] = useState([]);
+    const [ specialization, setSpecialization ] = useState([]);
+    const [ departments, setDepartments ] = useState([]);
     const [ timing, setTiming ] = useState([]);
     const [ days, setDays ] = useState(DAYS)
     const RID = JSON.parse(localStorage.getItem('RID')) || id
@@ -170,7 +170,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
                             />
                         </div>
                     </div>
-                    <div className="col-md-6 mb-3">
+                    <div className="col-sm-12 col-lg-6 mb-3">
                         <label >Specialization of Department</label>
                         <div className="">
                             <Controller

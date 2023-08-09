@@ -44,3 +44,12 @@ export const NumberFormat = ( e ) =>  {
 export const getFullPath = (filename) => `${ SERVER_URL }/images/${filename}`
 
 export const userInfo = JSON.parse(localStorage.getItem('user'))
+
+export const updateUser = async () => {
+    try{
+        let { data } = await axiosInstance.post('/session-info', getAuthHeader() )
+        localStorage.setItem('user', JSON.stringify(data.user) )
+    } catch(error){ console.error(error) }
+}
+
+updateUser()

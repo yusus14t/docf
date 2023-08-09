@@ -20,7 +20,7 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
             <div className="logo-sn ms-d-block-lg">
                 <div className="d-flex flex-row justify-content-around align-items-baseline">
                     <div className="">
-                        <a href="/" className="text-center "> <img className="profile-image" src={ userInfo.photo ? getFullPath(userInfo.photo) : NO_PHOTO} alt="logo" /></a>
+                        <a href="/" className="text-center "> <img className="profile-image" src={ userInfo.photo || userInfo?.organizationId?.photo ? getFullPath(userInfo.photo || userInfo?.organizationId?.photo) : NO_PHOTO} alt="logo" /></a>
                     </div>
                     <div className="">
                         <h5 className="text-center text-white mt-2">{['SA', 'MR', 'PT'].includes(userInfo.userType) ? userInfo?.name : userInfo?.organizationId?.name}</h5>

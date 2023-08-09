@@ -4,7 +4,6 @@ const commonController = require(`../controllers/common-controller`);
 // const { jwt_verify } = require('../middlewares/common-middleware');
 const { upload } = require('../constants/utils')
 
-
 router.post('/checkDuplicateEmail',  commonController.checkDuplicateEmail);
 router.post('/create-clinic', commonController.createClinic);
 router.post('/create-hospital', commonController.createHospital);

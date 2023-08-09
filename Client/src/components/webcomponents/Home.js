@@ -27,7 +27,7 @@ function Home() {
           alignItems: "center",
         }}
       >
-        <div className="container hero-content position-relative">
+        <div className="container hero-content ">
           <div className="">
             <h1 style={{ fontWeight: "bolder" }}>
               Get Expert <span> </span>
