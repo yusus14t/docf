@@ -413,6 +413,16 @@ const hospitalDetails = async ( body ) => {
     } catch(error){ console.log(error) }
 }
 
+const patientAppointments = async ( body, user ) => {
+    try{
+        let today = new Date()
+        today.setHours(0,0,0,0)
+       let appointments = await AppointmentModel.find({ userId: ObjectId(user._id), ...( body?.isToday ? { createdAt: { $gte: today }} : {}) })
+       .populate('departmentId', 'name address')
+       return Success({ appointments })
+    } catch(error){ console.log(error) }
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -432,4 +442,5 @@ module.exports = {
     setUserType,
     getAllHospitals,
     hospitalDetails,
+    patientAppointments,
 }

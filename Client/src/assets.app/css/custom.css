@@ -1349,6 +1349,7 @@ input::-webkit-inner-spin-button {
   height: 150px;
   border-radius: 50%;
   margin-left: 26%;
+  border: 1px solid grey;
 }
 /* ends */
 .apt-card{
@@ -1370,6 +1371,8 @@ input::-webkit-inner-spin-button {
 .d-contents {
   display: contents;
 }
+
+
 /*==================*************************media queries*******************==========================*/
 
 @media (max-width: 767px) {

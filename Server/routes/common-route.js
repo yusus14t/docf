@@ -26,4 +26,8 @@ router.post('/delete-notification', commonController.deleteNotification)
 router.get('/tickets', commonController.allTickets)
 router.post('/create-ticket', commonController.createTicket)
 
+//patient
+router.get('/patient-appointments', commonController.patientAppointments)
+
+
 module.exports = router;

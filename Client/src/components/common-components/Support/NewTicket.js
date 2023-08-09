@@ -4,7 +4,7 @@ import Select from "react-select"
 import { axiosInstance, getAuthHeader } from "../../../constants/utils";
 import useToasty from '../../../hooks/toasty';
 
-const NewTcket = ({isOpen, setIsOpen}) => {
+const NewTcket = ({isOpen, setIsOpen, refresh = () => {} }) => {
     const toasty = useToasty();
     const { register, handleSubmit, watch ,formState:{ errors }, control } = useForm({ onChange: true });
 
@@ -13,6 +13,7 @@ const NewTcket = ({isOpen, setIsOpen}) => {
             let {data} = await axiosInstance.post('/common/create-ticket', formData, getAuthHeader()) 
             toasty.success(data?.message)
             setIsOpen(false)
+            refresh()
         } catch(error){ console.log(error) }
     }
     return(

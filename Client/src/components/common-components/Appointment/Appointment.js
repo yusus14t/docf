@@ -43,6 +43,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                 setCardError('Card Must be select')
                 return;
             }
+
             if (selected) {
                 let selectedData = { department: { _id: formData.department?.organizationId } }
                 formData = { ...selectedData, ...selected }
@@ -51,7 +52,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
             if (['DP', 'CL'].includes(userInfo.userType)) {
                 formData['department'] = { organizationId: userInfo.organizationId._id }
 
-            } else if ( userInfo.userType === 'PT' ) formData['department'] = { organizationId: departmentId }
+            } else if ( userInfo.userType === 'PT' ) formData['department'] = { organizationId: params?.id }
 
             let { data } = await axiosInstance.post('/doctor/add-appointment', formData,);
             setAppointments(data?.appointment)

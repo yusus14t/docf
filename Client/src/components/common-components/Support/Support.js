@@ -50,7 +50,7 @@ const Support = () => {
                                 </div>
                                 <div className="mx-4 mt-10  " style={{height:"65vh", marginTop:"50px"}}>
 
-                                {tickets.length && tickets.map( ticket =>
+                                {tickets.length > 0 && tickets.map( ticket =>
                                     <div className="row dropdown-menu-active ">
                                     <div className="col text-center ">
                                         <span className="text-dark align-middle">{ticket.title}</span>
@@ -76,6 +76,7 @@ const Support = () => {
                     <NewTcket
                         isOpen={isModalOpen}
                         setIsOpen={setIsModalOpen}
+                        refresh={() => allTickets()}
                     />
                 }
             </div>

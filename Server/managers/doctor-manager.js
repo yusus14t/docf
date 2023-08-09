@@ -208,6 +208,7 @@ const deleteDoctor = async (body, user) => {
 
 const addAppointment = async (body, user) => {
   try {
+    console.log('body', body)
     let today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -218,14 +219,15 @@ const addAppointment = async (body, user) => {
       },
       { token: 1 }
     ).sort({ createdAt: -1 });
+
     let token = lastAppointment?.token
       ? Number(lastAppointment.token) + 1
       : "1";
+
     let patient = await UserModel.findOne(
       { phone: body.phone, userType: "PT" },
       { name: 1, userType: 1, phone: 1, address: 1 }
     );
-
     if (!patient) {
       patient = await UserModel({
         ...body,
@@ -233,13 +235,16 @@ const addAppointment = async (body, user) => {
         primary: true,
       }).save();
     }
-
+    
+    console.log( 'patient', patient )
+    
     let appointment = await AppointmentModel.findOne({
       userId: patient._id,
       departmentId: body.department.organizationId,
       status: "waiting",
       createdAt: { $gte: today },
     });
+
     if (!appointment) {
       appointment = await AppointmentModel({
         token,

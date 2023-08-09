@@ -8,6 +8,11 @@ const editProfile = async ( body, user, file ) => {
         let detail = JSON.parse(JSON.stringify(body))
         if( detail ) detail = JSON.parse(detail.data)
         
+        if( user.userType === 'PT' ){
+            if ( file ) detail['photo'] = file?.filename
+            await UserModel.updateOne({ _id: ObjectId(user._id) }, { ...detail })
+            return Success({ message: 'Profile Edit Successfully.'})
+        }
 
         let hospital = await UserModel.findOne({ phone: detail?.phone, _id: { $ne: user._id } })
 
@@ -22,8 +27,6 @@ const editProfile = async ( body, user, file ) => {
         }
 
         if ( file ) obj['photo'] = file?.filename
-
-        console.log('obj', obj)
         
         await organizationModel.updateOne({ _id: user.organizationId }, obj)
         if( obj.phone ) await UserModel.updateOne({ _id: user._id }, { phone: obj.phone })
