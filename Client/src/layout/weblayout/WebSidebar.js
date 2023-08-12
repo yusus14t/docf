@@ -10,13 +10,16 @@ import { getFullPath } from '../../constants/utils';
 function WebSidebar({isOpen}) {
 
     const MENU_ITEM = [
-      { id: 'home', name: 'Home', path: '/' },
-      { id: 'hospitals', name: 'Hospitals', path: '/hospitals' },
-      { id: 'clinics', name: 'Clinics', path: '/clinics' },
-      { id: 'doctors', name: 'Doctors', path: '/doctors' },
-      { id: 'aboutus', name: 'About Us', path: '/about-us' },
-      { id: 'contactus', name: 'Contact Us', path: '/contact-us' },
-    ]    
+      { id: "home", name: "Home", path: "/" },
+      { id: "gynae", name: "Gynae", path: "/gynae" },
+      { id: "hospitals", name: "Hospitals", path: "/hospitals" },
+      { id: "clinics", name: "Clinics", path: "/clinics" },
+      { id: "doctors", name: "Doctors", path: "/doctors" },
+      { id: "ultrasound", name: "Ultrasound", path: "/ultrasound" },
+      { id: "ultrasound", name: "Homeopathy", path: "/homeopathy" },
+      { id: "aboutus", name: "About Us", path: "/about-us" },
+      { id: "contactus", name: "Contact Us", path: "/contact-us" },
+    ];    
 
     const userInfo = JSON.parse(localStorage.getItem('user'))
     

@@ -41,14 +41,16 @@ export const DAYS = [
 ]
 
 export const WEB_MENU_ITEMS = [
-    { id: "home", name: "Home", path: "/" },
-    { id: "gynae", name: "Gynae", path: "/gynae" },
-    { id: "hospitals", name: "Hospitals", path: "/hospitals" },
-    { id: "clinic", name: "Clinics", path: "/clinic" },
-    { id: "doctors", name: "Doctors", path: "/doctors" },
-    { id: "about", name: "About Us", path: "/about" },
-    { id: "contact", name: "Contact Us", path: "/contact" },
-];
+         { id: "home", name: "Home", path: "/" },
+         { id: "gynae", name: "Gynae", path: "/gynae" },
+         { id: "hospitals", name: "Hospitals", path: "/hospitals" },
+         { id: "clinic", name: "Clinics", path: "/clinic" },
+         { id: "doctors", name: "Doctors", path: "/doctors" },
+         { id: "ultrasounds", name: "Ultrasounds", path: "/ultrasounds" },
+         { id: "homeopathy", name: "Homeopathy", path: "/homeopathy" },
+         { id: "about", name: "About Us", path: "/about" },
+         { id: "contact", name: "Contact Us", path: "/contact" },
+       ];
 
 export const SERVICES = [
     { id: 'PARKING', name: 'Parking' },

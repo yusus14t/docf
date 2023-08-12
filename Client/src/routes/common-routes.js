@@ -17,6 +17,7 @@ const HospitalDetails = lazy(() => import("../components/webcomponents/Hospital/
 const LogIn = lazy(() => import("../components/authentication/LogIn"));
 const Ultrasound = lazy(() => import("../components/webcomponents/Ultrasound"));
 const SpecializationDetails = lazy(() => import('../components/webcomponents/Specializations/SpecializationDetails'))
+const Homeopathy =lazy(()=> import('../components/webcomponents/Homeopathy'))
 
 const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
 
@@ -35,6 +36,7 @@ const COMMON_ROUTE = [
   { path: "/hospital/:id", element: <HospitalDetails /> },
   { path: "/department/:id", element: <ClinicDetail /> },
   { path: "/ultrasounds", element: <Ultrasound /> },
+  {path: "/homeopathy", element: <Homeopathy/>},
   { path: "/specialization-deatils", element: <SpecializationDetails /> },
 
   {

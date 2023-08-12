@@ -96,9 +96,7 @@ function Home() {
 
       {/* testimonials */}
 
-      <div className="">
-        <Testamonilas />
-      </div>
+      
     </>
   );
 }
