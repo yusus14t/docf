@@ -9,7 +9,7 @@ function WebFooter() {
           Made by <Link style={{color:"skyblue"}} target='_blank' to="https://erahamtech.com">EraHam Tech</Link> | Copyright &#169;, Doctor Time. All rights reserved
         </p>
       </footer>
-    );
+    ) ;
 }
 
 export default WebFooter;

@@ -8,14 +8,14 @@ const Search = () => {
     <>
       <div className="box"></div>
       <div
-        style={{ position: "fixed", zIndex: "999" }}
+        style={{ position: "fixed", zIndex: "800" }}
         className="seacrh-bar-container w-100 "
       >
         <ul className="d-flex flex-row justify-content-center seacrh-ul  p-2">
           <li>
             <label htmlFor="">
               <img
-                style={{ width: "30px", height: "40px", marginRight: "10px" }}
+                style={{ width: "30px", height: "35px", marginRight: "10px" }}
                 src={filter}
                 alt=""
               />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Avatar from '../../assets.app/img/dashboard/doctor-3.jpg'
-import logo from '../../assets.app/img/logo/logo.png'
+import logo from '../../assets.app/img/logo/logo.jpg'
 import WebSidebar from "./WebSidebar";
 import { Dropdown, Item } from "../../components/common-components/Dropdown";
 import { WEB_MENU_ITEMS, userRoutes } from "../../constants/constant";
