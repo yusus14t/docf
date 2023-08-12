@@ -20,9 +20,23 @@ const deleteOrganization = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const organizationChart = async ( req, res ) => {
+    mrManager.organizationChart( req.params, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const analytics = async ( req, res ) => {
+    mrManager.analytics( req.params, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 
 module.exports = {
     clinics,
     organizations,
     deleteOrganization,
+    organizationChart,
+    analytics,
 }

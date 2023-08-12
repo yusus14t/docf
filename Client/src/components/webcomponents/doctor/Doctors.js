@@ -48,7 +48,7 @@ const handle = ()=>{
                     .map((doctor, key) => (
                       <>
                         <div className="col-lg-4 col-md-4 mcard" key={key}>
-                          <Link to="/doctor-detail">
+                          <Link to={`/clinic-detail/${doctor?.organizationId}`}>
                             <div
                               onClick={handle}
                               // onClick={() =>"" }
@@ -73,10 +73,10 @@ const handle = ()=>{
                                     "Specialization"}
                                 </p>
                                 <p className="mb-1 experience-dr">
-                                  Eperience : 8 Years
+                                  Eperience :{ doctor?.experience || '-'}
                                 </p>
-                                <p className="dr-qualifiction mb-1">MBBS ,MD</p>
-                                <p className="dr-address">{doctor?.address}</p>
+                                <p className="dr-qualifiction mb-1">Qualification: {doctor?.qualification || '-'}</p>
+                                <p className="dr-address">{doctor?.address || '-'}</p>
                               </div>
                             </div>
                           </Link>

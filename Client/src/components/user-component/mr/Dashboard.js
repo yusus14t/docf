@@ -6,32 +6,54 @@ import { LineChart, DoughnutChart } from '../../common-components/Chart';
 import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from '../../../constants/utils'
 
 const Dashbaord = () => {
-    const [doctor, setDoctor] = useState({})
     const [isWeekChart, setIsWeekChart] = useState(true) 
     const [chartData, setChartData] = useState({})
     const [hospitals, setHospitals] = useState({})
     const [clinics, setClinics] = useState({})
+    const [ organizationChartData,setOrganizationChartData ] = useState([])
+    const [ analytics, setAnalytics ] = useState({})
+
+    const fullForm = {
+        'HL': 'Hospital',
+        'CL': 'Clinic',
+        'DR': 'Doctor'
+    }
 
     useEffect(() => {
+        getOrganizationAnalyitcs()
         changeFilter('clinics')
         getHospitals()
         getClinics()
+        getAnalytics()
     }, [])
 
     const getHospitals =  async () => {
         try{ 
-            let { data } = await axiosInstance.get('/mr/organiztions', { params: { organizationType: 'Hospital', istoday: false }, ...getAuthHeader()})
-            console.log('data hospitals', data)
+            let { data } = await axiosInstance.get('/mr/organiztions', { params: { organizationType: 'Hospital', istoday: true }, ...getAuthHeader()})
             setHospitals(data.organizations)
         } catch(error){ console.error(error) }
     }
     
     const getClinics =  async () => {
         try{ 
-            let { data } = await axiosInstance.get('/mr/organiztions', { params: { organizationType: 'Clinic', istoday: false }, ...getAuthHeader()})
-            console.log('data', data)
+            let { data } = await axiosInstance.get('/mr/organiztions', { params: { organizationType: 'Clinic', istoday: true }, ...getAuthHeader()})
             setClinics(data.organizations)
         } catch(error){ console.error(error) }
+    }
+
+    const getOrganizationAnalyitcs = async () => {
+        try{
+            let { data } = await axiosInstance.get('/mr/organization-chart')
+            data?.organizationChartData.map( d => d._id = fullForm[d._id])
+            setOrganizationChartData(data?.organizationChartData)
+        }catch(error){ console.error(error) }
+    }
+
+    const getAnalytics = async () => {
+        try{
+            let { data } = await axiosInstance.get('/mr/analytics')
+            setAnalytics(data?.analytics)
+        }catch(error){ console.error(error) }
     }
 
     const changeFilter = (value) => {
@@ -80,8 +102,8 @@ const Dashbaord = () => {
                             <div class="media-body">
                                 <h6>Visits</h6>
                                 <div className='d-flex justify-content-start'>
-                                    <div className='ms-card-change text-light me-3'><span className='fs-07 text-white'>Today </span>45</div>
-                                    <div className='ms-card-change text-light'><span className='fs-07 text-white'>Total </span>34</div>
+                                    <div className='ms-card-change text-light me-3'><span className='fs-07 text-white'>Today </span>0</div>
+                                    <div className='ms-card-change text-light'><span className='fs-07 text-white'>Total </span>0</div>
                                 </div>
                             </div>
                         </div>
@@ -95,8 +117,8 @@ const Dashbaord = () => {
                                 <div class="media-body">
                                     <h6>Clinics</h6>
                                     <div className='d-flex justify-content-start'>
-                                        <div className='ms-card-change text-light me-3'><span className='fs-07 text-white'>Today </span>45</div>
-                                        <div className='ms-card-change text-light '><span className='fs-07 text-white'>Total </span>34</div>
+                                        <div className='ms-card-change text-light me-3'><span className='fs-07 text-white'>Today </span>{analytics?.todayClinics?.count || '0'}</div>
+                                        <div className='ms-card-change text-light '><span className='fs-07 text-white'>Total </span>{analytics?.totalClinics?.count || '0'}</div>
                                     </div>
                                 </div>
                             </div>
@@ -111,8 +133,8 @@ const Dashbaord = () => {
                                 <div class="media-body">
                                     <h6>Hospitals</h6>
                                     <div className='d-flex justify-content-start'>
-                                        <div className='ms-card-change text-light me-3'><span className='fs-07 text-white'>Today </span>45</div>
-                                        <div className='ms-card-change text-light '><span className='fs-07 text-white'>Total </span>34</div>
+                                        <div className='ms-card-change text-light me-3'><span className='fs-07 text-white'>Today </span>{ analytics?.todayHospitals?.count || '0' }</div>
+                                        <div className='ms-card-change text-light '><span className='fs-07 text-white'>Total </span>{ analytics?.totalHospitals?.count || '0'}</div>
                                     </div>
                                 </div>
                             </div>
@@ -127,8 +149,8 @@ const Dashbaord = () => {
                                 <div class="media-body">
                                     <h6>Doctors</h6>
                                     <div className='d-flex justify-content-start'>
-                                        <div className='ms-card-change text-light me-3'><span className='fs-07 text-white'>Today </span>45</div>
-                                        <div className='ms-card-change text-light '><span className='fs-07 text-white'>Total </span>34</div>
+                                        <div className='ms-card-change text-light me-3'><span className='fs-07 text-white'>Today </span>{ analytics?.todayDoctors?.count || '0' }</div>
+                                        <div className='ms-card-change text-light '><span className='fs-07 text-white'>Total </span>{ analytics?.totalDoctors?.count || '0' }</div>
                                     </div>
                                 </div>
                             </div>
@@ -176,20 +198,12 @@ const Dashbaord = () => {
                     <div class="ms-panel h-100">
                         <div class="ms-panel-header">
                             <div>
-                                <h6>Totals</h6>
+                                <h6>ORGANIZATION CHART</h6>
                             </div>
                         </div>
-                        <div class="ms-panel-body d-flex justify-content-around align-items-center">
-                            <div>
-                                <span className='h4'>Organization</span>
-                                <div className='mt-3 float-left'>
-                                    <p className='h6'>Hospitals <span className='h5 text-info'>46%</span></p>
-                                    <p className='h6'>Clinics <span className='h5 text-info'>46%</span></p>
-                                    <p className='h6'>Doctors <span className='h5 text-info'>46%</span></p>
-                                </div>
-                            </div>
-                            <div className='text-center' style={{ height:'12rem', width:'12rem' }}>
-                                <DoughnutChart filterType={isWeekChart ? 'week' : 'month' } labelName={'Patient'} chartData={chartData} />
+                        <div class="d-flex justify-content-around align-items-center ">
+                            <div className='text-center' style={{ height:'20rem', width:'20rem' }}>
+                                <DoughnutChart filterType={isWeekChart ? 'week' : 'month' } labelName={'Patient'} chartData={organizationChartData} />
                             </div>
                         </div>
                     </div>
@@ -209,7 +223,7 @@ const Dashbaord = () => {
                                 {hospitals?.length > 0 && hospitals.map((hospital, key) => 
                                     <li class="ms-list-item media" key={key} >
                                     <img src={hospital?.photo ? getFullPath(hospital.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
-                                    <div class="media-body mt-1">
+                                    <div class="media-body mt-1"> 
                                         <div className='d-flex justify-content-between'>
                                             <div>
                                                 <h4>{hospital?.name}</h4>

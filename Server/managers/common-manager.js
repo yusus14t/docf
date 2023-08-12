@@ -308,6 +308,8 @@ const clinicDetails = async ( body ) => {
                     email: 1,
                     specialization: 1,
                     token: {$first: '$appointment.token'},
+                    address: 1,
+                    fee: 1,
                 }
             }
         ])
@@ -371,7 +373,11 @@ const waitingList = async ( body, user ) => {
 
 const setUserType = async ( body ) => {
     try {
-
+        let userTypes = {
+            'hospital': 'HL',
+            'clinic': 'CL',
+            'patient': 'PT',
+        }
         let userType = null
         let organization = null
         if (body.type === 'hospital') {
@@ -380,10 +386,10 @@ const setUserType = async ( body ) => {
                 organization = await OrganizationModel({ organizationType: 'Hospital' }).save()
             }
         }
-        else if (body.type === 'clinic') {
-            userType = 'CL'
+        else if ([ 'clinic' ].includes(body.type)) {
+            userType = userTypes[body.type]
             if( !body?.organizationId ){
-                organization = await OrganizationModel({ organizationType: 'Clinic' }).save()
+                organization = await OrganizationModel({ organizationType: body.type === 'clinic' ? 'Clinic' : 'Ultrasound' }).save()
             }
         }
         else userType = 'PT'
@@ -407,6 +413,9 @@ const getAllHospitals = async ( body ) => {
 const hospitalDetails = async ( body ) => {
     try{
        let details = await OrganizationModel.findOne({ _id: body.id })
+       let user = await UserModel.findOne({ organizationId: body.id }, { phone: 1 })
+       details['phone'] = user?.phone
+
        let departments = await UserModel.find({ hospitalId: body.id }, { organizationId: 1 })
        .populate('organizationId', 'name room specialization photo')
        return Success({ details, departments })

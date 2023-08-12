@@ -30,7 +30,7 @@ app.use(
 );
 
 // Static Routes
-app.use('/images', express.static(path.join(__dirname, './uploads')))
+app.use('/images', express.static('./uploads'))
 
 
 // All Routes

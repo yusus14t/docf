@@ -35,8 +35,164 @@ const deleteOrganization = async ( body ) => {
 }
 
 
+const organizationChart = async ( body, user ) => {
+    try{
+        let organizationChartData = await UserModel.aggregate([
+            {
+                $match: {
+                    createdBy: user._id
+                }
+            },
+            {
+                $group: {
+                    _id: '$userType',
+                    count: {
+                        $sum: 1
+                    }
+                }
+            }
+        ])
+
+        return Success({ message: 'Delete succesfully', organizationChartData })
+    } catch( error ){ console.log(error) }
+}
+
+
+const analytics = async ( body, user ) => {
+    try{
+        let today = new Date()
+        today.setHours(0, 0, 0, 0)
+
+        let analytics = await UserModel.aggregate([
+            {
+                $match: {
+                    createdBy: user._id,
+                }
+            },
+            {
+                $facet: {
+                    totalClinics: [
+                        {
+                            $match: {
+                                userType: 'CL',
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: '$userType',
+                                count: {
+                                    $sum: 1
+                                },
+                            }
+                        }
+                    ],
+                    todayClinics: [
+                        {
+                            $match: {
+                                userType: 'CL',
+                                createdAt: {
+                                    $gte: today
+                                }
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: '$userType',
+                                count: {
+                                    $sum: 1
+                                },
+                            }
+                        }
+                    ],
+                    totalHospitals: [
+                        {
+                            $match: {
+                                userType: 'HL',
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: '$userType',
+                                count: {
+                                    $sum: 1
+                                },
+                            }
+                        }
+                    ],
+                    todayHospitals: [
+                        {
+                            $match: {
+                                userType: 'HL',
+                                createdAt: {
+                                    $gte: today
+                                }
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: '$userType',
+                                count: {
+                                    $sum: 1
+                                },
+                            }
+                        }
+                    ],
+                    totalDoctors: [
+                        {
+                            $match: {
+                                userType: 'DR',
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: '$userType',
+                                count: {
+                                    $sum: 1
+                                },
+                            }
+                        },
+                    ],
+                    todayDoctors: [
+                        {
+                            $match: {
+                                userType: 'DR',
+                                createdAt: {
+                                    $gte: today
+                                }
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: '$userType',
+                                count: {
+                                    $sum: 1
+                                },
+                            }
+                        }
+                    ],
+                }
+            },
+            {
+                $project: {
+                    todayDoctors: { $first: '$todayDoctors' },
+                    totalDoctors: { $first: '$totalDoctors' },
+                    todayClinics: { $first: '$todayClinics' },
+                    totalClinics: { $first: '$totalClinics' },
+                    todayHospitals: { $first: '$todayHospitals' },
+                    totalHospitals: { $first: '$totalHospitals' },
+                }
+            }
+        ])
+        
+        return Success({ message: 'Delete succesfully', analytics: analytics[0]})
+    } catch( error ){ console.log(error) }
+}
+
+
 module.exports = {
     clinics,
     organizations,
     deleteOrganization,
+    organizationChart,
+    analytics,
 }

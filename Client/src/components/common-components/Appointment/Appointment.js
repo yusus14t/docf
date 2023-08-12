@@ -49,7 +49,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                 formData = { ...selectedData, ...selected }
             }
 
-            if (['DP', 'CL'].includes(userInfo.userType)) {
+            if (['DP', 'CL' ].includes(userInfo.userType)) {
                 formData['department'] = { organizationId: userInfo.organizationId._id }
 
             } else if ( userInfo.userType === 'PT' ) formData['department'] = { organizationId: params?.id }

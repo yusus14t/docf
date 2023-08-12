@@ -7,7 +7,7 @@ const organizationSchema = new Schema({
 
     phone: { type: String },
     address: { type: String },
-    organizationType: { type: String, enum: [ 'Clinic', 'Department', 'Hospital' ] },
+    organizationType: { type: String, enum: [ 'Clinic', 'Department', 'Hospital', 'Ultrasound' ] },
     photo: { type: String, default: null },
     specialization: [
         {

@@ -3,7 +3,7 @@ import background from "../../../assets.app/img/user-profile-bg-1920x400.jpg";
 import DepartmentCard from "./DepartmentCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLocationDot, faMapMarker, faPhone } from "@fortawesome/free-solid-svg-icons";
-import { axiosInstance, getFullPath } from "../../../constants/utils";
+import { axiosInstance, formatPhone, getFullPath } from "../../../constants/utils";
 import { useParams } from "react-router-dom";
 
 const HospitalDetails = () => {
@@ -20,7 +20,6 @@ const HospitalDetails = () => {
       let { data } = await axiosInstance.get(`/hospital-details/${params.id}`)
       setHospital(data?.details)
       setDepartments(data?.departments)
-      console.log(data)
     } catch(error) { console.error(error) }
   }
 
@@ -50,7 +49,7 @@ const HospitalDetails = () => {
             </div>
             <div class="sigma_info-description">
               <p>Our Address</p>
-              <p class="secondary-color">Street 9, Ho Chi Minh city Vietman</p>
+              <p class="secondary-color">{ hospital?.address }</p>
             </div>
           </div>
           <div class="sigma_info style-26 d-flex">
@@ -65,7 +64,7 @@ const HospitalDetails = () => {
             </div>
             <div class="sigma_info-description">
               <p>Call Us</p>
-              <p class="secondary-color">+91 8889966365</p>
+              <p class="secondary-color">{formatPhone(hospital?.phone)}</p>
             </div>
           </div>
           <div class="sigma_info style-26 d-flex">
@@ -79,7 +78,7 @@ const HospitalDetails = () => {
             </div>
             <div class="sigma_info-description">
               <p>Our Mail</p>
-              <p class="secondary-color">youremail@gamil.com</p>
+              <p class="secondary-color">{ hospital?.email }</p>
             </div>
           </div>
         </div>

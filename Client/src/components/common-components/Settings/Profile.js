@@ -93,7 +93,7 @@ const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
                                 />
                             </div>
                         </div>
-                        { source !== 'addMR' && ['HL', 'CL', 'DP'].includes(userInfo.userType) && <div className="col-md-6 mb-3">
+                        { source !== 'addMR' && ['HL', 'CL', 'DP' ].includes(userInfo.userType) && <div className="col-md-6 mb-3">
                             <label >Consultant Fee</label>
                             <div className="input-group">
                                 <input 

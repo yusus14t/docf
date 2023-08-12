@@ -46,7 +46,6 @@ export const WEB_MENU_ITEMS = [
     { id: "hospitals", name: "Hospitals", path: "/hospitals" },
     { id: "clinic", name: "Clinics", path: "/clinic" },
     { id: "doctors", name: "Doctors", path: "/doctors" },
-    { id: "ultrasound", name: "Ultrasound", path: "/ultrasound" },
     { id: "about", name: "About Us", path: "/about" },
     { id: "contact", name: "Contact Us", path: "/contact" },
 ];

@@ -1,6 +1,6 @@
 import background from "../../assets.app/img/user-profile-bg-1920x400.jpg";
 import drprofile from "../../assets.app/img/doctors-list/182x280-0.jpg";
-import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils";
+import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from "../../constants/utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
@@ -91,7 +91,7 @@ function Detail() {
           <h4 className="clinic-detail-name">{clinicDetail?.name}</h4>
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-around  ">
-              <img className="clinic-detail-img" src={clinicDetail?.doctors && (clinicDetail?.photo ? getFullPath(clinicDetail?.doctors[0]?.photo) : NO_PHOTO)} alt="" />
+              <img className="clinic-detail-img" src={clinicDetail?.doctors ? getFullPath(clinicDetail?.doctors[0]?.photo) : NO_PHOTO} alt="" />
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {clinicDetail?.name}
@@ -180,7 +180,7 @@ function Detail() {
                 <h6 className="text-left text-light mx-2">
                   <span className="text-disabled">Consultation Fee</span> :
                   Rs&nbsp;
-                  {clinicDetail?.detail?.fee}
+                  {clinicDetail?.fee}
                 </h6>
                 <div className="description-clinic-detail mb-3 pe-2">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
@@ -243,7 +243,7 @@ function Detail() {
           </div>
 
           {/* CONTACT CARD */}
-          <div className="contact-details-clinic">
+          <div className="contact-details-clinic pt-3">
             <div className="sigma_info style-26 d-flex">
               <div className="sigma_info-title">
                 <span className="sigma_info-icon clinic-address-icon-container">
@@ -256,7 +256,7 @@ function Detail() {
               <div className="sigma_info-description">
                 <p>Our Address</p>
                 <p className="secondary-color">
-                  <b>{clinicDetail?.detail?.address}</b>
+                  <b>{clinicDetail?.address}</b>
                 </p>
               </div>
             </div>
@@ -274,9 +274,7 @@ function Detail() {
                 <p>Call Us</p>
                 <p className="secondary-color">
                   <b>
-                    {clinicDetail?.detail?.phone?.slice(0, 3)}-
-                    {clinicDetail?.detail?.phone?.slice(4, 7)}-
-                    {clinicDetail?.detail?.phone?.slice(-4)}
+                    {formatPhone(clinicDetail?.phone)}
                   </b>
                 </p>
               </div>
@@ -293,7 +291,7 @@ function Detail() {
               <div className="sigma_info-description">
                 <p>Our Mail</p>
                 <p className="secondary-color">
-                  <b>{clinicDetail?.detail?.email}</b>
+                  <b>{clinicDetail?.email}</b>
                 </p>
               </div>
             </div>
@@ -304,7 +302,7 @@ function Detail() {
         <Appointment
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          departmentId={clinicDetail?.detail?._id}
+          departmentId={clinicDetail?._id}
           refresh={() => {}}
         />
       )}

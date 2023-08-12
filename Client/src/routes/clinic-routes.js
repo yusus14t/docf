@@ -10,8 +10,7 @@ import Settings from "../components/common-components/Settings/Settings";
 const CLINIC = [
   { path: "/clinic", element: <Navigate to={"/clinic/dashboard"} /> },
   { path: "/clinic/dashboard", element: <Dashbaord /> },
-  { path: "/clinic/profile", element: <h1>Profile</h1> },
-  { path: "/clinic/patient", element: <Patients /> },
+  { path: "/clinic/patients", element: <Patients /> },
   { path: "/clinic/appointment", element: <AppointmentList /> },
   { path: "/clinic/notification", element: <Notification /> },
   { path: "/clinic/support", element: <Support /> },
