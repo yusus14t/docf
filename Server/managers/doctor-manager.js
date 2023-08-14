@@ -142,9 +142,9 @@ const getAllDoctors = async (body, user) => {
 
       departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
       query['organizationId'] = { $in: departmentIds }
-    } else {
-      query['createdBy'] = user._id
-    }
+    } else if( user ){
+      query['createdBy'] = user?._id
+    } 
 
     let doctors = await UserModel.aggregate([
       {

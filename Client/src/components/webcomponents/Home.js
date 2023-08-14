@@ -12,7 +12,6 @@ import Search from "../common-components/Search";
 function Home() {
   
   return (
-
     <>
       <div className="box"></div>
       {/* hero section */}
@@ -76,10 +75,14 @@ function Home() {
         </h3>
         <div className="row mt-2">
           <div className="col-sm-6">
-            <div className="col-5 advantages"></div>
-            <div className="col-5 advantages"></div>
-            <div className="col-5 advantages"></div>
-            <div className="col-5 advantages"></div>
+            <div className="col-5 advantages">
+              <h3 className="">Time Saving of Patients</h3>
+            </div>
+            <div className="col-5 advantages">Get Rid from Crowd</div>
+            <div className="col-5 advantages">
+              Book Appoinment from anywhere
+            </div>
+            <div className="col-5 advantages">Search Best doctor near you</div>
           </div>
           <div className="col-sm-6 advantages-side-img">
             <img
@@ -95,8 +98,6 @@ function Home() {
       {/* <Services /> */}
 
       {/* testimonials */}
-
-      
     </>
   );
 }
