@@ -1062,6 +1062,7 @@ input::-webkit-inner-spin-button {
 .hopsiptal-banner-img {
   height: 300px;
   width: 100%;
+  object-fit: cover;
 }
 .department-card {
   height: 173px;
@@ -1369,6 +1370,18 @@ input::-webkit-inner-spin-button {
   width: 15rem;
 }
 
+/* Searchpage */
+.search-page{
+  background-color: #dfdede;
+  height: 70vh;
+  /* width: 50%; */
+  overflow: scroll;
+}
+.search-result-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 1400px){
   .home-search{
@@ -1407,6 +1420,15 @@ input::-webkit-inner-spin-button {
 
 
 @media (max-width: 767px) {
+  .search-page{
+    width: 100%;
+    
+  }
+  .main-ch{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    width: 100% !important;
+  }
   .seacrh-bar-container {
     z-index: 99;
     margin-top: 15px;
