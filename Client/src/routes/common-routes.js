@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import { userRoutes as userRouteConstant } from "../constants/constant";
 
+import Hospitals from "../components/webcomponents/Hospital/Hospitals";
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
 const Doctors = lazy(() => import( '../components/webcomponents/doctor/Doctors'))
 const Clinics = lazy(() => import( "../components/webcomponents/Clinics"))
@@ -11,7 +12,6 @@ const Contact = lazy(() => import('../components/webcomponents/Contact'))
 const DepartmentSignUp = lazy(() => import('../components/authentication/DepartmentSignUp'))
 const AfterSignup = lazy(() => import('../components/process/AfterSignup'))
 const Gynae = lazy(() => import("../components/webcomponents/Gynae"))
-const Hospitals = lazy(() => import("../components/webcomponents/Hospital/Hospitals"))
 const Detail = lazy(() => import("../components/webcomponents/doctor/Detail"))
 const HospitalDetails = lazy(() => import("../components/webcomponents/Hospital/HospitalDetails"))
 const LogIn = lazy(() => import("../components/authentication/LogIn"));

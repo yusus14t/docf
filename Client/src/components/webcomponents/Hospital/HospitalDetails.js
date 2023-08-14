@@ -13,7 +13,7 @@ const HospitalDetails = () => {
 
   useEffect(() => {
     getHospital();
-  }, [])
+  }, [params.id, ])
 
   const getHospital = async () => {
     try{

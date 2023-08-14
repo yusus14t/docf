@@ -17,7 +17,6 @@ const HospitalGrid = ({source}) => {
     try {
       let { data } = await axiosInstance.get('/hospitals')
       setHospitals(data?.organization)
-      console.log('data',data)
     } catch(error){ console.error(error) }
   }
   return (

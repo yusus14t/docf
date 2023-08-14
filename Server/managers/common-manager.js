@@ -437,8 +437,8 @@ const patientAppointments = async ( body, user ) => {
 
 const search = async ( body, user ) => {
     try{
-        
-        console.log(body, ( body?.fee > 0 ? { fee: { $lte: parseInt(body?.fee) }} : {}))
+        if( !body?.search ) return Success({ searchData: [] })
+
         let aggregateQuery = [
             {
                 $match: {
@@ -464,12 +464,9 @@ const search = async ( body, user ) => {
                 }
             }
         })
-
-        console.log(aggregateQuery)
         
-        let organizations = await OrganizationModel.aggregate(aggregateQuery)        
-        console.log(organizations.map(a => `${a.name}, ${a.fee} ${a.organizationType}`))
-       return Success({ organizations })
+        let searchData = await OrganizationModel.aggregate(aggregateQuery)        
+       return Success({ searchData })
     } catch(error){ console.log(error) }
 }
 

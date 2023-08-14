@@ -13,8 +13,8 @@ const Card = ({source}) => {
   const getSpecialization = async () => {
     let { data } = await axiosInstance.get("/get-specializations");
     setSpecialization(data?.specializations);
-    console.log(data);
   };
+  
   return (
     <>
       {specialisations

@@ -39,7 +39,6 @@ function Clinics({ source }) {
       >
         <div className="asidebox"></div>
         <div className="container">
-          {console.log(clinics)}
           <div className="row mt-2 mb-2">
             <div className="col-12">
               <div className="row ">
