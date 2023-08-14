@@ -15,6 +15,12 @@ const organizationSchema = new Schema({
             id: { type: String }
         }
     ],
+    services: [
+        {
+            name: { type: String },
+            id: { type: String }
+        }
+    ],
     fee: { type: String, default: '0' },
     room: {  type: String },
     timing: [
@@ -24,7 +30,6 @@ const organizationSchema = new Schema({
             close: { type: String },
         }
     ],
-    // parking: { type: String, enum: [ 'available', 'unAvailable' ] },
 
     isActive: { type: String, default: false },
     tab: {

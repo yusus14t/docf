@@ -218,7 +218,7 @@ const Dashbaord = () => {
                                 <Link to={'/mr/hospital-registration'} className='btn btn btn-info btn-md'>+ Hospital</Link>
                             </div>
                         </div>
-                        <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">{ console.log('hospitals', hospitals)}
+                        <div style={{overflowY:"scroll"}} class="ms-panel-body h20 p-0">
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {hospitals?.length > 0 && hospitals.map((hospital, key) => 
                                     <li class="ms-list-item media" key={key} >

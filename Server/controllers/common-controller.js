@@ -157,6 +157,12 @@ const patientAppointments = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const search = async ( req, res ) => {
+    commonManager.search( req.query )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -183,4 +189,5 @@ module.exports = {
     getAllHospitals,
     hospitalDetails,
     patientAppointments,
+    search,
 }

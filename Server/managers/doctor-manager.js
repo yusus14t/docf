@@ -142,7 +142,7 @@ const getAllDoctors = async (body, user) => {
 
       departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
       query['organizationId'] = { $in: departmentIds }
-    } else {
+    } else if( user ) {
       query['createdBy'] = user._id
     }
 

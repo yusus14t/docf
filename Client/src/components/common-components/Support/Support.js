@@ -23,7 +23,7 @@ const Support = () => {
             <div className='ms-content-wrapper'>
                 <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                     <div>
-                        <h6 >Help Desk</h6>{ console.log(tickets)}
+                        <h6 >Help Desk</h6>
                     </div>
                     {userInfo.userType !== 'SA' && <div>
                         <button onClick={() => setIsModalOpen(true)} className=" btn btn-info btn-md" >New Ticket</button>

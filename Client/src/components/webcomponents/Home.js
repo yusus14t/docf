@@ -2,12 +2,8 @@ import Clinics from "./Clinics";
 import Hospitals from "./Hospital/Hospitals";
 import dr from "../../assets.app/img/home/portrait-doctor.jpg";
 import hero from "../../assets.app/img/home/hero.jpg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Slider from "./Specializations/Slider";
 import DoctorsList from "./doctor/Doctors";
-import Testamonilas from "./Testamonilas";
-import Search from "../common-components/Search";
 
 function Home() {
   
@@ -39,7 +35,7 @@ function Home() {
               Our Partners provide best Medical Treament and advice
             </h4>
           </div>
-          <div
+          {/* <div
             style={{ backgroundColor: "#fff" }}
             className="search-contianer-home mt-3"
           >
@@ -49,7 +45,7 @@ function Home() {
               type="text"
             />
             <FontAwesomeIcon className="home-search-icon" icon={faSearch} />
-          </div>
+          </div> */}
         </div>
       </div>
       {/* specialization slider */}

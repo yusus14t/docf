@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {  Controller, useForm } from "react-hook-form"
-import { DAYS } from "../../../constants/constant";
+import { DAYS, RADIOLOGIST_DEPARTMENT } from "../../../constants/constant";
 import { NumberFormat, axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
 import useToasty from '../../../hooks/toasty';
 import Select from 'react-select';
@@ -26,7 +26,6 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
     const getDepartments = async () => {
         try {
             let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: RID }, ...getAuthHeader() })
-            console.log('data', data)
             setDepartments(data?.organizations)
         } catch(error) { console.error(error) }
     }
@@ -34,6 +33,10 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
     const getHospitalSpecialization = async () => {
         try {
             let { data } = await axiosInstance.get('/doctor/hospital-specialization', { params: { organizationId: RID }})
+            if( data.specialization.find( spe => spe.id === 'RADIOLOGIST' )){
+                data.specialization = data.specialization?.filter( spe => spe.id !== 'RADIOLOGIST' )
+                data.specialization = [ ...data.specialization, ...RADIOLOGIST_DEPARTMENT ]
+            }
             setSpecialization(data?.specialization)
         } catch(error){ console.error(error) }
     }
@@ -106,7 +109,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
                                             <FontAwesomeIcon className='ms-text-ligth cursor-pointer' icon={faTrash} onClick={() => deleteDepartment(department.organizationId._id)} />
                                         </div>
                                     </div>
-                                    <span className='text-light' style={{ fontSize: 'x-small' }}>{department?.organizationId?.specialization?.name || 'Specialization'}</span>
+                                    <span className='text-light' style={{ fontSize: 'x-small' }}>{department?.organizationId?.specialization[0 ]?.name || 'Specialization'}</span>
                                     <br />
                                     <span className='text-light' style={{ fontSize: 'x-small' }}>{department?.organizationId?.address}</span>
                                 </div>

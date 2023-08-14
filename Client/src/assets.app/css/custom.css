@@ -353,7 +353,7 @@
   color: white !important;
 }
 .box {
-  height: 75px;
+  height: 60px;
   width: 100%;
   background-color: #f1f5fc;
 }
@@ -390,9 +390,9 @@
   width: 400px;
   border-radius: 6px;
   height: 40px;
-  border: 1px solid black;
   display: flex;
   justify-content: center;
+  background: #dfdede;
   align-items: center;
 }
 .city-filter {
@@ -421,6 +421,7 @@
   width: 350px;
   padding: 0 5px;
   border: none;
+  background: #dfdede;
 }
 .search-bar input:focus {
   outline: none;
@@ -437,7 +438,6 @@
   margin-right: 15px;
 }
 .seacrh-bar-container {
-  height: 60px;
   background: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -672,7 +672,7 @@ input::-webkit-inner-spin-button {
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   min-height: 150px;
-  background-color: #236b71;
+  background-color: #053d42;
   margin-bottom: 10px;
 }
 .description-clinic-detail {
@@ -1365,6 +1365,9 @@ input::-webkit-inner-spin-button {
   display: contents;
 }
 
+.w-15 {
+  width: 15rem;
+}
 
 /*==================*************************media queries*******************==========================*/
 @media (max-width: 1400px){
@@ -1383,9 +1386,9 @@ input::-webkit-inner-spin-button {
   .hospital-address{
     width: 160px;
   }
-  .box {
+  /* .box {
     height: 59px;
-  }
+  } */
   .navbar{
     height: 59px;
   }
@@ -1396,9 +1399,6 @@ input::-webkit-inner-spin-button {
   .search-bar{
     
     height: 35px;
-  }
-  .seacrh-bar-container{
-    height: 52px;
   }
    
 
@@ -1412,7 +1412,7 @@ input::-webkit-inner-spin-button {
     margin-top: 15px;
   }
   .search-bar {
-    width: 200px;
+    width: 350px;
   }
   .search-ico {
     padding-right: 5px;

@@ -85,10 +85,10 @@ const createHospital = async ( body, userInfo ) => {
                 userType: "HL",
                 isActive: true,
                 createdBy: userInfo?._id,
-                ...( body.isLogin ? {twoFactor: {
+                twoFactor: {
                     isVerified: true,
                     otp: 0
-                }} : {})
+                }
             }).save()
 
             let returnObj = {
@@ -205,17 +205,18 @@ const getUserByEmail = async ( body ) => {
 const organizationDetails = async ( body, user, file ) => {
     try{
         let detail = JSON.parse(JSON.stringify(body))
-        if( detail ) detail = JSON.parse(detail.data)
+        if( detail ) detail = JSON.parse(detail.data) 
 
         if( detail?.specialization?.length ) detail.specialization = detail?.specialization?.map( s => ({ name: s.name, id: s.value }) )
-
 
         await OrganizationModel.updateOne({ _id: detail._id}, {
             fee: detail?.fee,
             specialization: detail?.specialization,
             tab: { step: detail?.tab, isComplete: true },
             address: detail?.address, 
-            photo: file?.filename
+            photo: file?.filename,
+            services: detail?.services ,
+            timing: detail?.timing
         })
 
         return Success({ message: 'Details saved successfully' })
@@ -310,6 +311,8 @@ const clinicDetails = async ( body ) => {
                     token: {$first: '$appointment.token'},
                     address: 1,
                     fee: 1,
+                    services: 1,
+                    timing: 1,
                 }
             }
         ])
@@ -432,6 +435,44 @@ const patientAppointments = async ( body, user ) => {
     } catch(error){ console.log(error) }
 }
 
+const search = async ( body, user ) => {
+    try{
+        
+        console.log(body, ( body?.fee > 0 ? { fee: { $lte: parseInt(body?.fee) }} : {}))
+        let aggregateQuery = [
+            {
+                $match: {
+                    organizationType: {
+                        $in: [ 'Hospital', 'Clinic' ]
+                    },
+                    $and: [
+                        body?.fee > 0 ? { fee: { $lte: parseInt(body?.fee) }} : {},
+                        body?.city ? { address: { $regex: body?.city, $options: 'i' } } : {},
+                        body?.specialization ? { 'specialization.name': body?.specialization } : {},
+                        body?.type ? { organizationType: body?.type } : {},
+                    ]
+                }
+            },
+           
+        ]
+
+        if(body?.search) aggregateQuery.push({
+            $match: {
+                name: {
+                    $regex:  body.search,
+                    $options: 'i'
+                }
+            }
+        })
+
+        console.log(aggregateQuery)
+        
+        let organizations = await OrganizationModel.aggregate(aggregateQuery)        
+        console.log(organizations.map(a => `${a.name}, ${a.fee} ${a.organizationType}`))
+       return Success({ organizations })
+    } catch(error){ console.log(error) }
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -452,4 +493,5 @@ module.exports = {
     getAllHospitals,
     hospitalDetails,
     patientAppointments,
+    search,
 }

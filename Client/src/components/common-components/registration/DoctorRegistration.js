@@ -4,7 +4,7 @@ import { NumberFormat, axiosInstance, getAuthHeader, getFullPath, userInfo } fro
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
 import ImgUpload from '../Imgupload';
-import Select from "react-select"
+import Select from "react-select";
 import useToasty from '../../../hooks/toasty';
 
 

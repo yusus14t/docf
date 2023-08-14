@@ -7,7 +7,7 @@ import useToasty from '../../../hooks/toasty'
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 
 
-const Clinics = () => {
+const Clinics = ({ source }) => {
     const [clinics, setClinics] = useState([]);
     const [deleteModal, setDeleteModal] = useState(false);
     const [ clinic, setClinic ] = useState({});
@@ -15,11 +15,11 @@ const Clinics = () => {
 
     useEffect(() => {
         getClinics()
-    }, [])
+    }, [source, ])
 
     const getClinics = async () => {
         try {
-            let { data } = await axiosInstance.get('/mr/organiztions', { params: { organizationType: 'Clinic' } , ...getAuthHeader()})
+            let { data } = await axiosInstance.get('/mr/organiztions', { params: { organizationType: source === 'clinics' ? 'Clinic' : 'Hospital' } , ...getAuthHeader()})
             setClinics(data?.organizations)
         } catch(error){ console.error(error) }
     }
@@ -38,9 +38,9 @@ const Clinics = () => {
         <div className="ms-content-wrapper mx-2 ">
             <div className="ms-panel mb-0 inner-content-height">
                 <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
-                    <div><h6>Clinics</h6></div>
+                    <div><h6>{ source === 'clinics' ? 'Clinics' : 'Hospitals'}</h6></div>
                     <div class="ms-form-group my-0 mb-0 has-icon fs-14">
-                        <input type="search" class="ms-form-input" name="search" placeholder="Search for doctors" />
+                        <input type="search" class="ms-form-input" name="search" placeholder={`Search ${source}`} />
                         <i class="flaticon-search text-disabled"></i>
                     </div>
 

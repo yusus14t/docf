@@ -24,7 +24,7 @@ router.get('/', (req, res) => res.send('Hello AcadTech'));
 
 router.post('/session-info', jwt_verify, commonController.sessionInfo);
 // Un verify routes
-// router.post('/signup', commonController.signUp);
+
 router.post('/signup', commonController.signUp)
 router.post('/validate-otp', commonController.validateOtp)
 router.post('/login', commonController.logIn);
@@ -34,6 +34,8 @@ router.get('/clinic-detail', commonController.clinicDetails);
 router.get('/waiting-list/:id', commonController.waitingList);
 router.get("/all-doctors", doctorContoller.getAllDoctors);
 router.get("/get-specializations", commonController.allSpecializations);
+router.get("/search", commonController.search);
+
 //hospitals
 router.get('/hospitals', commonController.getAllHospitals);
 router.get('/hospital-details/:id', commonController.hospitalDetails);

@@ -15,8 +15,18 @@ function Detail() {
   const [waitingList, setWaitingList] = useState([]);
   const [token, setToken] = useState('00')
   const [isOpen, setIsOpen] = useState(false);
+  const [timing, setTiming] = useState([])
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
+  const FullDay = {
+    "MON": 'Monday',
+    "TUE": 'Tuesday',
+    "WED": 'Wednesday',
+    "THU": 'Thursday',
+    "FRI": 'Friday',
+    "SAT": 'Saturday',
+    "SUN": 'Sunday',
+  }
 
   useEffect(() => {
     getWaitingList();
@@ -45,9 +55,9 @@ function Detail() {
         params: { _id: params.id },
         ...getAuthHeader(),
       });
-      setClinicDetail(data?.detail);
       let detail = data?.detail
-
+      setClinicDetail(detail);
+      setTiming(detail?.timing)
       let token = '00'
       token = detail?.token?.length === 1  ? 
               `0${detail?.token}` : 
@@ -183,10 +193,9 @@ function Detail() {
                   {clinicDetail?.fee}
                 </h6>
                 <div className="description-clinic-detail mb-3 pe-2">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-                  velit quam iure quibusdam dolorum quisquam eos quis sed
-                  molestiae, quae excepturi delectus soluta sunt dignissimos
-                  accusamus accusantium repellendus quod assumenda.
+                  <span className="text-disabled">Services</span> : &nbsp;
+                    {clinicDetail?.services?.length > 0 ? clinicDetail?.services?.map( serv => `${serv?.name }, `) : '-' }
+                    { console.log('clinicDetail', clinicDetail)}
                 </div>
               </div>
               <div className="text-center">
@@ -195,46 +204,14 @@ function Detail() {
                     <thead className="thead-light">
                       <tr>
                         <th>Session</th>
-                        <th>Morning</th>
-                        <th>Evening</th>
+                        <th>Open</th>
+                        <th>Close</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Monday</td>
-                        <td>9:00 AM - 1:00 PM</td>
-                        <td>4:00 PM - 8:00 PM</td>
-                      </tr>
-                      <tr>
-                        <td>Tuesday</td>
-                        <td>9:00 AM - 1:00 PM</td>
-                        <td>4:00 PM - 8:00 PM</td>
-                      </tr>
-                      <tr>
-                        <td>Wednesday</td>
-                        <td>9:00 AM - 1:00 PM</td>
-                        <td>4:00 PM - 8:00 PM</td>
-                      </tr>
-                      <tr>
-                        <td>Thursday</td>
-                        <td>9:00 AM - 1:00 PM</td>
-                        <td>4:00 PM - 8:00 PM</td>
-                      </tr>
-                      <tr>
-                        <td>Friday</td>
-                        <td>9:00 AM - 1:00 PM</td>
-                        <td>4:00 PM - 8:00 PM</td>
-                      </tr>
-                      <tr>
-                        <td>Saturday</td>
-                        <td>9:00 AM - 1:00 PM</td>
-                        <td>4:00 PM - 8:00 PM</td>
-                      </tr>
-                      <tr>
-                        <td>Sunday</td>
-                        <td>10:00 AM - 12:00 PM</td>
-                        <td>5:00 PM - 7:00 PM</td>
-                      </tr>
+                      { Object.values(FullDay).map( day => <tr>
+                        <td>{day}</td>
+                       </tr>)}
                     </tbody>
                   </table>
                 </div>

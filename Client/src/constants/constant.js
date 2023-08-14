@@ -17,6 +17,7 @@ export const MODULES = [
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MR']},
     {id: 'hospital-registration', title: 'Hospital Registration', pathname: '/hospital-registration', access: [ 'MR']},
     {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['SA', 'MR']},
+    {id: 'hospitals', title: 'Hospitals', pathname: '/hospitals', access: ['MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'HL', 'CL', 'DP']},
     {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'MA']},
     {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', ]},
@@ -73,4 +74,18 @@ export const SERVICES = [
     { id: 'BLOOD_BANK', name: 'Blood Bank' },
     { id: 'ICU', name: 'ICU' },
     { id: 'OXYGEN', name: 'Oxygen' },
+]
+
+export const RADIOLOGIST_DEPARTMENT = [
+    { id:'ULTRASOUND', name: 'Ultrasound' },
+    { id:'XRAY', name: 'X-Ray' },
+    { id:'MRI', name: 'MRI' },
+    { id:'CTSCAN', name: 'CT-Scan' },
+]
+
+export const ORGANIZATION_TYPE = [
+    { id: 'HOSPITAL', name: 'Hospital' },
+    { id: 'CLINIC', name: 'Clinic' },
+    { id: 'DOCTOR', name: 'Doctor' },
+    { id: 'ULTRASOUND', name: 'Ultrasound' },
 ]
