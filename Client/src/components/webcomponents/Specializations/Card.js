@@ -20,7 +20,8 @@ const Card = ({source, specializations}) => {
         )
         .map((specialisation) => {
           return (
-            <Link to="/specialization-deatils">
+            <Link to={`/specialization/${specialisation?.id}`}>
+              
               <div className="specialization-card">
                 <div className="">
                   <div className="spe-circle mx-auto ">

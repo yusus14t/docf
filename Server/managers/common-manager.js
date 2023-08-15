@@ -264,6 +264,14 @@ const allSpecializations = async ( body ) => {
        return Success({ specializations })
     } catch(error){ console.log(error) }
 }
+const oneSpecialization = async (body) => {
+  try {
+    let specializations = specialization.data.find( spe => spe.id === body.id);
+    return Success({ specializations });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const getAllClinics = async (body) => {
     try {
@@ -477,24 +485,25 @@ const search = async ( body, user ) => {
 }
 
 module.exports = {
-    logIn,
-    signUp,
-    sessionInfo,
-    createClinic,
-    appointmentDepartments,
-    getPatientByNumber,
-    getUserByEmail,
-    organizationDetails,
-    validateOtp,
-    allSpecializations,
-    getAllClinics, 
-    clinicDetails,
-    getOrganization,
-    waitingList,
-    createHospital,
-    setUserType,
-    getAllHospitals,
-    hospitalDetails,
-    patientAppointments,
-    search,
-}
+  logIn,
+  signUp,
+  sessionInfo,
+  createClinic,
+  appointmentDepartments,
+  getPatientByNumber,
+  getUserByEmail,
+  organizationDetails,
+  validateOtp,
+  allSpecializations,
+  getAllClinics,
+  clinicDetails,
+  getOrganization,
+  waitingList,
+  createHospital,
+  setUserType,
+  getAllHospitals,
+  hospitalDetails,
+  patientAppointments,
+  search,
+  oneSpecialization,
+};
