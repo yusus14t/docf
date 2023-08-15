@@ -34,6 +34,8 @@ router.get('/clinic-detail', commonController.clinicDetails);
 router.get('/waiting-list/:id', commonController.waitingList);
 router.get("/all-doctors", doctorContoller.getAllDoctors);
 router.get("/get-specializations", commonController.allSpecializations);
+router.get("/specialization/:id", commonController.oneSpecialization);
+
 router.get("/search", commonController.search);
 
 //hospitals

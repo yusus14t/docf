@@ -54,8 +54,8 @@ function WebSidebar({isOpen}) {
             <div className="">
               <ul className="m-menu">
                 {
-                  MENU_ITEM.map( item => (
-                    <li className="m-menu-item">
+                  MENU_ITEM.map( (item, key) => (
+                    <li className="m-menu-item" key={key}>
                       <Link to={ item.path } className="text-white" key={item.id} >
                         <div className=' d-flex justify-content-between' >
                             <div>
