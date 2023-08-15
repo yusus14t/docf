@@ -22,7 +22,7 @@ const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
             }
         } else { obj = { ...userInfo }}
 
-        reset(obj)
+        if( source !== 'addMR' ) reset(obj)
     }, [])
 
     const submit = async (values) => {
