@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import img from "../../assets.app/img/clinic-grid/348x350-2.jpg";
-import Search from '../common-components/Search';
+import { axiosInstance, getAuthHeader, getFullPath } from '../../constants/utils';
+import NO_PHOTO from '../../assets.app/images/no-photo.png';
 
 const Ultrasound = () => {
+  const [clinics, setClinics] = useState([]);
+
+  useEffect(() => {
+    getAllClinics();
+  }, []);
+
+  const getAllClinics = async () => {
+    try {
+      let { data } = await axiosInstance.get("/all-clinics", { params: { filter: { specialization: 'Ultrasound' }}, ...getAuthHeader()});
+      setClinics(data?.clinics);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="box"></div>
@@ -12,41 +27,32 @@ const Ultrasound = () => {
       </div>
       <div className="container">
         <div className="row">
-          {[1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 11, 1].map((cards) => {
-            return (
-              <div
-                className="col-lg-4 col-md-4 mcard"
-
-                // key={}
-              >
-                <Link to="/clinic-detail">
+          {clinics?.length > 0 && clinics.map(( clinic, key ) =>
+              <div className="col-lg-4 col-md-4 mcard" key={key} >
+                <Link to={`/clinic-detail/${ clinic._id }`}>
                   <div
                     style={{ background: "#edede9", border: "none" }}
-                    // onClick={handle}
-                    // onClick={() =>"" }
                     className="Dr-container mb-3 d-flex p-3"
                   >
                     <div className="ml-3">
-                      <img className="dr-profile-img" src={img} alt="" />
+                      <img className="dr-profile-img" src={clinic?.photo ? getFullPath(clinic?.photo) : NO_PHOTO} alt="" />
                     </div>
-
                     <div className="dr-details">
-                      <h2 className="text-center">Alhamd </h2>
+                      <h2 className="text-center">{ clinic?.name }</h2>
                       <p
                         style={{ background: "#00afb9" }}
                         className="mb-1 dr-spelialization"
                       >
                         Ultrasound
                       </p>
-                      <p className="mb-1 experience-dr">Eperience : 8 Years</p>
-                      <p className="dr-qualifiction mb-1">MBBS ,MD</p>
-                      <p className="dr-address">Jamalpur Uganda</p>
+                      <p className="mb-1 experience-dr">Experience: { clinic?.experience || '-' }</p>
+                      <p className="dr-qualifiction mb-1">{ clinic?.qualification || '-'}</p>
+                      <p className="dr-address">{ clinic?.address || '-'}</p>
                     </div>
                   </div>
                 </Link>
               </div>
-            );
-          })}
+           )}
         </div>
       </div>
     </>

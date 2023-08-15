@@ -44,7 +44,6 @@ const Dashbaord = () => {
     const getPatients = async () => {
         try{
             let { data } = await axiosInstance.get('/super-admin/patients', {params: { istoday: true } , ...getAuthHeader()})
-            console.log('  patiients', data)
             setPatients(data.patients)
         } catch(error){ console.error(error) }
     }
@@ -64,8 +63,8 @@ const Dashbaord = () => {
                                 <div class="media-body">
                                     <h6>Patients</h6>
                                     <div className='d-flex justify-content-start'>
-                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>45</div>
-                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>34</div>
+                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>{analyticsData.today_patients?.count || 0 }</div>
+                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>{analyticsData.total_patients?.count || 0 }</div>
                                     </div>
                                 </div>
                             </div>
@@ -80,8 +79,8 @@ const Dashbaord = () => {
                                 <div class="media-body">
                                     <h6>Clinics</h6>
                                     <div className='d-flex justify-content-start'>
-                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>45</div>
-                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>34</div>
+                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>{analyticsData.today_clinics?.count || 0 }</div>
+                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>{analyticsData.total_clinics?.count || 0 }</div>
                                     </div>
                                 </div>
                             </div>
@@ -96,8 +95,8 @@ const Dashbaord = () => {
                                 <div class="media-body">
                                     <h6>Hospitals</h6>
                                     <div className='d-flex justify-content-start'>
-                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>45</div>
-                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>34</div>
+                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>{analyticsData.today_hospitals?.count || 0 }</div>
+                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>{analyticsData.total_hospitals?.count || 0 }</div>
                                     </div>
                                 </div>
                             </div>
@@ -112,8 +111,8 @@ const Dashbaord = () => {
                                 <div class="media-body">
                                     <h6>Doctors</h6>
                                     <div className='d-flex justify-content-start'>
-                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>45</div>
-                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>34</div>
+                                        <div className='ms-card-change text-dark me-3'><span className='fs-07 text-white'>Today </span>{analyticsData.today_doctors?.count || 0 }</div>
+                                        <div className='ms-card-change text-dark '><span className='fs-07 text-white'>Total </span>{analyticsData.total_doctors?.count || 0 }</div>
                                     </div>
                                 </div>
                             </div>

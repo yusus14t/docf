@@ -11,7 +11,7 @@ const editDoctor = async ( req, res ) =>
         .catch( err => res.status(500).send(err) )
 
 const getAllDoctors = async ( req, res ) => {
-    DoctorManager.getAllDoctors( req.body, req.user )
+    DoctorManager.getAllDoctors( req.query, req.user )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }

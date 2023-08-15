@@ -65,7 +65,6 @@ const MR = () => {
                                                 <span style={{ marginBottom: "50%" }} class="badge badge-outline-danger">{mr?.isActive ? 'Active' : 'Inactive'}</span>
                                             </div>
                                             <div style={{ marginLeft: "15px" }} className="float-last">
-                                                <FontAwesomeIcon className="cursor-pointer"  icon={faEdit}></FontAwesomeIcon>
                                                 <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer"  icon={faTrash} onClick={() => {setMR(mr); setDeleteModal(true)}}></FontAwesomeIcon>
                                             </div>
                                         </div>
@@ -94,7 +93,7 @@ const MR = () => {
                 submitButton={false}
                 closeButton={false}
             >
-                <Profile source='addMR' setIsOpen={setAddModal} refresh={() => getMRs()} />
+                <Profile source={'addMR'} setIsOpen={setAddModal} refresh={() => getMRs()} />
             </Modal>}
 
         </div>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 // import store from '../../redux/Store';
-import { axiosInstance, getFullPath } from "../../../constants/utils";
+import { axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
 import ProfilePhoto from "../../../assets.web/img/doctor-details/243x264.jpg";
 import { Navigate, Link } from "react-router-dom"
 
-function DoctorsList({ source }) {
+function DoctorsList({ source, filter }) {
   const [doctors, setDoctors] = useState([]);
   
 
@@ -14,7 +14,7 @@ function DoctorsList({ source }) {
 
   const getAllDoctors = async () => {
     try{
-      let { data } = await axiosInstance.get("/all-doctors");
+      let { data } = await axiosInstance.get("/all-doctors", {params: { filter }, ...getAuthHeader() });
       setDoctors(data?.doctors);
     } catch(error){ 
       console.error(error)

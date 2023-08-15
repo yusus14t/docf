@@ -1,6 +1,7 @@
 const UserModel = require("../models/user-model")
 const { Success } = require("../constants/utils")
 const organizationModel = require("../models/organization-model")
+const { isAxiosError } = require("axios")
 const ObjectId = require('mongoose').Types.ObjectId
 
 const editProfile = async ( body, user, file ) => {
@@ -29,7 +30,10 @@ const editProfile = async ( body, user, file ) => {
         if ( file ) obj['photo'] = file?.filename
         
         await organizationModel.updateOne({ _id: user.organizationId }, obj)
-        if( obj.phone ) await UserModel.updateOne({ _id: user._id }, { phone: obj.phone })
+
+        if( ['SA', 'MR'].includes(user.userType)) await UserModel.updateOne({ _id: user._id }, obj)
+        else if( obj.phone ) await UserModel.updateOne({ _id: user._id }, { phone: obj.phone })
+
 
         return Success({ message: 'Details saved successfully' })
     } catch(error){ console.log(error) }

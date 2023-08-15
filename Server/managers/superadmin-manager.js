@@ -15,6 +15,26 @@ const getProfile = async ( body ) => {
 const analytics = async () => {
     try {
         let today = new Date()
+        today.setHours(0,0,0,0)
+
+        const getQuery = (isToday, userType) => {
+            return [{
+                $match: {
+                    userType,
+                    ...( isToday ? { createdAt: { $gte: today }} : {} )
+                },
+            },
+            {
+                $group: {
+                    _id: '$userType',
+                    count: {
+                        $sum: 1
+                    }
+                }
+            }]
+        }
+
+        console.log(getQuery( false,  'PT'))
         let analyticsData = await UserModel.aggregate([
             {
                 $facet: {
@@ -26,18 +46,28 @@ const analytics = async () => {
                             }
                         },
                     ],
-                    today_users: [
-                        {
-                            $match: { createdAt: { $lte: today } }
-                        },
-                        {
-                            $group: {
-                                _id: '$userType',
-                                count: { $sum: 1 }
-                            }
-                        },
-                    ],
+                    total_patients:  getQuery( false,  'PT'),
+                    today_patients:  getQuery( true,   'PT'),
+                    total_doctors:   getQuery( false,  'DR'),
+                    today_doctors:   getQuery( true,   'DR'),
+                    total_clinics:   getQuery( false,  'CL'), 
+                    today_clinics:   getQuery( true,   'CL'),
+                    total_hospitals: getQuery( false,  'HL'),
+                    today_hospitals: getQuery( true,   'HL'),
                 },
+            },
+            {
+                $project: {
+                    total_users:     1,
+                    total_patients:  { $first: '$total_patients' },
+                    today_patients:  { $first: '$today_patients' },
+                    total_doctors:   { $first: '$total_doctors' },
+                    today_doctors:   { $first: '$today_doctors' },
+                    total_clinics:   { $first: '$total_clinics' },
+                    today_clinics:   { $first: '$today_clinics' },
+                    total_hospitals: { $first: '$total_hospitals' },
+                    today_hospitals: { $first: '$today_hospitals' },
+                }
             }
         ])
 

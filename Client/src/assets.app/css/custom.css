@@ -353,7 +353,7 @@
   color: white !important;
 }
 .box {
-  height: 60px;
+  height: 75px;
   width: 100%;
   background-color: #f1f5fc;
 }
@@ -1412,6 +1412,9 @@ input::-webkit-inner-spin-button {
   .search-bar{
     
     height: 35px;
+  }
+  .box{
+    height: 59px;
   }
    
 

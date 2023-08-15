@@ -20,7 +20,7 @@ export const MODULES = [
     {id: 'hospitals', title: 'Hospitals', pathname: '/hospitals', access: ['MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'HL', 'CL', 'DP']},
     {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'MA']},
-    {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', ]},
+    {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'MR' ]},
     {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
     {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
 ]

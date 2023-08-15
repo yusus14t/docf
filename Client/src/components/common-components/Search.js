@@ -28,7 +28,9 @@ const Search = () => {
   }, [ window.location.pathname ])
 
   useEffect( () => {
-    getSearch()
+    if( filter.search || filter.fee || filter.city || filter.specialization || filter.type ){
+      getSearch()
+    }
   }, [ filter ] )
 
   const getAllSpecializations = async () => {

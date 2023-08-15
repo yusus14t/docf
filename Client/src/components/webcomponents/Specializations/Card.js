@@ -4,20 +4,12 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../../../constants/utils";
 
-const Card = ({source}) => {
-  useEffect(() => {
-    getSpecialization();
-  }, []);
-
-  const [specialisations, setSpecialization] = useState([]);
-  const getSpecialization = async () => {
-    let { data } = await axiosInstance.get("/get-specializations");
-    setSpecialization(data?.specializations);
-  };
+const Card = ({source, specializations}) => {
+  
   
   return (
     <>
-      {specialisations
+      {specializations
         .filter(
           (card, index) =>
             (source === "slider1" && index <= 3) ||
@@ -28,7 +20,8 @@ const Card = ({source}) => {
         )
         .map((specialisation) => {
           return (
-            <Link to="/specialization-deatils">
+            <Link to={`/specialization/${specialisation?.id}`}>
+              
               <div className="specialization-card">
                 <div className="">
                   <div className="spe-circle mx-auto ">
