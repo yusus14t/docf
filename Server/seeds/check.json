@@ -1,0 +1,39 @@
+{
+    "Sheet1": [
+        {
+            "PostOfficeName": "Connaught Place",
+            "Pincode": "110001",
+            "City": "New Delhi",
+            "District": "New Delhi",
+            "State": "Delhi"
+        },
+        {
+            "PostOfficeName": "Constitution House",
+            "Pincode": "110001",
+            "City": "New Delhi",
+            "District": "Central Delhi",
+            "State": "Delhi"
+        },
+        {
+            "PostOfficeName": "Eastern Court",
+            "Pincode": "110001",
+            "City": "New Delhi",
+            "District": "Central Delhi",
+            "State": "Delhi"
+        },
+        {
+            "PostOfficeName": "Election Commission",
+            "Pincode": "110001",
+            "City": "New Delhi",
+            "District": "Central Delhi",
+            "State": "Delhi"
+        },
+        {
+            "PostOfficeName": "Janpath",
+            "Pincode": "110001",
+            "City": "New Delhi",
+            "District": "Central Delhi",
+            "State": "Delhi"
+        }
+    ]
+}

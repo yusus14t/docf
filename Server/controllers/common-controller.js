@@ -115,7 +115,7 @@ const oneSpecialization = async (req, res) => {
     .catch(err => res.status(500).send(err.data))
 }
 const getAllClinics = async ( req, res ) => {
-    commonManager.getAllClinics( req.body )
+    commonManager.getAllClinics( req.query )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
