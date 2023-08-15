@@ -153,6 +153,7 @@ const getAllDoctors = async (body, user) => {
           isActive: true,
           primary: false,
           ...query,
+          ...(body?.filter?.specialization ? { 'specialization.name': body?.filter?.specialization } : {} )
         },
       },
       {

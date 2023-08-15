@@ -265,11 +265,17 @@ const allSpecializations = async ( body ) => {
     } catch(error){ console.log(error) }
 }
 
-const getAllClinics = async ( body ) => {
-    try{
-       let clinics = await OrganizationModel.find({ organizationType: 'Clinic'  })
-       return Success({ clinics })
-    } catch(error){ console.log(error) }
+const getAllClinics = async (body) => {
+    try {
+        console.log('body', body)
+        let clinics = await OrganizationModel.find({
+        
+                organizationType: {$in : ['Clinic', 'Department']},
+                ...(body?.filter?.specialization ? { 'specialization.name': body?.filter?.specialization } : {})
+            
+        })
+        return Success({ clinics })
+    } catch (error) { console.log(error) }
 }
 
 const clinicDetails = async ( body ) => {

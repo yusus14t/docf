@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { axiosInstance } from '../../constants/utils';
+import { axiosInstance, getAuthHeader } from '../../constants/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { getFullPath } from "../../constants/utils";
 import clinicPhoto2 from "../../assets.app/img/backgrounds/hos.jpg";
-import slide2 from "../../assets.web/img/home-1/1920x1280-2.jpg";
 import Homeopath from "../../assets.app/img/logo/homeopathy.jpg";
 import DoctorsList from './doctor/Doctors';
 
@@ -13,20 +12,21 @@ import DoctorsList from './doctor/Doctors';
 
 
 function Homeopathy() {
-    let card = [1, 2, 3, 4];
-    const [clinics, setClinics] = useState([]);
-    useEffect(() => {
-      getAllClinics();
-    }, []);
+  const [clinics, setClinics] = useState([]);
 
-    const getAllClinics = async () => {
-      try {
-        let { data } = await axiosInstance.get("/all-clinics");
-        setClinics(data?.clinics);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  useEffect(() => {
+    getAllClinics();
+  }, []);
+
+  const getAllClinics = async () => {
+    try {
+      let { data } = await axiosInstance.get("/all-clinics", { params: { filter: { specialization: 'Homeopathy' }}, ...getAuthHeader()});
+      setClinics(data?.clinics);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="box"></div>
@@ -49,7 +49,7 @@ function Homeopathy() {
         </div>
       </div>
       <div style={{ marginTop: "-85px" }} className="row ">
-        <DoctorsList source={"homepage"} />
+        <DoctorsList source={"homepage"} filter={{ specialization: 'Homeopathy' }} />
       </div>
       <div className="container">
         <div className="partner row">
