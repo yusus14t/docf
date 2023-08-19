@@ -2,6 +2,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const multer = require('multer');
+const ftp = require("basic-ftp");
+const fs = require("fs");
+const path = require('path');
 
 const Error = ({message = 'Something went wrong!', code = 500, status = 'Fail', ...args}) => { 
   return { message, code, status, ...args } 
@@ -53,15 +56,50 @@ const Error = ({message = 'Something went wrong!', code = 500, status = 'Fail', 
 }
 
 const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: async (req, file, cb) => {
     cb(null, "uploads");
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
-    cb(null, `doctortime-${file.fieldname}-${Date.now()}.${ext}`);
+    cb(null, `doctortime-${Date.now()}.${ext}`);
   },
 });
+
+
 const upload = multer({ storage: multerStorage })
+
+
+const uploadToBucket = async ( filename ) =>  {
+
+  if( process.env.ENVIRONMENT === 'development' ) return filename
+
+  const client = new ftp.Client();
+  client.ftp.verbose = true; 
+
+  try {
+    await client.access({
+      host: process.env.FTP_HOST, 
+      user: process.env.FTP_USERNAME, 
+      password: process.env.FTP_PASSWORD,
+      secure: false,
+    });
+
+    const remotePath = process.env.ROOT_DIRECTORY
+    const remoteFileName = filename;
+
+    const localFilePath = path.join(__dirname, '..', '/uploads', filename)
+    const localFile = fs.createReadStream(localFilePath);
+    await client.uploadFrom(localFile, remotePath+remoteFileName );
+
+    fs.unlinkSync(localFilePath)
+    return filename
+  } catch (err) {
+    console.error("Error uploading image:", err);
+    return err
+  } finally {
+    client.close();
+  }
+}
 
 
 module.exports = {
@@ -72,4 +110,5 @@ module.exports = {
   randomOtp,
   smsService,
   upload,
+  uploadToBucket,
 }

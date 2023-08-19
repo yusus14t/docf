@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SERVER_URL } from '../configs/env';
+import { SERVER_URL, ENVIRONMENT,BUCKET_URL } from '../configs/env';
 
 export const getAuthHeader = () => {
     let token = JSON.parse(localStorage.getItem('token'))
@@ -41,7 +41,10 @@ export const NumberFormat = ( e ) =>  {
     if( !Number(e.target.value) ) return e.target.value = e.target.value.slice(0, -1)
 }
 
-export const getFullPath = (filename) => `${ SERVER_URL }/images/${filename}`
+export const getFullPath = (filename) => {
+    if( ENVIRONMENT === 'production' )  return `${BUCKET_URL}/${ filename }`
+    else return `${ SERVER_URL }/images/${ filename }`
+}
 
 export const userInfo = JSON.parse(localStorage.getItem('user'))
 

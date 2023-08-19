@@ -1,5 +1,5 @@
 const UserModel = require("../models/user-model")
-const { Success } = require("../constants/utils")
+const { Success, uploadToBucket } = require("../constants/utils")
 const organizationModel = require("../models/organization-model")
 const { isAxiosError } = require("axios")
 const ObjectId = require('mongoose').Types.ObjectId
@@ -27,7 +27,10 @@ const editProfile = async ( body, user, file ) => {
             email: detail?.email
         }
 
-        if ( file ) obj['photo'] = file?.filename
+        if ( file ) {
+            await uploadToBucket( file.filename );
+            obj['photo'] = file?.filename
+        }
         
         await organizationModel.updateOne({ _id: user.organizationId }, obj)
 
