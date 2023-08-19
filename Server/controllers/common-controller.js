@@ -145,7 +145,7 @@ const setUserType = async ( req, res ) => {
 }
 
 const getAllHospitals = async ( req, res ) => {
-    commonManager.getAllHospitals( req.body, req.user )
+    commonManager.getAllHospitals( req.query, req.user )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }

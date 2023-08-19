@@ -5,54 +5,60 @@ import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 import slide2 from "../../../assets.web/img/home-1/1920x1280-2.jpg";
-import { getFullPath } from "../../../constants/utils";
-import { axiosInstance } from "../../../constants/utils";
+import { getAuthHeader, getFullPath,axiosInstance, formatPhone } from "../../../constants/utils";
 import clinicPhoto2 from "../../../assets.web/img/home-1/1920x1280-1.jpg";
-// import Search from '../../common-components/Search'
 
 
 const SpecializationDetails = () => {
   const params = useParams()
   const [clinics, setClinics] = useState([]);
-  const [specialisations, setSpecialization] = useState([]);
+  const [hospitals, setHospitals] = useState([]);
+  const [specialization, setSpecialization] = useState([]);
+
+  useEffect(() => {
+    getSpecialization();
+  }, [ params.id, ]);
 
   useEffect(() => {
     getAllClinics();
-    getSpecialization();
-    console.log('>>>>>>>>>>>>>>1')
-  }, [ ]);
+    getAllHospitals();
+  },[specialization])
 
   const getSpecialization = async () => {
-    console.log(">>>>>>>>>>>>>>2");
-          
-    let { data } = await axiosInstance.get(`/specialization/${params.id}`);
-    setSpecialization(data?.specializations);
-    
+    try{
+      let { data } = await axiosInstance.get(`/specialization/${params.id}`);
+      setSpecialization(data?.specializations);
+    } catch(error){ console.error(error) }
   };
-  
-  
-
-  
    
-    
+  const getAllClinics = async () => {
+    try {
+      let { data } = await axiosInstance.get("/all-clinics", { params: { filter: {specialization: specialization?.name }}, ...getAuthHeader()});
+      console.log('data', data)
+      setClinics(data?.clinics);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-   
-    const getAllClinics = async () => {
-      try {
-        let { data } = await axiosInstance.get("/all-clinics");
-        setClinics(data?.clinics);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const getAllHospitals = async () => {
+    try {
+      let { data } = await axiosInstance.get("/hospitals", { params: { filter: {specialization: specialization?.name }}, ...getAuthHeader()});
+      console.log('data', data)
+      setHospitals( data?.organization );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
-    {console.log(specialisations)}
+    
       <div style={{ height: "65px" }}></div>
       <div className="">
         <div className=" banner text-center">
           <h3 className="title pt-0">
-            {specialisations?.name}
+            {specialization?.name}
           </h3>
         </div>
       </div>
@@ -62,13 +68,13 @@ const SpecializationDetails = () => {
             <img className="specialization-image" src={banner} alt="" />
           </span>
           <div className="deatil">
-            <p className="details-text">{specialisations?.description}</p>
+            <p className="details-text">{specialization?.description}</p>
           </div>
 
           <div className="">
             <h2 className="text-center">Hospitals</h2>
             <div className="row">
-              {[1, 2, 3, 4, 5, 6].map((hospital) => {
+              { hospitals?.length > 0 && hospitals.map((hospital) => {
                 return (
                   <div
                     className="ml-2 col-lg-4 mb-4 col-md-4 mcard mt-2"
@@ -76,22 +82,23 @@ const SpecializationDetails = () => {
                   >
                     <div className="hospitalCard ">
                       <span className=" hospital-title">
-                        {hospital.name}jjklbljk
+                        {hospital.name}
                       </span>
                       <div className="hospitalCard-background-img">
                         <img
                           className="hospitalCard-background-img"
-                          src={slide2}
+                          src={hospital?.photo
+                            ? getFullPath(hospital.photo)
+                            : clinicPhoto2}
                           alt=""
                         />
                       </div>
                       <div className="clinic-details d-flex flex-row justify-content-between">
                         <div className="mt-3">
                           <h6 className="hospital-specialization text-disabled">
-                            Multi Specialist
-                            {/* {hospital.specialization.length > 1
-                            ? "Multi speciality"
-                            : hospital.specialization?.name || "-"} */}
+                          {hospital.specialization.length > 1
+                                ? "Multi speciality"
+                                : hospital.specialization[0]?.name || "-"}
                           </h6>
                           <div className="contact-info mt-3">
                             <div>
@@ -100,28 +107,13 @@ const SpecializationDetails = () => {
                                   className="clinic-icon address-icon"
                                   icon={faLocationDot}
                                 />
-                                {hospital.address}
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Exercitationem dignissimos id,
-                                officiis esse, explicabo doloremque et excepturi
-                                in amet adipisci, iusto est dolorem. Autem
-                                aperiam fugiat deserunt magni facere tenetur?
+                                {hospital.address || '-'}
                               </p>
                             </div>
                           </div>
                         </div>
                         <div className="mt-3 hospital-card-timing">
-                          <h6 className="hospital-timming-card">Timming</h6>
                           <div className="d-flex flex-column justify-contant-between">
-                            <div className="">
-                              <p className="clinic-timming mb-0">
-                                Morning : 08 AM to 11 PM
-                              </p>
-                              <p className="clinic-timming mb-0">
-                                {" "}
-                                Evening : 05 PM to 11 PM
-                              </p>
-                            </div>
                             <div className="">
                               <Link
                                 className="text-light hospital-btn  btn btn1 btn-primary shadow-none"
@@ -167,8 +159,7 @@ const SpecializationDetails = () => {
                               alt=""
                             />
                             <span className=" p-2 clinic-title">
-                              {clinic?.name} :{" "}
-                              <span className="open">close</span>
+                              {clinic?.name} 
                             </span>
                           </div>
                           <div className="clinic-details d-flex flex-row justify-content-between">
@@ -181,21 +172,12 @@ const SpecializationDetails = () => {
                                   Contact Info :
                                 </h6>
                                 <div>
-                                  <FontAwesomeIcon
-                                    className="clinic-icon"
-                                    icon={faPhone}
-                                  />
-                                  <p className="d-inline-block ml-2 mb-0">
-                                    {clinic?.phone ? "+91" + clinic?.phone : ""}
-                                  </p>
-                                </div>
-                                <div>
                                   <p className="ml-2 adjust hospital-address  ">
                                     <FontAwesomeIcon
                                       className="clinic-icon address-icon"
                                       icon={faLocationDot}
                                     />
-                                    {clinic?.address}
+                                    {clinic?.address || '-'}
                                   </p>
                                 </div>
                               </div>

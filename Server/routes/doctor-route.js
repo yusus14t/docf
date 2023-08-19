@@ -23,7 +23,7 @@ router.get('/clinics', DoctorController.getClinics)
 router.post('/specialization', DoctorController.addSpecialization)
 router.get('/patients', DoctorController.patients)
 router.get('/hospital-specialization', DoctorController.hospitalSpecialization)
-
+router.post('/anonymous-appointment', DoctorController.anonymousAppointment)
 
 
 module.exports = router;

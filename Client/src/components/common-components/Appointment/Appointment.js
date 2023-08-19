@@ -67,6 +67,15 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
         }
     }
 
+    const addAnonymous = async () => {
+        try{
+            let { data } = await axiosInstance.post('/doctor/anonymous-appointment');
+            console.log(data, 'anonymous-appointment')
+            refresh()
+            setIsOpen(false)
+        } catch(error){ console.error(error) }
+    }
+
     return (
         <Modal
             isOpen={isOpen}
@@ -254,6 +263,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                 }
                 <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={() => setIsOpen(false)}>Cancel</button>
                 <button type="submit" className="btn btn-primary shadow-none mx-2">Save</button>
+                <button className="btn btn-primary shadow-none mx-2" onClick={() => addAnonymous()}>Add Anonymous</button>
             </form>
         </Modal>
     )

@@ -118,6 +118,12 @@ const doghnutAnalytics = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const anonymousAppointment = async ( req, res ) => {
+    DoctorManager.anonymousAppointment( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     getAppointments,
     editDoctor,
@@ -138,5 +144,6 @@ module.exports = {
     patients,
     hospitalSpecialization,
     addSpecialization,
-    getClinics
+    getClinics,
+    anonymousAppointment
 }
