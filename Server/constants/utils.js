@@ -5,6 +5,8 @@ const multer = require('multer');
 const ftp = require("basic-ftp");
 const fs = require("fs");
 const path = require('path');
+const QRCode = require('qrcode');
+
 
 const Error = ({message = 'Something went wrong!', code = 500, status = 'Fail', ...args}) => { 
   return { message, code, status, ...args } 
@@ -101,6 +103,18 @@ const uploadToBucket = async ( filename ) =>  {
   }
 }
 
+const QRCodeGenerate = async ( data, filename ) => {
+  try{
+    QRCode.toDataURL(data, (err, code) => {
+      if(err) return console.log(err)  
+
+      let imagePath = path.join(__dirname, '..', 'uploads')
+      fs.writeFile( `${imagePath}/${filename}`, code, ( err ) =>  console.log(err || 'Successfully generate qrcode'))
+    })
+    await uploadToBucket( filename )
+  } catch(error){ console.log(error) }
+}
+
 
 module.exports = {
   Error, Success,
@@ -111,4 +125,5 @@ module.exports = {
   smsService,
   upload,
   uploadToBucket,
+  QRCodeGenerate,
 }

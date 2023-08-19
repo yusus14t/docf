@@ -8,6 +8,8 @@ const editProfile = async ( body, user, file ) => {
     try{
         let detail = JSON.parse(JSON.stringify(body))
         if( detail ) detail = JSON.parse(detail.data)
+
+        if( file ) await uploadToBucket( file.filename );
         
         if( user.userType === 'PT' ){
             if ( file ) detail['photo'] = file?.filename
@@ -28,7 +30,6 @@ const editProfile = async ( body, user, file ) => {
         }
 
         if ( file ) {
-            await uploadToBucket( file.filename );
             obj['photo'] = file?.filename
         }
         

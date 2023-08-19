@@ -1,4 +1,4 @@
-const { Error, Success, encryptPassword, comparePassword, createToken, smsService } = require('../constants/utils');
+const { Error, Success,  createToken, smsService, QRCodeGenerate, uploadToBucket } = require('../constants/utils');
 const UserModel = require('../models/user-model');
 const OrganizationModel = require('../models/organization-model');
 const AppointmentModel = require('../models/appointment-model');
@@ -8,9 +8,21 @@ const { specialization } = require('../seeds/specialization-seed')
 
 
 
-const sessionInfo = async ( body, user ) => {
+const sessionInfo = async ( request, user ) => {
     try{
         let info = await UserModel.findOne({ _id: user._id }).populate('organizationId')
+
+        if( [ 'DP', 'CL', 'HL' ].includes(info.userType) && !info?.organizationId?.qrCode ){
+            let link = 'https://doctortime.in';
+            if( info.userType === 'HL' ) link += `/hospital/${ info.organizationId }`
+            else if( info.userType === 'CL' ) link += `/clinic-detail/${ info.organizationId }`
+            else if( info.userType === 'DP' ) link += `/department/${ info.organizationId }`
+            
+            // genrate qr code
+            await QRCodeGenerate(link, `${info.organizationId._id}.qr`)
+            await OrganizationModel.updateOne({ _id: info.organizationId._id }, { qrCode: String(info.organizationId._id)+'.qr' })
+        }
+
         return Success({ user: info })
     }catch(error){ console.log(error) }    
 }
@@ -120,14 +132,14 @@ const createHospital = async ( body, userInfo ) => {
 
 const logIn = async ( body ) => {
     try{
-        let user = await UserModel.findOne({ email: body.email })
+        // let user = await UserModel.findOne({ email: body.email })
 
-        if(!user) return Error({message: 'User not found'})
+        // if(!user) return Error({message: 'User not found'})
 
-        let isValid = await comparePassword(body.password, user.password)
-        if(!isValid) return Error({message: 'Invalid Password'})
+        // let isValid = await comparePassword(body.password, user.password)
+        // if(!isValid) return Error({message: 'Invalid Password'})
 
-        let token = createToken(user._id)
+        // let token = createToken(user._id)
         return Success({message: 'Successfull', token, user })
     } catch(error){ 
         console.log(error) 
@@ -209,6 +221,8 @@ const organizationDetails = async ( body, user, file ) => {
 
         if( detail?.specialization?.length ) detail.specialization = detail?.specialization?.map( s => ({ name: s.name, id: s.value }) )
 
+        if( file ) await uploadToBucket( file.filename );
+        
         await OrganizationModel.updateOne({ _id: detail._id}, {
             fee: detail?.fee,
             specialization: detail?.specialization,
