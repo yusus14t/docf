@@ -1,5 +1,5 @@
 const AppointmentModel = require("../models/appointment-model");
-const { Success, Error } = require("../constants/utils");
+const { Success, Error, uploadToBucket } = require("../constants/utils");
 const UserModel = require("../models/user-model");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { EventEmitter } = require("events");
@@ -113,7 +113,12 @@ const editDoctor = async (body, user, file) => {
       aboutme: body?.aboutme,
       photo: body?.photo,
     };
-    if (file) userObj["photo"] = file?.filename;
+
+    
+    if (file){
+      await uploadToBucket( file.filename );
+      userObj["photo"] = file?.filename;
+    }
 
     await UserModel.updateOne({ _id: ObjectId(body._id) }, userObj);
 
@@ -142,7 +147,8 @@ const getAllDoctors = async (body, user) => {
 
       departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
       query['organizationId'] = { $in: departmentIds }
-    } else if( user ) {
+
+    } else if( user && user.userType !== 'SA' ) {
       query['createdBy'] = user._id
     }
 

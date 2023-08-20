@@ -9,6 +9,7 @@ const organizationSchema = new Schema({
     address: { type: String },
     organizationType: { type: String, enum: [ 'Clinic', 'Department', 'Hospital', 'Ultrasound' ] },
     photo: { type: String, default: null },
+    qrCode: { type: String, default: null },
     specialization: [
         {
             name: { type: String },

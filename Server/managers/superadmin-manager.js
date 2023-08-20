@@ -1,7 +1,7 @@
 
 const UserModel  = require('../models/user-model'); 
 const OrganizationModel  = require('../models/organization-model'); 
-const { Success, Error } = require('../constants/utils')
+const { Success, Error, uploadToBucket } = require('../constants/utils')
 
 
 const getProfile = async ( body ) => {
@@ -126,6 +126,10 @@ const MRs = async ( body ) => {
 const createMR = async ( body, file ) => {
     try {
         body = JSON.parse(body.data)
+
+        if( file ) await uploadToBucket( file.filename );
+
+        
         let MRs = await UserModel({
             ...body,
             photo: file?.filename,

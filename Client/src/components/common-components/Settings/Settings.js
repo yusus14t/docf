@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { axiosInstance, getAuthHeader } from "../../../constants/utils";
+import { axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal";
@@ -15,16 +15,19 @@ const Settings = () => {
   const [specialization, setSpecialization] = useState({ name: null, error: null })
   const [specializations, setSpecializations] = useState([])
   const [allSpecializations, setAllSpecializations] = useState([])
+  const [qrCode, setQrCode] = useState(null)
   const toasty = useToasty()
 
   useEffect(() => {
-    if (tab === 'SPECIALIZATION')
-      getAllSpecialization()
+    if (tab === 'SPECIALIZATION') getAllSpecialization()
+    if( tab === 'QRCODE' )  getQrCode()
   }, [tab,])
 
   useEffect(() => {
     getAllCommonSpecialization()
   }, [isOpen])
+
+
 
   const getAllSpecialization = async () => {
     try {
@@ -66,6 +69,19 @@ const Settings = () => {
     } catch (error) { console.error(error) }
   }
 
+  const getQrCode = async () => {
+    let fetchQrCode = await fetch( getFullPath(userInfo?.organizationId?.qrCode) )
+    let base64Code = await fetchQrCode.text()
+    setQrCode(base64Code)
+  }
+
+  const download = () => {
+    let element = document.createElement('a')
+    element.setAttribute('href', qrCode)
+    element.setAttribute('download', 'QRCode.png')  
+    element.click()
+  }
+
   return (
     <div className='ms-content-wrapper'>
       <div className="row mr-0" >
@@ -74,6 +90,7 @@ const Settings = () => {
             <div class="ms-panel-header ms-panel-custome">
               <div>
                 {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
+                {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
                 <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
               </div>
             </div>
@@ -115,6 +132,13 @@ const Settings = () => {
                 </>
               }
               {tab === 'PROFILE' && <Profile />}
+              {tab === 'QRCODE' && (
+                <div>
+                  <img src={qrCode} />
+                  <button className="btn btn-primary" onClick={() => download()}>Download QR Code</button>
+                </div>
+              )}
+
             </div>
           </div>
         </div>
