@@ -275,12 +275,9 @@ const oneSpecialization = async (body) => {
 
 const getAllClinics = async (body) => {
     try {
-        console.log('body', body)
         let clinics = await OrganizationModel.find({
-        
-                organizationType: {$in : ['Clinic', 'Department']},
-                ...(body?.filter?.specialization ? { 'specialization.name': body?.filter?.specialization } : {})
-            
+            organizationType: {$in : ['Clinic', 'Department']},
+            ...(body?.filter?.specialization ? { 'specialization.name': body?.filter?.specialization } : {})            
         })
         return Success({ clinics })
     } catch (error) { console.log(error) }
@@ -419,9 +416,13 @@ const setUserType = async ( body ) => {
     } catch (error) { console.log(error) }
 }
 
-const getAllHospitals = async ( body ) => {
+const getAllHospitals = async ( body, user ) => {
     try{
-       let organization = await OrganizationModel.find({ organizationType: 'Hospital'}, { name: 1, specialization: 1, email: 1, address: 1, photo: 1 })
+        console.log('body', body,body?.filter ? { 'specialization.name': body?.filter?.specialization } : {} )
+       let organization = await OrganizationModel.find({ 
+        organizationType: 'Hospital',
+        ...( body?.filter ? { 'specialization.name': body?.filter?.specialization } : {} )
+    }, { name: 1, specialization: 1, email: 1, address: 1, photo: 1 })
 
        return Success({ organization })
     } catch(error){ console.log(error) }

@@ -213,7 +213,6 @@ const deleteDoctor = async (body, user) => {
 
 const addAppointment = async (body, user) => {
   try {
-    console.log('body', body)
     let today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -241,7 +240,6 @@ const addAppointment = async (body, user) => {
       }).save();
     }
     
-    console.log( 'patient', patient )
     
     let appointment = await AppointmentModel.findOne({
       userId: patient._id,
@@ -633,8 +631,11 @@ const createDepartment = async (body, userInfo) => {
 
 const getDepartments = async (body, user) => {
   try {
+    let query = { hospitalId: user.userType === 'HL' ? user.organizationId :  body?.organizationId, userType: 'DP' }
 
-    let organizations = await UserModel.find({ hospitalId: user.userType === 'HL' ? user.organizationId :  body?.organizationId, userType: 'DP' }).populate('organizationId')
+    if( user.userType === 'SA' ) query = { userType: 'DP' }
+
+    let organizations = await UserModel.find(query).populate('organizationId')
     return Success({ organizations });
   } catch (error) {
     console.log(error);
@@ -774,6 +775,57 @@ const addSpecialization = async (body, user) => {
   }
 };
 
+const anonymousAppointment = async (body, user) => {
+  try {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let lastAppointment = await AppointmentModel.findOne({departmentId: ObjectId(user.organizationId), createdAt: { $gte: today }}, { token: 1 } )
+    .sort({ createdAt: -1 });
+
+    let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : 1;
+
+    let patient = await UserModel.findOne({ name: 'Anonymous', userType: "PT" },{ _id: 1 });
+
+    if ( !patient ) {
+      patient = await UserModel({
+        name: 'Anonymous',
+        email: 'anonymous@mail.com',
+        userType: "PT",
+        phone: '0000000000',
+        primary: false,
+      }).save();
+    }
+
+    let appointment = await AppointmentModel({
+      token,
+      userId: patient._id,
+      departmentId: user.organizationId,
+      createdBy: user._id,
+    }).save();
+
+
+    let data = {
+      _id: appointment._id,
+      departmentId: appointment.departmentId,
+      token,
+      user: {
+        _id: patient._id,
+        name: patient.name,
+        phone: patient.phone,
+        address: patient?.address,
+      },
+    };
+
+    eventEmitter.emit("new-appointment", { data } );
+
+    return Success({ message: "Appointment addedd successfully" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 const EventHandler = (req, res) => {
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
@@ -794,6 +846,7 @@ const EventHandler = (req, res) => {
   eventEmitter.on("re-appointment", (data) =>
     sendResponse(data, "re-appointment")
   );
+
   eventEmitter.on("status", (data) => sendResponse(data, "status"));
 };
 
@@ -818,5 +871,6 @@ module.exports = {
   hospitalSpecialization,
   addSpecialization,
   getClinics,
+  anonymousAppointment,
   EventHandler,
 };

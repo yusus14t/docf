@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import DrAvatar from "../../assets.app/img/DoctorAvatar.png"
+import axios from "axios";
 
 
 export default function ImgUpload({ source, file=() => {}, editImage = null }) {
   const [image, setImage] = useState({ preview: "", raw: "" });
 
-  const handleChange = e => {
+  const handleChange = async e => {
     if (e.target.files.length) {
       setImage({
         preview: URL.createObjectURL(e.target.files[0]),

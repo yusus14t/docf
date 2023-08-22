@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { axiosInstance, getFullPath } from "../../../constants/utils";
-import DoctorImage from "../../../assets.app/img/dashboard/doctor-1.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../common-components/Modal";
+import NO_PHOTO from '../../../assets.app/images/no-photo.png';
 
 const Clinics = () => {
     const [departments, setDepartments] = useState([])
@@ -17,7 +17,6 @@ const Clinics = () => {
     const getDepartments = async () => {
         try{
             let { data } = await axiosInstance.get('/doctor/clinics')
-            
             setDepartments(data?.departments)
         } catch(error){
             console.error(error)
@@ -35,9 +34,9 @@ const Clinics = () => {
     return (
         <div className="ms-content-wrapper mx-2">
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
-                <div><h6>Doctors List</h6></div>
+                <div><h6>Clinics</h6></div>
                 <div class="ms-form-group my-0 mb-0 has-icon fs-14 d-flex justify-content-center">
-                    <input type="search" class="ms-form-input" name="search" placeholder="Search for departments" />
+                    <input type="search" class="ms-form-input" name="search" placeholder="Search for clinics & departments" />
                     <i class="flaticon-search text-disabled"></i>
                 </div>
 
@@ -50,7 +49,7 @@ const Clinics = () => {
                             <div className="ms-card-body" style={{ borderLeft: '5px solid #112c2f'}}>
                                 <div className="media mb-0 fs-14">
                                     <div className="me-2 align-self-center">
-                                        <img src={department?.organizationId?.photo ? getFullPath(department?.organizationId?.photo) :  DoctorImage} className="ms-img-round" alt="people" />
+                                        <img src={department?.organizationId?.photo ? getFullPath(department?.organizationId?.photo) :  NO_PHOTO} className="ms-img-round" alt="people" />
                                     </div>
                                     <div className="media-body" >
                                         <h6 style={{ maxWidth: '70%'}}>{department?.organizationId?.name}</h6>
@@ -59,7 +58,7 @@ const Clinics = () => {
                                                 <span style={{ marginBottom: "50%" }} class="badge badge-outline-danger">{department?.isActive ? 'Active' : 'Inactive'}</span>
                                             </div>
                                             <div style={{ marginLeft: "15px" }} className="float-last">
-                                                <FontAwesomeIcon className="cursor-pointer"  icon={faEdit}></FontAwesomeIcon>
+                                                {/* <FontAwesomeIcon className="cursor-pointer"  icon={faEdit}></FontAwesomeIcon> */}
                                                 <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer"  icon={faTrash} onClick={() => {setDepartment(department); setDeleteModal(true)}}></FontAwesomeIcon>
                                             </div>
                                         </div>

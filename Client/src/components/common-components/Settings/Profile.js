@@ -4,7 +4,7 @@ import ImgUpload from '../Imgupload';
 import  useToasty  from '../../../hooks/toasty';
 import { useEffect, useState } from 'react';
 
-const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
+const Profile = ({ source, setIsOpen = () => {}, refresh = () => {} }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({ onchange: true })
     const [ selectedFile, setSelectedFile ] = useState({})
     const toasty =  useToasty()
@@ -22,7 +22,7 @@ const Profile = ({ source, setIsOpen, refresh = () => {} }) => {
             }
         } else { obj = { ...userInfo }}
 
-        reset(obj)
+        if( source !== 'addMR' ) reset(obj)
     }, [])
 
     const submit = async (values) => {
