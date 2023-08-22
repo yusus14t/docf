@@ -59,7 +59,7 @@ const SpecializationDetails = () => {
       {
         <div className="splz-deatial container mt-3">
           <span className="mb-0">
-            <img className="specialization-image" src={banner} alt="" />
+            <img className="specialization-image" src={specialisations?.pic} alt="" />
           </span>
           <div className="deatil">
             <p className="details-text">{specialisations?.description}</p>

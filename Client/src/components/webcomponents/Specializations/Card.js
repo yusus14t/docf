@@ -30,7 +30,7 @@ const Card = ({source, specializations}) => {
                       icon={faHeart}
                     />
                   </div>
-                  <h2>{specialisation.name}</h2>
+                  <h2 className="sixe">{specialisation.name}</h2>
                 </div>
               </div>
             </Link>
