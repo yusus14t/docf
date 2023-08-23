@@ -263,7 +263,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                 }
                 <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={() => setIsOpen(false)}>Cancel</button>
                 <button type="submit" className="btn btn-primary shadow-none mx-2">Save</button>
-                <button className="btn btn-primary shadow-none mx-2" onClick={() => addAnonymous()}>Add Anonymous</button>
+                { ['CL', 'DP', 'HL'].includes(userInfo.userType) && <button className="btn btn-primary shadow-none mx-2" onClick={() => addAnonymous()}>Add Anonymous</button>}
             </form>
         </Modal>
     )

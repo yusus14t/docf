@@ -10,6 +10,8 @@ const { specialization } = require('../seeds/specialization-seed')
 
 const sessionInfo = async ( request, user ) => {
     try{
+
+        if( !user ) return Success({ message: '' })
         let info = await UserModel.findOne({ _id: user._id }).populate('organizationId')
 
         if( [ 'DP', 'CL', 'HL' ].includes(info.userType) && !info?.organizationId?.qrCode ){
@@ -19,8 +21,9 @@ const sessionInfo = async ( request, user ) => {
             else if( info.userType === 'DP' ) link += `/department/${ info.organizationId }`
             
             // genrate qr code
-            await QRCodeGenerate(link, `${info.organizationId._id}.qr`)
-            await OrganizationModel.updateOne({ _id: info.organizationId._id }, { qrCode: String(info.organizationId._id)+'.qr' })
+            const filename = `${info.organizationId._id}.png`
+            await QRCodeGenerate(link, filename)
+            await OrganizationModel.updateOne({ _id: info.organizationId._id }, { qrCode: filename })
         }
 
         return Success({ user: info })

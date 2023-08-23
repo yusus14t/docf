@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { userRoutes as userRouteConstant } from "../constants/constant";
 
 import Hospitals from "../components/webcomponents/Hospital/Hospitals";
+import { userInfo } from "../constants/utils";
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
 const Doctors = lazy(() => import( '../components/webcomponents/doctor/Doctors'))
 const Clinics = lazy(() => import( "../components/webcomponents/Clinics"))
@@ -19,7 +20,7 @@ const Ultrasound = lazy(() => import("../components/webcomponents/Ultrasound"));
 const SpecializationDetails = lazy(() => import('../components/webcomponents/Specializations/SpecializationDetails'))
 const Homeopathy =lazy(()=> import('../components/webcomponents/Homeopathy'))
 
-const getUserType = () => JSON.parse(localStorage.getItem("user"))?.userType;
+const getUserType = () => userInfo?.userType;
 
 const COMMON_ROUTE = [
   { path: "/", element: <Home /> },

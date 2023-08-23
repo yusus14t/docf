@@ -15,12 +15,10 @@ const Settings = () => {
   const [specialization, setSpecialization] = useState({ name: null, error: null })
   const [specializations, setSpecializations] = useState([])
   const [allSpecializations, setAllSpecializations] = useState([])
-  const [qrCode, setQrCode] = useState(null)
   const toasty = useToasty()
 
   useEffect(() => {
     if (tab === 'SPECIALIZATION') getAllSpecialization()
-    if( tab === 'QRCODE' )  getQrCode()
   }, [tab,])
 
   useEffect(() => {
@@ -69,15 +67,11 @@ const Settings = () => {
     } catch (error) { console.error(error) }
   }
 
-  const getQrCode = async () => {
-    let fetchQrCode = await fetch( getFullPath(userInfo?.organizationId?.qrCode) )
-    let base64Code = await fetchQrCode.text()
-    setQrCode(base64Code)
-  }
+  const download = async ( link ) => {
+    let fetchQrCode = await fetch( link )
 
-  const download = () => {
     let element = document.createElement('a')
-    element.setAttribute('href', qrCode)
+    element.setAttribute('href', URL.createObjectURL(await fetchQrCode.blob()))
     element.setAttribute('download', 'QRCode.png')  
     element.click()
   }
@@ -134,8 +128,8 @@ const Settings = () => {
               {tab === 'PROFILE' && <Profile />}
               {tab === 'QRCODE' && (
                 <div>
-                  <img src={qrCode} />
-                  <button className="btn btn-primary" onClick={() => download()}>Download QR Code</button>
+                  <img src={getFullPath(userInfo?.organizationId?.qrCode)} />
+                  <button className="btn btn-primary" onClick={() => download(getFullPath(userInfo?.organizationId?.qrCode))}>Download QR Code</button>
                 </div>
               )}
 
