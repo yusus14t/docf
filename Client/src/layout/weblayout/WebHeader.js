@@ -60,7 +60,7 @@ const WebHeader = () => {
               </li>
               <li className="dropdown-divider"></li>
 
-            {userInfo && <Item> <Link className="fs-14 p-2" to={userRoutes[userInfo.userType].path}> <span>Dashboard</span> </Link></Item>}
+            {userInfo && <Item> <Link className="fs-14 p-2" to={userRoutes[userInfo.userType]?.path}> <span>Dashboard</span> </Link></Item>}
             <Item onClick={() => Logout()}><span className="fs-14 p-2"><i className="flaticon-user"></i>Logout</span></Item>
           </Dropdown>
         </div>)

@@ -44,6 +44,18 @@ const Dashbaord = () => {
     } catch (error) { console.error(error) }
   }
 
+  const share = async ( appointment ) => {
+    try{
+      let shareData = {
+        title: appointment.name,
+        text: 'This is appointment',
+        url: window.location.origin,
+      }
+      
+      await navigator.share(shareData)
+    } catch(error){ console.error(error) }
+  }
+
   return (
     <div style={{ background: "#f2f2f2" }} className="">
       <div className="pdash">
@@ -113,6 +125,9 @@ const Dashbaord = () => {
                   </div>
                   <div className="col d-flex align-items-center">
                     <h6>{appointment?.departmentId?.address || '-'}</h6>
+                  </div>
+                  <div className="col d-flex align-items-center">
+                    <button className="btn btn-primary shadow-none btn-sm" onClick={() => share(appointment)}>Share</button>
                   </div>
                 </div>
               );
