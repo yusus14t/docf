@@ -28,12 +28,19 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
       if( ['modal'].includes(source) ){
         getAllSpecialization()
       } else {
-        let specialization = organization?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe.name }))
-        setSpecialization(specialization)
+        getClinicSpecialization()
       }
       
     }
   }, [])
+
+  const getClinicSpecialization = async () => {
+    try{
+      let { data } = await axiosInstance.get(`/hospital/clinic-specialization/${organization?._id}`)
+      console.log(data)
+      setSpecialization(data?.specializations)
+    } catch(error){ console.error(error) }
+  }
 
   const getAllSpecialization = async () => {
     try{

@@ -7,6 +7,13 @@ const editProfile = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const clinicSpecialization = async ( req, res ) => {
+    hospitalManager.clinicSpecialization( req.params, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     editProfile,
+    clinicSpecialization,
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../../constants/utils'
 
 import { Link } from "react-router-dom";
-import clinicPhoto2 from "../../../assets.app/img/backgrounds/hos.jpg";
+import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getFullPath } from "../../../constants/utils";
@@ -50,7 +50,7 @@ const HospitalGrid = ({source}) => {
                             src={
                               hospital?.photo
                                 ? getFullPath(hospital.photo)
-                                : clinicPhoto2
+                                : NO_PHOTO
                             }
                             alt=""
                           />
@@ -60,7 +60,7 @@ const HospitalGrid = ({source}) => {
                             <h6 className="hospital-specialization text-disabled">
                               {hospital.specialization.length > 1
                                 ? "Multi speciality"
-                                : hospital.specialization?.name || "-"}
+                                : hospital.specialization[0]?.name || "-"}
                             </h6>
                             <div className="contact-info mt-3">
                               <div>

@@ -5,5 +5,6 @@ const { upload } = require('../constants/utils');
 
 
 router.post('/edit-profile', upload.single("image"), hospitalController.editProfile)
+router.get('/clinic-specialization/:id', hospitalController.clinicSpecialization)
 
 module.exports = router;

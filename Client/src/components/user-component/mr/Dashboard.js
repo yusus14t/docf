@@ -222,12 +222,12 @@ const Dashbaord = () => {
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {hospitals?.length > 0 && hospitals.map((hospital, key) => 
                                     <li class="ms-list-item media" key={key} >
-                                    <img src={hospital?.photo ? getFullPath(hospital.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
+                                    <img src={hospital?.photo ? getFullPath(hospital.organizationId?.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
                                     <div class="media-body mt-1"> 
                                         <div className='d-flex justify-content-between'>
                                             <div>
-                                                <h4>{hospital?.name}</h4>
-                                                <span class="fs-12">{hospital.address}</span>
+                                                <h4>{hospital?.organizationId?.name}</h4>
+                                                <span class="fs-12">{hospital.organizationId?.address}</span>
                                             </div> 
                                             <div className='d-contents'>
                                                 <h4 class="fs-12">{formatPhone(hospital.phone)}</h4>
@@ -254,12 +254,12 @@ const Dashbaord = () => {
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {clinics?.length > 0 && clinics.map((clinics, key) =>
                                     <li class="ms-list-item media" key={key} >
-                                        <img src={clinics?.photo ? getFullPath(clinics.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
+                                        <img src={clinics?.organizationId?.photo ? getFullPath(clinics.organizationId?.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
                                         <div class="media-body mt-1">
                                             <div className='d-flex justify-content-between'>
                                                 <div>
-                                                    <h4>{clinics?.name}</h4>
-                                                    <span class="fs-12">{clinics.address}</span>
+                                                    <h4>{clinics?.organizationId?.name}</h4>
+                                                    <span class="fs-12">{clinics.organizationId?.address}</span>
                                                 </div>
                                                 <div className='d-contents'>
                                                     <h4 class="fs-12">{formatPhone(clinics.phone)}</h4>
