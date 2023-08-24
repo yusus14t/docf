@@ -43,6 +43,15 @@ const editProfile = async ( body, user, file ) => {
     } catch(error){ console.log(error) }
 }
 
+const clinicSpecialization = async (body, user) => {
+    try{
+        let specializations = await organizationModel.findOne({_id: body.id }, { specialization: 1 })
+        specializations = specializations?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe?.name  }))
+        return Success({ specializations })
+    } catch(error){ console.error(error) }
+}
+
 module.exports = {
     editProfile,
+    clinicSpecialization,
 }

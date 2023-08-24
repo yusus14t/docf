@@ -34,7 +34,7 @@ const COMMON_ROUTE = [
   { path: "/doctors", element: <Doctors /> },
   { path: "/about", element: <About /> },
   { path: "/clinic-detail/:id", element: <ClinicDetail /> },
-  { path: "/clinic", element: <Clinics /> },
+  { path: "/clinics", element: <Clinics /> },
   { path: "/contact", element: <Contact /> },
   { path: "/hospitals", element: <Hospitals /> },
   { path: "/after", element: <AfterSignup /> },

@@ -11,7 +11,7 @@ export const userRoutes = {
 
 export const MODULES = [
     {id: 'dashboard', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR']},
-    {id: 'patient', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA', 'MA' ]},
+    {id: 'patients', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA', 'MA' ]},
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['CL', 'DP', 'HL' ]},
     {id: 'departments', title: 'Departments', pathname: '/departments', access: ['HL', 'SA']},
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MR']},
@@ -45,7 +45,7 @@ export const WEB_MENU_ITEMS = [
          { id: "home", name: "Home", path: "/" },
          { id: "gynae", name: "Gynae", path: "/gynae" },
          { id: "hospitals", name: "Hospitals", path: "/hospitals" },
-         { id: "clinic", name: "Clinics", path: "/clinic" },
+         { id: "clinics", name: "Clinics", path: "/clinics" },
          { id: "doctors", name: "Doctors", path: "/doctors" },
          { id: "ultrasounds", name: "Ultrasounds", path: "/ultrasounds" },
          { id: "homeopathy", name: "Homeopathy", path: "/homeopathy" },

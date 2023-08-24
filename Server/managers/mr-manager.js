@@ -20,7 +20,10 @@ const organizations = async ( body, user ) => {
         let today = new Date()
         today.setHours(0, 0, 0, 0)
 
-        let organizations = await OrganizationModel.find({ organizationType: body.organizationType, ...(body.istoday == 'true' ? {createdAt: { $gte: today }} : {} ), createdBy: user._id })
+        let organizations = await UserModel.find({ createdBy: user._id, userType: body.organizationType === 'Hospital' ? 'HL' : 'CL', ...(body.istoday == 'true' ? {createdAt: { $gte: today }} : {} ) }, { organizationId: 1, phone: 1, organizationType: 1 })
+        .populate('organizationId')
+
+        // let organizations = await OrganizationModel.find({ organizationType: body.organizationType, ...(body.istoday == 'true' ? {createdAt: { $gte: today }} : {} ), createdBy: user._id })
         return Success({ organizations })
     } catch( error ){ console.log(error) }
 }

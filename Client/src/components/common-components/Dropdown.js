@@ -27,7 +27,7 @@ export const Dropdown = ({ toggle, children }) => {
         <>  
             <div className="dropdown" onClick={() => setIsOpen(!isOpen)} ref={wrapperRef}>
                 {toggle}
-                <ul class={`dropdown-menu dropdown-menu-end user-dropdown pb-0 ${ isOpen && 'show' }`} aria-labelledby="userDropdown" data-bs-popper="none">
+                <ul class={`dropdown-menu dropdown-menu-end user-dropdown pb-0 ${ isOpen && 'show' }`} aria-labelledby="userDropdown" data-bs-popper="none" style={{ top: '3rem'}}>
                     {children}
                 </ul>
             </div>

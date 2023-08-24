@@ -37,6 +37,7 @@ export const AllRoutes = () => {
   let allUseRoutes = [
     {
       path: "/",
+      exact: true,
       element: <WebLayout />,
       children: COMMON_ROUTE,
     },
@@ -45,6 +46,7 @@ export const AllRoutes = () => {
   if( userRoute?.path ){
     allUseRoutes.push({
       path: `/${userRoute?.path}`,
+      exact: true,
       element: user ? <AppLayout /> : <Navigate to={"/login"} />,
       children: user ? userRoute.id : [],
     });

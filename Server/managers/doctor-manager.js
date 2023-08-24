@@ -489,6 +489,7 @@ const createDoctor = async (body, user, image) => {
           doctor,
         });
     } else {
+      await uploadToBucket( image.filename )
       doctor = await UserModel({
         userType: "DR",
         name: body?.name,
