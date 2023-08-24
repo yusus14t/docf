@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import sli from '../../assets.app/images/Borcelle.png'
+// import sli from '../../assets.app/images/Borcelle.png'
 
 
 function WebFooter() {
@@ -8,13 +8,13 @@ function WebFooter() {
       <footer className="sigma_footer style-5 pb-0 footer">
         <div className="row">
           <div style={{ padding: "10px 30px" }} className="col-sm-3 ">
-            <Link>
+            <Link to="/contact">
               <h6 className="text-light">Contact</h6>
             </Link>
-            <Link>
+            <Link to="/privacy">
               <h6 className="text-light">Privacy and Policy</h6>
             </Link>
-            <Link>
+            <Link to="/terms">
               <h6 className="text-light">Term and Condition</h6>
             </Link>
           </div>
@@ -32,13 +32,13 @@ function WebFooter() {
           </div>
 
           <div style={{ padding: "10px 30px" }} className="col-sm-3 ">
-            <Link>
+            <Link to="/about">
               <h6 className="text-light">About Us</h6>
             </Link>
-            <Link>
+            <Link target='_blank' to="https://www.linkedin.com/">
               <h6 className="text-light">Linkedin</h6>
             </Link>
-            <Link>
+            <Link target='_blank' to="https://www.youtube.com/">
               <h6 className="text-light">Youtube</h6>
             </Link>
           </div>

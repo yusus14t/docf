@@ -77,6 +77,13 @@ function Slider() {
               </div>
             </div>
           </div>
+          <div className="slide">
+            <div className="d-flex justify-center">
+              <div className="specialization-card-container container">
+                <Card source={"slider5"} specializations={specializations} />
+              </div>
+            </div>
+          </div>
         </Carousel>
       </div>
     </>

@@ -10,8 +10,8 @@ const { specialization } = require('../seeds/specialization-seed')
 
 const sessionInfo = async ( request, user ) => {
     try{
-
         if( !user ) return Success({ message: '' })
+
         let info = await UserModel.findOne({ _id: user._id }).populate('organizationId')
 
         if( [ 'DP', 'CL', 'HL' ].includes(info.userType) && !info?.organizationId?.qrCode ){

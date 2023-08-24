@@ -4,6 +4,11 @@ import { userRoutes as userRouteConstant } from "../constants/constant";
 
 import Hospitals from "../components/webcomponents/Hospital/Hospitals";
 import { userInfo } from "../constants/utils";
+import Privacy from "../components/webcomponents/Privacy";
+import Terms from "../components/webcomponents/Terms";
+import NotFound from "../components/webcomponents/NotFound";
+import NoData from "../components/webcomponents/NoData";
+
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
 const Doctors = lazy(() => import( '../components/webcomponents/doctor/Doctors'))
 const Clinics = lazy(() => import( "../components/webcomponents/Clinics"))
@@ -37,8 +42,10 @@ const COMMON_ROUTE = [
   { path: "/hospital/:id", element: <HospitalDetails /> },
   { path: "/department/:id", element: <ClinicDetail /> },
   { path: "/ultrasounds", element: <Ultrasound /> },
-  {path: "/homeopathy", element: <Homeopathy/>},
+  { path: "/homeopathy", element: <Homeopathy /> },
   { path: "/specialization/:id", element: <SpecializationDetails /> },
+  { path: "/privacy", element: <Privacy /> },
+  { path: "/terms", element: <Terms /> },
 
   {
     path: "/login",
@@ -48,7 +55,8 @@ const COMMON_ROUTE = [
       <LogIn />
     ),
   },
-  { path: "/*", element: <h1>Not Found</h1> },
+  { path: "/jjjj", element: <NoData /> },
+  { path: "/*", element: <NotFound /> },
 ];
 
 export default COMMON_ROUTE;
