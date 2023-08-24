@@ -12,8 +12,9 @@ import Loader from "../layout/Loader";
 
 import WebLayout from  "../layout/weblayout/WebLayout";
 import AppLayout from "../layout/Index";
+import { userInfo } from "../constants/utils";
 
-const getUser = () => JSON.parse(localStorage.getItem("user"))
+const getUser = () => userInfo
 
 const USER_ROUTES = {
   SA: { path: "/super-admin", id: SUPER_ADMIN },

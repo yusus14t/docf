@@ -30,7 +30,7 @@ const logIn = async ( req, res ) => {
 }
 
 const sessionInfo = async ( req, res ) => {
-    commonManager.sessionInfo( req.body, req.user )
+    commonManager.sessionInfo( req, req.user )
         .then( result => res.status(result.code).send(result) )
         .catch( err => res.status(500).send(err.data) )
 }

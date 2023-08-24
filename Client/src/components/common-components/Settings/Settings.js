@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { axiosInstance, getAuthHeader } from "../../../constants/utils";
+import { axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal";
@@ -18,13 +18,14 @@ const Settings = () => {
   const toasty = useToasty()
 
   useEffect(() => {
-    if (tab === 'SPECIALIZATION')
-      getAllSpecialization()
+    if (tab === 'SPECIALIZATION') getAllSpecialization()
   }, [tab,])
 
   useEffect(() => {
     getAllCommonSpecialization()
   }, [isOpen])
+
+
 
   const getAllSpecialization = async () => {
     try {
@@ -66,6 +67,15 @@ const Settings = () => {
     } catch (error) { console.error(error) }
   }
 
+  const download = async ( link ) => {
+    let fetchQrCode = await fetch( link )
+
+    let element = document.createElement('a')
+    element.setAttribute('href', URL.createObjectURL(await fetchQrCode.blob()))
+    element.setAttribute('download', 'QRCode.png')  
+    element.click()
+  }
+
   return (
     <div className='ms-content-wrapper'>
       <div className="row mr-0" >
@@ -74,6 +84,7 @@ const Settings = () => {
             <div class="ms-panel-header ms-panel-custome">
               <div>
                 {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
+                {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
                 <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
               </div>
             </div>
@@ -115,6 +126,13 @@ const Settings = () => {
                 </>
               }
               {tab === 'PROFILE' && <Profile />}
+              {tab === 'QRCODE' && (
+                <div>
+                  <img src={getFullPath(userInfo?.organizationId?.qrCode)} />
+                  <button className="btn btn-primary" onClick={() => download(getFullPath(userInfo?.organizationId?.qrCode))}>Download QR Code</button>
+                </div>
+              )}
+
             </div>
           </div>
         </div>

@@ -46,7 +46,7 @@ export const getFullPath = (filename) => {
     else return `${ SERVER_URL }/images/${ filename }`
 }
 
-export const userInfo = JSON.parse(localStorage.getItem('user'))
+export const userInfo = localStorage.getItem('user') != 'undefined' ? JSON.parse(localStorage.getItem('user')) : {}
 
 export const updateUser = async () => {
     try{
