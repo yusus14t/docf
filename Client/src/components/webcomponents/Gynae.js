@@ -7,6 +7,7 @@ import {
   faStethoscope,
 } from "@fortawesome/free-solid-svg-icons";
 import banner from "../../assets.app/img/gynae/gynacard-image.png";
+import Banner from "../../assets.app/images/GYNA_POSTER.jpg";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -65,14 +66,14 @@ const Gynae = () => {
             className="hero-banner"
             style={{
               backgroundColor: "blue",
-              backgroundImage: `url(${banner})`,
+              backgroundImage: `url(${Banner})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }}
           >
-            <span className="btn btn-primary  gynae-button-hero">
+            {/* <span className="btn btn-primary  gynae-button-hero">
               <Link className="text-light">Book Appiontment</Link>
-            </span>
+            </span> */}
           </div>
         </div>
         {/*------services-------  */}

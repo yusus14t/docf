@@ -72,7 +72,11 @@ function Home() {
         <div className="row mt-2">
           <div className="col-sm-6">
             <div className="col-5 advantages">
-              <h3 className="">Time Saving of Patients</h3>
+              <h5 className="text">
+                Doctortime is a patient time saving platform .this is
+                India’s first platform where the patient himself can see the
+                live number at the doctor visit.
+              </h5>
             </div>
             <div className="col-5 advantages">Get Rid from Crowd</div>
             <div className="col-5 advantages">
