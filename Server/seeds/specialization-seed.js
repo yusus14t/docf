@@ -3,6 +3,7 @@ let specialization = {
     {
       id: "PUMONOLOGIST",
       name: "Punomologist",
+      nickname: "(LUNGS)",
       pic: "https://catimage.net/images/2023/08/16/108a014405ce314da.jpg",
       icon1: "https://catimage.net/images/2023/08/24/PUMONOLOGIST-LUNGS.jpg",
       icon2: "",
@@ -14,6 +15,7 @@ let specialization = {
     {
       id: "HEPATOLOGIST",
       name: "Hepatologist",
+      nickname: "(Liver)",
       pic: "https://catimage.net/images/2023/08/16/33e39137b30f97a0a.jpg",
       icon1: "https://catimage.net/images/2023/08/24/HEPATOLOGIST-LIVER.jpg",
       icon2: "",
@@ -27,6 +29,7 @@ In conclusion, hepatology remains an exciting and rapidly evolving field within 
     {
       id: "NEPHROLOGIST",
       name: "Nephrologist",
+      nickname: "(Kidney)",
       pic: "https://catimage.net/images/2023/08/16/3ca98fcadfd14fe9b.jpg",
       icon1: "https://catimage.net/images/2023/08/24/NEPHROLOGIST-kidney.jpg",
       icon: "",
@@ -40,7 +43,7 @@ In conclusion, hepatology remains an exciting and rapidly evolving field within 
     {
       id: "DERMATOLOGIST",
       name: "Dermatologist",
-
+      nickname: "(Skin)",
       pic: "https://catimage.net/images/2023/08/16/Derma.jpg",
       icon1: "https://catimage.net/album/icons.tSwg",
       icon2: "",
@@ -53,6 +56,7 @@ In conclusion, hepatology remains an exciting and rapidly evolving field within 
     {
       id: "ENDOCRINOLOGIST",
       name: "Endocrinologist",
+      nickname: "(Diabetes)",
       pic: "https://catimage.net/images/2023/08/16/Endocrinologist.jpg",
       icon1: "https://catimage.net/images/2023/08/24/DERMATALOGIST-SKIN.jpg",
       icon1: "",
@@ -66,6 +70,7 @@ The fascinating field of endocrinology explains the complex relationships betwee
     {
       id: "UROLOGIST",
       name: "Urologist",
+      nickname: "()",
       pic: "https://catimage.net/images/2023/08/16/Urologist.jpg",
       icon1: "https://catimage.net/images/2023/08/24/UROLOGY.jpg",
       icon1: "",
@@ -79,6 +84,7 @@ Urologists play a vital role in the healthcare ecosystem, addressing a wide rang
     {
       id: "GENERAL-PHYSICIAN ",
       name: "General Physician",
+      nickname: "(Common Doctor)",
       pic: "https://catimage.net/images/2023/08/16/general.jpg",
       icon1:
         "https://catimage.net/images/2023/08/24/GENERAL-PHYSICIAN-COMMAN-DOCTOR.jpg",
@@ -92,6 +98,7 @@ General physicians are the backbone of the healthcare system, providing comprehe
     {
       id: "RADIOCOLOGIST",
       name: "Radiologist",
+      nickname: "()",
       pic: "https://catimage.net/images/2023/08/16/radio.jpg",
       icon1: "",
       icon1: "",
@@ -104,6 +111,7 @@ Radiologists are the guiding light in the realm of radiology, illuminating the p
     {
       id: "ORTHOPEDIC ",
       name: "Orthophedic",
+      nickname: "(Knee & Hip)",
       pic: "https://catimage.net/images/2023/08/16/orthopadic.jpg",
       icon1: "https://catimage.net/images/2023/08/24/ORTHOPEDIC.jpg",
       icon2: "",
@@ -116,6 +124,7 @@ In order to increase mobility, reduce pain, and enhance the overall quality of l
     {
       id: "PAEDIATRICIAN",
       name: "Paediatrician",
+      nickname: "(Child's Doctor)",
       pic: "https://catimage.net/images/2023/08/16/1.jpg",
       icon1:
         "https://catimage.net/images/2023/08/24/PEDIATRICIAN-CHILD-SPECILIST-DOCTOR.jpg",
@@ -129,6 +138,7 @@ Paediatricians can diagnose and treat a wide range of health conditions in child
     {
       id: "RHEUMATOLOGISTS",
       name: "Rheumatologist",
+      nickname: "(Joint Pain)",
       pic: "https://catimage.net/images/2023/08/16/3.jpg",
       icon1:
         "https://catimage.net/images/2023/08/24/RHEUMATALOGY-JOINT-PAIN-copy.jpg",
@@ -143,6 +153,7 @@ Advances in rheumatology research continue to shape the field, leading to improv
     {
       id: "CARDIOLOGIST",
       name: "Cardiologist",
+      nickname: "(Heart)",
       pic: "https://catimage.net/images/2023/08/16/1446eb7809bafd295.jpg",
       icon1: "https://catimage.net/images/2023/08/24/1.CARDIOLOGIST-heart.jpg",
       icon2: "https://catimage.net/images/2023/08/24/CARDIOLOGIST.jpg",
@@ -156,6 +167,7 @@ To ensure the well-being of people with cardiovascular issues, cardiology and th
     {
       id: "NEUROLOGIST",
       name: "Neurologist",
+      nickname: "(Brain)",
       pic: "https://catimage.net/images/2023/08/16/2.jpg",
       icon1:
         "https://catimage.net/images/2023/08/24/NEPHROLOGIST-kidneyd3cbf6d1882d3525.jpg",
@@ -169,6 +181,7 @@ The advances in neurology pave the way for a future where neurological disorders
     {
       id: "GYNECOLOGIST",
       name: "Gynecologist",
+      nickname: "(Woman's Health)",
       pic: "https://catimage.net/images/2023/08/16/gynae.jpg",
       icon1: "https://catimage.net/images/2023/08/24/1.gynaclogist.jpg",
       icon2: "",
@@ -184,6 +197,7 @@ The advances in neurology pave the way for a future where neurological disorders
     {
       id: "ONCOLOGIST",
       name: "Oncologist",
+      nickname: "(Cancer)",
       pic: "https://catimage.net/images/2023/08/16/1.1.jpg",
       icon1: "https://catimage.net/images/2023/08/24/ONCOLOGIST-cancer.jpg",
       icon2: "",
@@ -197,6 +211,7 @@ We can expect even more novel and individualised methods to tackle this terrible
     {
       id: "OPHTHALMOLOGIST",
       name: "Ophthalmologist",
+      nickname: "(Eyes)",
       pic: "https://catimage.net/images/2023/08/16/36c99205941b10155.jpg",
       icon1: "https://catimage.net/images/2023/08/24/1.OPTHALMOLOGIST-EYE.jpg",
       icon2: "https://catimage.net/images/2023/08/24/OPTHALMOLOGIST-EYE.jpg",
@@ -210,6 +225,7 @@ The field of ophthalmology promises a brighter future where visual impairments a
     {
       id: "PSYCHIATRISTS",
       name: "Phsychiatrists",
+      nickname: "()",
       pic: "https://catimage.net/images/2023/08/16/2d5f3c77f5da986a5.jpg",
       icon1:
         "https://catimage.net/images/2023/08/24/PHYCHIATRISSTS-DEPRESSION.jpg",
@@ -223,6 +239,7 @@ Moreover, psychologists are individuals dedicated towards treating and diagnosin
     {
       id: "IMMUNOLOGIST",
       name: "Immunologist",
+      nickname: "(Liver)",
       pic: "https://catimage.net/images/2023/08/16/18e19779eb353817e.jpg",
       icon1: "",
       icon2: "",

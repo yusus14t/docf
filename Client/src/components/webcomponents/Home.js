@@ -71,18 +71,29 @@ function Home() {
         </h3>
         <div className="row mt-2">
           <div className="col-sm-6">
-            <div className="col-5 advantages">
-              <h5 className="text">
+            <div className="col-5 advantages d-flex align-items-center px-3">
+              <h5 className="align-middle">
                 Doctortime is a patient time saving platform .this is
                 India’s first platform where the patient himself can see the
                 live number at the doctor visit.
               </h5>
             </div>
-            <div className="col-5 advantages">Get Rid from Crowd</div>
-            <div className="col-5 advantages">
-              Book Appoinment from anywhere
+            <div className="col-5 advantages d-flex align-items-center px-3">
+              <h5>
+                patient can avoid both crowd and infection at the doctor‘s
+                place
+              </h5>
             </div>
-            <div className="col-5 advantages">Search Best doctor near you</div>
+            <div className="col-5 advantages d-flex align-items-center px-3">
+              <h5>
+                You can book your number and relatives no. At any where .
+              </h5>
+            </div>
+            <div className="col-5 advantages d-flex align-items-center px-3">
+              <h5>
+                You can get best doctor doctor of your area’s in your budget.
+              </h5>
+            </div>
           </div>
           <div className="col-sm-6 advantages-side-img">
             <img

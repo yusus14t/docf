@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import sli from '../../assets.app/images/Borcelle.png'
+import sli from '../../assets.app/images/applicationposter.jpg'
 
 
 function WebFooter() {
@@ -19,14 +19,14 @@ function WebFooter() {
             </Link>
           </div>
 
-          <div style={{ padding: "10px 30px" }} className="col-sm-3 ">
+          <div style={{ padding: "10px 30px" }} className="col-sm-3">
             <Link>
               <h6 className="text-light">FaceBook</h6>
             </Link>
-            <Link>
+            <Link target="_blank" to="https://www.instagram.com/doctortime__/">
               <h6 className="text-light">Instagram</h6>
             </Link>
-            <Link>
+            <Link target="_blank" to="https://twitter.com/Doctortime_">
               <h6 className="text-light">Twitter</h6>
             </Link>
           </div>
@@ -35,23 +35,21 @@ function WebFooter() {
             <Link to="/about">
               <h6 className="text-light">About Us</h6>
             </Link>
-            <Link target='_blank' to="https://www.linkedin.com/">
+            <Link
+              target="_blank"
+              to="https://www.linkedin.com/in/doctor-time-4a7b00278/"
+            >
               <h6 className="text-light">Linkedin</h6>
             </Link>
-            <Link target='_blank' to="https://www.youtube.com/">
+            <Link
+              target="_blank"
+              to="https://www.youtube.com/channel/UCZawOzeRUom9bNn4W9kO21w"
+            >
               <h6 className="text-light">Youtube</h6>
             </Link>
           </div>
-          <div style={{ padding: "10px 30px" }} className="col-sm-3 ">
-            <Link>
-              <h6 className="text-light">About Us</h6>
-            </Link>
-            <Link>
-              <h6 className="text-light">Linkedin</h6>
-            </Link>
-            <Link>
-              <h6 className="text-light">Youtube</h6>
-            </Link>
+          <div style={{ padding:"0" }} className="col-sm-3 ">
+            <img style={{ height: "101px", width:"220px" }} className='rounded' src={sli} alt="" />
           </div>
         </div>
         <hr className="m-0" />
