@@ -25,7 +25,7 @@ const Patients = () => {
                             <a href="add-patient.html" className="ms-text-primary">Add Patient</a>
                         </div>
                         <div className="ms-panel-body p-0 ">
-                            <div className="table-responsive">
+                            <div style={{height:"576px", overflow:"scroll"}} className="table-responsive">
                                 <div id="data-table-2_wrapper" className="dataTables_wrapper dt-bootstrap4 no-footer">
                                     <div className="row">
                                         <div className="col-sm-12 p-0 m-2">

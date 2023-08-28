@@ -56,13 +56,13 @@ const Search = () => {
       >
         <ul className="d-flex flex-row justify-content-center seacrh-ul pt-2">
           <li>
-              <img
-                className="cursor-pointer"
-                style={{ width: "30px", height: "35px", marginRight: "10px" }}
-                src={filterImage}
-                onClick={() => setIsFilterOpen(!isFilterOpen) }
-              />
-
+            <img
+              className="cursor-pointer"
+              style={{ width: "30px", height: "35px", marginRight: "10px" }}
+              src={filterImage}
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              alt="filter"
+            />
           </li>
           <li>
             <div className="search-bar">
@@ -71,116 +71,158 @@ const Search = () => {
                 type="text"
                 value={filter.search}
                 onClick={() => setIsOpenSearch(true)}
-                onChange={(e) => setFilter({ ...filter, search: e.target.value }) }
+                onChange={(e) =>
+                  setFilter({ ...filter, search: e.target.value })
+                }
               />
               <FontAwesomeIcon className="search-ico" icon={faSearch} />
-              { isOpenSearch && <FontAwesomeIcon className="search-ico mx-2" icon={faXmark} onClick={() => {setIsOpenSearch(false); setIsFilterOpen(false)}} />}
+              {isOpenSearch && (
+                <FontAwesomeIcon
+                  className="search-ico mx-2"
+                  icon={faXmark}
+                  onClick={() => {
+                    setIsOpenSearch(false);
+                    setIsFilterOpen(false);
+                  }}
+                />
+              )}
             </div>
           </li>
         </ul>
-        {isFilterOpen && <div
-          className="w-100" style={{ background: '#fff', height: '60px'}}
-        >
-          <div className="d-flex justify-content-around align-item-center">
-            <div>
-              <div className="d-flex justify-content-between" style={{ width: '15rem'}} >
-                <div className="">Consultation Fee</div>
-                <div className="">Rs.{ filter.fee }</div>
+        {isFilterOpen && (
+          <div className="w-100" style={{ background: "#fff", height: "60px" }}>
+            <div className="d-flex justify-content-around align-item-center search-mobile">
+              <div>
+                <div
+                  className="d-flex justify-content-between "
+                  style={{ width: "15rem" }}
+                >
+                  <div className="">Consultation Fee</div>
+                  <div className="">Rs.{filter.fee}</div>
+                </div>
+                <input
+                  className="mobile-width form-range"
+                  type="range"
+                  min="0"
+                  max="2000"
+                  step="50"
+                  id="feeRange"
+                  onChange={(e) =>
+                    setFilter({ ...filter, fee: e.target.value })
+                  }
+                />
               </div>
-              <input type="range" class="form-range" min="0" max="2000" step="50" id="feeRange" onChange={(e) => setFilter({ ...filter, fee: e.target.value})} />
-            </div>
-            <div>
-              <Select
-                isMulti={false}
-                options={[{name: 'Aligarh', id:'ALIGARH'}, { id: 'MORADABAD', name: 'Moradabad'}]}
-                getOptionLabel={({ name }) => name}
-                getOptionValue={({ id }) => id}
-                className={`form-control p-0 w-15`}
-                classNamePrefix="select"
-                placeholder="Select City"
-                onChange={(e) => setFilter({ ...filter, city: e.name })}
-              />
-            </div>
-            <div>
-              <Select
-                isMulti={false}
-                options={ sepcializations?.length ? sepcializations : [] }
-                getOptionLabel={({ name }) => name}
-                getOptionValue={({ id }) => id}
-                className={`form-control p-0 w-15`}
-                classNamePrefix="select"
-                placeholder="Select Specialization"
-                onChange={(e) => setFilter({ ...filter, specialization: e.name })}
-              />
-            </div>
-            <div>
-              <Select
-                isMulti={false}
-                options={ ORGANIZATION_TYPE }
-                getOptionLabel={({ name }) => name}
-                getOptionValue={({ id }) => id}
-                className={`form-control p-0 w-15`}
-                classNamePrefix="select"
-                placeholder="Select Type"
-                onChange={(e) => setFilter({ ...filter, type: e.name })}
-              />
+              <div>
+                <Select
+                  isMulti={false}
+                  options={[
+                    { name: "Aligarh", id: "ALIGARH" },
+                    { id: "MORADABAD", name: "Moradabad" },
+                  ]}
+                  getOptionLabel={({ name }) => name}
+                  getOptionValue={({ id }) => id}
+                  className={`form-control p-0 w-15`}
+                  classNamePrefix="select"
+                  placeholder="Select City"
+                  onChange={(e) => setFilter({ ...filter, city: e.name })}
+                />
+              </div>
+              <div>
+                <Select
+                  isMulti={false}
+                  options={sepcializations?.length ? sepcializations : []}
+                  getOptionLabel={({ name }) => name}
+                  getOptionValue={({ id }) => id}
+                  className={`form-control p-0 w-15`}
+                  classNamePrefix="select"
+                  placeholder="Select Specialization"
+                  onChange={(e) =>
+                    setFilter({ ...filter, specialization: e.name })
+                  }
+                />
+              </div>
+              <div>
+                <Select
+                  isMulti={false}
+                  options={ORGANIZATION_TYPE}
+                  getOptionLabel={({ name }) => name}
+                  getOptionValue={({ id }) => id}
+                  className={`form-control p-0 w-15`}
+                  classNamePrefix="select"
+                  placeholder="Select Type"
+                  onChange={(e) => setFilter({ ...filter, type: e.name })}
+                />
+              </div>
             </div>
           </div>
-        </div>}
-        { isOpenSearch && <div
-          className="py-2 px-0 container main-ch"
-          style={{ background: "black", width: "50%" }}
-        >
-          <div className="search-page container rounded">
-            <div className="search-result-container p-0">
-              {searchData?.length > 0 ? searchData.map( clinic => (
-                <Link className="w-50 mr-1 p-2 main-ch" to={ clinic?.organizationType === 'Hospital' ? `/hospital/${ clinic._id }` : `/clinic-detail/${ clinic._id }`}>
-                  <div class="ms-card mb-0">
-                    <div class="ms-card-body">
-                      <div class="media mb-0 fs-14">
-                        <div class="me-2 align-self-center">
-                          <img
-                            src={clinic?.photo ? getFullPath(clinic?.photo) : NO_PHOTO}
-                            class="ms-img-round"
-                            alt="people"
-                          />
-                        </div>
-                        <div class="media-body">
-                          <h6>{ clinic?.name }</h6>
-                          <div class="float-end d-flex-colum justify-content-between">
-                            <div class="div">
-                              <span
-                                class="badge badge-outline-danger"
-                                style={{ marginBottom: "50%" }}
-                              >
-                                { clinic?.organizationType }
-                              </span>
+        )}
+        {isOpenSearch && (
+          <div
+            className="py-2 px-0 container main-ch"
+            style={{ background: "black", width: "50%" }}
+          >
+            <div className="search-page container rounded">
+              <div className="search-result-container p-0">
+                {searchData?.length > 0 ? (
+                  searchData.map((clinic) => (
+                    <Link
+                      className="w-50 mr-1 p-2 main-ch"
+                      to={
+                        clinic?.organizationType === "Hospital"
+                          ? `/hospital/${clinic._id}`
+                          : `/clinic-detail/${clinic._id}`
+                      }
+                    >
+                      <div class="ms-card mb-0">
+                        <div class="ms-card-body">
+                          <div class="media mb-0 fs-14">
+                            <div class="me-2 align-self-center">
+                              <img
+                                src={
+                                  clinic?.photo
+                                    ? getFullPath(clinic?.photo)
+                                    : NO_PHOTO
+                                }
+                                class="ms-img-round"
+                                alt="people"
+                              />
+                            </div>
+                            <div class="media-body">
+                              <h6>{clinic?.name}</h6>
+                              <div class="float-end d-flex-colum justify-content-between">
+                                <div class="div">
+                                  <span
+                                    class="badge badge-outline-danger"
+                                    style={{ marginBottom: "50%" }}
+                                  >
+                                    {clinic?.organizationType}
+                                  </span>
+                                </div>
+                              </div>
+                              <p class="fs-12 my-1 text-disabled">
+                                {clinic?.email}
+                              </p>
+                              <h6 class="mt-0">
+                                <span class="fs-14">
+                                  <i class="fas fa-map-marker-alt"></i>
+                                </span>
+                                {clinic?.address || "-"}
+                              </h6>
                             </div>
                           </div>
-                          <p class="fs-12 my-1 text-disabled">
-                            { clinic?.email }
-                          </p>
-                          <h6 class="mt-0">
-                            <span class="fs-14">
-                              <i class="fas fa-map-marker-alt"></i>
-                            </span>
-                            { clinic?.address || '-' }
-                          </h6>
                         </div>
                       </div>
-                    </div>
-                </div>
-                </Link>
-              )
-              )
-              : 
-                <div className="align-item-center">
-                  <span>No Search results</span>
-                </div>
-              }
+                    </Link>
+                  ))
+                ) : (
+                  <div className="align-item-center">
+                    <span>No Search results</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>}
+        )}
       </div>
     </>
   );

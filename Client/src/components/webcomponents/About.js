@@ -1,23 +1,41 @@
 import React from "react";
+import banner from "../../assets.app/images/AboutUS.png";
+import about2 from "../../assets.app/images/about2.png";
+import about3 from "../../assets.app/images/about3.png";
+import about4 from "../../assets.app/images/about4.png";
+import about5 from "../../assets.app/images/about4.png";
+
+
+
+
 
 const About = () => {
   return (
     <>
-      <div style={{ height: "100px" }}></div>
-      <div className="container">
-        <h3>About Us</h3>
-        <p className="text-justify">
-          Doctor Time is an online palteform that connects doctors and patients.
-          Doctor time services are mostly connected to OPD appointments. It
-          creates the most comfortable environment in the hospital or clinic.
-          Doctor is quite good at dealing with crowds.With the assistance of a
-          doctor, time will be saved, and patients will feel more at ease at
-          hospitals and clinics. The main goal of this app is for patients to
-          quickly obtain their appointment numbers, especially in regions where
-          there is a lot of crowding in hospitals and clinics. This software is
-          billable for both doctors and patients, and it is not responsible
-        </p>
+      <div style={{ height: "60px" }}></div>
+      <div style={{ width: "100%", height: "200px" }} className="">
+        <img style={{ width: "100%", height: "200px" }} src={banner} alt="" />
       </div>
+
+      <div
+        style={{ width: "100%", height: "700px", marginTop: "30px" }}
+        className=""
+      >
+        <img style={{ width: "100%", height: "700px" }} src={about3} alt="" />
+      </div>
+      <div
+        style={{ width: "100%", height: "400px", marginTop: "30px" }}
+        className=""
+      >
+        <img style={{ width: "100%", height: "500px" }} src={about2} alt="" />
+      </div>
+      <div
+        style={{ width: "100%", height: "250px", marginTop: "30px" }}
+        className=""
+      >
+        <img style={{ width: "100%", height: "250px" }} src={about4} alt="" />
+      </div>
+      <div className="container"></div>
     </>
   );
 };
