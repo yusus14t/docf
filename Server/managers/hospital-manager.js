@@ -1,7 +1,6 @@
 const UserModel = require("../models/user-model")
 const { Success, uploadToBucket } = require("../constants/utils")
 const organizationModel = require("../models/organization-model")
-const { isAxiosError } = require("axios")
 const ObjectId = require('mongoose').Types.ObjectId
 
 const editProfile = async ( body, user, file ) => {
@@ -51,7 +50,66 @@ const clinicSpecialization = async (body, user) => {
     } catch(error){ console.error(error) }
 }
 
+const addServices = async ({ services }, user) => {
+    try {
+
+        let updatedService = []
+    
+        if (services?.length) {
+          for (let service of services) {
+    
+            let organization = await organizationModel.findOne({
+              _id: user?.organizationId,
+              "services.id": service.id,
+            });
+    
+            if (!organization) {
+              await organizationModel.updateOne(
+                { _id: user?.organizationId },
+                {
+                  $push: {
+                    services: { id: service?.id || service?.label?.toUpperCase() , name: service.name || service?.label },
+                  },
+                }
+              );
+              updatedService.push({ id: service?.id || service?.label?.toUpperCase() , name: service.name || service?.label })
+            }
+          }
+        }
+        return Success({ message: 'Specialization created succesfully.', services: updatedService });
+    
+      } catch (error) {
+        console.log(error);
+      }
+}
+
+const getServices = async (body, user) => {
+    try{
+        let organization = await organizationModel.findOne({_id: user.organizationId }, { services: 1 })
+        return Success({ services: organization.services })
+    } catch(error){ console.error(error) }
+}
+
+const deleteService = async ({ id }, user) => {
+    try{
+        await organizationModel.updateOne({ _id: user.organizationId }, { $pull: { services: { id } } })
+        return Success({ message: 'Successfully deleted service' })
+    } catch(error){ console.error(error) }
+}
+
+const deleteSpecialization = async ({ id }, user) => {
+    try{
+        await organizationModel.updateOne({ _id: user.organizationId }, { $pull: { specialization: { id } } })
+        return Success({ message: 'Successfully deleted service' })
+    } catch(error){ console.error(error) }
+}
+
+
 module.exports = {
     editProfile,
     clinicSpecialization,
+    addServices,
+    getServices,
+    deleteService,
+    deleteSpecialization
 }

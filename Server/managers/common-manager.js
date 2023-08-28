@@ -14,16 +14,17 @@ const sessionInfo = async ( request, user ) => {
         if( !user ) return Success({ message: '' })
         let info = await UserModel.findOne({ _id: user._id }).populate('organizationId')
 
-        if( [ 'DP', 'CL', 'HL' ].includes(info.userType) && !info?.organizationId?.qrCode ){
+        if( [ 'DP', 'CL', 'HL' ].includes(info.userType) && !info?.organizationId?.qrCode  ){
             let link = 'https://doctortime.in';
-            if( info.userType === 'HL' ) link += `/hospital/${ info.organizationId }`
-            else if( info.userType === 'CL' ) link += `/clinic-detail/${ info.organizationId }`
-            else if( info.userType === 'DP' ) link += `/department/${ info.organizationId }`
+            if( info.userType === 'HL' ) link += `/hospital/${ info.organizationId._id }`
+            else if( info.userType === 'CL' ) link += `/clinic-detail/${ info.organizationId._id }`
+            else if( info.userType === 'DP' ) link += `/department/${ info.organizationId._id }`
             
             // genrate qr code
             const filename = `${info.organizationId._id}.png`
             await QRCodeGenerate(link, filename)
             await OrganizationModel.updateOne({ _id: info.organizationId._id }, { qrCode: filename })
+            info.organizationId.qrCode = filename
         }
 
         return Success({ user: info })
