@@ -6,6 +6,7 @@ import Modal from "../Modal";
 import Profile from "./Profile";
 import CreatableSelect from 'react-select/creatable';
 import useToasty from "../../../hooks/toasty";
+import Website from "./Website";
 
 
 const Settings = () => {
@@ -79,16 +80,18 @@ const Settings = () => {
   return (
     <div className='ms-content-wrapper'>
       <div className="row mr-0" >
-        <div class="col-xl-12 col-md-12">
-          <div class="ms-panel mb-0 inner-content-height">
-            <div class="ms-panel-header ms-panel-custome">
+        <div className="col-xl-12 col-md-12">
+          <div className="ms-panel mb-0 inner-content-height">
+            <div className="ms-panel-header ms-panel-custome">
               <div>
                 {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
                 {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
                 <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
+                {['SA'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('WEBSITE')}>Website</span>}
+
               </div>
             </div>
-            <div class="ms-panel-body p-0" >
+            <div className="ms-panel-body p-0 content-height">
               {tab === 'SPECIALIZATION' &&
                 <>
                   <div className="d-flex justify-content-between p-3">
@@ -99,9 +102,9 @@ const Settings = () => {
                       <button className="btn btn-primary btn-md shadow-none" onClick={() => setIsOpen(true)}>Add Specialization</button>
                     </div>
                   </div>
-                  <div class="ms-panel-body py-0 ">
-                    <div class="table-responsive">
-                      <table class="table table-hover  thead-primary">
+                  <div className="ms-panel-body py-0 ">
+                    <div className="table-responsive">
+                      <table className="table table-hover  thead-primary">
                         <thead style={{ backgroundColor: '#A2A2A252' }}>
                           <tr>
                             <th scope="col" style={{ color: '#000' }}>Id</th>
@@ -112,7 +115,7 @@ const Settings = () => {
                         <tbody>
                           {specializations?.length > 0 && specializations.map(specialization =>
                             <tr>
-                              <td class="ms-table-f-w">{specialization.id}</td>
+                              <td className="ms-table-f-w">{specialization.id}</td>
                               <td>{specialization.name}</td>
                               <td>
                                 <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => { }} icon={faTrash}></FontAwesomeIcon>
@@ -126,6 +129,7 @@ const Settings = () => {
                 </>
               }
               {tab === 'PROFILE' && <Profile />}
+              {tab === 'WEBSITE' && <Website />}
               {tab === 'QRCODE' && (
                 <div>
                   <img src={getFullPath(userInfo?.organizationId?.qrCode)} />
