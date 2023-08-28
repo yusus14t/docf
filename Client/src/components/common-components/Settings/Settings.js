@@ -7,25 +7,39 @@ import Profile from "./Profile";
 import CreatableSelect from 'react-select/creatable';
 import useToasty from "../../../hooks/toasty";
 import Website from "./Website";
+import { SERVICES } from "../../../constants/constant";
+
 
 
 const Settings = () => {
   const userInfo = JSON.parse(localStorage.getItem('user'))
   const [tab, setTab] = useState(['HL', 'CL'].includes(userInfo.userType) ? 'SPECIALIZATION' : 'PROFILE')
   const [isOpen, setIsOpen] = useState(false)
+  const [isServiceOpen, setIsServiceOpen] = useState(false)
   const [specialization, setSpecialization] = useState({ name: null, error: null })
   const [specializations, setSpecializations] = useState([])
   const [allSpecializations, setAllSpecializations] = useState([])
+
+  const [services, setServices] = useState([]);
+  const [organizationServices, setOrganizationServices] = useState([]);
+
   const toasty = useToasty()
 
   useEffect(() => {
     if (tab === 'SPECIALIZATION') getAllSpecialization()
+    else if( tab === 'SERVICES' ) getServices()
   }, [tab,])
 
   useEffect(() => {
     getAllCommonSpecialization()
   }, [isOpen])
 
+  const getServices = async () => {
+    try{ 
+      let { data } = await axiosInstance.get('/hospital/services')
+      setOrganizationServices(data?.services)
+    }catch(error){ console.error(error) }
+  }
 
 
   const getAllSpecialization = async () => {
@@ -76,6 +90,42 @@ const Settings = () => {
     element.setAttribute('download', 'QRCode.png')  
     element.click()
   }
+  
+  const submitServices = async (value) => {
+    try {
+      if (!value.length) return
+
+      let { data } = await axiosInstance.post('/hospital/services', { services: value }, getAuthHeader())
+
+      if (!data.services?.length) {
+        toasty.error('Oops! They have already in your list')
+        setIsServiceOpen(false)
+        return
+      }
+      console.log(data?.services)
+      setOrganizationServices( old => [...old, ...data?.services])
+      setIsServiceOpen(false)
+      toasty.success(data?.message)
+
+    } catch (error) { console.error(error) }
+  }
+
+  const deleteService = async ( id ) => {
+    try {
+      await axiosInstance.delete(`/hospital/service/${ id }`)
+      setOrganizationServices( old => old.filter( service => service.id !== id))
+      toasty.success('Successfully service deleted')
+    } catch(error){ console.error(error) }
+  }
+
+  const deleteSpecialization = async ( id ) => {
+    try {
+      await axiosInstance.delete(`/hospital/specialization/${ id }`)
+      setSpecializations( old => old.filter( specialization => specialization.id !== id))
+      toasty.success('Successfully specialization deleted')
+    } catch(error){ console.error(error) }
+  }
+
 
   return (
     <div className='ms-content-wrapper'>
@@ -85,6 +135,7 @@ const Settings = () => {
             <div className="ms-panel-header ms-panel-custome">
               <div>
                 {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
+                {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SERVICES')}>Services</span>}
                 {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
                 <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
                 {['SA'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('WEBSITE')}>Website</span>}
@@ -118,7 +169,43 @@ const Settings = () => {
                               <td className="ms-table-f-w">{specialization.id}</td>
                               <td>{specialization.name}</td>
                               <td>
-                                <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => { }} icon={faTrash}></FontAwesomeIcon>
+                                <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" icon={faTrash}  onClick={() => deleteSpecialization(specialization.id)}></FontAwesomeIcon>
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </>
+              }
+               {tab === 'SERVICES' &&
+                <>
+                  <div className="d-flex justify-content-between p-3">
+                    <div>
+                      <h4>Services</h4>
+                    </div>
+                    <div>
+                      <button className="btn btn-primary btn-md shadow-none" onClick={() => setIsServiceOpen(true)}>Add Services</button>
+                    </div>
+                  </div>
+                  <div class="ms-panel-body py-0 ">
+                    <div class="table-responsive">
+                      <table class="table table-hover  thead-primary">
+                        <thead style={{ backgroundColor: '#A2A2A252' }}>
+                          <tr>
+                            <th scope="col" style={{ color: '#000' }}>Id</th>
+                            <th scope="col" style={{ color: '#000' }}>Name</th>
+                            <th scope="col" style={{ color: '#000' }}>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {organizationServices?.length > 0 && organizationServices.map(service =>
+                            <tr>
+                              <td class="ms-table-f-w">{service.id}</td>
+                              <td>{service.name}</td>
+                              <td>
+                                <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => deleteService(service.id) } icon={faTrash}></FontAwesomeIcon>
                               </td>
                             </tr>
                           )}
@@ -145,18 +232,45 @@ const Settings = () => {
         <Modal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          title="Add Specialization"
-          data={specialization}
-          callback={(data) => submitSpecialization(data)}
+          title={"Add Specialization"}
+          data={ specialization  }
+          callback={(data) => {submitSpecialization(data)}}
         >
           <div className="row">
             <div className="col-12">
-              <label>Name of specialization</label>
+              <label>Name of Specialization</label>
               <div className="">
                 <CreatableSelect
                   isMulti={true}
-                  options={allSpecializations}
-                  onChange={(e) => setSpecialization(e)}
+                  options={ allSpecializations}
+                  onChange={(e) => {setSpecialization(e)}}
+                  className={`form-control p-0`}
+                  classNamePrefix="select"
+                />
+              </div>
+            </div>
+          </div>
+        </Modal>
+      }
+
+      {isServiceOpen &&
+        <Modal
+          isOpen={isServiceOpen}
+          setIsOpen={setIsServiceOpen}
+          title={ 'Add Services'}
+          data={ services }
+          callback={(data) => {submitServices(data)}}
+        >
+          <div className="row">
+            <div className="col-12">
+              <label>Name of Services</label>
+              <div className="">
+                <CreatableSelect
+                  isMulti={true}
+                  getOptionLabel={({ name }) => name }
+                  getOptionValue={({ id }) => id }
+                  options={SERVICES}
+                  onChange={(e) => {setServices(e); return e}}
                   className={`form-control p-0`}
                   classNamePrefix="select"
                 />
