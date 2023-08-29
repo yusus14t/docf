@@ -20,8 +20,8 @@ const Contact = () => {
                   <img className="contact-icons" src={phone} alt="" />
                 </div>
                 <div className="contact-kk ">
-                  <Link to="tel:123-456-7890" className="href_location">
-                    1234567890
+                  <Link to="tel:9528820782" className="href_location">
+                    +91 9528820782 
                   </Link>
                 </div>
               </div>
@@ -32,7 +32,9 @@ const Contact = () => {
                   <img className="contact-icons" src={whatsapp} alt="" />
                 </div>
                 <div className="contact-kk">
-                  <Link to="#">+91 8474986168</Link>
+                  <Link target="_blank" to="https://wa.me/919528820782">
+                    +91 9528820782
+                  </Link>
                 </div>
               </div>
             </li>
@@ -42,7 +44,9 @@ const Contact = () => {
                   <img className="contact-icons " src={email} alt="" />
                 </div>
                 <div className="contact-kk">
-                  <Link to="mailto:yusuf14t@gmail.com">yusuf14t@gmail.com</Link>
+                  <Link target="_blank" to="mailto:yusuf14t@gmail.com">
+                    contact@doctortime.in
+                  </Link>
                 </div>
               </div>
             </li>
@@ -52,7 +56,9 @@ const Contact = () => {
                   <img src={twitter} className="contact-icons" alt="" />
                 </div>
                 <div className=" contact-kk">
-                  <Link to="https://www.instagram.com">@yusus14t</Link>
+                  <Link target="_blank" to="https://twitter.com/Doctortime_">
+                    @Doctortime_
+                  </Link>
                 </div>
               </div>
             </li>
@@ -62,11 +68,37 @@ const Contact = () => {
           <div className="row">
             <div className="col-sm-6">
               <label htmlFor="">Name</label>
-              <input type="text" className="form-control" />
+              <input
+                type="text"
+                placeholder="John Dee"
+                className="form-control"
+              />
             </div>
             <div className="col-sm-6">
-              <label htmlFor="">Mobile Number or Email Address</label>
-              <input type="number" className="form-control" />
+              <label htmlFor="">Mobile Number</label>
+              <input
+                type="number"
+                placeholder="8474986368"
+                className="form-control"
+              />
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className="col-sm-6">
+              <label htmlFor="">Topic</label>
+              <input
+                type="text"
+                placeholder="Enter the topic here"
+                className="form-control"
+              />
+            </div>
+            <div className="col-sm-6">
+              <label htmlFor="">Email Address</label>
+              <input
+                type="number"
+                placeholder="Enter your Email address here (optional)"
+                className="form-control"
+              />
             </div>
           </div>
           <div className="row p-3">
@@ -76,6 +108,7 @@ const Contact = () => {
               id=""
               cols="30"
               rows="10"
+              placeholder="write your message here"
             ></textarea>
           </div>
           <div className="row ">

@@ -8,7 +8,6 @@ import Privacy from "../components/webcomponents/Privacy";
 import Terms from "../components/webcomponents/Terms";
 import NotFound from "../components/webcomponents/NotFound";
 import NoData from "../components/webcomponents/NoData";
-import AppointmentShare from "../components/user-component/patient/AppointmentShare";
 
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
 const Doctors = lazy(() => import( '../components/webcomponents/doctor/Doctors'))
@@ -47,7 +46,6 @@ const COMMON_ROUTE = [
   { path: "/specialization/:id", element: <SpecializationDetails /> },
   { path: "/privacy", element: <Privacy /> },
   { path: "/terms", element: <Terms /> },
-  { path: "/share", element: <AppointmentShare /> },
 
   {
     path: "/login",
