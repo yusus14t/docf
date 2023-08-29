@@ -42,8 +42,6 @@ const MR = () => {
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                 <div><h6>MRs</h6></div>
                 <div class="ms-form-group my-0 mb-0 has-icon fs-14 d-flex justify-content-center">
-                    <input type="search" class="ms-form-input" name="search" placeholder="Search for MRs" />
-                    <i class="flaticon-search text-disabled"></i>
                     <button className="btn btn-light btn-md mx-2" onClick={() => setAddModal(true) }>+ MR</button>
                 </div>
 
