@@ -36,8 +36,6 @@ const Clinics = () => {
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                 <div><h6>Clinics</h6></div>
                 <div class="ms-form-group my-0 mb-0 has-icon fs-14 d-flex justify-content-center">
-                    <input type="search" class="ms-form-input" name="search" placeholder="Search for clinics & departments" />
-                    <i class="flaticon-search text-disabled"></i>
                 </div>
 
 

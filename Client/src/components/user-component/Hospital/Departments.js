@@ -40,7 +40,6 @@ const Departments = () => {
             <div className="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                 <div><h6>Departments</h6></div>
                 <div className="ms-form-group my-0 mb-0 has-icon fs-14 d-flex justify-content-center">
-                    <input type="search" className="ms-form-input d-search" name="search" placeholder="Search for departments" />
                 { userInfo.userType === 'HL' && <button className=" mx-3 btn btn-info btn-md shadow-none" onClick={() =>  setAddDepartment(true)}>Add Department</button>}
                 </div>
 

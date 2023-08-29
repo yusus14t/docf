@@ -11,17 +11,16 @@ const AppointmentShare = () => {
             width: "600px",
             border: "1px solid black",
           }}
-          className="p-2 rounded"
         >
-          <h4 className="">Appointment Card</h4>
+          <h4>Appointment Card</h4>
           <hr />
-          <div className="">
+          <div >
             <h3 style={{textAlign:"center"}} >Clinic Or Hospital NAme</h3>
             <h6 style={{marginLeft:"16px"}} >25/02/2003</h6>
             <hr />
           </div>
-          <div style={{display:"flex", justifyContent:"space-around", padding:"0 3.5rem"}} className=" d-flex justify-content-around px-4">
-            <div className="">
+          <div style={{display:"flex", justifyContent:"space-around", padding:"0 3.5rem"}}>
+            <div >
               <img
                 
                 src={img}
@@ -29,19 +28,19 @@ const AppointmentShare = () => {
                 alt=""
               />
             </div>
-            <div style={{display:"flex", flexDirection:"column" , margin:"auto"}} className="user-details m-auto d-flex flex-column">
+            <div style={{display:"flex", flexDirection:"column" , margin:"auto"}} >
               <h6 style={{fontWeight:"bold"}} >
-                <span style={{margin:"0", color:"black"}} >Name : </span>Lapd{" "}
+                <span style={{margin:"0", color:"black"}} >Name : </span>Lapd
               </h6>
 
               <h6 style={{fontWeight:"bold"}} >
                 <span style={{margin:"0", color:"black"}}>Age : </span>25
               </h6>
               <h6 style={{fontWeight:"bold"}} >
-                <span style={{color:"black", margin:"0"}} className="m-0 text-dark">Gender : </span>male
+                <span style={{color:"black", margin:"0"}} >Gender : </span>male
               </h6>
               <h6 style={{fontWeight:"bold"}} >
-                <span style={{margin:"0", color:"black"}} className="m-0 text-dark">Blood Group : </span>A+
+                <span style={{margin:"0", color:"black"}} >Blood Group : </span>A+
               </h6>
             </div>
             <div style={{width:"60px", height:"60px", borderRadius:"6px", backgroundColor:"#00bf63"}}  >
