@@ -102,7 +102,7 @@ const Settings = () => {
         setIsServiceOpen(false)
         return
       }
-      console.log(data?.services)
+
       setOrganizationServices( old => [...old, ...data?.services])
       setIsServiceOpen(false)
       toasty.success(data?.message)
