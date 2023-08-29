@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faL,
+  
   faLocationDot,
   faPhone,
-  faStethoscope,
 } from "@fortawesome/free-solid-svg-icons";
 import Banner from "../../assets.app/images/GYNA_POSTER.jpg";
 import Gynaecology from "../../assets.app/images/Gynaecology.jpg";

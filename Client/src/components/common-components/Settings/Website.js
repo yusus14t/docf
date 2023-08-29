@@ -9,6 +9,16 @@ const Website = () => {
           <img style={{ width: "100%" }} src={Im} alt="" />
           <h6 className="text-center">Home Page Poster</h6>
         </div>
+        <div className="col-sm-4">
+          <img style={{ width: "100%" }} src={Im} alt="" />
+          <h6 className="text-center">Home page 4 lines</h6>
+        </div>
+        <div className="col-sm-4">
+          <img style={{ width: "100%" }} src={Im} alt="" />
+          <h6 className="text-center">Home page Why Choose US picture</h6>
+        </div>
+      </div>
+      <div className="row">
         <div className="col-sm-4 p-2">
           <img style={{ width: "100%" }} src={Im} alt="" />
           <h6 className="text-center">Gynae Poster 1</h6>
@@ -17,20 +27,20 @@ const Website = () => {
           <img style={{ width: "100%" }} src={Im} alt="" />
           <h6 className="text-center">Gynae Poster 2</h6>
         </div>
-        <div className="col-sm-4 p-2">
-          <img style={{ width: "100%" }} src={Im} alt="" />
-          <h6 className="text-center">Homiopathy Poster</h6>
-        </div>
-        <div className="col-sm-4 p-2">
-          <img style={{ width: "100%" }} src={Im} alt="" />
-          <h6 className="text-center">UltraSound Poster</h6>
-        </div>
         <div className="col-sm-4">
           <img style={{ width: "100%" }} src={Im} alt="" />
           <h6 className="text-center">Gynae Slider</h6>
         </div>
       </div>
       <div className="row">
+        <div className="col-sm-4 p-2">
+          <img style={{ width: "100%" }} src={Im} alt="" />
+          <h6 className="text-center">Homiopathy Poster</h6>
+        </div>
+        <div className="col-sm-4">
+          <img style={{ width: "100%" }} src={Im} alt="" />
+          <h6 className="text-center">Ultrasound Poster</h6>
+        </div>
         <div className="col-sm-4">
           <img style={{ width: "100%" }} src={Im} alt="" />
           <h6 className="text-center">Contact Information</h6>

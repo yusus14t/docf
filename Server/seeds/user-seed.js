@@ -21,6 +21,18 @@ let user = {
       primary: true,
       twoFactor: { isVerified: true, otp: "0" },
       age: 21,
+      name: "Pervez Khan",
+      email: "",
+      phone: "8533819696",
+      address: "688 Royce Street, Hardyville, Wisconsin, 324",
+      userType: "SA",
+    },
+    
+    {
+      isActive: true,
+      primary: true,
+      twoFactor: { isVerified: true, otp: "0" },
+      age: 21,
       name: "Abdul",
       email: "realhamson@gmail.com",
       phone: "8273237781",

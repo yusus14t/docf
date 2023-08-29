@@ -1,9 +1,7 @@
 import React from "react";
-import banner from "../../assets.app/images/AboutUS.png";
 import about2 from "../../assets.app/images/about2.png";
 import about3 from "../../assets.app/images/about3n.png";
 import about4 from "../../assets.app/images/jk.png";
-import about5 from "../../assets.app/images/about4.png";
 
 
 
