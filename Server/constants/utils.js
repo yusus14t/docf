@@ -72,9 +72,8 @@ const upload = multer({ storage: multerStorage })
 
 
 const uploadToBucket = async (filename) => {
-
   if (process.env.ENVIRONMENT === 'development') return filename
-
+  
   const client = new ftp.Client();
   client.ftp.verbose = true;
 
@@ -85,16 +84,16 @@ const uploadToBucket = async (filename) => {
       password: process.env.FTP_PASSWORD,
       secure: false,
     });
-
+    
     const remotePath = process.env.ROOT_DIRECTORY
-    const remoteFileName = filename;
+    const remoteFullPath = path.join(remotePath, filename)
 
     const localFilePath = path.join(__dirname, '..', '/uploads', filename)
     const localFile = fs.createReadStream(localFilePath);
-    await client.uploadFrom(localFile, remotePath + remoteFileName);
+    await client.uploadFrom(localFile, remoteFullPath);
 
     fs.unlinkSync(localFilePath)
-    return filename
+    return remoteFullPath
   } catch (err) {
     console.error("Error uploading image:", err);
     return err
