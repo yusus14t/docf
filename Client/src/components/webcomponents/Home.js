@@ -54,7 +54,7 @@ function Home() {
       {/* specialization slider end */}
 
       {/* <Clinics style={{ margin: "0" }} /> */}
-      <div className="container">
+      <div className="">
         <div className="row">
           <DoctorsList source={"homepage"} />
         </div>

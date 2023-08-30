@@ -280,7 +280,7 @@ const Dashbaord = () => {
         title=""
       >
         <div
-          style={{background: "#ffff", width: "600px", border: "1px solid black"}}
+          style={{background: "#ffff", width: "100%", border: "1px solid black"}}
           class="p-2 rounded mb-3"
           ref={appointmentCarRef}
         >
@@ -307,17 +307,17 @@ const Dashbaord = () => {
               </div>
               <div>
                 <div style={{display: "flex", flexDirection: "column", margin: "auto" }}>
-                  <h4 style={{fontWeight: "bold", margin: "0"}}>
+                  <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "0"}}>
                     <span style={{margin: "0", color: "black"}}>Name : </span>{ appointment?.userId?.name || 'Patient Name'}
                   </h4>
 
-                  <h4 style={{ fontWeight: "bold", margin: "5px 0 0 0"}}>
+                  <h4 style={{ fontWeight: "bold", fontSize:"17px", margin: "5px 0 0 0"}}>
                     <span style={{margin: "0", color: "black"}}>Age : </span>{ appointment?.userId?.age || 'Age'}
                   </h4>
-                  <h4 style={{fontWeight: "bold", margin: "5px 0 0 0"}}>
-                    <span style={{color: "black", margin: "0"}} class="m-0 text-dark">Gender : </span>{appointment?.userId?.gender || 'Gender'}
+                  <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "5px 0 0 0"}}>
+                    <span style={{color: "black", fontSize:"17px", margin: "0"}} class="m-0 text-dark">Gender : </span>{appointment?.userId?.gender || 'Gender'}
                   </h4>
-                  <h4 style={{fontWeight: "bold", margin: "5px 0 0 0"}}>
+                  <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "5px 0 0 0"}}>
                     <span style={{margin: "0", color: "black"}} class="m-0 text-dark">Blood Group : </span>{appointment?.userId?.bloodGroup || 'Blood Group'}
                   </h4>
                 </div>
