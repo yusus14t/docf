@@ -1,12 +1,27 @@
 import Clinics from "./Clinics";
 import Hospitals from "./Hospital/Hospitals";
-import dr from "../../assets.app/img/home/portrait-doctor.jpg";
-import hero from "../../assets.app/img/home/hero.jpg";
 import Slider from "./Specializations/Slider";
 import DoctorsList from "./doctor/Doctors";
+import { getFullPath, getImages } from "../../constants/utils";
+import { useEffect, useState } from "react";
+import { WEBSITE_IMAGE } from "../../constants/constant";
 
 function Home() {
-  
+  const [ images, setImages ] = useState([])
+
+  useEffect(() => {
+    initailizer()
+  }, [])
+
+  const initailizer = async () => {
+    let imagesData = await getImages()
+    setImages(imagesData.data.images)
+  }
+
+  const findImage = ( id ) => {
+    return getFullPath(images.find( image => image.id === id )?.image)
+  }
+
   return (
     <>
       <div className="box"></div>
@@ -14,8 +29,7 @@ function Home() {
       <div
         className=" hero-container"
         style={{
-          background: `url(${hero})`,
-          // backgroundSize: "100% 100%",
+          background: `url(${ findImage(WEBSITE_IMAGE.HOME_BANNER) })`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           display: "flex",
@@ -34,24 +48,12 @@ function Home() {
               Our Partners provide best Medical Treament and advice
             </h4>
           </div>
-          {/* <div
-            style={{ backgroundColor: "#fff" }}
-            className="search-contianer-home mt-3"
-          >
-            <input
-              className="home-search "
-              placeholder="Seach for Doctor, Hospital and Clinics"
-              type="text"
-            />
-            <FontAwesomeIcon className="home-search-icon" icon={faSearch} />
-          </div> */}
+
         </div>
       </div>
-      {/* specialization slider */}
       <div className="mobie">
         <Slider />
       </div>
-      {/* specialization slider end */}
 
       {/* <Clinics style={{ margin: "0" }} /> */}
       <div className="">
@@ -64,7 +66,6 @@ function Home() {
         <Hospitals source={"homepage"} />
       </div>
 
-      {/* advantages or featurs */}
       <div className="container">
         <h3 className="text-center underline">
           <span className="under">Why Choose Us</span>
@@ -97,7 +98,7 @@ function Home() {
           </div>
           <div className="col-sm-6 advantages-side-img">
             <img
-              src={dr}
+              src={findImage(WEBSITE_IMAGE.HOME_BOTTOM_BANNER)}
               alt=""
               className="rounded"
               style={{ height: "460px", width: "100%" }}

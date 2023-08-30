@@ -1,16 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { axiosInstance, getAuthHeader, getFullPath } from '../../constants/utils';
+import { axiosInstance, getAuthHeader, getFullPath, getImages } from '../../constants/utils';
 import NO_PHOTO from '../../assets.app/images/no-photo.png';
 import Banner from "../../assets.app/images/GYNA_POSTER.jpg";
+import { WEBSITE_IMAGE } from '../../constants/constant';
 
 
 const Ultrasound = () => {
   const [clinics, setClinics] = useState([]);
+  const [ images, setImages ] = useState([])
 
   useEffect(() => {
+    initailizer()
+
     getAllClinics();
   }, []);
+
+  const initailizer = async () => {
+    let imagesData = await getImages()
+    setImages(imagesData.data.images)
+  }
+
+  const findImage = ( id ) => {
+    return getFullPath(images.find( image => image.id === id )?.image)
+  }
+
+
 
   const getAllClinics = async () => {
     try {
@@ -32,7 +47,7 @@ const Ultrasound = () => {
           className="hero-banner"
           style={{
             backgroundColor: "blue",
-            backgroundImage: `url(${Banner})`,
+            backgroundImage: `url(${findImage(WEBSITE_IMAGE.ULTRASOUND_BANNER)})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
           }}

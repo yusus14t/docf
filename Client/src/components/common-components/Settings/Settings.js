@@ -135,52 +135,12 @@ const Settings = () => {
           <div className="ms-panel mb-0 inner-content-height">
             <div className="ms-panel-header ms-panel-custome">
               <div>
-                {["HL", "CL"].includes(userInfo.userType) && (
-                  <span
-                    className="btn btn-info btn-md mx-3"
-                    onClick={() => setTab("SPECIALIZATION")}
-                  >
-                    Specialization
-                  </span>
-                )}
-                {["HL", "CL"].includes(userInfo.userType) && (
-                  <span
-                    className="btn btn-info btn-md mx-3"
-                    onClick={() => setTab("Timming")}
-                  >
-                    Timming
-                  </span>
-                )}
-                {["HL", "CL"].includes(userInfo.userType) && (
-                  <span
-                    className="btn btn-info btn-md mx-3"
-                    onClick={() => setTab("SERVICES")}
-                  >
-                    Services
-                  </span>
-                )}
-                {["HL", "CL", "DP"].includes(userInfo.userType) && (
-                  <span
-                    className="btn btn-info btn-md mx-3"
-                    onClick={() => setTab("QRCODE")}
-                  >
-                    QR Code
-                  </span>
-                )}
-                <span
-                  className="btn btn-info btn-md mx-3"
-                  onClick={() => setTab("PROFILE")}
-                >
-                  Profile
-                </span>
-                {["SA"].includes(userInfo.userType) && (
-                  <span
-                    className="btn btn-info btn-md mx-3"
-                    onClick={() => setTab("WEBSITE")}
-                  >
-                    Website
-                  </span>
-                )}
+                {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
+                {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SERVICES')}>Services</span>}
+                {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
+                <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
+                {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('WEBSITE')}>Website</span>}
+
               </div>
             </div>
             <div className="ms-panel-body p-0 content-height">
@@ -298,7 +258,7 @@ const Settings = () => {
               {tab === "WEBSITE" && <Website />}
               {tab === "QRCODE" && (
                 <div>
-                  <img src={getFullPath(userInfo?.organizationId?.qrCode)} />
+                  <img src={getFullPath(userInfo?.organizationId?.qrCode)} alt="qrcode" />
                   <button
                     className="btn btn-primary"
                     onClick={() =>

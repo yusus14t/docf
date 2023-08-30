@@ -1,7 +1,8 @@
 
 const UserModel  = require('../models/user-model'); 
 const OrganizationModel  = require('../models/organization-model'); 
-const { Success, Error, uploadToBucket } = require('../constants/utils')
+const { Success, Error, uploadToBucket } = require('../constants/utils');
+const websiteImageModel = require('../models/website-image-model');
 
 
 const getProfile = async ( body ) => {
@@ -34,7 +35,6 @@ const analytics = async () => {
             }]
         }
 
-        console.log(getQuery( false,  'PT'))
         let analyticsData = await UserModel.aggregate([
             {
                 $facet: {
@@ -158,6 +158,42 @@ const deleteMR = async ( body ) => {
     }
 }
 
+const websiteImages = async ( body ) => {
+    try {
+        let images = await websiteImageModel.find();
+        return Success({ images });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+
+const uploadImage = async ( body, file ) => {
+    try {
+        let image = await websiteImageModel.findOne({ id: body.id })
+        await uploadToBucket(file.filename)
+
+        if( image ){
+            await websiteImageModel.updateOne({ id: body.id }, { image: file.filename })
+            image.image = file.filename 
+
+        } else {
+            image = await websiteImageModel({
+                id: body.id,
+                image: file.filename
+            }).save()
+        }
+
+        return Success({ image });
+
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+
 module.exports = {
     getProfile,
     analytics,
@@ -166,5 +202,7 @@ module.exports = {
     patients,
     MRs,
     createMR,
-    deleteMR
+    deleteMR,
+    websiteImages,
+    uploadImage,
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 import toasty from '../../../hooks/toasty'
-import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from '../../../constants/utils';
+import { axiosInstance, formatPhone, getAuthHeader, getFullPath, userInfo } from '../../../constants/utils';
 import { DoughnutChart, LineChart } from '../../common-components/Chart';
 
 const Dashbaord = () => {
@@ -120,7 +120,7 @@ const Dashbaord = () => {
                         </div>
                     </a>
                 </div>
-                <div class="col-xl-6 col-md-6 col-sm-12 mb-4">
+                { userInfo?.userType === 'SA' && <div class="col-xl-6 col-md-6 col-sm-12 mb-4">
                     <div class="ms-panel">
                         <div class="ms-panel-header">
                             <div className='d-flex justify-content-between'>
@@ -151,7 +151,7 @@ const Dashbaord = () => {
                         </div>
 
                     </div>
-                </div>
+                </div>}
                 <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
                     <div class="ms-panel h-100">
                         <div class="ms-panel-header">
