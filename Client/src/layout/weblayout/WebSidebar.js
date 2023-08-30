@@ -21,6 +21,9 @@ function WebSidebar({ isOpen }) {
   ];
 
   const userInfo = JSON.parse(localStorage.getItem("user"));
+  const logout= () =>{
+    localStorage.clear()
+  }
 
   return (
     <aside
@@ -48,12 +51,21 @@ function WebSidebar({ isOpen }) {
           </div>
           <div className="m-footer">
             {userInfo ? (
-              <Link
-                to={`${userRoutes[userInfo?.userType]?.path}/dashboard`}
-                className="m-login"
-              >
-                Dashboard
-              </Link>
+              <>
+                <Link
+                  to={`${userRoutes[userInfo?.userType]?.path}/dashboard`}
+                  className="m-login"
+                >
+                  Dashboard
+                </Link>
+
+                <Link
+                  onClick={logout}
+                  className="m-login"
+                >
+                  LogOut
+                </Link>
+              </>
             ) : (
               <Link to={"/login"} className="m-login">
                 Login/Signup

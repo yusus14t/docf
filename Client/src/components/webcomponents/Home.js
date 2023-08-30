@@ -55,7 +55,8 @@ function Home() {
         <Slider />
       </div>
 
-      <div className="container">
+      {/* <Clinics style={{ margin: "0" }} /> */}
+      <div className="">
         <div className="row">
           <DoctorsList source={"homepage"} />
         </div>

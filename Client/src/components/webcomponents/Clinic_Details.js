@@ -94,14 +94,27 @@ function Detail() {
         <div
           className="clinicbanner"
           style={{
-            background: `url(${clinicDetail?.photo ? getFullPath(clinicDetail?.photo) : background})`,
+            backgroundImage: `url(${
+              clinicDetail?.photo
+                ? getFullPath(clinicDetail?.photo)
+                : background
+            })`,
             backgroundRepeat: "no-repeat",
+            backgroundSize:"100%"
           }}
         >
           <h4 className="clinic-detail-name">{clinicDetail?.name}</h4>
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-around  ">
-              <img className="clinic-detail-img" src={clinicDetail?.doctors ? getFullPath(clinicDetail?.doctors[0]?.photo) : NO_PHOTO} alt="" />
+              <img
+                className="clinic-detail-img"
+                src={
+                  clinicDetail?.doctors
+                    ? getFullPath(clinicDetail?.doctors[0]?.photo)
+                    : NO_PHOTO
+                }
+                alt=""
+              />
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {clinicDetail?.name}
@@ -110,7 +123,8 @@ function Detail() {
                   style={{ display: "inline-block" }}
                   className="text-light clinic-detail-drName rounded"
                 >
-                  {clinicDetail?.specialization?.map( spe => spe.name) || "Specialization"}
+                  {clinicDetail?.specialization?.map((spe) => spe.name) ||
+                    "Specialization"}
                 </h6>
               </div>
             </div>
@@ -125,17 +139,19 @@ function Detail() {
           </div>
         </div>
 
-        { (userInfo?.userType === "PT" || !userInfo) && <div
-          className="bookappoint cursor-pointer"
-          onClick={() => handleAppointmentModal()}
-        >
-          <FontAwesomeIcon
-            className="bookappointment-icon"
-            icon={faCalendarPlus}
-          />
+        {(userInfo?.userType === "PT" || !userInfo) && (
+          <div
+            className="bookappoint cursor-pointer"
+            onClick={() => handleAppointmentModal()}
+          >
+            <FontAwesomeIcon
+              className="bookappointment-icon"
+              icon={faCalendarPlus}
+            />
 
-          <h5 className="p-2">Book Appointment</h5>
-        </div>}
+            <h5 className="p-2">Book Appointment</h5>
+          </div>
+        )}
 
         <div className="container-fluid">
           <div className="row clinic-details-row mt-5 mx-0">
@@ -150,7 +166,11 @@ function Detail() {
                         <li className=" p-2" key={key}>
                           <div className="mt-auto">
                             <div
-                              className={`token-list-item d-flex flex-row justify-content-around ${ list?.token == parseInt(token) ? "token-list-active" : "" }`}
+                              className={`token-list-item d-flex flex-row justify-content-around ${
+                                list?.token == parseInt(token)
+                                  ? "token-list-active"
+                                  : ""
+                              }`}
                             >
                               <div className="token ">
                                 <h4 className="token-list-number">
@@ -194,8 +214,10 @@ function Detail() {
                 </h6>
                 <div className="description-clinic-detail mb-3 pe-2">
                   <span className="text-disabled">Services</span> : &nbsp;
-                    {clinicDetail?.services?.length > 0 ? clinicDetail?.services?.map( serv => `${serv?.name }, `) : '-' }
-                    { console.log('clinicDetail', clinicDetail)}
+                  {clinicDetail?.services?.length > 0
+                    ? clinicDetail?.services?.map((serv) => `${serv?.name}, `)
+                    : "-"}
+                  {console.log("clinicDetail", clinicDetail)}
                 </div>
               </div>
               <div className="text-center">
@@ -209,9 +231,11 @@ function Detail() {
                       </tr>
                     </thead>
                     <tbody>
-                      { Object.values(FullDay).map( day => <tr>
-                        <td>{day}</td>
-                       </tr>)}
+                      {Object.values(FullDay).map((day) => (
+                        <tr>
+                          <td>{day}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -231,10 +255,12 @@ function Detail() {
                 </span>
               </div>
               <div className="sigma_info-description">
-                <p>Our Address</p>
-                <p className="secondary-color">
-                  <b>{clinicDetail?.address}</b>
-                </p>
+                <div className="clinic-footer-address">
+                  <p>Our Address</p>
+                  <p className="secondary-color">
+                    <b>{clinicDetail?.address}</b>
+                  </p>
+                </div>
               </div>
             </div>
             <div className="sigma_info style-26 d-flex">
@@ -250,9 +276,7 @@ function Detail() {
               <div className="sigma_info-description">
                 <p>Call Us</p>
                 <p className="secondary-color">
-                  <b>
-                    {formatPhone(clinicDetail?.phone)}
-                  </b>
+                  <b>{formatPhone(clinicDetail?.phone)}</b>
                 </p>
               </div>
             </div>

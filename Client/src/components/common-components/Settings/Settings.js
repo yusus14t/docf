@@ -16,6 +16,7 @@ const Settings = () => {
   const [tab, setTab] = useState(['HL', 'CL'].includes(userInfo.userType) ? 'SPECIALIZATION' : 'PROFILE')
   const [isOpen, setIsOpen] = useState(false)
   const [isServiceOpen, setIsServiceOpen] = useState(false)
+  const [isTimming,setTimming] = useState(false)
   const [specialization, setSpecialization] = useState({ name: null, error: null })
   const [specializations, setSpecializations] = useState([])
   const [allSpecializations, setAllSpecializations] = useState([])
@@ -128,8 +129,8 @@ const Settings = () => {
 
 
   return (
-    <div className='ms-content-wrapper'>
-      <div className="row mr-0" >
+    <div className="ms-content-wrapper">
+      <div className="row mr-0">
         <div className="col-xl-12 col-md-12">
           <div className="ms-panel mb-0 inner-content-height">
             <div className="ms-panel-header ms-panel-custome">
@@ -143,98 +144,144 @@ const Settings = () => {
               </div>
             </div>
             <div className="ms-panel-body p-0 content-height">
-              {tab === 'SPECIALIZATION' &&
+              {tab === "SPECIALIZATION" && (
                 <>
                   <div className="d-flex justify-content-between p-3">
                     <div>
                       <h4>Specialization</h4>
                     </div>
                     <div>
-                      <button className="btn btn-primary btn-md shadow-none" onClick={() => setIsOpen(true)}>Add Specialization</button>
+                      <button
+                        className="btn btn-primary btn-md shadow-none"
+                        onClick={() => setIsOpen(true)}
+                      >
+                        Add Specialization
+                      </button>
                     </div>
                   </div>
                   <div className="ms-panel-body py-0 ">
                     <div className="table-responsive">
                       <table className="table table-hover  thead-primary">
-                        <thead style={{ backgroundColor: '#A2A2A252' }}>
+                        <thead style={{ backgroundColor: "#A2A2A252" }}>
                           <tr>
-                            <th scope="col" style={{ color: '#000' }}>Id</th>
-                            <th scope="col" style={{ color: '#000' }}>Name</th>
-                            <th scope="col" style={{ color: '#000' }}>Delete</th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Id
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Name
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Delete
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
-                          {specializations?.length > 0 && specializations.map(specialization =>
-                            <tr>
-                              <td className="ms-table-f-w">{specialization.id}</td>
-                              <td>{specialization.name}</td>
-                              <td>
-                                <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" icon={faTrash}  onClick={() => deleteSpecialization(specialization.id)}></FontAwesomeIcon>
-                              </td>
-                            </tr>
-                          )}
+                          {specializations?.length > 0 &&
+                            specializations.map((specialization) => (
+                              <tr>
+                                <td className="ms-table-f-w">
+                                  {specialization.id}
+                                </td>
+                                <td>{specialization.name}</td>
+                                <td>
+                                  <FontAwesomeIcon
+                                    style={{ marginLeft: "8px" }}
+                                    className="cursor-pointer"
+                                    icon={faTrash}
+                                    onClick={() =>
+                                      deleteSpecialization(specialization.id)
+                                    }
+                                  ></FontAwesomeIcon>
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </>
-              }
-               {tab === 'SERVICES' &&
+              )}
+              {tab === "SERVICES" && (
                 <>
                   <div className="d-flex justify-content-between p-3">
                     <div>
                       <h4>Services</h4>
                     </div>
                     <div>
-                      <button className="btn btn-primary btn-md shadow-none" onClick={() => setIsServiceOpen(true)}>Add Services</button>
+                      <button
+                        className="btn btn-primary btn-md shadow-none"
+                        onClick={() => setIsServiceOpen(true)}
+                      >
+                        Add Services
+                      </button>
                     </div>
                   </div>
                   <div class="ms-panel-body py-0 ">
                     <div class="table-responsive">
                       <table class="table table-hover  thead-primary">
-                        <thead style={{ backgroundColor: '#A2A2A252' }}>
+                        <thead style={{ backgroundColor: "#A2A2A252" }}>
                           <tr>
-                            <th scope="col" style={{ color: '#000' }}>Id</th>
-                            <th scope="col" style={{ color: '#000' }}>Name</th>
-                            <th scope="col" style={{ color: '#000' }}>Delete</th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Id
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Name
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Delete
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
-                          {organizationServices?.length > 0 && organizationServices.map(service =>
-                            <tr>
-                              <td class="ms-table-f-w">{service.id}</td>
-                              <td>{service.name}</td>
-                              <td>
-                                <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => deleteService(service.id) } icon={faTrash}></FontAwesomeIcon>
-                              </td>
-                            </tr>
-                          )}
+                          {organizationServices?.length > 0 &&
+                            organizationServices.map((service) => (
+                              <tr>
+                                <td class="ms-table-f-w">{service.id}</td>
+                                <td>{service.name}</td>
+                                <td>
+                                  <FontAwesomeIcon
+                                    style={{ marginLeft: "8px" }}
+                                    className="cursor-pointer"
+                                    onClick={() => deleteService(service.id)}
+                                    icon={faTrash}
+                                  ></FontAwesomeIcon>
+                                </td>
+                              </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </>
-              }
-              {tab === 'PROFILE' && <Profile />}
-              {tab === 'WEBSITE' && <Website />}
-              {tab === 'QRCODE' && (
+              )}
+              {tab === "PROFILE" && <Profile />}
+              {tab === "WEBSITE" && <Website />}
+              {tab === "QRCODE" && (
                 <div>
-                  <img src={getFullPath(userInfo?.organizationId?.qrCode)} />
-                  <button className="btn btn-primary" onClick={() => download(getFullPath(userInfo?.organizationId?.qrCode))}>Download QR Code</button>
+                  <img src={getFullPath(userInfo?.organizationId?.qrCode)} alt="qrcode" />
+                  <button
+                    className="btn btn-primary"
+                    onClick={() =>
+                      download(getFullPath(userInfo?.organizationId?.qrCode))
+                    }
+                  >
+                    Download QR Code
+                  </button>
                 </div>
               )}
-
             </div>
           </div>
         </div>
       </div>
-      {isOpen &&
+      {isOpen && (
         <Modal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           title={"Add Specialization"}
-          data={ specialization  }
-          callback={(data) => {submitSpecialization(data)}}
+          data={specialization}
+          callback={(data) => {
+            submitSpecialization(data);
+          }}
         >
           <div className="row">
             <div className="col-12">
@@ -242,8 +289,10 @@ const Settings = () => {
               <div className="">
                 <CreatableSelect
                   isMulti={true}
-                  options={ allSpecializations}
-                  onChange={(e) => {setSpecialization(e)}}
+                  options={allSpecializations}
+                  onChange={(e) => {
+                    setSpecialization(e);
+                  }}
                   className={`form-control p-0`}
                   classNamePrefix="select"
                 />
@@ -251,15 +300,17 @@ const Settings = () => {
             </div>
           </div>
         </Modal>
-      }
+      )}
 
-      {isServiceOpen &&
+      {isServiceOpen && (
         <Modal
           isOpen={isServiceOpen}
           setIsOpen={setIsServiceOpen}
-          title={ 'Add Services'}
-          data={ services }
-          callback={(data) => {submitServices(data)}}
+          title={"Add Services"}
+          data={services}
+          callback={(data) => {
+            submitServices(data);
+          }}
         >
           <div className="row">
             <div className="col-12">
@@ -267,10 +318,13 @@ const Settings = () => {
               <div className="">
                 <CreatableSelect
                   isMulti={true}
-                  getOptionLabel={({ name }) => name }
-                  getOptionValue={({ id }) => id }
+                  getOptionLabel={({ name }) => name}
+                  getOptionValue={({ id }) => id}
                   options={SERVICES}
-                  onChange={(e) => {setServices(e); return e}}
+                  onChange={(e) => {
+                    setServices(e);
+                    return e;
+                  }}
                   className={`form-control p-0`}
                   classNamePrefix="select"
                 />
@@ -278,7 +332,17 @@ const Settings = () => {
             </div>
           </div>
         </Modal>
-      }
+      )}
+      {isTimming && (
+        <Modal
+          isOpen={isTimming}
+          setIsOpen={setTimming}
+          title={"Add Timming"}
+         
+        >
+          <span>lkhbkhblkljk</span>
+        </Modal>
+      )}
     </div>
   );
 }
