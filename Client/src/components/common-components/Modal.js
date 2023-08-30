@@ -13,7 +13,7 @@ const Modal = ({
 }) => {
     return (
         <div className={`modal fade ${isOpen && 'show'}`} tabindex="-1" role="dialog" aria-labelledby="modal-1">
-            <div className="modal-dialog modal-dialog-centered" role="document" style={{ maxWidth: 'max-content'}}>
+            <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title has-icon ms-icon-round "> {title}</h5>

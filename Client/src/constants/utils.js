@@ -42,7 +42,7 @@ export const NumberFormat = ( e ) =>  {
 }
 
 export const getFullPath = (filename) => {
-    if( ENVIRONMENT === 'production' )  return `${BUCKET_URL}/${ filename }`
+    if( ENVIRONMENT !== 'production' )  return `${BUCKET_URL}/${ filename }`
     else return `${ SERVER_URL }/images/${ filename }`
 }
 

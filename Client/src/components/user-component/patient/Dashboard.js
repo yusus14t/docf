@@ -17,6 +17,7 @@ const Dashbaord = () => {
   const [openAppointmentModal, setOpenAppointmentModal] = useState(false)
   const appointmentCarRef = useRef(null)
   const [ appointment, setAppointment ] = useState({});
+  const [isLinkCopy, setIsLinkCopy ] = useState(false)
 
   useEffect(() => {
     getAllAppointments()
@@ -52,19 +53,25 @@ const Dashbaord = () => {
     try{
       let blobData = await toBlob(appointmentCarRef.current, { cacheBust: false })
 
-      console.log( 'blobData', blobData )
       let file = new File( [blobData], 'appointment-card.png', {type: "image/png"})
       let formData = new FormData()
       formData.append( 'file', file )
-      let { data } = await axiosInstance.post('/common/upload-file', formData, getAuthHeader())
-      console.log(getFullPath(data.pathname))
-      // let shareData = {
-      //   title: appointment.name,
-      //   text: 'This is appointment',
-      //   url: window.location.origin,
-      // }
-      
-      // await navigator.share(shareData)
+      let { data } = await axiosInstance.post('/common/upload-file', formData, { _id: appointment._id }, getAuthHeader())
+
+      navigator.clipboard.writeText(getFullPath(data.pathname))
+        .then(()=> {
+         toasty.success('Link Copied.')
+         setIsLinkCopy(true)
+        })
+        .catch((error) => console.log(error))
+
+      await navigator.share({
+        file,
+        title: 'Appointment Card',
+        text: `Your appointment scheduled on ${ appointment?.departmentId?.name }. The appointment will check on the https://doctortime.in .`
+      })
+    
+
     } catch(error){ console.error(error) }
   }
 
@@ -72,7 +79,7 @@ const Dashbaord = () => {
     toPng(appointmentCarRef.current, { cacheBust: false })
       .then((dataUrl) => {
         const link = document.createElement("a");
-        link.download = "my-image-name.png";
+        link.download = "appointment-card.png";
         link.href = dataUrl;
         link.click();
       })
@@ -274,9 +281,9 @@ const Dashbaord = () => {
       >
         <div
           style={{background: "#ffff", width: "600px", border: "1px solid black"}}
-          class="p-2 rounded"
+          class="p-2 rounded mb-3"
           ref={appointmentCarRef}
-        >{ console.log(appointment)}
+        >
           <h4 style={{ marginLeft: "20px" }} class="">Appointment Card</h4>
           <hr />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -328,6 +335,9 @@ const Dashbaord = () => {
             </p>
           </div>
         </div>
+
+        { isLinkCopy && <span className="text-success">Link Copied.</span>}
+        <br />
         <button className='btn btn-primary btn-md shadow-none mt-2' onClick={() => htmlToImageConvert() }>Download Card</button>
         <button className="btn btn-primary mt-1 rounded shadow-none mx-2" onClick={() => share(appointment)}>Share</button>
       </Modal>}

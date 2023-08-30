@@ -86,14 +86,14 @@ const uploadToBucket = async (filename) => {
     });
     
     const remotePath = process.env.ROOT_DIRECTORY
-    const remoteFullPath = path.join(remotePath, filename)
+    const remoteFullPath = remotePath+filename
 
     const localFilePath = path.join(__dirname, '..', '/uploads', filename)
     const localFile = fs.createReadStream(localFilePath);
     await client.uploadFrom(localFile, remoteFullPath);
 
     fs.unlinkSync(localFilePath)
-    return remoteFullPath
+    return filename
   } catch (err) {
     console.error("Error uploading image:", err);
     return err
