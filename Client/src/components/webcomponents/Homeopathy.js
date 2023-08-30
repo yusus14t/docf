@@ -1,22 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { axiosInstance, getAuthHeader } from '../../constants/utils';
+import { axiosInstance, getAuthHeader, getImages } from '../../constants/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { getFullPath } from "../../constants/utils";
 import clinicPhoto2 from "../../assets.app/img/backgrounds/hos.jpg";
 import Homeopath from "../../assets.app/img/logo/homeopathy.jpg";
 import DoctorsList from './doctor/Doctors';
+import { WEBSITE_IMAGE } from '../../constants/constant';
 
 
 
 
 function Homeopathy() {
   const [clinics, setClinics] = useState([]);
+  const [ images, setImages ] = useState([])
 
   useEffect(() => {
+    initailizer()
     getAllClinics();
   }, []);
+
+
+
+  const initailizer = async () => {
+    let imagesData = await getImages()
+    setImages(imagesData.data.images)
+  }
+
+  const findImage = ( id ) => {
+    return getFullPath(images.find( image => image.id === id )?.image)
+  }
+
 
   const getAllClinics = async () => {
     try {
@@ -36,16 +51,13 @@ function Homeopathy() {
           className="hero-banner"
           style={{
             backgroundColor: "blue",
-            backgroundImage: `url(${Homeopath})`,
+            backgroundImage: `url(${findImage(WEBSITE_IMAGE.HOMEOPATHY_BANNER)})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             position: "relative",
             zIndex: "500",
           }}
         >
-          {/* <span className="btn btn-primary  gynae-button-hero">
-            <Link className="text-light">Book Appiontment</Link>
-          </span> */}
         </div>
       </div>
       <div style={{ marginTop: "-85px" }} className="row ">

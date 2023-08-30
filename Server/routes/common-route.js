@@ -28,6 +28,7 @@ router.post('/create-ticket', commonController.createTicket)
 
 //patient
 router.get('/patient-appointments', commonController.patientAppointments)
+router.post('/upload-file', upload.single('file'), commonController.uploadFile )
 
 
 module.exports = router;

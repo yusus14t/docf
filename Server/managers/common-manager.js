@@ -461,8 +461,11 @@ const patientAppointments = async ( body, user ) => {
     try{
         let today = new Date()
         today.setHours(0,0,0,0)
+
        let appointments = await AppointmentModel.find({ userId: ObjectId(user._id), ...( body?.isToday ? { createdAt: { $gte: today }} : {}) })
        .populate('departmentId', 'name address')
+       .populate('userId')
+
        return Success({ appointments })
     } catch(error){ console.log(error) }
 }
@@ -502,6 +505,15 @@ const search = async ( body, user ) => {
     } catch(error){ console.log(error) }
 }
 
+const uploadFile = async ( file ) => {
+    try{
+        let pathname = await uploadToBucket(file.filename)
+
+       return Success({ pathname })
+    } catch(error){ console.log(error) }
+}
+
+
 module.exports = {
   logIn,
   signUp,
@@ -524,4 +536,5 @@ module.exports = {
   patientAppointments,
   search,
   oneSpecialization,
+  uploadFile,
 };

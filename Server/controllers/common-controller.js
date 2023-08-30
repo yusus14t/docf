@@ -168,6 +168,12 @@ const search = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const uploadFile = async ( req, res ) => {
+    commonManager.uploadFile( req.file )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -196,4 +202,5 @@ module.exports = {
     patientAppointments,
     search,
     oneSpecialization,
+    uploadFile,
 }

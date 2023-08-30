@@ -1,58 +1,55 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import { Suspense } from "react";
-import SUPER_ADMIN from "./super-admin-routes";
-import PATIENT from "./patient-routes";
-import CLINIC from "./clinic-routes";
-import DEPARTMENT from "./department-routes";
-import HOSPITAL from "./hospital-routes";
-import MR from "./mr-routes";
 
 import COMMON_ROUTE from "./common-routes";
 import Loader from "../layout/Loader";
 
 import WebLayout from  "../layout/weblayout/WebLayout";
 import AppLayout from "../layout/Index";
-import { userInfo } from "../constants/utils";
 
-const getUser = () => userInfo
+import { userInfo as user }  from "../constants/utils";
 
 const USER_ROUTES = {
-  SA: { path: "/super-admin", id: SUPER_ADMIN },
-  PT: { path: "/patient", id: PATIENT },
-  CL: { path: "/clinic", id: CLINIC },
-  DP: { path: "/department", id: DEPARTMENT },
-  MR: { path: "/mr", id: MR },
-  HL: { path: "/hospital", id: HOSPITAL },
+  SA: { path: "/super-admin", route: 'super-admin-routes' },
+  AD: { path: "/admin", route: 'admin-routes' },
+  PT: { path: "/patient", route: 'patient-routes' },
+  CL: { path: "/clinic", route: 'clinic-routes' },
+  DP: { path: "/department", route: 'department-routes' },
+  MR: { path: "/mr", route: 'mr-routes' },
+  HL: { path: "/hospital", route: 'hospital-routes' },
 };
 
+let user_routes = user?.userType ? import(`./${ USER_ROUTES[user?.userType].route }`).then((d) => user_routes = d.default ) : []
+
+
 export const AllRoutes = () => {
-  let user = getUser();
-  if( !user ) localStorage.clear()
-  if( !user?.isActive ){
-    localStorage.clear()
-    user = null
+  try{
+      if( !user ) localStorage.clear()
+      if( !user?.isActive ){
+        localStorage.clear()
+      }
+  } catch( error ){ console.log(error)}
+  finally {
+
+    let allUseRoutes = [
+      {
+        path: "/",
+        exact: true,
+        element: <WebLayout />,
+        children: COMMON_ROUTE,
+      },
+    ];
+  
+    if( user?.userType ){
+      allUseRoutes.push({
+        path: USER_ROUTES[user?.userType].path,
+        exact: true,
+        element: user ? <AppLayout /> : <Navigate to={"/login"} />,
+        children: user_routes,
+      });
+    }
+    
+    let routes = useRoutes(allUseRoutes);
+    return <Suspense fallback={<Loader />}>{routes}</Suspense>;
   }
-  let userRoute = USER_ROUTES[user?.userType];
-
-  let allUseRoutes = [
-    {
-      path: "/",
-      exact: true,
-      element: <WebLayout />,
-      children: COMMON_ROUTE,
-    },
-  ];
-
-  if( userRoute?.path ){
-    allUseRoutes.push({
-      path: `/${userRoute?.path}`,
-      exact: true,
-      element: user ? <AppLayout /> : <Navigate to={"/login"} />,
-      children: user ? userRoute.id : [],
-    });
-  }
-
-  let routes = useRoutes(allUseRoutes);
-
-  return <Suspense fallback={<Loader />}>{routes}</Suspense>;
 };
