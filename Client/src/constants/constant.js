@@ -7,11 +7,12 @@ export const userRoutes = {
     DP: {path: '/department', title: 'Department'},
     HL: {path: '/hospital', title: 'Hospital'},
     CL: {path: '/clinic', title: 'Clinic'},
+    AD: {path: '/admin', title: 'Admin'},
 } 
 
 export const MODULES = [
-    {id: '', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR']},
-    {id: 'patients', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA', 'MA' ]},
+    {id: '', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR', 'AD']},
+    {id: 'patients', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA' ]},
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['CL', 'DP', 'HL' ]},
     {id: 'departments', title: 'Departments', pathname: '/departments', access: ['HL', 'SA']},
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MR']},
@@ -19,10 +20,10 @@ export const MODULES = [
     {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['SA', 'MR']},
     {id: 'hospitals', title: 'Hospitals', pathname: '/hospitals', access: ['MR']},
     {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'HL', 'CL', 'DP', 'MR']},
-    {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'MA']},
-    {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'MR' ]},
-    {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
-    {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
+    {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'AD']},
+    {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'AD' ]},
+    {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT', 'AD']},
+    {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT', 'AD']},
 ]
 
 export const PRIORITY = [
@@ -89,3 +90,14 @@ export const ORGANIZATION_TYPE = [
     { id: 'DOCTOR', name: 'Doctor' },
     { id: 'ULTRASOUND', name: 'Ultrasound' },
 ]
+
+export const WEBSITE_IMAGE = {
+    HOME_BANNER: 'HOME_BANNER',
+    HOME_BOTTOM_BANNER: 'HOME_BOTTOM_BANNER',
+    GYNAE_SLIDER: 'GYNAE_SLIDER',
+    GYNAE_BANNER: 'GYNAE_BANNER',
+    GYNAE_BOTTOM_BANNER: 'GYNAE_BOTTOM_BANNER',
+    ULTRASOUND_BANNER: 'ULTRASOUND_BANNER',
+    HOMEOPATHY_BANNER: 'HOMEOPATHY_BANNER',
+    CONTACT_BANNER: 'CONTACT_BANNER', 
+} 

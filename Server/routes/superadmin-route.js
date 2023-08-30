@@ -11,5 +11,8 @@ router.get('/mrs', superAdminController.MRs );
 router.delete('/mr/:id', superAdminController.deleteMR );
 router.post('/mr', upload.single('image'), superAdminController.createMR );
 router.get('/patients', superAdminController.patients );
+router.get('/website-images', superAdminController.websiteImages );
+router.post('/upload-image', upload.single('file'), superAdminController.uploadImage );
+
 
 module.exports = router;

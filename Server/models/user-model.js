@@ -10,7 +10,7 @@ const userSchema = new Schema(
     gender: { type: String, enum: ["male", "female", "other"] },
     phone: { type: String, required: true },
     photo: { type: String, default: null },
-    userType: { type: String, enum: [ "PT", "MR", "SA", "DR", "CL", "DP", 'HL' ] },
+    userType: { type: String, enum: [ "PT", "MR", "SA", "DR", "CL", "DP", 'HL', 'AD' ] },
     organizationId: { type: Schema.Types.ObjectId, ref: "organization" },
     hospitalId: { type: Schema.Types.ObjectId, ref: "organization" },
     isActive: { type: Boolean, default: false },

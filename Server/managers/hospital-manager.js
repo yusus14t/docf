@@ -34,7 +34,7 @@ const editProfile = async ( body, user, file ) => {
         
         await organizationModel.updateOne({ _id: user.organizationId }, obj)
 
-        if( ['SA', 'MR'].includes(user.userType)) await UserModel.updateOne({ _id: user._id }, obj)
+        if( ['SA', 'MR' ,'AD'].includes(user.userType)) await UserModel.updateOne({ _id: user._id }, obj)
         else if( obj.phone ) await UserModel.updateOne({ _id: user._id }, { phone: obj.phone })
 
 

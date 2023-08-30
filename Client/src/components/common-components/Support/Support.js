@@ -25,7 +25,7 @@ const Support = () => {
                     <div>
                         <h6 >Help Desk</h6>
                     </div>
-                    {userInfo.userType !== 'SA' && <div>
+                    { !['SA', 'AD'].includes(userInfo.userType ) && <div>
                         <button onClick={() => setIsModalOpen(true)} className=" btn btn-info btn-md" >New Ticket</button>
                     </div>}
                 </div>

@@ -22,21 +22,36 @@ import slide1 from "../../assets.web/img/home-1/1920x1280-1.jpg";
 import slide2 from "../../assets.web/img/home-1/1920x1280-2.jpg";
 import slide3 from "../../assets.web/img/home-1/1920x1280-3.jpg";
 
-import { axiosInstance } from "../../constants/utils";
+import { axiosInstance, getImages } from "../../constants/utils";
 import { getFullPath } from "../../constants/utils";
 import Modal from "../common-components/Modal";
+import { WEBSITE_IMAGE } from "../../constants/constant";
+
+
 
 const Gynae = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
-    const [isOpen3, setIsOpen3] = useState(false);
-
+  const [isOpen3, setIsOpen3] = useState(false);
+  const [ images, setImages ] = useState([])
 
   const [clinics, setClinics] = useState([]);
+
+
   useEffect(() => {
+    initailizer()
     getAllClinics();
   }, []);
+
+  const initailizer = async () => {
+    let imagesData = await getImages()
+    setImages(imagesData.data.images)
+  }
+
+  const findImage = ( id ) => {
+    return getFullPath(images.find( image => image.id === id )?.image)
+  }
 
   const getAllClinics = async () => {
     try {
@@ -62,7 +77,7 @@ const Gynae = () => {
             interval={50}
           >
             <div className="slide1">
-              <img src={slide1} className="gynae-slide" alt="slide-1" />
+              <img src={findImage(WEBSITE_IMAGE.GYNAE_SLIDER)} className="gynae-slide" alt="slide-1" />
             </div>
             <div className="slide1">
               <img src={slide2} className="gynae-slide" alt="slide-2" />
@@ -77,14 +92,12 @@ const Gynae = () => {
             className="hero-banner"
             style={{
               backgroundColor: "blue",
-              backgroundImage: `url(${Banner})`,
+              backgroundImage: `url(${findImage(WEBSITE_IMAGE.GYNAE_SLIDER)})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }}
           >
-            {/* <span className="btn btn-primary  gynae-button-hero">
-              <Link className="text-light">Book Appiontment</Link>
-            </span> */}
+
           </div>
         </div>
         {/*------services-------  */}
@@ -97,13 +110,9 @@ const Gynae = () => {
           <div className="gynae-services-cards-container ">
             <div className="gynae-services-card text-center gynae-pink-layer">
               <span className="gynae-circle mt-2">
-                {/* <FontAwesomeIcon
-                  className="gynae-services-icon"
-                  icon={faStethoscope}
-                /> */}
                 <img
                   style={{ width: "83px", height: "83px", borderRadius: "50%" }}
-                  src={Gynaecology}
+                  src={findImage(WEBSITE_IMAGE.GYNAE_BANNER)}
                   alt=""
                 />
               </span>
@@ -198,7 +207,7 @@ const Gynae = () => {
           <div
             className="hero-banner"
             style={{
-              backgroundImage: `url(${slide2})`,
+              backgroundImage: `url(${findImage(WEBSITE_IMAGE.GYNAE_BOTTOM_BANNER)})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }}

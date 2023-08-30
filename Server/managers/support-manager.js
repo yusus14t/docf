@@ -36,7 +36,7 @@ const createTicket = async (body, user) => {
 const allTickets = async (body, user) => {
     try{
         let query = {}
-        if( user.userType !== 'SA' ){
+        if( !['SA', 'AD'].includes(user.userType) ){
             query = { senderId: user._id }
         }
         let tickets = await TicketModel.find(query).populate('senderId', 'userType phone organizationId name')
@@ -47,7 +47,6 @@ const allTickets = async (body, user) => {
                 ticket.senderId.fullName = organization?.fullName
             }
         }
-        console.log(tickets)
         return Success({ tickets })
     } catch(error){ console.log(error) }
 }
