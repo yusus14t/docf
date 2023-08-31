@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faSearch, faXmark } from "@fortawesome/free-solid-svg-icons";
 import filterImage from '../../assets.app/img/icons/filter.png';
@@ -14,6 +14,7 @@ const Search = () => {
   const [ searchData, setSearchData ] = useState([]);
   const [ isOpenSearch, setIsOpenSearch ] = useState(false)
   const [ filter, setFilter ] = useState({ search: null, fee: null, city: null, specialization: null, type: null })
+  const inputRef = useRef(null)
 
   useEffect(() => {
     getAllSpecializations()
@@ -29,6 +30,7 @@ const Search = () => {
 
   useEffect( () => {
     if( filter.search || filter.fee || filter.city || filter.specialization || filter.type ){
+      setIsOpenSearch(true)
       getSearch()
     }
   }, [ filter ] )
@@ -68,11 +70,13 @@ const Search = () => {
             <div className="search-bar">
               <input
                 placeholder="Doctors, Clinics and Hospitals etc"
+                ref={inputRef}
                 type="text"
-                value={filter.search}
                 onClick={() => setIsOpenSearch(true)}
-                onChange={(e) =>
+                onChange={(e) => {
+                  if( !e.target.value ) setSearchData([])
                   setFilter({ ...filter, search: e.target.value })
+                }
                 }
               />
               <FontAwesomeIcon className="search-ico" icon={faSearch} />
@@ -83,6 +87,7 @@ const Search = () => {
                   onClick={() => {
                     setIsOpenSearch(false);
                     setIsFilterOpen(false);
+                    inputRef.current.value = null
                   }}
                 />
               )}
@@ -116,7 +121,7 @@ const Search = () => {
                 <Select
                   isMulti={false}
                   options={[
-                    { name: "Aligarh", id: "ALIGARH" },
+                    { id: "ALIGARH", name: "Aligarh" },
                     { id: "MORADABAD", name: "Moradabad" },
                   ]}
                   getOptionLabel={({ name }) => name}
@@ -144,7 +149,7 @@ const Search = () => {
               <div>
                 <Select
                   isMulti={false}
-                  options={ORGANIZATION_TYPE}
+                  options={ ORGANIZATION_TYPE }
                   getOptionLabel={({ name }) => name}
                   getOptionValue={({ id }) => id}
                   className={`form-control p-0 w-15`}
@@ -169,8 +174,8 @@ const Search = () => {
                       className="w-50 mr-1 p-2 main-ch"
                       to={
                         clinic?.organizationType === "Hospital"
-                          ? `/hospital/${clinic._id}`
-                          : `/clinic-detail/${clinic._id}`
+                          ? `/hospital/${clinic?.userType ? clinic?.organizationId : clinic._id}`
+                          : `/clinic-detail/${clinic?.userType ? clinic?.organizationId : clinic._id}`
                       }
                     >
                       <div class="ms-card mb-0">
@@ -195,7 +200,7 @@ const Search = () => {
                                     class="badge badge-outline-danger"
                                     style={{ marginBottom: "50%" }}
                                   >
-                                    {clinic?.organizationType}
+                                    { clinic?.userType ? 'Doctor' : clinic?.organizationType}
                                   </span>
                                 </div>
                               </div>

@@ -4,7 +4,8 @@ const OrganizationModel = require('../models/organization-model');
 const AppointmentModel = require('../models/appointment-model');
 const { randomOtp } = require('../constants/utils')
 const ObjectId = require('mongoose').Types.ObjectId
-const { specialization } = require('../seeds/specialization-seed')
+const { specialization } = require('../seeds/specialization-seed');
+const noticeModel = require('../models/notice-model');
 
 
 
@@ -472,8 +473,6 @@ const patientAppointments = async ( body, user ) => {
 
 const search = async ( body, user ) => {
     try{
-        if( !body?.search ) return Success({ searchData: [] })
-
         let aggregateQuery = [
             {
                 $match: {
@@ -481,13 +480,22 @@ const search = async ( body, user ) => {
                         $in: [ 'Hospital', 'Clinic' ]
                     },
                     $and: [
-                        body?.fee > 0 ? { fee: { $lte: parseInt(body?.fee) }} : {},
+                        body?.fee > 0 ? { fee: { $lte: body?.fee }} : {},
                         body?.city ? { address: { $regex: body?.city, $options: 'i' } } : {},
                         body?.specialization ? { 'specialization.name': body?.specialization } : {},
                         body?.type ? { organizationType: body?.type } : {},
                     ]
                 }
             },
+            {
+                $project: {
+                    organizationType: 1,
+                    photo: 1,
+                    name: 1,
+                    email: 1,
+                    address: 1,
+                }
+            }
            
         ]
 
@@ -500,8 +508,57 @@ const search = async ( body, user ) => {
             }
         })
         
-        let searchData = await OrganizationModel.aggregate(aggregateQuery)        
-       return Success({ searchData })
+        let searchData = await OrganizationModel.aggregate(aggregateQuery)   
+        let doctors = await UserModel.aggregate([
+            {
+                $match: {
+                    userType: 'DR',
+                    $and: [
+                        body?.search ? { name: {  $regex:  body.search, $options: 'i' }} : {},
+                        body?.city ? { address: { $regex: body?.city, $options: 'i' } } : {},
+                        body?.specialization ? { 'specialization.name': body?.specialization } : {},
+                    ]
+                }
+            },
+            {
+                $lookup: {
+                    from: 'organizations',
+                    localField: 'organizationId',
+                    foreignField: '_id',
+                    as: 'organization',
+                    pipeline: [
+                        {
+                            $project: {
+                                organizationType: 1,
+                                fee: 1,
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                $unwind: '$organization',
+            },
+            {
+                $project: {
+                    name: 1,
+                    email: 1,
+                    address: 1,
+                    photo: 1,
+                    userType: 1,
+                    organizationId: 1, 
+                    organizationType: '$organization.organizationType',
+                    fee: '$organization.fee'
+                }
+            },
+            {
+                $match: {
+                    ...(body?.fee > 0 ? { fee: { $lte: body?.fee }} : {})
+                }
+            }
+        ])
+        console.log(doctors)     
+       return Success({ searchData: [ ...searchData, ...doctors ] })
     } catch(error){ console.log(error) }
 }
 
@@ -510,6 +567,32 @@ const uploadFile = async ( file ) => {
         let pathname = await uploadToBucket(file.filename)
 
        return Success({ pathname })
+    } catch(error){ console.log(error) }
+}
+
+const createNotice = async ( body, user ) => {
+    try{
+        console.log('body', body)
+        let notice = await noticeModel({
+            organizationId: user.organizationId,
+            ...body,
+            createdBy: user._id 
+        }).save()
+       return Success({ notice, message: 'Successfully created' })
+    } catch(error){ console.log(error) }
+}
+
+const getNotice = async ( body ) => {
+    try{
+        let notices = await noticeModel.find({ organizationId: body.id })
+       return Success({ notices })
+    } catch(error){ console.log(error) }
+}
+
+const deleteNotice = async ( body ) => {
+    try{
+        await noticeModel.deleteOne({ _id: body.id })
+       return Success({ message: 'Successfully deleted' })
     } catch(error){ console.log(error) }
 }
 
@@ -537,4 +620,7 @@ module.exports = {
   search,
   oneSpecialization,
   uploadFile,
+  getNotice,
+  createNotice,
+  deleteNotice,
 };

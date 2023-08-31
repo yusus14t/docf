@@ -174,6 +174,24 @@ const uploadFile = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const createNotice = async ( req, res ) => {
+    commonManager.createNotice( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const getNotice = async ( req, res ) => {
+    commonManager.getNotice( req.params )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const deleteNotice = async ( req, res ) => {
+    commonManager.deleteNotice( req.params )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -203,4 +221,7 @@ module.exports = {
     search,
     oneSpecialization,
     uploadFile,
+    createNotice,
+    getNotice,
+    deleteNotice,
 }
