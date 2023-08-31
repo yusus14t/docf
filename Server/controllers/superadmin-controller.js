@@ -61,7 +61,8 @@ const uploadImage = async (req, res) => {
         .then( result  => res.status(200).send(result) )
         .catch(err => res.status(500).send(err.data))
 }
-    
+
+
 module.exports = {
     getProfile,
     analytics,

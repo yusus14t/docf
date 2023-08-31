@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,8 @@ import CreatableSelect from 'react-select/creatable';
 import useToasty from "../../../hooks/toasty";
 import Website from "./Website";
 import { SERVICES } from "../../../constants/constant";
-
+import logo from '../../../assets.app/img/logo/logo.jpg'
+import { toPng } from 'html-to-image'
 
 
 const Settings = () => {
@@ -23,6 +24,8 @@ const Settings = () => {
 
   const [services, setServices] = useState([]);
   const [organizationServices, setOrganizationServices] = useState([]);
+
+  const QRCodeRef = useRef(null)
 
   const toasty = useToasty()
 
@@ -83,14 +86,19 @@ const Settings = () => {
     } catch (error) { console.error(error) }
   }
 
-  const download = async ( link ) => {
-    let fetchQrCode = await fetch( link )
+  const download = () => {
+    toPng( QRCodeRef.current, { cacheBust: false })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "QRCode.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-    let element = document.createElement('a')
-    element.setAttribute('href', URL.createObjectURL(await fetchQrCode.blob()))
-    element.setAttribute('download', 'QRCode.png')  
-    element.click()
-  }
   
   const submitServices = async (value) => {
     try {
@@ -258,11 +266,46 @@ const Settings = () => {
               {tab === "WEBSITE" && <Website />}
               {tab === "QRCODE" && (
                 <div>
-                  <img src={getFullPath(userInfo?.organizationId?.qrCode)} alt="qrcode" />
+                  <div style={{ marginLeft: "auto", }} className=""  >
+                    <div style={{ width: 800, border: "2px solid black",  background:'#fff' }} ref={QRCodeRef}>
+                      <div style={{ display: "flex" }}>
+                        <img
+                          style={{ width: "200px", padding: "10px 50px 0 50px" }}
+                          src={logo}
+                          alt=""
+                        />
+                        <h3 style={{ textAlign: "center" }}>Clinic Or Hospital Name</h3>
+                      </div>
+                      <hr />
+                      <div style={{ margin: "auto", width: "430px", height: "400px" }}>
+                        <h5 style={{ textAlign: "center" }}>
+                          Scan QR code to book Appointment
+                        </h5>
+                        <img
+                          src={ getFullPath(userInfo?.organizationId?.qrCode) }
+                          style={{ width: "400px", height: "400px" }}
+                          alt=""
+                        />
+                        <p style={{ textAlign: "center" }}>Or visit Doctortime.in</p>
+                      </div>
+                      <div style={{ marginTop: "100px" }}>
+                        <h4 style={{ textAlign: "center" }}>
+                          Don't Waste Your Time Be Samart
+                        </h4>
+                        <h4 style={{ textAlign: "center" }}>
+                          Come Here Just Before Your Turn{" "}
+                        </h4>
+                        <h4 style={{ textAlign: "center" }}>
+                          Book Appointment from Doctor Time and Track Live Appointment
+                          Number
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
                   <button
                     className="btn btn-primary"
                     onClick={() =>
-                      download(getFullPath(userInfo?.organizationId?.qrCode))
+                      download()
                     }
                   >
                     Download QR Code
