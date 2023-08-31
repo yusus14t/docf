@@ -41,6 +41,14 @@ const Search = () => {
       setSpecializations(data?.specializations)
     } catch(error){ console.error(error) }
   }
+  const getAllCities = async () => {
+    try {
+      let { data } = await axiosInstance.get("get-specializations");
+      setSpecializations(data?.specializations);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getSearch = async () => {
     try{

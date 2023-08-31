@@ -6,6 +6,7 @@ const { randomOtp } = require('../constants/utils')
 const ObjectId = require('mongoose').Types.ObjectId
 const { specialization } = require('../seeds/specialization-seed');
 const noticeModel = require('../models/notice-model');
+const { cities } =require('../seeds/citiesData.json')
 
 
 
@@ -291,7 +292,23 @@ const oneSpecialization = async (body) => {
     console.log(error);
   }
 };
+const allCities = async (body)=>{
+    try {
+      let cities = cities.data;
+      return Success({ cities });
+    } catch (error) {
+      console.log(error);
+    }
+}
 
+const oneCity = async (body) => {
+  try {
+    let ciites = cities.data.find((cti) => cti.id === body.id);
+    return Success({ cities });
+  } catch (error) {
+    console.log(error);
+  }
+};
 const getAllClinics = async (body) => {
     try {
         let clinics = await OrganizationModel.find({
@@ -599,7 +616,7 @@ const deleteNotice = async ( body ) => {
 
 module.exports = {
   logIn,
-  signUp,
+  signUp, 
   sessionInfo,
   createClinic,
   appointmentDepartments,
@@ -623,4 +640,5 @@ module.exports = {
   getNotice,
   createNotice,
   deleteNotice,
+  oneCity,
 };

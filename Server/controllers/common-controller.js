@@ -109,16 +109,16 @@ const allSpecializations = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
-const oneSpecialization = async (req, res) => {
-    commonManager.oneSpecialization(req.params)
-    .then(result => res.status(result.code).send(result))
-    .catch(err => res.status(500).send(err.data))
-}
-const getAllClinics = async ( req, res ) => {
-    commonManager.getAllClinics( req.query )
-    .then( result => res.status(result.code).send(result) )
-    .catch( err => res.status(500).send(err.data) )
-}
+// const oneSpecialization = async (req, res) => {
+//     commonManager.oneSpecialization(req.params)
+//     .then(result => res.status(result.code).send(result))
+//     .catch(err => res.status(500).send(err.data))
+// }
+// const getAllClinics = async ( req, res ) => {
+//     commonManager.getAllClinics( req.query )
+//     .then( result => res.status(result.code).send(result) )
+//     .catch( err => res.status(500).send(err.data) )
+// }
 
 const clinicDetails = async ( req, res ) => {
     commonManager.clinicDetails( req.query )
@@ -219,7 +219,7 @@ module.exports = {
     hospitalDetails,
     patientAppointments,
     search,
-    oneSpecialization,
+    // oneSpecialization,
     uploadFile,
     createNotice,
     getNotice,
