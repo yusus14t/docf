@@ -27,7 +27,18 @@ let user = {
       address: "688 Royce Street, Hardyville, Wisconsin, 324",
       userType: "SA",
     },
-    
+    {
+      isActive: true,
+      primary: true,
+      twoFactor: { isVerified: true, otp: "0" },
+      age: 21,
+      name: "Mohd Arif",
+      email: "",
+      phone: "8476860084",
+      address: "688 Royce Street, Hardyville, Wisconsin, 324",
+      userType: "AD",
+    },
+
     {
       isActive: true,
       primary: true,
