@@ -1382,7 +1382,7 @@ input::-webkit-inner-spin-button {
   flex-direction: row;
   flex-wrap: wrap;
 }
-[role=tooltip].popup-content{
+  [role=tooltip].popup-content{
   width: 500px;
 }
 .pop-up-content{
