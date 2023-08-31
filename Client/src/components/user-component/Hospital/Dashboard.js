@@ -21,7 +21,6 @@ const Dashbaord = () => {
     const toasty = useToasty();
 
     useEffect(() => {
-        changeFilter('clinics')
         getAppointments('waiting')
         getAppointments('unreached')
         getGenderData()
@@ -72,38 +71,6 @@ const Dashbaord = () => {
         } catch (error) { console.log(error) }
     }
 
-
-    const changeFilter = (value) => {
-        let data = {
-            week: [],
-            month: []
-        }
-        if (value === 'clinics') {
-            data = {
-                week: ['2', '5', '1', '2', '3', '7', '9'],
-                month: ['3', '1', '6', '9', '3', '6', '8', '3', '4', '2', '6', '2']
-            }
-        }
-        else if (value === 'hospitals') {
-            data = {
-                week: ['4', '3', '5', '3', '7', '8', '9'],
-                month: ['6', '3', '7', '8', '4', '2', '6', '3', '9', '5', '8', '4']
-            }
-        }
-        else if (value === 'visits') {
-            data = {
-                week: ['1', '2', '3', '4', '3', '2', '3'],
-                month: ['1', '2', '3', '4', '3', '2', '3', '3', '7', '4', '8', '4']
-            }
-        }
-        else if (value === 'doctors') {
-            data = {
-                week: ['6', '3', '6', '4', '8', '3', '6'],
-                month: ['5', '2', '4', '7', '8', '9', '6', '5', '4', '2', '4', '4']
-            }
-        }
-        setChartData(data)
-    }
 
     return (
         <div className='ms-content-wrapper'>
