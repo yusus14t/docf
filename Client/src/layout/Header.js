@@ -4,19 +4,28 @@ import Sidebar from "./Sidebar"
 import { Dropdown, Item } from '../components/common-components/Dropdown';
 import Appointment from "../components/common-components/Appointment/Appointment";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faBell, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
+import {  faBell, faCalendarDays, faClipboard, faTrash } from '@fortawesome/free-solid-svg-icons'
 import useNotification from '../hooks/Notification';
 import { Link } from "react-router-dom";
 import { userRoutes } from "../constants/constant";
+import Modal from "../components/common-components/Modal";
+import { axiosInstance, getAuthHeader } from "../constants/utils";
+import useToasty from "../hooks/toasty";
+
 
 const Header = () => {
+    const toasty = useToasty()
     const notificationAPI = useNotification();
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isCustomMessage, setCustomMessage] = useState(false)
+    const [isMessage, setIsMessage] = useState(true)
     const [notifications, setNotifications] = useState([])
     const [unseenNotificationCount, setUnseenNotificationCount] = useState(0)
     const mobileView = window.screen.availWidth <= 767
     const [isSidebarOpen, setIsSidebarOpen] = useState(mobileView ? false : true)
+    const [ notice, setNotice ] = useState({ title: null, description: null, error: false })
+    const [notices, setNotices] = useState([])
     const PRIORITY_COLORS = {
         'low': 'success',
         'medium': 'warning',
@@ -34,6 +43,10 @@ const Header = () => {
         return () => window.removeEventListener('resize', () => { }, false)
     }, [])
 
+    useEffect(() => {
+        getNotices()
+    }, [isCustomMessage])
+
     const Logout = () => {
         localStorage.clear()
         window.location.replace('/login')
@@ -46,8 +59,35 @@ const Header = () => {
             setUnseenNotificationCount(data?.unseenNotificationCount)
         } catch(error){ console.log(error) }
     }
+    
+    const submitNotice = async () => { 
+        try{
+            if( !notice.title || !notice.description ){
+                setNotice({ ...notice, error: true })
+                return
+            }
 
+            let { data } = await axiosInstance.post('/common/notice', notice , getAuthHeader()) 
+            setNotices(( old ) => [ ...old, data?.notice ])
+            setIsMessage(true)
+            toasty.success(data?.message)
+        } catch(error){ console.error(error) }
+    }
 
+    const getNotices = async () => {
+        try{
+            let { data } = await axiosInstance.get(`/common/notice/${ userInfo?.organizationId._id }`)
+            setNotices(data?.notices)
+        } catch(error){ console.error(error) }
+    }
+
+    const deleteNotice =  async ( id ) => {
+        try{
+            await axiosInstance.delete(`/common/notice/${id}`)
+            setNotices( old => old.filter( notice => notice._id !== id))
+            toasty.success('Successfully deleted')
+        } catch(error){ console.log(error) }
+    }
     return (
         <>
             <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} mobileView={mobileView} />
@@ -64,11 +104,16 @@ const Header = () => {
                 </div>
 
                 <ul className="ms-nav-list ms-inline mb-0" id="ms-nav-options">
-                    {userInfo.userType === "DR"  && <li className="ms-nav-item ms-d-none">
-                        <div className="text-white cursor-pointer" onClick={() => setIsModalOpen(true) }><FontAwesomeIcon className="Header-icon" icon={faCalendarDays} />Make an appointment</div>
-                    </li>}
+                    {['DP', 'CL', 'HL'].includes(userInfo.userType)  && <>
+                        <li className="ms-nav-item ms-d-none mx-2">
+                            <div className="text-white cursor-pointer " onClick={() => setIsModalOpen(true) }><FontAwesomeIcon className="Header-icon" icon={faCalendarDays} />Make an appointment</div>
+                        </li>
+                        <li className="ms-nav-item ms-d-none mx-3">
+                            <div className="text-white cursor-pointer" onClick={() => setCustomMessage(true) }><FontAwesomeIcon className="Header-icon" icon={faClipboard} />Noticeboard</div>
+                        </li>
+                    </>}
                     
-                    <li className="ms-nav-item ms-d-none">
+                    <li className="ms-nav-item ms-d-none mx-2">
                         <div className="text-white" >
                         <Dropdown
                             toggle={<> <FontAwesomeIcon className="Header-icon cursor-pointer" icon={faBell} />{ unseenNotificationCount > 0 && <span class="badge rounded-pill badge-outline-light bell-badge ">{unseenNotificationCount}</span>} </>}
@@ -117,6 +162,71 @@ const Header = () => {
                         isOpen={isModalOpen}
                         setIsOpen={setIsModalOpen}
                     />
+                }
+                {isCustomMessage && 
+                    <Modal
+                        isOpen={isCustomMessage}
+                        setIsOpen={setCustomMessage}
+                        closeButton={false}
+                        submitButton={false}
+                        title='Noticeboard'
+                    >
+                        { !isMessage ? <><div className="row">
+                            <div className="mb-3 d-flex justify-content-end">
+                                <button className=" btn btn-primary btn-sm p-2 shadow-none" onClick={() => { setIsMessage(!isMessage); setNotice({}) }}>List</button>
+                            </div>
+                            <div className="col-md-12 mb-3">
+                                <label className=''>Title</label>
+                                <div className="input-group">
+                                    <input type="text"
+                                        className="form-control "
+                                        placeholder="Title"
+                                        onChange={(e) => setNotice({ ...notice, title: e.target.value })}
+                                    />
+                                </div>
+                                {notice.error && <div className="text-danger ">{'Title is required'}</div>}
+                            </div>
+                            <div className="col-md-3 mb-3"></div>
+                            <div className="col-md-3 mb-3"></div>
+
+                            <div className="col-md-12 mb-3">
+                                <label className=''>Description</label>
+                                <div className="input-group">
+                                    <textarea type="text" rows={10}
+                                        className="form-control "
+                                        placeholder="Description"
+                                        onChange={(e) => setNotice({ ...notice, description: e.target.value })}
+                                    />
+                                </div>
+                                {notice.error && <div className="text-danger ">{'Description is required'}</div>}
+                            </div>
+                        </div>
+                        <button className="btn btn-primary btn-md" onClick={() => submitNotice() }>Save</button>
+                        </>
+                        :
+                        <div>
+                            <div className="mb-3" style={{ float: 'right'}}>
+                                <button className=" btn btn-primary btn-sm p-2 shadow-none" onClick={() => setIsMessage(false)}>Create</button>
+                            </div>
+                            { notices?.length > 0 ? notices.map( notice => <div className="mb-3 ps-3" style={{ borderLeft: '5px solid grey' }}>
+                                <div className="d-flex justify-content-between">
+                                    <div>
+                                        <h6>{ notice.title }</h6>
+                                    </div>
+                                    <div>
+                                        <FontAwesomeIcon className="cursor-pointer" icon={faTrash} onClick={() => deleteNotice( notice._id )} />
+                                    </div>
+                                </div>
+                                <p>{ notice.description }</p>
+                            </div>)
+                            :
+                            <div>
+                                No Data
+                            </div>    
+                        }
+                        </div>
+                        }
+                    </Modal>
                 }
             </nav>
         </>

@@ -17,6 +17,7 @@ function Detail() {
   const [isOpen, setIsOpen] = useState(false);
   const [timing, setTiming] = useState([])
   const userInfo = JSON.parse(localStorage.getItem("user"));
+  const [notices, setNotices] = useState([])
   const navigate = useNavigate();
   const FullDay = {
     "MON": 'Monday',
@@ -31,11 +32,11 @@ function Detail() {
   useEffect(() => {
     getWaitingList();
     getClinicDetail();
-    
+    getNotices();
+
     events.addEventListener('re-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) )) 
     events.addEventListener('new-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) ))
     events.addEventListener('status', ( event ) => statusEventHandler( JSON.parse(event.data) )) 
-    
 
   }, []);
 
@@ -86,6 +87,13 @@ function Detail() {
       });
     setIsOpen(true);
   };
+
+  const getNotices = async () => {
+    try {
+      let { data } = await axiosInstance.get(`/common/notice/${params.id}`)
+      setNotices(data?.notices)
+    } catch (error) { console.error(error) }
+  }
 
   return (
     <>
@@ -205,7 +213,7 @@ function Detail() {
 
             {/* INFO CARD */}
             <div className="col-md-6 px-3">
-              <div className="clinic-info-details">
+              <div className="clinic-info-details pb-3">
                 <h4 className="mb-3 pt-2  text-center">Info</h4>
                 <h6 className="text-left text-light mx-2">
                   <span className="text-disabled">Consultation Fee</span> :
@@ -217,8 +225,15 @@ function Detail() {
                   {clinicDetail?.services?.length > 0
                     ? clinicDetail?.services?.map((serv) => `${serv?.name}, `)
                     : "-"}
-                  {console.log("clinicDetail", clinicDetail)}
                 </div>
+                <div className="bg-white m-2 rounded p-2">Important Notice</div>
+                {notices?.length > 0 ? notices.map(notice => <div className="bg-white m-2 rounded p-2">
+                  <h6>{notice.title}</h6>
+                  <p>{notice.description}</p>
+                </div>)
+                  :
+                  <div className="bg-white m-2 rounded p-2">No Data</div>
+                }
               </div>
               <div className="text-center">
                 <div className="pr-2 ">
