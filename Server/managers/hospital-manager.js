@@ -21,7 +21,7 @@ const editProfile = async ( body, user, file ) => {
         if( hospital ) return({ message: 'Phone already used.'})
         
         let obj = {
-            fee: detail?.fee,
+            fee: parseInt(detail?.fee),
             address: detail?.address, 
             name: detail?.name,
             phone: detail?.phone,
