@@ -33,9 +33,9 @@
   position: relative;
   top: 82px;
 }
-.ms-main-aside {
+/* .ms-main-aside {
   height: 25rem;
-}
+} */
 
 /* .main-content{
 
@@ -96,8 +96,8 @@
   height: 40px;
 }
 .avatar {
-  width: 100%;
-  height: 40px;
+  width: 3.5rem;
+  height: 3.5rem;
 }
 .login_button {
   background-color: #ffff;
@@ -226,10 +226,12 @@
 }
 
 .content-height {
-  height: 85vh;
+  height: 75.5vh;
   overflow-x: hidden;
 }
-
+.btn{
+  padding: 4px;
+}
 .btn-1 {
   padding: 15px;
 }
@@ -792,9 +794,9 @@ input::-webkit-inner-spin-button {
 .inner-content-height {
   height: 83dvh;
 }
-.dr-address {
+/* .dr-address {
   width: 187px;
-}
+} */
 .dr-address:hover {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -1272,7 +1274,6 @@ input::-webkit-inner-spin-button {
 
 /* contact page */
 .contact-list-item {
-  width: 75%;
   height: 60px;
   border-radius: 50px;
   background-color: #f1f5fc;
@@ -1282,12 +1283,8 @@ input::-webkit-inner-spin-button {
 .contact-box-right {
   margin-top: 50px;
 }
-.contact-kk {
-  width: 200px;
-}
+
 .contact-icon-container {
-  width: 60px;
-  height: 60px;
   padding: 5px;
 }
 .contact-icons {
@@ -1380,8 +1377,27 @@ input::-webkit-inner-spin-button {
   flex-direction: row;
   flex-wrap: wrap;
 }
-/*==================*************************media queries*******************==========================*/
+  [role=tooltip].popup-content{
+  width: 500px;
+}
+.pop-up-content{
+ border: 1px solid cadetblue;
+ width: 500px;
+ background-color: #000;
+}
+
+.notice-max-height {
+  max-height: 30rem;
+  overflow: auto;
+}
+  /*==================*************************media queries*******************==========================*/
 @media (max-width: 1400px){
+  .fixed, .side-nav.fixed{
+    margin-top:58px ;
+  }
+  .dr-address{
+    width: 150px;
+  }
   .home-search{
     width: 90%;
   }
@@ -1418,12 +1434,32 @@ input::-webkit-inner-spin-button {
 
 }
 
-
+@media (max-width: 992px) {
+  .specialization-card {
+    width: 210px;
+  }
+}
 
 @media (max-width: 767px) {
+  .sidebar-image {
+    margin-top: 2rem;
+  }
   .search-page{
     width: 100%;
     
+  }
+  .mobile-width{
+    width: 15rem !important;
+  }
+  .search-mobile{
+    flex-direction: column;
+  }
+  .sixe{
+    font-size: 18px;
+  }
+  .specialization-card{
+    width: 155px;
+    height: 150px !important;
   }
   .main-ch{
     padding-left: 5px !important;
@@ -1664,10 +1700,10 @@ input::-webkit-inner-spin-button {
     height: 60px;
     width: 60px;
     font-size: 16px;
-    margin: 40px 0 0 70px;
+    margin: 40px 0 0 40px;
   }
   .current-clicnic-token h1 {
-    margin: 7px !important;
+    /* margin: 7px !important; */
     font-size: 40px;
   }
   .clinic-detail-mobile {
@@ -1692,10 +1728,20 @@ input::-webkit-inner-spin-button {
   .clinic-detail-drName {
     font-size: medium;
     margin-left: 15px;
+    width: 174px;
+  }
+  .fixed, .side-nav.fixed{
+    margin-top: 75px;
+  }
+  .clinic-footer-address{
+    width: 200px;
   }
   .clinic-detail-img {
     height: 100px;
     width: 80px;
+  }
+  .clinic-detail-name{
+    margin-top: 10px;
   }
 
   /*-------------------clinic crad--------------*/
@@ -1731,3 +1777,4 @@ input::-webkit-inner-spin-button {
   }
   
 }
+

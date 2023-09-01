@@ -25,7 +25,7 @@ const Support = () => {
                     <div>
                         <h6 >Help Desk</h6>
                     </div>
-                    {userInfo.userType !== 'SA' && <div>
+                    { !['SA', 'AD'].includes(userInfo.userType ) && <div>
                         <button onClick={() => setIsModalOpen(true)} className=" btn btn-info btn-md" >New Ticket</button>
                     </div>}
                 </div>
@@ -51,15 +51,17 @@ const Support = () => {
                                 <div className="mx-4 mt-10  " style={{height:"65vh", marginTop:"50px"}}>
 
                                 {tickets.length > 0 && tickets.map( ticket =>
-                                    <div className="row dropdown-menu-active ">
+                                    <div className="row dropdown-menu-active py-1 ">
                                     <div className="col text-center ">
                                         <span className="text-dark align-middle">{ticket.title}</span>
                                     </div>
                                     <div className="col text-center">
                                         <span className="text-dark">{ticket.description}</span>
                                     </div>                                
-                                    {userInfo.userType === 'SA' && <div className="col text-center">
-                                        <span className="text-dark">{ticket.senderId?.firstName} {ticket.senderId?.lastName}</span>
+                                    {userInfo.userType === 'SA' && <div className="col text-center ">
+                                        <span className="text-dark">{ticket.senderId?.name}</span>
+                                        <br />
+                                        <span className="text-dark">{ticket.senderId?.phone}</span>
                                     </div>}                                
                                     <div className="col text-center">
                                         <span className="text-dark">{formatDate(ticket.createdAt)}</span>

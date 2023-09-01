@@ -11,7 +11,7 @@ export const axiosInstance = axios.create({
     baseURL:  `${ SERVER_URL }/api`,
     headers: {
         'Access-Control-Allow-Origin': '*',
-        'auth-token': getAuthHeader()['headers']['auth-token']
+        'auth-token': getAuthHeader()['headers']['auth-token'],
     },
 })
 
@@ -56,3 +56,9 @@ export const updateUser = async () => {
 }
 
 updateUser()
+
+export const getImages = async () => {
+    try{
+      return await axiosInstance.get('/super-admin/website-images', getAuthHeader())
+    } catch(error){ console.error(error) }
+}

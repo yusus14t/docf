@@ -109,11 +109,11 @@ const allSpecializations = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
-const oneSpecialization = async (req, res) => {
-    commonManager.oneSpecialization(req.params)
-    .then(result => res.status(result.code).send(result))
-    .catch(err => res.status(500).send(err.data))
-}
+// const oneSpecialization = async (req, res) => {
+//     commonManager.oneSpecialization(req.params)
+//     .then(result => res.status(result.code).send(result))
+//     .catch(err => res.status(500).send(err.data))
+// }
 const getAllClinics = async ( req, res ) => {
     commonManager.getAllClinics( req.query )
     .then( result => res.status(result.code).send(result) )
@@ -168,6 +168,42 @@ const search = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const uploadFile = async ( req, res ) => {
+    commonManager.uploadFile( req.file )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const createNotice = async ( req, res ) => {
+    commonManager.createNotice( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const getNotice = async ( req, res ) => {
+    commonManager.getNotice( req.params )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const deleteNotice = async ( req, res ) => {
+    commonManager.deleteNotice( req.params )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const websiteSetting = async ( req, res ) => {
+    commonManager.websiteSetting( req.params )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
+const allCities = async ( req, res ) => {
+    commonManager.allCities( req.params )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -195,5 +231,11 @@ module.exports = {
     hospitalDetails,
     patientAppointments,
     search,
-    oneSpecialization,
+    // oneSpecialization,
+    uploadFile,
+    createNotice,
+    getNotice,
+    deleteNotice,
+    websiteSetting,
+    allCities,
 }

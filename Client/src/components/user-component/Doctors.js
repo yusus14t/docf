@@ -58,7 +58,6 @@ const DoctorsList = () => {
                 <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                     <div><h6>Doctors</h6></div>
                     <div class="ms-form-group my-0 mb-0 has-icon fs-14">
-                        { userInfo.userType === 'SA' && <input type="search" class="ms-form-input" name="search" placeholder="Search for doctors" onInput={(e) => { setSearchInput(e.target.value); console.log(e.target.value) }} />}
                         <i class="flaticon-search text-disabled"></i>
                         { ['CL', 'HL'].includes(userInfo.userType) && <button className="btn btn-light shadow-none mx-2" onClick={() => setDoctorModal(true) }>+ Doctor</button>}
                     </div>

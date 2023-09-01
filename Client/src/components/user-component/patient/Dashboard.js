@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 import { NumberFormat, axiosInstance, formatPhone, getAuthHeader, getFullPath, updateUser } from "../../../constants/utils";
 import Modal from "../../common-components/Modal";
 import { useForm } from "react-hook-form";
 import ImgUpload from "../../common-components/Imgupload";
 import useToasty from '../../../hooks/toasty';
+import { toPng, toBlob } from 'html-to-image'
 
 const Dashbaord = () => {
   const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -13,6 +14,10 @@ const Dashbaord = () => {
   const [selectedFile, setSelectedFile] = useState(null)
   const { register, reset, handleSubmit, formState: { errors } } = useForm({ onChangr: true })
   const toasty = useToasty()
+  const [openAppointmentModal, setOpenAppointmentModal] = useState(false)
+  const appointmentCarRef = useRef(null)
+  const [ appointment, setAppointment ] = useState({});
+  const [isLinkCopy, setIsLinkCopy ] = useState(false)
 
   useEffect(() => {
     getAllAppointments()
@@ -46,15 +51,42 @@ const Dashbaord = () => {
 
   const share = async ( appointment ) => {
     try{
-      let shareData = {
-        title: appointment.name,
-        text: 'This is appointment',
-        url: window.location.origin,
-      }
-      
-      await navigator.share(shareData)
+      let blobData = await toBlob(appointmentCarRef.current, { cacheBust: false })
+
+      let file = new File( [blobData], 'appointment-card.png', {type: "image/png"})
+      let formData = new FormData()
+      formData.append( 'file', file )
+      let { data } = await axiosInstance.post('/common/upload-file', formData, { _id: appointment._id }, getAuthHeader())
+
+      navigator.clipboard.writeText(getFullPath(data.pathname))
+        .then(()=> {
+         toasty.success('Link Copied.')
+         setIsLinkCopy(true)
+        })
+        .catch((error) => console.log(error))
+
+      await navigator.share({
+        file,
+        title: 'Appointment Card',
+        text: `Your appointment scheduled on ${ appointment?.departmentId?.name }. The appointment will check on the https://doctortime.in .`
+      })
+    
+
     } catch(error){ console.error(error) }
   }
+
+  const htmlToImageConvert = () => {
+    toPng(appointmentCarRef.current, { cacheBust: false })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "appointment-card.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div style={{ background: "#f2f2f2" }} className="">
@@ -127,7 +159,7 @@ const Dashbaord = () => {
                     <h6>{appointment?.departmentId?.address || '-'}</h6>
                   </div>
                   <div className="col d-flex align-items-center">
-                    <button className="btn btn-primary shadow-none btn-sm" onClick={() => share(appointment)}>Share</button>
+                    <button className="btn btn-primary mt-1 rounded shadow-none" onClick={() => { setAppointment(appointment); setOpenAppointmentModal(true) }}>View</button>
                   </div>
                 </div>
               );
@@ -135,7 +167,7 @@ const Dashbaord = () => {
           </div>
         </div>
       </div>
-      <Modal
+      {isOpen && <Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         closeButton={false}
@@ -238,7 +270,77 @@ const Dashbaord = () => {
             </form>
           </div>
         </div>
-      </Modal>
+      </Modal>}
+
+      { openAppointmentModal && <Modal
+        isOpen={openAppointmentModal}
+        setIsOpen={setOpenAppointmentModal}
+        closeButton={false}
+        submitButton={false}
+        title=""
+      >
+        <div
+          style={{background: "#ffff", width: "100%", border: "1px solid black"}}
+          class="p-2 rounded mb-3"
+          ref={appointmentCarRef}
+        >
+          <h4 style={{ marginLeft: "20px" }} class="">Appointment Card</h4>
+          <hr />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              <h2 style={{ textAlign: "center" }}>{appointment?.departmentId?.name || 'Hospital Name'}</h2>
+              <h6 style={{ marginLeft: "16px" }}>{new Date(appointment?.createdAt).toLocaleString()}</h6>
+            </div>
+            <div style={{ width: "60px", height: "60px", borderRadius: "6px", backgroundColor: "#8df7c4" }}>
+              <h3 style={{ textAlign: "center", margin: "5px 0 0 0", marginTop: "20%" }}>{appointment?.token}</h3>
+            </div>
+          </div>
+          <hr />
+          <div  >
+            <div style={{display: "flex", justifyContent: "space-between", padding: "0 3.5rem"}}>
+              <div>
+                <img
+                  src={ appointment?.userId?.photo ? getFullPath(appointment?.userId?.photo) : NO_PHOTO }
+                  style={{width: "150px", height: "150px", borderRadius: "6px"}}
+                  alt=""
+                />
+              </div>
+              <div>
+                <div style={{display: "flex", flexDirection: "column", margin: "auto" }}>
+                  <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "0"}}>
+                    <span style={{margin: "0", color: "black"}}>Name : </span>{ appointment?.userId?.name || 'Patient Name'}
+                  </h4>
+
+                  <h4 style={{ fontWeight: "bold", fontSize:"17px", margin: "5px 0 0 0"}}>
+                    <span style={{margin: "0", color: "black"}}>Age : </span>{ appointment?.userId?.age || 'Age'}
+                  </h4>
+                  <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "5px 0 0 0"}}>
+                    <span style={{color: "black", fontSize:"17px", margin: "0"}} class="m-0 text-dark">Gender : </span>{appointment?.userId?.gender || 'Gender'}
+                  </h4>
+                  <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "5px 0 0 0"}}>
+                    <span style={{margin: "0", color: "black"}} class="m-0 text-dark">Blood Group : </span>{appointment?.userId?.bloodGroup || 'Blood Group'}
+                  </h4>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <hr />
+          <div style={{paddingLeft: "40px"}}>
+            <h2 style={{ fontWeight: "bold"}}>Basic Details</h2>
+            <p style={{ margin: "5px 0 0 0", color: "black"}}>Guardian Name : {appointment?.userId?.gardianName || 'Gardian Name'}</p>
+            <p style={{ margin: "5px 0 0 0", color: "black"}}>Mobile Number : { formatPhone(appointment?.userId?.phone) }</p>
+            <p style={{margin: "5px 0 10px 0", color: "black"}}>
+              Address : {appointment?.userId?.address || 'Address'}
+            </p>
+          </div>
+        </div>
+
+        { isLinkCopy && <span className="text-success">Link Copied.</span>}
+        <br />
+        <button className='btn btn-primary btn-md shadow-none mt-2' onClick={() => htmlToImageConvert() }>Download Card</button>
+        <button className="btn btn-primary mt-1 rounded shadow-none mx-2" onClick={() => share(appointment)}>Share</button>
+      </Modal>}
     </div>
   );
 };

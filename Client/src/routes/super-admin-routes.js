@@ -8,6 +8,7 @@ import Patients from "../components/user-component/doctor/Patients";
 import Departments from "../components/user-component/Hospital/Departments";
 import Clinics from "../components/user-component/superAdmin/Clinics";
 import MR from "../components/user-component/superAdmin/MR";
+import Contacts from "../components/user-component/superAdmin/Contacts";
 
 
 
@@ -23,6 +24,7 @@ const SUPER_ADMIN = [
     { path: "/super-admin/setting", element: <Settings /> },
     { path: "/super-admin/clinics", element: <Clinics /> },
     { path: "/super-admin/mr", element: <MR /> },
+    { path: "/super-admin/contacts", element: <Contacts /> },
     { path: "/super-admin/*", element: <Navigate to={'/super-admin'} /> },
 ]
 

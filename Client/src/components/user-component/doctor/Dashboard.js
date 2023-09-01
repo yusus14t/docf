@@ -161,40 +161,7 @@ const Dashbaord = () => {
                         </div>
                     </a>
                 </div>
-                <div class="col-xl-6 col-md-6 col-sm-12 mb-4">
-                    <div class="ms-panel">
-                        <div class="ms-panel-header">
-                            <div className='d-flex justify-content-between'>
-                                <div>
-                                    <h6>Total Doctors</h6>
-                                </div>
-                                <div>
-                                    <div className='form-ontrol'>
-                                        <select class="form-control"
-                                            onChange={(e) => changeFilter(e.target.value)}
-                                        >
-                                            <option value="clinics">Patient</option>
-                                            <option value="doctors">Reached</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                        <div class="ms-panel-body">
-                            <span className='h6'>Week</span>
-                            <label class="ms-switch mx-2">
-                                <input type="checkbox"
-                                    onChange={(e) => setIsWeekChart(!e.target.checked)}
-                                />
-                                <span class="ms-switch-slider ms-switch-dark round"></span>
-                            </label>
-                            <span className='h6'>Year</span>
-                            {chartData && <LineChart filterType={isWeekChart ? 'week' : 'month'} labelName={'Patient'} chartData={chartData} />}
-                        </div>
-
-                    </div>
-                </div>
                 <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
                     <div class="ms-panel h-100">
                         <div class="ms-panel-header">

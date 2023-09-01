@@ -7,22 +7,24 @@ export const userRoutes = {
     DP: {path: '/department', title: 'Department'},
     HL: {path: '/hospital', title: 'Hospital'},
     CL: {path: '/clinic', title: 'Clinic'},
+    AD: {path: '/admin', title: 'Admin'},
 } 
 
 export const MODULES = [
-    {id: 'dashboard', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR']},
-    {id: 'patient', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA', 'MA' ]},
+    {id: '', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR', 'AD']},
+    {id: 'patients', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA' ]},
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: ['CL', 'DP', 'HL' ]},
     {id: 'departments', title: 'Departments', pathname: '/departments', access: ['HL', 'SA']},
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MR']},
     {id: 'hospital-registration', title: 'Hospital Registration', pathname: '/hospital-registration', access: [ 'MR']},
     {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['SA', 'MR']},
     {id: 'hospitals', title: 'Hospitals', pathname: '/hospitals', access: ['MR']},
-    {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'HL', 'CL', 'DP']},
-    {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'MA']},
-    {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'MR' ]},
-    {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
-    {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT']},
+    {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'HL', 'CL', 'DP', 'MR']},
+    {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'AD']},
+    {id: 'contacts', title: 'Contacts', pathname: '/contacts', access: ['SA', 'AD']},
+    {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'AD' ]},
+    {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT', 'AD']},
+    {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT', 'AD']},
 ]
 
 export const PRIORITY = [
@@ -45,7 +47,7 @@ export const WEB_MENU_ITEMS = [
          { id: "home", name: "Home", path: "/" },
          { id: "gynae", name: "Gynae", path: "/gynae" },
          { id: "hospitals", name: "Hospitals", path: "/hospitals" },
-         { id: "clinic", name: "Clinics", path: "/clinic" },
+         { id: "clinics", name: "Clinics", path: "/clinics" },
          { id: "doctors", name: "Doctors", path: "/doctors" },
          { id: "ultrasounds", name: "Ultrasounds", path: "/ultrasounds" },
          { id: "homeopathy", name: "Homeopathy", path: "/homeopathy" },
@@ -89,3 +91,37 @@ export const ORGANIZATION_TYPE = [
     { id: 'DOCTOR', name: 'Doctor' },
     { id: 'ULTRASOUND', name: 'Ultrasound' },
 ]
+
+export const WEBSITE_IMAGE = {
+    HOME_BANNER: 'HOME_BANNER',
+    HOME_BOTTOM_BANNER: 'HOME_BOTTOM_BANNER',
+    GYNAE_SLIDER: 'GYNAE_SLIDER',
+    GYNAE_BANNER: 'GYNAE_BANNER',
+    GYNAE_BOTTOM_BANNER: 'GYNAE_BOTTOM_BANNER',
+    ULTRASOUND_BANNER: 'ULTRASOUND_BANNER',
+    HOMEOPATHY_BANNER: 'HOMEOPATHY_BANNER',
+    CONTACT_BANNER: 'CONTACT_BANNER', 
+    LOGIN_BANNER: 'LOGIN_BANNER',
+    ABOUT_BANNER_1: 'ABOUT_BANNER_1',
+    ABOUT_POSTER_1: 'ABOUT_POSTER_1',
+} 
+
+export const FULLDAY = {
+    "MON": 'Monday',
+    "TUE": 'Tuesday',
+    "WED": 'Wednesday',
+    "THU": 'Thursday',
+    "FRI": 'Friday',
+    "SAT": 'Saturday',
+    "SUN": 'Sunday',
+}
+
+export const NUMBER_TO_DAY = {
+    0: 'SUN',
+    1: "MON",
+    2: "TUE",
+    3: "WED",
+    4: 'THU',
+    5: 'FRI',
+    6: 'SAT',
+}

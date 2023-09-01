@@ -2,6 +2,7 @@ const { Error, Success } = require('../constants/utils');
 const UserModel = require('../models/user-model');
 const NotificatioModel = require('../models/notification-model');
 const TicketModel = require('../models/ticket-model');
+const organizationModel = require('../models/organization-model');
 const ObjectId = require('mongoose').Types.ObjectId
 
 const createTicket = async (body, user) => {
@@ -22,7 +23,7 @@ const createTicket = async (body, user) => {
         
         await NotificatioModel({ 
             title: 'New Ticker Raised',
-            message: `${user.firstName} ${user.lastName} will raised a ticket.`,
+            message: `${user.name} will raised a ticket.`,
             priority: 'high',
             assigneeIds: superAdminIds,
             createdBy: user._id
@@ -35,10 +36,17 @@ const createTicket = async (body, user) => {
 const allTickets = async (body, user) => {
     try{
         let query = {}
-        if( user.userType !== 'SA' ){
+        if( !['SA', 'AD'].includes(user.userType) ){
             query = { senderId: user._id }
         }
-        let tickets = await TicketModel.find(query).populate('senderId', 'firstName lastName')
+        let tickets = await TicketModel.find(query).populate('senderId', 'userType phone organizationId name')
+        
+        for( let ticket of tickets ){
+            if( [ 'CL', 'HL', 'DP' ].includes(ticket?.senderId?.userType) ){
+                let organization = await organizationModel.findOne({ _id: ticket?.senderId?.organizationId }, { fullName: 1 })
+                ticket.senderId.fullName = organization?.fullName
+            }
+        }
         return Success({ tickets })
     } catch(error){ console.log(error) }
 }

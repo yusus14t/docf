@@ -1,6 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import { Suspense } from "react";
 import SUPER_ADMIN from "./super-admin-routes";
+import ADMIN from "./admin-routes";
 import PATIENT from "./patient-routes";
 import CLINIC from "./clinic-routes";
 import DEPARTMENT from "./department-routes";
@@ -23,6 +24,7 @@ const USER_ROUTES = {
   DP: { path: "/department", id: DEPARTMENT },
   MR: { path: "/mr", id: MR },
   HL: { path: "/hospital", id: HOSPITAL },
+  AD: { path: "/admin", id: ADMIN },
 };
 
 export const AllRoutes = () => {
@@ -37,6 +39,7 @@ export const AllRoutes = () => {
   let allUseRoutes = [
     {
       path: "/",
+      exact: true,
       element: <WebLayout />,
       children: COMMON_ROUTE,
     },
@@ -45,6 +48,7 @@ export const AllRoutes = () => {
   if( userRoute?.path ){
     allUseRoutes.push({
       path: `/${userRoute?.path}`,
+      exact: true,
       element: user ? <AppLayout /> : <Navigate to={"/login"} />,
       children: user ? userRoute.id : [],
     });

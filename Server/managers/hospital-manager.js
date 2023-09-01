@@ -1,7 +1,6 @@
 const UserModel = require("../models/user-model")
 const { Success, uploadToBucket } = require("../constants/utils")
 const organizationModel = require("../models/organization-model")
-const { isAxiosError } = require("axios")
 const ObjectId = require('mongoose').Types.ObjectId
 
 const editProfile = async ( body, user, file ) => {
@@ -26,7 +25,8 @@ const editProfile = async ( body, user, file ) => {
             address: detail?.address, 
             name: detail?.name,
             phone: detail?.phone,
-            email: detail?.email
+            email: detail?.email,
+            timing: detail?.timing,
         }
 
         if ( file ) {
@@ -35,7 +35,7 @@ const editProfile = async ( body, user, file ) => {
         
         await organizationModel.updateOne({ _id: user.organizationId }, obj)
 
-        if( ['SA', 'MR'].includes(user.userType)) await UserModel.updateOne({ _id: user._id }, obj)
+        if( ['SA', 'MR' ,'AD'].includes(user.userType)) await UserModel.updateOne({ _id: user._id }, obj)
         else if( obj.phone ) await UserModel.updateOne({ _id: user._id }, { phone: obj.phone })
 
 
@@ -43,6 +43,74 @@ const editProfile = async ( body, user, file ) => {
     } catch(error){ console.log(error) }
 }
 
+const clinicSpecialization = async (body, user) => {
+    try{
+        let specializations = await organizationModel.findOne({_id: body.id }, { specialization: 1 })
+        specializations = specializations?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe?.name  }))
+        return Success({ specializations })
+    } catch(error){ console.error(error) }
+}
+
+const addServices = async ({ services }, user) => {
+    try {
+
+        let updatedService = []
+    
+        if (services?.length) {
+          for (let service of services) {
+    
+            let organization = await organizationModel.findOne({
+              _id: user?.organizationId,
+              "services.id": service.id,
+            });
+    
+            if (!organization) {
+              await organizationModel.updateOne(
+                { _id: user?.organizationId },
+                {
+                  $push: {
+                    services: { id: service?.id || service?.label?.toUpperCase() , name: service.name || service?.label },
+                  },
+                }
+              );
+              updatedService.push({ id: service?.id || service?.label?.toUpperCase() , name: service.name || service?.label })
+            }
+          }
+        }
+        return Success({ message: 'Specialization created succesfully.', services: updatedService });
+    
+      } catch (error) {
+        console.log(error);
+      }
+}
+
+const getServices = async (body, user) => {
+    try{
+        let organization = await organizationModel.findOne({_id: user.organizationId }, { services: 1 })
+        return Success({ services: organization.services })
+    } catch(error){ console.error(error) }
+}
+
+const deleteService = async ({ id }, user) => {
+    try{
+        await organizationModel.updateOne({ _id: user.organizationId }, { $pull: { services: { id } } })
+        return Success({ message: 'Successfully deleted service' })
+    } catch(error){ console.error(error) }
+}
+
+const deleteSpecialization = async ({ id }, user) => {
+    try{
+        await organizationModel.updateOne({ _id: user.organizationId }, { $pull: { specialization: { id } } })
+        return Success({ message: 'Successfully deleted service' })
+    } catch(error){ console.error(error) }
+}
+
+
 module.exports = {
     editProfile,
+    clinicSpecialization,
+    addServices,
+    getServices,
+    deleteService,
+    deleteSpecialization
 }

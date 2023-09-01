@@ -7,6 +7,7 @@ import clinicPhoto2 from "../../assets.web/img/clinic-grid/348x350-1.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getFullPath } from "../../constants/utils";
+import { NUMBER_TO_DAY } from "../../constants/constant";
 
 function Clinics({ source }) {
   const [clinics, setClinics] = useState([]);
@@ -17,12 +18,45 @@ function Clinics({ source }) {
 
   const getAllClinics = async () => {
     try {
-      let { data } = await axiosInstance.get("/all-clinics");
+      let { data } = await axiosInstance.get("/all-clinics", {params: { isClinic: true }});
       setClinics(data?.clinics);
     } catch (error) {
       console.error(error);
     }
   };
+
+  const getTodayTiming = ( timing ) => {
+
+    let time = timing?.find( t => t.day === NUMBER_TO_DAY[2] )
+    console.log(time)
+    if( time ){
+      return(
+        <>
+          <div>
+            <p className="pb-0">Morning</p>
+            <div>
+              <span>Open: { time?.morning?.open } </span>
+              <br />
+              <span>Close: { time?.morning?.close } </span>
+            </div>
+          </div>
+          <div>
+          <p className="pb-0">Evening</p>
+          <div>
+            <span>Open: { time?.evening?.open } </span>
+            <br />
+            <span>Close: { time?.evening?.close } </span>
+          </div>
+        </div>
+        </>
+      )
+    } else {
+      return(<>
+        Today Not Available
+      </>)
+    }
+  }
+
   return (
     <div>
       <div className="box d-flex align-items-center">
@@ -107,14 +141,7 @@ function Clinics({ source }) {
                             <div className="">
                               <h6 className="text-disabled">Timming</h6>
                               <div className="d-flex flex-column justify-contant-between">
-                                <div className="">
-                                  <p className="clinic-timming mb-0">
-                                    Morning : 08 AM to 11 PM
-                                  </p>
-                                  <p className="clinic-timming mb-0">
-                                    Evening : 05 PM to 11 PM
-                                  </p>
-                                </div>
+                                {getTodayTiming( clinic?.timing )}
                                 <Link
                                   className="text-light clinic-btn  btn btn1 btn-primary shadow-none"
                                   to={`/clinic-detail/${clinic?._id}`}

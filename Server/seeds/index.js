@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const UserSeed = require('../seeds/user-seed');
 const AddressSchema = require('../models/address-model');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const settingModel = require('../models/setting-model');
 
 
 // Database Connection
@@ -12,20 +13,23 @@ mongoose.connect(process.env.DATABASE_URL || 'mongodb://0.0.0.0:27017/AcadTech')
 const database = mongoose.connection
 database.once('connected', () => console.log('Database Connected') )
 
-const upload = async () => {
-    try{
-        await AddressSchema.deleteMany({})
-        let jsonData = fs.readFileSync(path.join(__dirname, '/check.json'), 'utf-8')
-        let data = JSON.parse(jsonData)
-        console.log(data)
-        // await AddressSchema.insertMany(data['Sheet1'])
-    } catch( error ) { console.log(error) }
+const contactInfo = async () => {
+    let data = await settingModel({
+        id: 'CONTACT_INFO',
+        data: {
+            phone: '9528820782',
+            whatsapp: '9528820782',
+            email: 'contact@doctortime.in',
+            twitter: 'Doctortime_',
+        }
+    }).save()
+    console.log('Contact created', data)
 }
 
 // Registered Seeds
 const seeds = [
     { name: 'user', function: () => UserSeed.user.function() },
-    { name: 'pincodes', function: () => upload() }
+    { name: 'contact-info', function: () => contactInfo()}
 ]
 
 let args = process.argv.slice(2)

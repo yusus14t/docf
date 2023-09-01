@@ -50,7 +50,37 @@ const deleteMR = async (req, res) => {
         .catch(err => res.status(500).send(err.data))
 }
 
-        
+const websiteImages = async (req, res) => {
+    superAdminManager.websiteImages(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+const uploadImage = async (req, res) => {
+    superAdminManager.uploadImage(req.body, req.file, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+const contactInfo = async (req, res) => {
+    superAdminManager.contactInfo(req.params, req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+const getWebsiteInfo = async (req, res) => {
+    superAdminManager.getWebsiteInfo(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+const appointmentUsers = async (req, res) => {
+    superAdminManager.appointmentUsers(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+
 module.exports = {
     getProfile,
     analytics,
@@ -60,4 +90,9 @@ module.exports = {
     MRs,
     createMR,
     deleteMR,
+    websiteImages,
+    uploadImage,
+    contactInfo,
+    getWebsiteInfo,
+    appointmentUsers,
 }

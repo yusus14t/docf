@@ -1,7 +1,9 @@
 
 const UserModel  = require('../models/user-model'); 
 const OrganizationModel  = require('../models/organization-model'); 
-const { Success, Error, uploadToBucket } = require('../constants/utils')
+const { Success, Error, uploadToBucket } = require('../constants/utils');
+const websiteImageModel = require('../models/website-image-model');
+const settingModel = require('../models/setting-model');
 
 
 const getProfile = async ( body ) => {
@@ -34,7 +36,6 @@ const analytics = async () => {
             }]
         }
 
-        console.log(getQuery( false,  'PT'))
         let analyticsData = await UserModel.aggregate([
             {
                 $facet: {
@@ -158,6 +159,127 @@ const deleteMR = async ( body ) => {
     }
 }
 
+const websiteImages = async ( body ) => {
+    try {
+        let images = await websiteImageModel.find();
+        return Success({ images });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+
+const uploadImage = async ( body, file ) => {
+    try {
+        let image = await websiteImageModel.findOne({ id: body.id })
+        await uploadToBucket(file.filename)
+
+        if( image ){
+            await websiteImageModel.updateOne({ id: body.id }, { image: file.filename })
+            image.image = file.filename 
+
+        } else {
+            image = await websiteImageModel({
+                id: body.id,
+                image: file.filename
+            }).save()
+        }
+
+        return Success({ image });
+
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const contactInfo = async (params, body, user ) => {
+    try {
+        
+        let contact
+        if( params.id === 'CONTACT_QUERY'){
+            await settingModel({
+                id: params.id,
+                data: {
+                    ...body
+                }
+            }).save()
+
+        } else if( params.id === 'CONTACT_INFO' ){
+            contact = await settingModel.updateOne({ id: params.id },
+                {
+                    [`data.${body.type}`]: body.value 
+                }
+            )
+        }
+        console.log(contact)
+        return Success({ contact });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const getWebsiteInfo = async ( params, body ) => {
+    try {
+        let contacts = await settingModel.find({ id: params.id });
+        return Success({ contacts });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const appointmentUsers = async ( params, body ) => {
+    try {
+        let users = await UserModel.aggregate([
+            {
+                $match: {
+                    userType: {
+                        $nin: ['SA']
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: 'organizations',
+                    localField: 'organizationId',
+                    foreignField: '_id',
+                    as: 'organization',
+                    pipeline: [
+                        {
+                            $project: {
+                                name: 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                $unwind: {
+                    path: '$organization',
+                    preserveNullAndEmptyArrays: true
+                },
+                
+            },
+            {
+                $project: {
+                    label: '$name',
+                    label_two: '$organization.name',
+                    value: '$_id'
+                }
+            }
+        ]);
+        console.log(users)
+        return Success({ users });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+
 module.exports = {
     getProfile,
     analytics,
@@ -166,5 +288,10 @@ module.exports = {
     patients,
     MRs,
     createMR,
-    deleteMR
+    deleteMR,
+    websiteImages,
+    uploadImage,
+    contactInfo,
+    getWebsiteInfo,
+    appointmentUsers,
 }

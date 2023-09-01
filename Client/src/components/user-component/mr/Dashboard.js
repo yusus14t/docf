@@ -89,7 +89,7 @@ const Dashbaord = () => {
     } 
 
     return (
-        <div className='ms-content-wrapper content-height'>
+        <div className='ms-content-wrapper '>
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
                 <div>
                     <h6>Dashboard</h6>
@@ -159,42 +159,6 @@ const Dashbaord = () => {
                     </a>
                 </div>
                 <div class="col-xl-6 col-md-6 col-sm-12 mb-3">
-                    <div class="ms-panel">
-                        <div class="ms-panel-header">
-                            <div className='d-flex justify-content-between'>
-                                <div>
-                                    <h6>Total Doctors</h6>
-                                </div>
-                                <div>
-                                    <div className='form-ontrol'>
-                                        <select class="form-control" 
-                                            onChange={(e) => changeFilter(e.target.value)}
-                                        >
-                                            <option value="clinics">Clinics</option>
-                                            <option value="doctors">Doctors</option>
-                                            <option value="hospitals">Hospitals</option>
-                                            <option value="visits">Visits</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="ms-panel-body">
-                             <span className='h6'>Week</span>
-                            <label class="ms-switch mx-2">
-                                <input type="checkbox"
-                                    onChange={(e) => setIsWeekChart(!e.target.checked)}
-                                />
-                                <span class="ms-switch-slider ms-switch-dark round"></span>
-                            </label>
-                            <span className='h6'>Year</span>
-                            <LineChart filterType={isWeekChart ? 'week' : 'month' } labelName={'Patient'} chartData={chartData} />
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="col-xl-6 col-md-6 col-sm-12 mb-3">
                     <div class="ms-panel h-100">
                         <div class="ms-panel-header">
                             <div>
@@ -222,12 +186,12 @@ const Dashbaord = () => {
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {hospitals?.length > 0 && hospitals.map((hospital, key) => 
                                     <li class="ms-list-item media" key={key} >
-                                    <img src={hospital?.photo ? getFullPath(hospital.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
+                                    <img src={hospital?.photo ? getFullPath(hospital.organizationId?.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
                                     <div class="media-body mt-1"> 
                                         <div className='d-flex justify-content-between'>
                                             <div>
-                                                <h4>{hospital?.name}</h4>
-                                                <span class="fs-12">{hospital.address}</span>
+                                                <h4>{hospital?.organizationId?.name}</h4>
+                                                <span class="fs-12">{hospital.organizationId?.address}</span>
                                             </div> 
                                             <div className='d-contents'>
                                                 <h4 class="fs-12">{formatPhone(hospital.phone)}</h4>
@@ -254,12 +218,12 @@ const Dashbaord = () => {
                             <ul class="ms-followers ms-list ms-scrollable ps">
                                 {clinics?.length > 0 && clinics.map((clinics, key) =>
                                     <li class="ms-list-item media" key={key} >
-                                        <img src={clinics?.photo ? getFullPath(clinics.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
+                                        <img src={clinics?.organizationId?.photo ? getFullPath(clinics.organizationId?.photo) : NO_PHOTO} class="ms-img-small ms-img-round" alt="people" />
                                         <div class="media-body mt-1">
                                             <div className='d-flex justify-content-between'>
                                                 <div>
-                                                    <h4>{clinics?.name}</h4>
-                                                    <span class="fs-12">{clinics.address}</span>
+                                                    <h4>{clinics?.organizationId?.name}</h4>
+                                                    <span class="fs-12">{clinics.organizationId?.address}</span>
                                                 </div>
                                                 <div className='d-contents'>
                                                     <h4 class="fs-12">{formatPhone(clinics.phone)}</h4>

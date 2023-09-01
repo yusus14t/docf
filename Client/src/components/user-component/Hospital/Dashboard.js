@@ -21,7 +21,6 @@ const Dashbaord = () => {
     const toasty = useToasty();
 
     useEffect(() => {
-        changeFilter('clinics')
         getAppointments('waiting')
         getAppointments('unreached')
         getGenderData()
@@ -72,38 +71,6 @@ const Dashbaord = () => {
         } catch (error) { console.log(error) }
     }
 
-
-    const changeFilter = (value) => {
-        let data = {
-            week: [],
-            month: []
-        }
-        if (value === 'clinics') {
-            data = {
-                week: ['2', '5', '1', '2', '3', '7', '9'],
-                month: ['3', '1', '6', '9', '3', '6', '8', '3', '4', '2', '6', '2']
-            }
-        }
-        else if (value === 'hospitals') {
-            data = {
-                week: ['4', '3', '5', '3', '7', '8', '9'],
-                month: ['6', '3', '7', '8', '4', '2', '6', '3', '9', '5', '8', '4']
-            }
-        }
-        else if (value === 'visits') {
-            data = {
-                week: ['1', '2', '3', '4', '3', '2', '3'],
-                month: ['1', '2', '3', '4', '3', '2', '3', '3', '7', '4', '8', '4']
-            }
-        }
-        else if (value === 'doctors') {
-            data = {
-                week: ['6', '3', '6', '4', '8', '3', '6'],
-                month: ['5', '2', '4', '7', '8', '9', '6', '5', '4', '2', '4', '4']
-            }
-        }
-        setChartData(data)
-    }
 
     return (
         <div className='ms-content-wrapper'>
@@ -162,40 +129,6 @@ const Dashbaord = () => {
                             <i class="fas fa-stethoscope ms-icon-mr"></i>
                         </div>
                     </a>
-                </div>
-                <div class="col-xl-6 col-md-6 col-sm-12 mb-4">
-                    <div class="ms-panel">
-                        <div class="ms-panel-header">
-                            <div className='d-flex justify-content-between'>
-                                <div>
-                                    <h6>Total Doctors</h6>
-                                </div>
-                                <div>
-                                    <div className='form-ontrol'>
-                                        <select class="form-control"
-                                            onChange={(e) => changeFilter(e.target.value)}
-                                        >
-                                            <option value="clinics">Patient</option>
-                                            <option value="doctors">Reached</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="ms-panel-body">
-                            <span className='h6'>Week</span>
-                            <label class="ms-switch mx-2">
-                                <input type="checkbox"
-                                    onChange={(e) => setIsWeekChart(!e.target.checked)}
-                                />
-                                <span class="ms-switch-slider ms-switch-dark round"></span>
-                            </label>
-                            <span className='h6'>Year</span>
-                            {chartData && <LineChart filterType={isWeekChart ? 'week' : 'month'} labelName={'Patient'} chartData={chartData} />}
-                        </div>
-
-                    </div>
                 </div>
                 <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
                     <div class="ms-panel h-100">

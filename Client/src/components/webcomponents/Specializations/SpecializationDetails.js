@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../../../assets.app/css/specialzation.css";
-import banner from "../../../assets.app/img/specializations/cardio.jpg";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
-import slide2 from "../../../assets.web/img/home-1/1920x1280-2.jpg";
-import { getAuthHeader, getFullPath,axiosInstance, formatPhone } from "../../../constants/utils";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { getAuthHeader, getFullPath,axiosInstance,  } from "../../../constants/utils";
 import clinicPhoto2 from "../../../assets.web/img/home-1/1920x1280-1.jpg";
 
 
@@ -65,7 +63,7 @@ const SpecializationDetails = () => {
       {
         <div className="splz-deatial container mt-3">
           <span className="mb-0">
-            <img className="specialization-image" src={banner} alt="" />
+            <img className="specialization-image" src={specialization?.pic} alt="" />
           </span>
           <div className="deatil">
             <p className="details-text">{specialization?.description}</p>

@@ -22,13 +22,21 @@ const organizationSchema = new Schema({
             id: { type: String }
         }
     ],
-    fee: { type: String, default: '0' },
+    fee: { type: Number, default: '0' },
     room: {  type: String },
     timing: [
         { 
             day: { type: String },
             open: { type: String },
             close: { type: String },
+            morning: {
+                open: { type: String },
+                close: { type: String },
+            },
+            evening: {
+                open: { type: String },
+                close: { type: String },
+            },
         }
     ],
 

@@ -224,7 +224,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
                                         {...register('timing.close')}
                                     />
                                 </div>
-                                <div className='col-1'>
+                                <div className=''>
                                     <button type='button' style={{ minWidth: "60px" }} className='btn btn-1 btn-primary mt-4 p-1 px-1 shadow-none' onClick={() => handleTime()}> Add</button>
                                 </div>
                             </div>

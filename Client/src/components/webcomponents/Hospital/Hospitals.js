@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { axiosInstance } from '../../../constants/utils'
 
 import { Link } from "react-router-dom";
-import clinicPhoto2 from "../../../assets.app/img/backgrounds/hos.jpg";
+import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getFullPath } from "../../../constants/utils";
+import { NUMBER_TO_DAY } from '../../../constants/constant';
 const HospitalGrid = ({source}) => {
   const [ hospitals, setHospitals] = useState([]);
 
@@ -19,6 +20,25 @@ const HospitalGrid = ({source}) => {
       setHospitals(data?.organization)
     } catch(error){ console.error(error) }
   }
+
+  const getTodayTiming = ( timing ) => {
+
+    let time = timing?.find( t => t.day === NUMBER_TO_DAY[new Date().getDay()] )
+    if( time ){
+      return(
+        <div>
+          <span>Open: { time.open } </span>
+          <br />
+          <span>Close: { time.close } </span>
+        </div>
+      )
+    } else {
+      return(<>
+        Today Not Available
+      </>)
+    }
+  }
+  
   return (
     <div>
       <div className="box d-flex align-items-center">
@@ -50,7 +70,7 @@ const HospitalGrid = ({source}) => {
                             src={
                               hospital?.photo
                                 ? getFullPath(hospital.photo)
-                                : clinicPhoto2
+                                : NO_PHOTO
                             }
                             alt=""
                           />
@@ -60,7 +80,7 @@ const HospitalGrid = ({source}) => {
                             <h6 className="hospital-specialization text-disabled">
                               {hospital.specialization.length > 1
                                 ? "Multi speciality"
-                                : hospital.specialization?.name || "-"}
+                                : hospital.specialization[0]?.name || "-"}
                             </h6>
                             <div className="contact-info mt-3">
                               <div>
@@ -75,17 +95,9 @@ const HospitalGrid = ({source}) => {
                             </div>
                           </div>
                           <div className="mt-3 hospital-card-timing">
-                            <h6 className="hospital-timming-card">Timming</h6>
+                            <span>Timing</span>
                             <div className="d-flex flex-column justify-contant-between">
-                              <div className="">
-                                <p className="clinic-timming mb-0">
-                                  Morning : 08 AM to 11 PM
-                                </p>
-                                <p className="clinic-timming mb-0">
-                                  {" "}
-                                  Evening : 05 PM to 11 PM
-                                </p>
-                              </div>
+                              {getTodayTiming(hospital?.timing)}
                               <div className="">
                                 <Link
                                   className="text-light hospital-btn  btn btn1 btn-primary shadow-none"

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 import toasty from '../../../hooks/toasty'
-import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from '../../../constants/utils';
+import { axiosInstance, formatPhone, getAuthHeader, getFullPath, userInfo } from '../../../constants/utils';
 import { DoughnutChart, LineChart } from '../../common-components/Chart';
 
 const Dashbaord = () => {
@@ -10,12 +10,19 @@ const Dashbaord = () => {
     const [ clinics, setClinics ] = useState([])
     const [ patients, setPatients ] = useState([])
 
+    const [ data, setData ] = useState({
+        week: ['6', '3', '6', '4', '8', '3', '6'],
+        month: ['5', '2', '4', '7', '8', '9', '6', '5', '4', '2', '4', '4']
+    })
+
     useEffect(() => {
         analytics()
         getHospitals()
         getClinics()
         getPatients()
     },[])
+
+
 
     const analytics = async () => {
         try{
@@ -120,40 +127,8 @@ const Dashbaord = () => {
                         </div>
                     </a>
                 </div>
-                <div class="col-xl-6 col-md-6 col-sm-12 mb-4">
-                    <div class="ms-panel">
-                        <div class="ms-panel-header">
-                            <div className='d-flex justify-content-between'>
-                                <div>
-                                    <h6>Total Doctors</h6>
-                                </div>
-                                <div>
-                                    <div className='form-ontrol'>
-                                        <select class="form-control"
-                                        >
-                                            <option value="clinics">Patient</option>
-                                            <option value="doctors">Reached</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="ms-panel-body">
-                            <span className='h6'>Week</span>
-                            <label class="ms-switch mx-2">
-                                <input type="checkbox"
-                                />
-                                <span class="ms-switch-slider ms-switch-dark round"></span>
-                            </label>
-                            <span className='h6'>Year</span>
-                            {<LineChart filterType={'week'} labelName={'Patient'} chartData={[]} />}
-                        </div>
-
-                    </div>
-                </div>
                 <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
-                    <div class="ms-panel h-100">
+                    <div class="ms-panel">
                         <div class="ms-panel-header">
                             <div>
                                 <h6>Genders</h6>
@@ -177,7 +152,7 @@ const Dashbaord = () => {
                             </div>
                         </div>
                         <div class="ms-panel-body ">
-                            <div className='h4'>
+                            <div className='h5'>
                                 Appointment Status
                             </div>
                             <div className='text-center' style={{ height: '14rem', width: '14rem' }}>

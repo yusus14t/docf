@@ -4,26 +4,30 @@ const OrganizationModel = require('../models/organization-model');
 const AppointmentModel = require('../models/appointment-model');
 const { randomOtp } = require('../constants/utils')
 const ObjectId = require('mongoose').Types.ObjectId
-const { specialization } = require('../seeds/specialization-seed')
+const { specialization } = require('../seeds/specialization-seed');
+const noticeModel = require('../models/notice-model');
+const { CITIES } =require('../seeds/citiesData');
+const settingModel = require('../models/setting-model');
 
 
 
 const sessionInfo = async ( request, user ) => {
     try{
-
         if( !user ) return Success({ message: '' })
+
         let info = await UserModel.findOne({ _id: user._id }).populate('organizationId')
 
-        if( [ 'DP', 'CL', 'HL' ].includes(info.userType) && !info?.organizationId?.qrCode ){
+        if( [ 'DP', 'CL', 'HL' ].includes(info.userType) && !info?.organizationId?.qrCode  ){
             let link = 'https://doctortime.in';
-            if( info.userType === 'HL' ) link += `/hospital/${ info.organizationId }`
-            else if( info.userType === 'CL' ) link += `/clinic-detail/${ info.organizationId }`
-            else if( info.userType === 'DP' ) link += `/department/${ info.organizationId }`
+            if( info.userType === 'HL' ) link += `/hospital/${ info.organizationId._id }`
+            else if( info.userType === 'CL' ) link += `/clinic-detail/${ info.organizationId._id }`
+            else if( info.userType === 'DP' ) link += `/department/${ info.organizationId._id }`
             
             // genrate qr code
             const filename = `${info.organizationId._id}.png`
             await QRCodeGenerate(link, filename)
             await OrganizationModel.updateOne({ _id: info.organizationId._id }, { qrCode: filename })
+            info.organizationId.qrCode = filename
         }
 
         return Success({ user: info })
@@ -227,7 +231,7 @@ const organizationDetails = async ( body, user, file ) => {
         if( file ) await uploadToBucket( file.filename );
         
         await OrganizationModel.updateOne({ _id: detail._id}, {
-            fee: detail?.fee,
+            fee: parseInt(detail?.fee),
             specialization: detail?.specialization,
             tab: { step: detail?.tab, isComplete: true },
             address: detail?.address, 
@@ -292,8 +296,12 @@ const oneSpecialization = async (body) => {
 
 const getAllClinics = async (body) => {
     try {
+        console.log(body)
+        let users = ['Clinic']
+        if ( !body?.isClinic ) users.push('Department')
+        console.log(users)
         let clinics = await OrganizationModel.find({
-            organizationType: {$in : ['Clinic', 'Department']},
+            organizationType: {$in : users },
             ...(body?.filter?.specialization ? { 'specialization.name': body?.filter?.specialization } : {})            
         })
         return Success({ clinics })
@@ -341,6 +349,7 @@ const clinicDetails = async ( body ) => {
                     fee: 1,
                     services: 1,
                     timing: 1,
+                    organizationType: 1,
                 }
             }
         ])
@@ -435,11 +444,10 @@ const setUserType = async ( body ) => {
 
 const getAllHospitals = async ( body, user ) => {
     try{
-        console.log('body', body,body?.filter ? { 'specialization.name': body?.filter?.specialization } : {} )
        let organization = await OrganizationModel.find({ 
         organizationType: 'Hospital',
         ...( body?.filter ? { 'specialization.name': body?.filter?.specialization } : {} )
-    }, { name: 1, specialization: 1, email: 1, address: 1, photo: 1 })
+    }, { name: 1, specialization: 1, email: 1, address: 1, photo: 1, timing: 1 })
 
        return Success({ organization })
     } catch(error){ console.log(error) }
@@ -461,16 +469,18 @@ const patientAppointments = async ( body, user ) => {
     try{
         let today = new Date()
         today.setHours(0,0,0,0)
+
        let appointments = await AppointmentModel.find({ userId: ObjectId(user._id), ...( body?.isToday ? { createdAt: { $gte: today }} : {}) })
        .populate('departmentId', 'name address')
+       .populate('userId')
+
        return Success({ appointments })
     } catch(error){ console.log(error) }
 }
 
 const search = async ( body, user ) => {
     try{
-        if( !body?.search ) return Success({ searchData: [] })
-
+        console.log(body)
         let aggregateQuery = [
             {
                 $match: {
@@ -485,6 +495,15 @@ const search = async ( body, user ) => {
                     ]
                 }
             },
+            {
+                $project: {
+                    organizationType: 1,
+                    photo: 1,
+                    name: 1,
+                    email: 1,
+                    address: 1,
+                }
+            }
            
         ]
 
@@ -497,14 +516,113 @@ const search = async ( body, user ) => {
             }
         })
         
-        let searchData = await OrganizationModel.aggregate(aggregateQuery)        
-       return Success({ searchData })
+        let searchData = await OrganizationModel.aggregate(aggregateQuery)   
+        let doctors = await UserModel.aggregate([
+            {
+                $match: {
+                    userType: 'DR',
+                    $and: [
+                        body?.search ? { name: {  $regex:  body.search, $options: 'i' }} : {},
+                        body?.city ? { address: { $regex: body?.city, $options: 'i' } } : {},
+                        body?.specialization ? { 'specialization.name': body?.specialization } : {},
+                    ]
+                }
+            },
+            {
+                $lookup: {
+                    from: 'organizations',
+                    localField: 'organizationId',
+                    foreignField: '_id',
+                    as: 'organization',
+                    pipeline: [
+                        {
+                            $project: {
+                                organizationType: 1,
+                                fee: 1,
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                $unwind: '$organization',
+            },
+            {
+                $project: {
+                    name: 1,
+                    email: 1,
+                    address: 1,
+                    photo: 1,
+                    userType: 1,
+                    organizationId: 1, 
+                    organizationType: '$organization.organizationType',
+                    fee: '$organization.fee'
+                }
+            },
+            {
+                $match: {
+                    ...(body?.fee > 0 ? { fee: { $lte: parseInt(body?.fee) }} : {})
+                }
+            }
+        ])
+       return Success({ searchData: [ ...searchData, ...doctors ] })
     } catch(error){ console.log(error) }
 }
 
+const uploadFile = async ( file ) => {
+    try{
+        let pathname = await uploadToBucket(file.filename)
+
+       return Success({ pathname })
+    } catch(error){ console.log(error) }
+}
+
+const createNotice = async ( body, user ) => {
+    try{
+        console.log('body', body)
+        let notice = await noticeModel({
+            organizationId: user.organizationId,
+            ...body,
+            createdBy: user._id 
+        }).save()
+       return Success({ notice, message: 'Successfully created' })
+    } catch(error){ console.log(error) }
+}
+
+const getNotice = async ( body ) => {
+    try{
+        let notices = await noticeModel.find({ organizationId: body.id })
+       return Success({ notices })
+    } catch(error){ console.log(error) }
+}
+
+const deleteNotice = async ( body ) => {
+    try{
+        await noticeModel.deleteOne({ _id: body.id })
+       return Success({ message: 'Successfully deleted' })
+    } catch(error){ console.log(error) }
+}
+
+const websiteSetting = async ( params ) => {
+    try{
+        let contact = await settingModel.findOne({ id: params.id })
+       return Success({ contact })
+    } catch(error){ console.log(error) }
+}
+
+const allCities = async ( body )=> {
+    try {
+      return Success({ cities: CITIES });
+    } catch (error) {
+      console.log(error);
+    }
+}
+
+
+
 module.exports = {
   logIn,
-  signUp,
+  signUp, 
   sessionInfo,
   createClinic,
   appointmentDepartments,
@@ -524,4 +642,10 @@ module.exports = {
   patientAppointments,
   search,
   oneSpecialization,
+  uploadFile,
+  getNotice,
+  createNotice,
+  deleteNotice,
+  websiteSetting,
+  allCities,
 };

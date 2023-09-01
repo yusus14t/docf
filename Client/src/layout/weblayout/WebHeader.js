@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import Avatar from '../../assets.app/img/dashboard/doctor-3.jpg'
+import NO_PHOTO from '../../assets.app/images/no-photo.png'
 import logo from '../../assets.app/img/logo/logo.jpg'
 import WebSidebar from "./WebSidebar";
 import { Dropdown, Item } from "../../components/common-components/Dropdown";
 import { WEB_MENU_ITEMS, userRoutes } from "../../constants/constant";
+import { getFullPath } from "../../constants/utils";
 
 const WebHeader = () => {
   const userInfo = JSON.parse(localStorage.getItem('user'))
@@ -48,14 +49,14 @@ const WebHeader = () => {
               toggle={
                 <img
                   className="ms-user-img ms-img-round float-end avatar"
-                  src={Avatar}
+                  src={userInfo?.photo || userInfo?.organizationId?.photo ? getFullPath(userInfo?.photo || userInfo?.organizationId?.photo) : NO_PHOTO}
                   alt="people"
                 />
               }
             >
               <li className="dropdown-menu-header">
                 <h6 className="dropdown-header ms-inline m-0">
-                  <span className="text-disabled">Welcome, Dr Samuel Deo</span>
+                  <span className="text-disabled">Welcome, { userInfo?.fullName || userInfo?.organizationId?.name}</span>
                 </h6>
               </li>
               <li className="dropdown-divider"></li>
