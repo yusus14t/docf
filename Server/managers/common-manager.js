@@ -6,7 +6,8 @@ const { randomOtp } = require('../constants/utils')
 const ObjectId = require('mongoose').Types.ObjectId
 const { specialization } = require('../seeds/specialization-seed');
 const noticeModel = require('../models/notice-model');
-const { cities } =require('../seeds/citiesData.json')
+const { cities } =require('../seeds/citiesData.json');
+const settingModel = require('../models/setting-model');
 
 
 
@@ -311,8 +312,12 @@ const oneCity = async (body) => {
 };
 const getAllClinics = async (body) => {
     try {
+        console.log(body)
+        let users = ['Clinic']
+        if ( !body?.isClinic ) users.push('Department')
+        console.log(users)
         let clinics = await OrganizationModel.find({
-            organizationType: {$in : ['Clinic']},
+            organizationType: {$in : users },
             ...(body?.filter?.specialization ? { 'specialization.name': body?.filter?.specialization } : {})            
         })
         return Success({ clinics })
@@ -360,6 +365,7 @@ const clinicDetails = async ( body ) => {
                     fee: 1,
                     services: 1,
                     timing: 1,
+                    organizationType: 1,
                 }
             }
         ])
@@ -613,6 +619,13 @@ const deleteNotice = async ( body ) => {
     } catch(error){ console.log(error) }
 }
 
+const websiteSetting = async ( params ) => {
+    try{
+        let contact = await settingModel.findOne({ id: params.id })
+       return Success({ contact })
+    } catch(error){ console.log(error) }
+}
+
 
 module.exports = {
   logIn,
@@ -641,4 +654,5 @@ module.exports = {
   createNotice,
   deleteNotice,
   oneCity,
+  websiteSetting,
 };

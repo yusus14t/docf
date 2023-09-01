@@ -1274,7 +1274,6 @@ input::-webkit-inner-spin-button {
 
 /* contact page */
 .contact-list-item {
-  width: 75%;
   height: 60px;
   border-radius: 50px;
   background-color: #f1f5fc;
@@ -1284,12 +1283,8 @@ input::-webkit-inner-spin-button {
 .contact-box-right {
   margin-top: 50px;
 }
-.contact-kk {
-  width: 200px;
-}
+
 .contact-icon-container {
-  width: 60px;
-  height: 60px;
   padding: 5px;
 }
 .contact-icons {
@@ -1390,6 +1385,11 @@ input::-webkit-inner-spin-button {
  width: 500px;
  background-color: #000;
 }
+
+.notice-max-height {
+  max-height: 30rem;
+  overflow: auto;
+}
   /*==================*************************media queries*******************==========================*/
 @media (max-width: 1400px){
   .fixed, .side-nav.fixed{
@@ -1441,6 +1441,9 @@ input::-webkit-inner-spin-button {
 }
 
 @media (max-width: 767px) {
+  .sidebar-image {
+    margin-top: 2rem;
+  }
   .search-page{
     width: 100%;
     

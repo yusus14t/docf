@@ -100,4 +100,27 @@ export const WEBSITE_IMAGE = {
     ULTRASOUND_BANNER: 'ULTRASOUND_BANNER',
     HOMEOPATHY_BANNER: 'HOMEOPATHY_BANNER',
     CONTACT_BANNER: 'CONTACT_BANNER', 
+    LOGIN_BANNER: 'LOGIN_BANNER',
+    ABOUT_BANNER_1: 'ABOUT_BANNER_1',
+    ABOUT_POSTER_1: 'ABOUT_POSTER_1',
 } 
+
+export const FULLDAY = {
+    "MON": 'Monday',
+    "TUE": 'Tuesday',
+    "WED": 'Wednesday',
+    "THU": 'Thursday',
+    "FRI": 'Friday',
+    "SAT": 'Saturday',
+    "SUN": 'Sunday',
+}
+
+export const NUMBER_TO_DAY = {
+    0: 'SUN',
+    1: "MON",
+    2: "TUE",
+    3: "WED",
+    4: 'THU',
+    5: 'FRI',
+    6: 'SAT',
+}

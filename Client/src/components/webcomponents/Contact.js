@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import phone from "../../assets.app/img/icons/icons8-phonecall-96.png";
 import whatsapp from "../../assets.app/img/icons/icons8-whatsapp-96.png";
 import email from "../../assets.app/img/icons/icons8-email-96.png";
 import twitter from "../../assets.app/img/icons/icons8-twitter-100.png";
+import { axiosInstance, formatPhone } from "../../constants/utils";
 
 const Contact = () => {
+  const [ contact, setContact ] = useState({})
+
+  useEffect(() => {
+    getContact()
+  }, [])
+
+  const getContact = async () => {
+    try{
+      let {data} = await axiosInstance.get('/common/website/CONTACT_INFO')
+      setContact(data?.contact?.data)
+    } catch(error){ console.error(error) }
+  }
+
   return (
     <div className="container ">
       <div className="box"></div>
@@ -20,8 +34,8 @@ const Contact = () => {
                   <img className="contact-icons" src={phone} alt="" />
                 </div>
                 <div className="contact-kk ">
-                  <Link to="tel:9528820782" className="href_location">
-                    +91 9528820782 
+                  <Link to={`tel:${contact.phone}`} className="href_location">
+                    +91 { formatPhone(contact?.phone) } 
                   </Link>
                 </div>
               </div>
@@ -32,8 +46,8 @@ const Contact = () => {
                   <img className="contact-icons" src={whatsapp} alt="" />
                 </div>
                 <div className="contact-kk">
-                  <Link target="_blank" to="https://wa.me/919528820782">
-                    +91 9528820782
+                  <Link target="_blank" to={`https://wa.me/${contact.whatsapp}`}>
+                    +91 { formatPhone(contact.whatsapp)}
                   </Link>
                 </div>
               </div>
@@ -44,8 +58,8 @@ const Contact = () => {
                   <img className="contact-icons " src={email} alt="" />
                 </div>
                 <div className="contact-kk">
-                  <Link target="_blank" to="mailto:yusuf14t@gmail.com">
-                    contact@doctortime.in
+                  <Link target="_blank" to={`mailto:${contact.email}`}>
+                    {contact.email}
                   </Link>
                 </div>
               </div>
@@ -56,8 +70,8 @@ const Contact = () => {
                   <img src={twitter} className="contact-icons" alt="" />
                 </div>
                 <div className=" contact-kk">
-                  <Link target="_blank" to="https://twitter.com/Doctortime_">
-                    @Doctortime_
+                  <Link target="_blank" to={`https://twitter.com/${contact.twitter}`}>
+                    @{contact.twitter}
                   </Link>
                 </div>
               </div>

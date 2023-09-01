@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 const DepartmentCard = ({ departments }) => {
   return (
     <>
-      <div className="container-fluid mt-4">
         <div className="row">
           {departments?.map(( department, key )=>{
             return (
-              <div className="col-md-3" key={key}>
+              <div className="col-md-6" key={key}>
                 <div className="card p-2 department-card">
                   <div className="d-flex align-items-center">
                     <div className="image">
@@ -44,7 +43,6 @@ const DepartmentCard = ({ departments }) => {
           })}
           
         </div>
-      </div>
     </>
   );
 };

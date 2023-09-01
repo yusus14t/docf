@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal";
 import Profile from "./Profile";
 import CreatableSelect from 'react-select/creatable';
@@ -10,6 +10,10 @@ import Website from "./Website";
 import { SERVICES } from "../../../constants/constant";
 import logo from '../../../assets.app/img/logo/logo.jpg'
 import { toPng } from 'html-to-image'
+import phone from "../../../assets.app/img/icons/icons8-phonecall-96.png";
+import whatsapp from "../../../assets.app/img/icons/icons8-whatsapp-96.png";
+import email from "../../../assets.app/img/icons/icons8-email-96.png";
+import twitter from "../../../assets.app/img/icons/icons8-twitter-100.png";
 
 
 const Settings = () => {
@@ -24,14 +28,18 @@ const Settings = () => {
 
   const [services, setServices] = useState([]);
   const [organizationServices, setOrganizationServices] = useState([]);
+  const [isEdit, setIsEdit ] = useState({ open: false, type: null, value: null })
+
+  const [ contact, setContact ] = useState({})
 
   const QRCodeRef = useRef(null)
-
+  const inputRef = useRef(null)
   const toasty = useToasty()
 
   useEffect(() => {
     if (tab === 'SPECIALIZATION') getAllSpecialization()
     else if( tab === 'SERVICES' ) getServices()
+    else if( tab === 'CONTACT' ) getContact()
   }, [tab,])
 
   useEffect(() => {
@@ -135,6 +143,27 @@ const Settings = () => {
     } catch(error){ console.error(error) }
   }
 
+  const edit = ( type, old_value ) => {
+    setIsEdit({ ...isEdit, open: true, type })
+    setTimeout(() => {
+      inputRef.current.value = old_value
+    }, 500)
+  }
+  
+  const save = async () => {
+    try{
+      await axiosInstance.post(`/super-admin/website/CONTACT_INFO`, isEdit, getAuthHeader())
+      getContact()
+      setIsEdit({ open: false })
+    }catch(error){ console.error(error) }
+  }
+
+  const getContact = async () => {
+    try{
+      let {data} = await axiosInstance.get('/common/website/CONTACT_INFO')
+      setContact(data?.contact?.data)
+    } catch(error){ console.error(error) }
+  }
 
   return (
     <div className="ms-content-wrapper">
@@ -142,12 +171,13 @@ const Settings = () => {
         <div className="col-xl-12 col-md-12">
           <div className="ms-panel mb-0 inner-content-height">
             <div className="ms-panel-header ms-panel-custome">
-              <div>
+              <div style={{ display: "flex", overflow: "auto"}}>
                 {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
                 {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SERVICES')}>Services</span>}
                 {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
-                <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
                 {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('WEBSITE')}>Website</span>}
+                {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('CONTACT')}>Contact</span>}
+                <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
 
               </div>
             </div>
@@ -266,51 +296,113 @@ const Settings = () => {
               {tab === "WEBSITE" && <Website />}
               {tab === "QRCODE" && (
                 <div>
-                  <div style={{ marginLeft: "auto", }} className=""  >
-                    <div style={{ width: 800, border: "2px solid black",  background:'#fff' }} ref={QRCodeRef}>
-                      <div style={{ display: "flex" }}>
-                        <img
-                          style={{ width: "200px", padding: "10px 50px 0 50px" }}
-                          src={logo}
-                          alt=""
-                        />
-                        <h3 style={{ textAlign: "center" }}>Clinic Or Hospital Name</h3>
+                  <div style={{ marginLeft: "auto", display:'flex', justifyContent:'center' }} className=""  >
+                    <div style={{ display:'flex', flexDirection:'column'}}>
+                      <div style={{ width: "500px", border: "2px solid black",  background:'#fff', marginTop:"20px" }} ref={QRCodeRef}>
+                        <div style={{ display: "flex", marginTop:'10px', alignItems:'center' }}>
+                          <img
+                            style={{ width: "200px", padding: "0px 20px 0 50px" }}
+                            src={logo}
+                            alt=""
+                          />
+                          <h4 style={{ textAlign: "center" }}>{userInfo?.organizationId?.name}</h4>
+                        </div>
+                        <hr />
+                        <div style={{ margin: "auto", width: "430px", height: "400px" }}>
+                          <h5 style={{ textAlign: "center" }}>
+                            Scan QR code to book Appointment
+                          </h5>
+                          <img
+                            src={ getFullPath(userInfo?.organizationId?.qrCode) }
+                            style={{ width: "400px", height: "400px" }}
+                            alt=""
+                          />
+                        </div>
+                        <p style={{textAlign: "center"}}>Or visit Doctortime.in</p>
+                        <div style={{ marginTop: "30px", marginBottom:"30px" }}>
+                          <p style={{ textAlign: "center"}}>
+                            Don't Waste Your Time Be Samart.
+                            <br />
+                            Come Here Just Before Your Turn.
+                            <br />
+                            Book Appointment from Doctor Time and Track Live Appointment
+                            Number
+                          </p>
+                        </div>
                       </div>
-                      <hr />
-                      <div style={{ margin: "auto", width: "430px", height: "400px" }}>
-                        <h5 style={{ textAlign: "center" }}>
-                          Scan QR code to book Appointment
-                        </h5>
-                        <img
-                          src={ getFullPath(userInfo?.organizationId?.qrCode) }
-                          style={{ width: "400px", height: "400px" }}
-                          alt=""
-                        />
-                        <p style={{ textAlign: "center" }}>Or visit Doctortime.in</p>
-                      </div>
-                      <div style={{ marginTop: "100px" }}>
-                        <h4 style={{ textAlign: "center" }}>
-                          Don't Waste Your Time Be Samart
-                        </h4>
-                        <h4 style={{ textAlign: "center" }}>
-                          Come Here Just Before Your Turn{" "}
-                        </h4>
-                        <h4 style={{ textAlign: "center" }}>
-                          Book Appointment from Doctor Time and Track Live Appointment
-                          Number
-                        </h4>
+                      <div style={{ display:'flex', justifyContent: 'center', marginTop: '1.5rem', marginBottom: "3rem"}}>
+                        <div>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() =>
+                              download()
+                            }
+                          >
+                            Download QR Code
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() =>
-                      download()
-                    }
-                  >
-                    Download QR Code
-                  </button>
                 </div>
+              )}
+              {tab === "CONTACT" && (
+                <>
+                  <div className="d-flex justify-content-between p-3">
+                    <div>
+                      <h4>Contact Info</h4>
+                    </div>
+                  </div>
+                  <div className="">
+                    { isEdit.open && <div className="col-md-6 m-3">
+                      <label className=''>{ isEdit.type }</label>
+                      <div className="input-group">
+                        <input type="text"
+                          ref={inputRef}
+                          className={`form-control `}
+                          placeholder={isEdit.type}
+                          onChange={(e) => setIsEdit({ ...isEdit, value: e.target.value })}
+                        />
+                        <button className="btn btn-primary btn-sm shadow-none mx-2" onClick={() => save()}> Save </button>
+                        <button className="btn btn-light btn-sm shadow-none" onClick={() => setIsEdit({ })}> Cancel </button>
+                      </div>
+                    </div>}
+                    <div className="d-flex flex-wrap">
+                          <div className="col-md-3 contact-list-item mx-2 mb-3 d-flex flex-row justify-content-around align-items-center">
+                            <div className="contact-icon-container contact-kk">
+                              <img className="contact-icons" src={phone} alt="" />
+                            </div>
+                            {contact?.phone}
+                            <FontAwesomeIcon className=' cursor-pointer' icon={faEdit} onClick={() => edit('phone', contact?.phone)} />
+
+                          </div>
+                          <div className=" col-md-3 contact-list-item mx-2 mb-3 d-flex flex-row justify-content-around align-items-center">
+                            <div className="contact-icon-container contact-kk">
+                              <img className="contact-icons" src={whatsapp} alt=""  />
+                            </div>
+                            {contact?.whatsapp}
+                            <FontAwesomeIcon className=' cursor-pointer' icon={faEdit} onClick={() => edit('whatsapp', contact?.whatsapp)}  />
+
+                          </div>
+                          <div className="col-md-3 contact-list-item mx-2 mb-3 d-flex flex-row justify-content-around align-items-center">
+                            <div className="contact-icon-container contact-kk">
+                              <img className="contact-icons " src={email} alt="" />
+                            </div>
+                            {contact?.email}
+                            <FontAwesomeIcon className=' cursor-pointer' icon={faEdit} onClick={() => edit('email', contact?.email)} />
+
+                          </div>
+                          <div className="col-md-3 contact-list-item mx-2 mb-3 d-flex flex-row justify-content-around ml-5 align-items-center">
+                            <div className="contact-icon-container contact-kk">
+                              <img src={twitter} className="contact-icons" alt="" />
+                            </div>
+                            @{contact?.twitter}
+                            <FontAwesomeIcon className=' cursor-pointer' icon={faEdit} onClick={() => edit('twitter', contact?.twitter)} />
+
+                          </div>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
           </div>

@@ -13,6 +13,7 @@ router.post('/mr', upload.single('image'), superAdminController.createMR );
 router.get('/patients', superAdminController.patients );
 router.get('/website-images', superAdminController.websiteImages );
 router.post('/upload-image', upload.single('file'), superAdminController.uploadImage );
+router.post('/website/:id', superAdminController.contactInfo );
 
 
 module.exports = router;

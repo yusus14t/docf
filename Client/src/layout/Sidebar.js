@@ -18,7 +18,7 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
     return (
         <aside className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ${!isOpen ? 'ms-aside-left' : ''} `} style={{ paddingBottom: '6rem' }}>
             <div className="logo-sn ms-d-block-lg">
-                <div className="d-flex flex-row justify-content-around align-items-baseline">
+                <div className="d-flex flex-row justify-content-around align-items-baseline sidebar-image">
                     <div className="">
                         <a href="/" className="text-center "> <img className="profile-image" src={ userInfo.photo || userInfo?.organizationId?.photo ? getFullPath(userInfo.photo || userInfo?.organizationId?.photo) : NO_PHOTO} alt="logo" /></a>
                     </div>

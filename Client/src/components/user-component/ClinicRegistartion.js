@@ -63,7 +63,7 @@ const ClinicRegistartion = ({ isSelfCreated, source }) => {
 
   return (
     <div>
-      <div className="ms-panel-body content-height">
+      <div className="ms-panel-body ">
         <div className="ms-form-wizard style1-wizard wizard form-content" role="application">
           <div className="steps  ">
             <ul role="tablist">

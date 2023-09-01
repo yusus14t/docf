@@ -8,6 +8,7 @@ import events from "../../events";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarPlus, faEnvelope, faMapMarker,  faPhone, } from "@fortawesome/free-solid-svg-icons";
 import NO_PHOTO from '../../assets.app/images/no-photo.png'
+import { FULLDAY } from "../../constants/constant";
 
 function Detail() {
   const params = useParams();
@@ -19,16 +20,7 @@ function Detail() {
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [notices, setNotices] = useState([])
   const navigate = useNavigate();
-  const FullDay = {
-    "MON": 'Monday',
-    "TUE": 'Tuesday',
-    "WED": 'Wednesday',
-    "THU": 'Thursday',
-    "FRI": 'Friday',
-    "SAT": 'Saturday',
-    "SUN": 'Sunday',
-  }
-
+ 
   useEffect(() => {
     getWaitingList();
     getClinicDetail();
@@ -93,6 +85,31 @@ function Detail() {
       let { data } = await axiosInstance.get(`/common/notice/${params.id}`)
       setNotices(data?.notices)
     } catch (error) { console.error(error) }
+  }
+
+  const getTiming = ( short, full, source ) => {
+    let day = timing.find( time => time.day === short )
+
+    if( source === 'Clinic'  ){
+      return(
+        <tr>
+          <td>{ full }</td>
+          <td>{ day?.morning?.open || '-' }</td>
+          <td>{ day?.morning?.close || '-' }</td>
+          <td>{ day?.evening?.open || '-'}</td>
+          <td>{ day?.evening?.close || '-'}</td>
+        </tr>
+      )
+    } else {
+      return (
+        <tr>
+          <td>{ full }</td>
+          <td>{ day?.open || '-' }</td>
+          <td>{ day?.close || '-' }</td>
+        </tr>
+      )
+
+    }
   }
 
   return (
@@ -239,17 +256,24 @@ function Detail() {
                 <div className="pr-2 ">
                   <table className="table  table-bordered">
                     <thead className="thead-light">
+                      {clinicDetail?.organizationType === 'Clinic' ? <tr>
+                        <th>Session</th>
+                        <th>Morn Open</th>
+                        <th>Morn Close</th>
+                        <th>Even Open</th>
+                        <th>Even Close</th>
+                      </tr>
+                      :
                       <tr>
                         <th>Session</th>
                         <th>Open</th>
                         <th>Close</th>
                       </tr>
+                      }
                     </thead>
                     <tbody>
-                      {Object.values(FullDay).map((day) => (
-                        <tr>
-                          <td>{day}</td>
-                        </tr>
+                      {Object.entries(FULLDAY).map(([short, day]) => (
+                        getTiming( short, day, clinicDetail?.organizationType )   
                       ))}
                     </tbody>
                   </table>

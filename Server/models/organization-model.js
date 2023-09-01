@@ -29,6 +29,14 @@ const organizationSchema = new Schema({
             day: { type: String },
             open: { type: String },
             close: { type: String },
+            morning: {
+                open: { type: String },
+                close: { type: String },
+            },
+            evening: {
+                open: { type: String },
+                close: { type: String },
+            },
         }
     ],
 

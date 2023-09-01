@@ -62,6 +62,12 @@ const uploadImage = async (req, res) => {
         .catch(err => res.status(500).send(err.data))
 }
 
+const contactInfo = async (req, res) => {
+    superAdminManager.contactInfo(req.params, req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
 
 module.exports = {
     getProfile,
@@ -74,4 +80,5 @@ module.exports = {
     deleteMR,
     websiteImages,
     uploadImage,
+    contactInfo,
 }

@@ -78,7 +78,6 @@ const LogIn = () => {
 
       localStorage.setItem("user", JSON.stringify(data?.user));
       localStorage.setItem("token", JSON.stringify(data?.token));
-
       if (data?.user?.twoFactor?.isVerified && data?.user?.isActive) {
         if (LocationState?.redirectTo)
           window.location.replace(LocationState.redirectTo);

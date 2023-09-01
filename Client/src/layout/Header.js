@@ -44,6 +44,7 @@ const Header = () => {
     }, [])
 
     useEffect(() => {
+        if( ['CL', 'HL', 'DP'].includes(userInfo.userType))
         getNotices()
     }, [isCustomMessage])
 
@@ -204,9 +205,9 @@ const Header = () => {
                         <button className="btn btn-primary btn-md" onClick={() => submitNotice() }>Save</button>
                         </>
                         :
-                        <div>
-                            <div className="mb-3" style={{ float: 'right'}}>
-                                <button className=" btn btn-primary btn-sm p-2 shadow-none" onClick={() => setIsMessage(false)}>Create</button>
+                        <div className="notice-max-height">
+                            <div className="mb-3" style={{ display: 'flex', justifyContent:'end'}}>
+                                <button className=" btn btn-primary btn-sm p-2 shadow-none" onClick={() => setIsMessage(false)}>Add Notice</button>
                             </div>
                             { notices?.length > 0 ? notices.map( notice => <div className="mb-3 ps-3" style={{ borderLeft: '5px solid grey' }}>
                                 <div className="d-flex justify-content-between">

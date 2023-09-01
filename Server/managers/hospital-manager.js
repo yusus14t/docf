@@ -25,7 +25,8 @@ const editProfile = async ( body, user, file ) => {
             address: detail?.address, 
             name: detail?.name,
             phone: detail?.phone,
-            email: detail?.email
+            email: detail?.email,
+            timing: detail?.timing,
         }
 
         if ( file ) {

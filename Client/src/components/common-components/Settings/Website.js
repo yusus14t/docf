@@ -57,24 +57,6 @@ const Website = () => {
           <h6 className="text-center">{imageId}</h6>
         </div>)}
       </div>
-      <div className="row">
-        <div className="col-sm-4">
-          <img style={{ width: "100%" }} src={Im} alt="" />
-          <h6 className="text-center">Login Page Image</h6>
-        </div>
-        <div className="col-sm-4">
-          <img style={{ width: "100%" }} src={Im} alt="" />
-          <h6 className="text-center">About Poster 1</h6>
-        </div>
-        <div className="col-sm-4">
-          <img style={{ width: "100%" }} src={Im} alt="" />
-          <h6 className="text-center">About Picture 1</h6>
-        </div>
-        <div className="col-sm-4">
-          <img style={{ width: "100%" }} src={Im} alt="" />
-          <h6 className="text-center">About Poster 2</h6>
-        </div>
-      </div>
     </div>
   );
 }

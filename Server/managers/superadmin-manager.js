@@ -3,6 +3,7 @@ const UserModel  = require('../models/user-model');
 const OrganizationModel  = require('../models/organization-model'); 
 const { Success, Error, uploadToBucket } = require('../constants/utils');
 const websiteImageModel = require('../models/website-image-model');
+const settingModel = require('../models/setting-model');
 
 
 const getProfile = async ( body ) => {
@@ -193,7 +194,20 @@ const uploadImage = async ( body, file ) => {
     }
 }
 
+const contactInfo = async (params, body, user ) => {
+    try {
 
+        let contact = await settingModel.updateOne({ id: params.id },
+            {
+                [`data.${body.type}`]: body.value 
+            }
+        )
+        return Success({ contact });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
 
 module.exports = {
     getProfile,
@@ -206,4 +220,5 @@ module.exports = {
     deleteMR,
     websiteImages,
     uploadImage,
+    contactInfo,
 }

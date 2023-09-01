@@ -5,9 +5,12 @@ import { useEffect, useState } from 'react';
 import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 import useToasty from '../../../hooks/toasty';
 import { DAYS, SERVICES } from '../../../constants/constant'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
 
 const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
-    const { register, handleSubmit, control, formState: { errors }, setError, getValues, setValue, } = useForm({ onChange: true })
+    const { register, handleSubmit, control, formState: { errors }, setError, getValues, setValue, clearErrors } = useForm({ onChange: true })
     const [selectedFile, setSelectedFile] = useState(null);
     const [specializations, setSpecializations] = useState([])
     const [ timing, setTiming ] = useState([]);
@@ -50,22 +53,37 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
     const handleTime = () => {
         let time = getValues('timing')
 
-        if( !time?.day ) setError('timing.day', { message: 'Day is required'})
-        if( !time?.open ) setError('timing.open', { message: 'Open time is required'})
-        if( !time?.close ) setError('timing.close', { message: 'Close time is required'})
+        if( !time?.day ){ setError('timing.day', { message: 'Day is required'}); return }
+        if( !time?.open ){ setError('timing.open', { message: 'Open time is required'}); return }
+        if( !time?.close ){ setError('timing.close', { message: 'Close time is required'}); return }
 
         let day = timing.find( t => t.day === time.day )
-        if( !day && time?.day && time?.open && time?.close ){
+        if( !day ){
             setTiming([ ...timing, JSON.parse(JSON.stringify(time)) ])
             setDays( old => old.filter( d => d.value !== time.day ))
             setValue('timing', { day: '', open: '', close: ''})
-        }
-        if( !day && time?.day && time?.open && time?.close ){
-            setTiming([ ...timing, JSON.parse(JSON.stringify(time)) ])
-            setDays( old => old.filter( d => d.value !== time.day ))
-            setValue('timing', { day: '', open: '', close: ''})
+            clearErrors('timing')
         }
     }
+
+  const handleClinicTime = () => {
+    let time = getValues('timing')
+
+    if (!time?.day) { setError('timing.day', { message: 'Day is required' }); return }
+    if (!time?.morning?.open) { setError('timing.morning.open', { message: 'Open time is required' }); return }
+    if (!time?.morning?.close) { setError('timing.morning.close', { message: 'Close time is required' }); return }
+
+    if (!time?.evening?.open) { setError('timing.evening.open', { message: 'Open time is required' }); return }
+    if (!time?.evening?.close) { setError('timing.evening.close', { message: 'Close time is required' }); return }
+
+    let day = timing.find(t => t.day === time.day)
+    if (!day) {
+      setTiming([...timing, JSON.parse(JSON.stringify(time))])
+      setDays(old => old.filter(d => d.value !== time.day))
+      setValue('timing', { day: '', morning: { open: '', close: '' }, evening: { open: '', close: '' } })
+      clearErrors('timing')
+    }
+  }
 
     const handleDelete = (time) => {
         setTiming( old => old.filter( t => t.day !== time.day ))
@@ -192,10 +210,10 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                               type="time"
                               id="open"
                               className={`form-control ${
-                                errors?.timing?.open ? "border-danger" : ""
+                                errors?.timing?.morning?.open ? "border-danger" : ""
                               }`}
                               placeholder="morning 10am to 12pm"
-                              {...register("timing.open")}
+                              {...register("timing.morning.open")}
                             />
                           </div>
                           <div className="col-sm-3">
@@ -203,10 +221,10 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                             <input
                               type="time"
                               className={`form-control ${
-                                errors?.timing?.close ? "border-danger" : ""
+                                errors?.timing?.morning?.close ? "border-danger" : ""
                               }`}
                               placeholder="morning 10am to 12pm"
-                              {...register("timing.close")}
+                              {...register("timing.morning.close")}
                             />
                           </div>
                         </div>
@@ -218,10 +236,10 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                               type="time"
                               id="open"
                               className={`form-control ${
-                                errors?.timing?.open ? "border-danger" : ""
+                                errors?.timing?.evening?.open ? "border-danger" : ""
                               }`}
                               placeholder="morning 10am to 12pm"
-                              {...register("timing.open")}
+                              {...register("timing.evening.open")}
                             />
                           </div>
                           <div className="col-sm-3">
@@ -229,10 +247,10 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                             <input
                               type="time"
                               className={`form-control ${
-                                errors?.timing?.close ? "border-danger" : ""
+                                errors?.timing?.evening?.close ? "border-danger" : ""
                               }`}
                               placeholder="morning 10am to 12pm"
-                              {...register("timing.close")}
+                              {...register("timing.evening.close")}
                             />
                           </div>
                         </div>
@@ -241,9 +259,8 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                             type="button"
                             style={{ minWidth: "60px" }}
                             className="btn btn-1 btn-primary mt-4 p-1 px-1 shadow-none"
-                            onClick={() => handleTime()}
+                            onClick={() => handleClinicTime()}
                           >
-                            {" "}
                             Add
                           </button>
                         </div>
@@ -305,15 +322,48 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
               </div>
             )}
             <div className="px-2">
-              <div className="alert alert-info alert-outline p-2 mb-2 mt-4">
+              {source !== "Clinic" ? <div className="alert alert-info alert-outline p-2 mb-2 mt-4">
                 <div className="d-flex justify-content-around">
                   <div>Day</div>
                   <div>Open</div>
                   <div>Close</div>
                   <div>Action</div>
                 </div>
+              </div> 
+              :
+              <div className="alert alert-info alert-outline p-2 mb-2 mt-4">
+                <div className="d-flex justify-content-around">
+                  <div>Day</div>
+                    <div>Mor Open</div>
+                    <div>Mor close</div>
+                    <div>Eve Open</div>
+                    <div>Eve Close</div>
+                  <div>Action</div>
+                </div>
               </div>
-              {timing?.length > 0 &&
+              }
+              {timing?.length > 0 && source === "Clinic" && 
+                timing.map((time) => (
+                  <div className="alert alert-info p-2">
+                    <div className="d-flex justify-content-around">
+                      <div>{time.day}</div>
+                      <div>{time.morning.open}</div>
+                      <div>{time.morning.close}</div>
+                      <div>{time.evening.open}</div>
+                      <div>{time.evening.close}</div>
+                      <div>
+                        <FontAwesomeIcon
+                          className="cursor-pointer"
+                          icon={faTrash}
+                          onClick={() =>
+                            handleDelete(time)
+                          }
+                        ></FontAwesomeIcon>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {timing?.length > 0 && source !== "Clinic" && 
                 timing.map((time) => (
                   <div className="alert alert-info p-2">
                     <div className="d-flex justify-content-around">

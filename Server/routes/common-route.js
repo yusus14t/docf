@@ -35,5 +35,9 @@ router.delete('/notice/:id', commonController.deleteNotice)
 router.get('/patient-appointments', commonController.patientAppointments)
 router.post('/upload-file', upload.single('file'), commonController.uploadFile )
 
+// website
+router.get('/website/:id', commonController.websiteSetting)
+
+
 
 module.exports = router;
