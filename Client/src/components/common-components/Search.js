@@ -14,11 +14,12 @@ const Search = () => {
   const [ searchData, setSearchData ] = useState([]);
   const [ isOpenSearch, setIsOpenSearch ] = useState(false)
   const [ filter, setFilter ] = useState({ search: null, fee: null, city: null, specialization: null, type: null })
+  const [cities, setCities] = useState([])
   const inputRef = useRef(null)
 
   useEffect(() => {
     getAllSpecializations()
-   
+    getAllCities()
   },[])
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const Search = () => {
     setIsOpenSearch(false)
     setSearchData([])
     setIsFilterOpen(false)
+    
   }, [ window.location.pathname ])
 
   useEffect( () => {
@@ -41,10 +43,11 @@ const Search = () => {
       setSpecializations(data?.specializations)
     } catch(error){ console.error(error) }
   }
+  
   const getAllCities = async () => {
     try {
-      let { data } = await axiosInstance.get("get-specializations");
-      setSpecializations(data?.specializations);
+      let { data } = await axiosInstance.get("/common/cities");
+      setCities(data?.cities);
     } catch (error) {
       console.error(error);
     }
@@ -128,16 +131,13 @@ const Search = () => {
               <div>
                 <Select
                   isMulti={false}
-                  options={[
-                    { id: "ALIGARH", name: "Aligarh" },
-                    { id: "MORADABAD", name: "Moradabad" },
-                  ]}
-                  getOptionLabel={({ name }) => name}
-                  getOptionValue={({ id }) => id}
+                  options={cities}
+                  getOptionLabel={({ city }) => city}
+                  getOptionValue={({ city }) => city}
                   className={`form-control p-0 w-15`}
                   classNamePrefix="select"
                   placeholder="Select City"
-                  onChange={(e) => setFilter({ ...filter, city: e.name })}
+                  onChange={(e) => setFilter({ ...filter, city: e.city })}
                 />
               </div>
               <div>

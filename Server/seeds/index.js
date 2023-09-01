@@ -20,7 +20,7 @@ const contactInfo = async () => {
             phone: '9528820782',
             whatsapp: '9528820782',
             email: 'contact@doctortime.in',
-            twitter: '@Doctortime_',
+            twitter: 'Doctortime_',
         }
     }).save()
     console.log('Contact created', data)

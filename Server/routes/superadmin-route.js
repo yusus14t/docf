@@ -14,6 +14,9 @@ router.get('/patients', superAdminController.patients );
 router.get('/website-images', superAdminController.websiteImages );
 router.post('/upload-image', upload.single('file'), superAdminController.uploadImage );
 router.post('/website/:id', superAdminController.contactInfo );
+router.get('/website/:id', superAdminController.getWebsiteInfo );
+router.get('/appointment-users', superAdminController.appointmentUsers );
+
 
 
 module.exports = router;

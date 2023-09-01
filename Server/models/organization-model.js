@@ -22,7 +22,7 @@ const organizationSchema = new Schema({
             id: { type: String }
         }
     ],
-    fee: { type: String, default: '0' },
+    fee: { type: Number, default: '0' },
     room: {  type: String },
     timing: [
         { 

@@ -6,7 +6,7 @@ const { randomOtp } = require('../constants/utils')
 const ObjectId = require('mongoose').Types.ObjectId
 const { specialization } = require('../seeds/specialization-seed');
 const noticeModel = require('../models/notice-model');
-const { cities } =require('../seeds/citiesData.json');
+const { CITIES } =require('../seeds/citiesData');
 const settingModel = require('../models/setting-model');
 
 
@@ -231,7 +231,7 @@ const organizationDetails = async ( body, user, file ) => {
         if( file ) await uploadToBucket( file.filename );
         
         await OrganizationModel.updateOne({ _id: detail._id}, {
-            fee: detail?.fee,
+            fee: parseInt(detail?.fee),
             specialization: detail?.specialization,
             tab: { step: detail?.tab, isComplete: true },
             address: detail?.address, 
@@ -293,23 +293,7 @@ const oneSpecialization = async (body) => {
     console.log(error);
   }
 };
-const allCities = async (body)=>{
-    try {
-      let cities = cities.data;
-      return Success({ cities });
-    } catch (error) {
-      console.log(error);
-    }
-}
 
-const oneCity = async (body) => {
-  try {
-    let ciites = cities.data.find((cti) => cti.id === body.id);
-    return Success({ cities });
-  } catch (error) {
-    console.log(error);
-  }
-};
 const getAllClinics = async (body) => {
     try {
         console.log(body)
@@ -496,6 +480,7 @@ const patientAppointments = async ( body, user ) => {
 
 const search = async ( body, user ) => {
     try{
+        console.log(body)
         let aggregateQuery = [
             {
                 $match: {
@@ -503,7 +488,7 @@ const search = async ( body, user ) => {
                         $in: [ 'Hospital', 'Clinic' ]
                     },
                     $and: [
-                        body?.fee > 0 ? { fee: { $lte: body?.fee }} : {},
+                        body?.fee > 0 ? { fee: { $lte: parseInt(body?.fee) }} : {},
                         body?.city ? { address: { $regex: body?.city, $options: 'i' } } : {},
                         body?.specialization ? { 'specialization.name': body?.specialization } : {},
                         body?.type ? { organizationType: body?.type } : {},
@@ -576,11 +561,10 @@ const search = async ( body, user ) => {
             },
             {
                 $match: {
-                    ...(body?.fee > 0 ? { fee: { $lte: body?.fee }} : {})
+                    ...(body?.fee > 0 ? { fee: { $lte: parseInt(body?.fee) }} : {})
                 }
             }
         ])
-        console.log(doctors)     
        return Success({ searchData: [ ...searchData, ...doctors ] })
     } catch(error){ console.log(error) }
 }
@@ -626,6 +610,15 @@ const websiteSetting = async ( params ) => {
     } catch(error){ console.log(error) }
 }
 
+const allCities = async ( body )=> {
+    try {
+      return Success({ cities: CITIES });
+    } catch (error) {
+      console.log(error);
+    }
+}
+
+
 
 module.exports = {
   logIn,
@@ -653,6 +646,6 @@ module.exports = {
   getNotice,
   createNotice,
   deleteNotice,
-  oneCity,
   websiteSetting,
+  allCities,
 };
