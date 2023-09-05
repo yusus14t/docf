@@ -322,7 +322,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
               </div>
             )}
             <div className="px-2">
-              {source !== "Clinic" ? <div className="alert alert-info alert-outline p-2 mb-2 mt-4">
+              {source !== "Clinic" ? <div className="alert alert-danger border-0 p-2 mb-2 mt-4">
                 <div className="d-flex justify-content-around">
                   <div>Day</div>
                   <div>Open</div>
@@ -331,7 +331,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                 </div>
               </div> 
               :
-              <div className="alert alert-info alert-outline p-2 mb-2 mt-4">
+              <div className="alert alert-danger border-0 p-2 mb-2 mt-4">
                 <div className="d-flex justify-content-around">
                   <div>Day</div>
                     <div>Mor Open</div>
@@ -344,7 +344,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
               }
               {timing?.length > 0 && source === "Clinic" && 
                 timing.map((time) => (
-                  <div className="alert alert-info p-2">
+                  <div className="alert alert-secondary border-0 p-2">
                     <div className="d-flex justify-content-around">
                       <div>{time.day}</div>
                       <div>{time.morning.open}</div>
@@ -365,18 +365,19 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                 ))}
                 {timing?.length > 0 && source !== "Clinic" && 
                 timing.map((time) => (
-                  <div className="alert alert-info p-2">
+                  <div className="alert alert-secondary border-0 p-2">
                     <div className="d-flex justify-content-around">
                       <div>{time.day}</div>
                       <div>{time.open}</div>
                       <div>{time.close}</div>
                       <div>
-                        <button
-                          className="ms-btn-icon btn-primary"
-                          onClick={() => handleDelete(time)}
-                        >
-                          D
-                        </button>
+                        <FontAwesomeIcon
+                          className="cursor-pointer"
+                          icon={faTrash}
+                          onClick={() =>
+                            handleDelete(time)
+                          }
+                        ></FontAwesomeIcon>
                       </div>
                     </div>
                   </div>

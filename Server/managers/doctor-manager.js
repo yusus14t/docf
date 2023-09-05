@@ -591,10 +591,13 @@ const setAppointmentStatus = async (body) => {
   }
 };
 
-const createDepartment = async (body, userInfo) => {
+const createDepartment = async (body, userInfo, file ) => {
   try {
+    body = JSON.parse(body?.data);
     let organization = await UserModel.findOne({ phone: body.phone }).lean();
     if (!organization) {
+      await uploadToBucket( file.filename )
+
       organization = await OrganizationModel({
         registration: body?.registration,
         organizationType: "Department",
@@ -607,6 +610,7 @@ const createDepartment = async (body, userInfo) => {
         timing: body?.timing,
         room: body?.room,
         specialization: body?.specialization,
+        photo: file.filename
       }).save();
 
       let user = await UserModel({

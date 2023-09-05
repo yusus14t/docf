@@ -6,11 +6,13 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import {
   axiosInstance,
   getAuthHeader,
+  getFullPath,
+  getImages,
   NumberFormat,
 } from "../../constants/utils";
 import useToasty from "../../hooks/toasty";
-import { Link, useLocation } from "react-router-dom";
-import { userRoutes } from "../../constants/constant";
+import { useLocation } from "react-router-dom";
+import { WEBSITE_IMAGE, userRoutes } from "../../constants/constant";
 import { useForm } from "react-hook-form";
 
 const LogIn = () => {
@@ -34,6 +36,7 @@ const LogIn = () => {
     4: "ORGANIZATION_FORM",
   };
   const [component, setComponent] = useState(COMPONENTS["1"]);
+  const [ images, setImages ] = useState([])
   const [details, setDetails] = useState({
     name: "",
     phone: "",
@@ -41,7 +44,9 @@ const LogIn = () => {
     gender: "",
   });
 
-
+  useEffect(() => {
+    initailizer();
+  }, [])
 
   const userValidate = async (value) => {
     try {
@@ -143,10 +148,21 @@ const LogIn = () => {
     }
   };
 
+
+  const initailizer = async () => {
+    let imagesData = await getImages()
+    console.log('>>>>>>>>>>', imagesData.data.images)
+    setImages(imagesData.data.images)
+  }
+
+  const findImage = ( id ) => {
+    return getFullPath(images.find( image => image.id === id )?.image)
+  }
+
   return (
     <div
       style={{
-        backgroundImage: `url(${background})`,
+        backgroundImage: `url(${findImage(WEBSITE_IMAGE.LOGIN_BANNER)})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}

@@ -1,6 +1,7 @@
 import React from "react";
-import img from "../../../assets.app/img/blog-grid/350x300-0.jpg";
+import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 import { Link } from "react-router-dom";
+import { getFullPath } from "../../../constants/utils";
 const DepartmentCard = ({ departments }) => {
   return (
     <>
@@ -12,7 +13,7 @@ const DepartmentCard = ({ departments }) => {
                   <div className="d-flex align-items-center">
                     <div className="image">
                       <img
-                        src={img}
+                        src={department?.organizationId?.photo ? getFullPath( department?.organizationId?.photo) : NO_PHOTO }
                         className="rounded department-card-image"
                         alt=""
                       />

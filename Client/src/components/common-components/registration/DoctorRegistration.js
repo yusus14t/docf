@@ -22,7 +22,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
 
   useEffect(() => {
 
-    if( organization?._id ){
+    if( RID ){
       getDoctorsInOrganization()
       getDepartments()
       if( ['modal'].includes(source) ){
@@ -36,8 +36,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
 
   const getClinicSpecialization = async () => {
     try{
-      let { data } = await axiosInstance.get(`/hospital/clinic-specialization/${organization?._id}`)
-      console.log(data)
+      let { data } = await axiosInstance.get(`/hospital/clinic-specialization/${RID}`)
       setSpecialization(data?.specializations)
     } catch(error){ console.error(error) }
   }
@@ -65,7 +64,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
 
   const getDoctorsInOrganization = async () => {
     try {
-      let { data } = await axiosInstance.get('/doctor/doctorsInOrganization', { params: { organizationId: organization._id }, ...getAuthHeader()})
+      let { data } = await axiosInstance.get('/doctor/doctorsInOrganization', { params: { organizationId: RID }, ...getAuthHeader()})
       setDoctors(data?.doctors)
     } catch(error){ 
       console.error(error)
@@ -77,7 +76,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
     try {      
 
       if(!values?._id){
-        values['organizationId'] = source === 'Hospital' || userInfo.userType === 'HL'? values.department?._id : organization._id
+        values['organizationId'] = source === 'Hospital' || userInfo.userType === 'HL'? values.department?._id : RID
         values['tab'] = tab
       }
       
@@ -269,7 +268,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
                 </div>
               </div>}
             <div className="col-md-6 mb-3">
-              <label >Specialization of Clinic</label>
+              <label >Select Specialization</label>
               <div className="">
                 <Controller
                   control={control}

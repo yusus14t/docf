@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { axiosInstance, getAuthHeader, getFullPath, getImages } from '../../constants/utils';
 import NO_PHOTO from '../../assets.app/images/no-photo.png';
-import Banner from "../../assets.app/images/GYNA_POSTER.jpg";
 import { WEBSITE_IMAGE } from '../../constants/constant';
 
 

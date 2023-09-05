@@ -13,7 +13,7 @@ const { randomOtp } = require("../constants/utils");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { specialization } = require("../seeds/specialization-seed");
 const noticeModel = require("../models/notice-model");
-const { cities } = require("../seeds/citiesData.json");
+const { CITIES } = require("../seeds/citiesData");
 const settingModel = require("../models/setting-model");
 
 const sessionInfo = async (request, user) => {
@@ -370,21 +370,14 @@ const oneSpecialization = async (body) => {
     console.log(error);
   }
 };
-const allCities = async (body) => {
-  try {
-    let cities = cities.data;
-    return Success({ cities });
-  } catch (error) {
-    console.log(error);
-  }
-};
+const allCities = async (body) => Success({ cities: CITIES });
 
 const getAllClinics = async (body) => {
   try {
-    console.log(body);
+    
     let users = ["Clinic"];
     if (!body?.isClinic) users.push("Department");
-    console.log(users);
+    
     let clinics = await OrganizationModel.find({
       organizationType: { $in: users },
       ...(body?.filter?.specialization

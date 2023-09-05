@@ -18,7 +18,7 @@ import twitter from "../../../assets.app/img/icons/icons8-twitter-100.png";
 
 const Settings = () => {
   const  userInfo = JSON.parse(localStorage.getItem('user'))
-  const [tab, setTab] = useState(['HL', 'CL'].includes(userInfo.userType) ? 'SPECIALIZATION' : 'PROFILE')
+  const [tab, setTab] = useState(['HL', 'CL'].includes(userInfo.userType) ? 'SPECIALIZATION' : (['SA', 'AD'].includes(userInfo.userType) ? 'WEBSITE'  : 'PROFILE' ))
   const [isOpen, setIsOpen] = useState(false)
   const [isServiceOpen, setIsServiceOpen] = useState(false)
   const [isTimming,setTimming] = useState(false)

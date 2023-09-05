@@ -1,30 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  
-  faLocationDot,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
-import Banner from "../../assets.app/images/GYNA_POSTER.jpg";
-import Gynaecology from "../../assets.app/images/Gynaecology.jpg";
+import { faLocationDot, faPhone, } from "@fortawesome/free-solid-svg-icons";
 import ivf from "../../assets.app/images/ivf.jpg";
 import TEST from "../../assets.app/images/TEST-TUBE-BABY.jpg";
 import surrogacy from "../../assets.app/images/surrogacy.jpg";
+import Gynaecology from "../../assets.app/images/Gynaecology.jpg";
+import NO_PHOTO from "../../assets.app/images/no-photo.png";
 import { NUMBER_TO_DAY } from "../../constants/constant";
-
-
-
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import clinicPhoto2 from "../../assets.app/img/backgrounds/hos.jpg";
 
-import slide1 from "../../assets.web/img/home-1/1920x1280-1.jpg";
-import slide2 from "../../assets.web/img/home-1/1920x1280-2.jpg";
-import slide3 from "../../assets.web/img/home-1/1920x1280-3.jpg";
-
-import { axiosInstance, getImages } from "../../constants/utils";
+import { axiosInstance, convertTo12HourFormat, getAuthHeader, getImages } from "../../constants/utils";
 import { getFullPath } from "../../constants/utils";
 import Modal from "../common-components/Modal";
 import { WEBSITE_IMAGE } from "../../constants/constant";
@@ -39,11 +27,13 @@ const Gynae = () => {
   const [ images, setImages ] = useState([])
 
   const [clinics, setClinics] = useState([]);
+  const [hospitals, setHospitals] = useState([]);
 
 
   useEffect(() => {
     initailizer()
     getAllClinics();
+    getHospitals()
   }, []);
 
   const initailizer = async () => {
@@ -55,42 +45,49 @@ const Gynae = () => {
     return getFullPath(images.find( image => image.id === id )?.image)
   }
 
+  const getHospitals = async () => {
+    try {
+      let { data } = await axiosInstance.get('/hospitals', { params: { filter: { specialization: 'Gynecologist' },  }, ...getAuthHeader() })
+      setHospitals(data?.organization)
+      console.log(data.organization)
+    } catch(error){ console.error(error) }
+  }
+
+
   const getAllClinics = async () => {
     try {
-      let { data } = await axiosInstance.get("/all-clinics");
+      let { data } = await axiosInstance.get("/all-clinics", { params: { isClinic: true, filter: {specialization: 'Gynecologist'} }, ...getAuthHeader() });
       setClinics(data?.clinics);
     } catch (error) {
       console.error(error);
     }
   };
-const getTodayTiming = (timing) => {
-  let time = timing?.find((t) => t.day === NUMBER_TO_DAY[2]);
-  console.log(time);
-  if (time) {
-    return (
-      <>
-        <div>
-          <p className="pb-0  cli-time">Morning</p>
+
+  const getTodayTiming = ( timing ) => {
+
+    let time = timing?.find( t => t.day === NUMBER_TO_DAY[2] )
+
+    if( time ){
+      return (
+        <>
           <div>
-            <span className="cli-time">Open: {time?.morning?.open} </span>
-            <br />
-            <span className="cli-time">Close: {time?.morning?.close} </span>
-          </div>
-        </div>
-        {/* <div>
-            <p className="pb-0 cli-time">Evening</p>
             <div>
-              <span className="cli-time">Open: {time?.evening?.open} </span>
+              <span>Open: { convertTo12HourFormat(time?.open) } </span>
               <br />
-              <span className="cli-time">Close: {time?.evening?.close} </span>
+              <span>Close: { convertTo12HourFormat(time?.close) } </span>
             </div>
-          </div> */}
-      </>
-    );
-  } else {
-    return <>Today Not Available</>;
+          </div>
+          <div>
+        </div>
+        </>
+      );
+    } else {
+      return(<>
+        Today Not Available
+      </>)
+    }
   }
-};
+
   return (
     <>
       <div className="box"></div>
@@ -105,19 +102,21 @@ const getTodayTiming = (timing) => {
             onChange={true}
             interval={50}
           >
-            <div className="slide1">
-              <img
-                src={findImage(WEBSITE_IMAGE.GYNAE_SLIDER)}
-                className="gynae-slide"
-                alt="slide-1"
-              />
-            </div>
-            <div className="slide1">
-              <img src={slide2} className="gynae-slide" alt="slide-2" />
-            </div>
-            <div className="slide1">
-              <img src={slide3} className="gynae-slide" alt="slide-3" />
-            </div>
+            {
+              [
+                WEBSITE_IMAGE.GYNAE_SLIDER_1,
+                WEBSITE_IMAGE.GYNAE_SLIDER_2,
+                WEBSITE_IMAGE.GYNAE_SLIDER_3,
+                WEBSITE_IMAGE.GYNAE_SLIDER_4
+              ].map(slide => <div className="slide1">
+                <img
+                  src={findImage(slide)}
+                  className="gynae-slide"
+                  alt={slide}
+                />
+              </div>)
+            }
+        
           </Carousel>
         </div>
         <div className="p-2">
@@ -125,7 +124,7 @@ const getTodayTiming = (timing) => {
             className="hero-banner"
             style={{
               backgroundColor: "blue",
-              backgroundImage: `url(${findImage(WEBSITE_IMAGE.GYNAE_SLIDER)})`,
+              backgroundImage: `url(${findImage(WEBSITE_IMAGE.GYNAE_BANNER)})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }}
@@ -138,13 +137,13 @@ const getTodayTiming = (timing) => {
               <span className="under">Health Care Services</span>
             </h3>
           </div>
-          <div className="gynae-services-cards-container ">
+          <div className="gynae-services-cards-container justify-content-center">
             <div className="gynae-services-card text-center gynae-pink-layer">
               <span className="gynae-circle mt-2">
                 <img
                   style={{ width: "83px", height: "83px", borderRadius: "50%" }}
-                  src={findImage(WEBSITE_IMAGE.GYNAE_BANNER)}
-                  alt=""
+                  src={Gynaecology}
+                  alt="Gynaecology"
                 />
               </span>
               <h3>Gynaecology Process</h3>
@@ -161,10 +160,6 @@ const getTodayTiming = (timing) => {
             </div>
             <div className="gynae-services-card text-center gynae-pink-layer">
               <span className="gynae-circle mt-2">
-                {/* <FontAwesomeIcon
-                  className="gynae-services-icon"
-                  icon={faStethoscope}
-                /> */}
                 <img
                   style={{ width: "85px", height: "85px", borderRadius: "50%" }}
                   src={surrogacy}
@@ -259,7 +254,7 @@ const getTodayTiming = (timing) => {
                 <span className="under">Hospitals</span>
               </h3>
             </div>
-            {[1, 2, 3].map((Hospital) => {
+            { hospitals?.length >  0 && hospitals.map((Hospital) => {
               return (
                 <div
                   className="ml-2 col-lg-4 mb-4 col-md-4 mcard mt-2 "
@@ -273,20 +268,19 @@ const getTodayTiming = (timing) => {
                       className=" hospital-title text-dark"
                       style={{ backgroundColor: "#ffc1d44d" }}
                     >
-                      Al-Samad Hospital
+                      {Hospital.name}
                     </span>
                     <div className="hospitalCard-background-img">
-                      {/* <div className="hospital-card-inner-header"></div> */}
                       <img
                         className="hospitalCard-background-img"
-                        src={slide2}
+                        src={Hospital?.photo ? getFullPath(Hospital?.photo) : NO_PHOTO }
                         alt=""
                       />
                     </div>
                     <div className="clinic-details d-flex flex-row justify-content-between">
                       <div className="mt-3">
                         <h6 className="hospital-specialization text-disabled">
-                          Multi Specialist
+                          { Hospital?.specialization > 0 ? 'Multi Specialist' : Hospital?.specialization[0].name }
                         </h6>
                         <div className="contact-info mt-3">
                           <div>
@@ -295,8 +289,7 @@ const getTodayTiming = (timing) => {
                                 className="clinic-icon address-icon"
                                 icon={faLocationDot}
                               />
-                              Nala road nagla jamalpur, Aligarh Uttar Pradesh
-                              Nala road nagla jamalpur, Aligarh Uttar Pradesh
+                             { Hospital.address }
                             </p>
                           </div>
                         </div>
@@ -304,20 +297,12 @@ const getTodayTiming = (timing) => {
                       <div className="mt-3 hospital-card-timing">
                         <h6 className="hospital-timming-card">Timming</h6>
                         <div className="d-flex flex-column justify-contant-between">
-                          <div className="">
-                            <p className="clinic-timming mb-0">
-                              Morning : 08 AM to 11 PM
-                            </p>
-                            <p className="clinic-timming mb-0">
-                              {" "}
-                              Evening : 05 PM to 11 PM
-                            </p>
-                          </div>
+                          { getTodayTiming(Hospital?.timing) }
                           <div className="">
                             <button className="hospital-btn  btn btn1 btn-primary">
                               <Link
                                 className="text-light"
-                                to={"/hospital-details"}
+                                to={`/hospital/${ Hospital._id }`}
                               >
                                 View More
                               </Link>
@@ -355,7 +340,7 @@ const getTodayTiming = (timing) => {
                           src={
                             clinic?.photo
                               ? getFullPath(clinic?.photo)
-                              : clinicPhoto2
+                              : NO_PHOTO
                           }
                           alt=""
                         />
@@ -366,7 +351,7 @@ const getTodayTiming = (timing) => {
                           style={{ marginLeft: "10px", fontSize: "10px" }}
                           className="ml-2 p-2 clinic-title"
                         >
-                          &#8377;200
+                          &#8377;{clinic?.name}
                         </span>
                       </div>
                       <div className="clinic-details d-flex flex-row justify-content-between">
@@ -398,25 +383,6 @@ const getTodayTiming = (timing) => {
                             </div>
                           </div>
                         </div>
-                        {/* <div className="">
-                          <h6 className="text-disabled">Timming</h6>
-                          <div className="d-flex flex-column justify-contant-between">
-                            <div className="">
-                              <p className="clinic-timming mb-0">
-                                Morning : 08 AM to 11 PM
-                              </p>
-                              <p className="clinic-timming mb-0">
-                                Evening : 05 PM to 11 PM
-                              </p>
-                            </div>
-                            <Link
-                              className="text-light clinic-btn  btn btn1 btn-primary shadow-none"
-                              to={`/clinic-detail/${clinic?._id}`}
-                            >
-                              View More
-                            </Link>
-                          </div>
-                        </div> */}
                         <div className="">
                           <h6 className="text-disabled">Timming</h6>
                           <div className="d-flex flex-column justify-contant-around">

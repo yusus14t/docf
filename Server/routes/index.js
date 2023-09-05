@@ -2,7 +2,7 @@ const express = require('express');
 const router = express();
 const commonController = require(`../controllers/common-controller`);
 const doctorContoller = require(`../controllers/doctor-controller`);
-
+const superAdminController = require('../controllers/superadmin-controller')
 const { EventHandler } = require('../managers/doctor-manager');
 const { jwt_verify } = require('../middlewares/common-middleware');
 
@@ -35,7 +35,7 @@ router.get('/waiting-list/:id', commonController.waitingList);
 router.get("/all-doctors", doctorContoller.getAllDoctors);
 router.get("/get-specializations", commonController.allSpecializations);
 router.get("/specialization/:id", commonController.oneSpecialization);
-
+router.get('/website-images', superAdminController.websiteImages );
 router.get("/search", commonController.search);
 
 //hospitals

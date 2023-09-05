@@ -59,7 +59,7 @@ updateUser()
 
 export const getImages = async () => {
     try{
-      return await axiosInstance.get('/super-admin/website-images', getAuthHeader())
+      return await axiosInstance.get('/website-images', getAuthHeader())
     } catch(error){ console.error(error) }
 }
 

@@ -71,7 +71,7 @@ const setAppointmentStatus = async ( req, res ) => {
 }
 
 const createDepartment = async ( req, res ) => {
-    DoctorManager.createDepartment( req.body, req.user )
+    DoctorManager.createDepartment( req.body, req.user, req.file )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }

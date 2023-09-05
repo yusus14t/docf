@@ -3,8 +3,9 @@ import "../../../assets.app/css/specialzation.css";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignJustify, faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { getAuthHeader, getFullPath,axiosInstance,  } from "../../../constants/utils";
+import { getAuthHeader, getFullPath,axiosInstance, convertTo12HourFormat,  } from "../../../constants/utils";
 import clinicPhoto2 from "../../../assets.web/img/home-1/1920x1280-1.jpg";
+import { NUMBER_TO_DAY } from "../../../constants/constant";
 
 
 const SpecializationDetails = () => {
@@ -26,14 +27,12 @@ const SpecializationDetails = () => {
     try{
       let { data } = await axiosInstance.get(`/specialization/${params.id}`);
       setSpecialization(data?.specializations);
-      console.log(data);
     } catch(error){ console.error(error) }
   };
    
   const getAllClinics = async () => {
     try {
-      let { data } = await axiosInstance.get("/all-clinics", { params: { filter: {specialization: specialization?.name }}, ...getAuthHeader()});
-      console.log('data', data)
+      let { data } = await axiosInstance.get("/all-clinics", { params: { filter: {specialization: specialization?.name }, isClinic: true }, ...getAuthHeader()});
       setClinics(data?.clinics);
     } catch (error) {
       console.error(error);
@@ -43,16 +42,39 @@ const SpecializationDetails = () => {
   const getAllHospitals = async () => {
     try {
       let { data } = await axiosInstance.get("/hospitals", { params: { filter: {specialization: specialization?.name }}, ...getAuthHeader()});
-      console.log('data', data)
       setHospitals( data?.organization );
     } catch (error) {
       console.error(error);
     }
   };
 
+  const getTodayTiming = ( timing ) => {
+
+    let time = timing?.find( t => t.day === NUMBER_TO_DAY[2] )
+
+    if( time ){
+      return (
+        <>
+          <div>
+            <div>
+              <span>Open: { convertTo12HourFormat(time?.open) } </span>
+              <br />
+              <span>Close: { convertTo12HourFormat(time?.close) } </span>
+            </div>
+          </div>
+          <div>
+        </div>
+        </>
+      );
+    } else {
+      return(<>
+        Today Not Available
+      </>)
+    }
+  }
+
   return (
     <>
-      {console.log(specialization)}
       <div style={{ height: "65px" }}></div>
       <div className="">
         <div className=" banner text-center">
@@ -117,7 +139,9 @@ const SpecializationDetails = () => {
                             </div>
                           </div>
                           <div className="mt-3 hospital-card-timing">
+                            Timing
                             <div className="d-flex flex-column justify-contant-between">
+                              {getTodayTiming(hospital.timing)}
                               <div className="">
                                 <Link
                                   className="text-light hospital-btn  btn btn1 btn-primary shadow-none"

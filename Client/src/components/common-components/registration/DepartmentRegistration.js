@@ -7,6 +7,7 @@ import Select from 'react-select';
 import NO_PHOTO from '../../../assets.app/images/no-photo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
+import ImgUpload from "../Imgupload";
 
 
 const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}, refresh = () => {}}) => {
@@ -17,6 +18,8 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {},
     const [ days, setDays ] = useState(DAYS)
     const RID = JSON.parse(localStorage.getItem('RID')) || id
     const toasty = useToasty();
+    const [selectedImage, setSelectedImage] = useState(null)
+    const [editImage, setEditImage] = useState(null)
 
     useEffect(() => {
         getDepartments()
@@ -61,11 +64,17 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {},
         setDays( old => ([ DAYS.find( d => d.value === time.day ), ...old].sort((a, b) => a.value - b.value )))
     }   
 
-    const submit = async (fromData) => {
+    const submit = async (formValues) => {
         try{    
-            fromData['timing'] = timing
-            fromData['organizationId'] = RID
-            let { data } = await axiosInstance.post('/doctor/create-department', fromData , getAuthHeader())
+            formValues['timing'] = timing
+            formValues['organizationId'] = RID
+
+            let formData = new FormData()
+            formData.append('data', JSON.stringify(formValues))
+            formData.append('image', selectedImage)
+
+
+            let { data } = await axiosInstance.post('/doctor/create-department', formData , getAuthHeader())
             reset({ name: '', room: '', email: '', phone: '', specialization: '' })
             setTiming([])
             setDays(DAYS)
@@ -88,7 +97,12 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {},
         } catch(error) { console.error(error) }
     }
 
-    
+    const handleEdit = (department) => {
+        setEditImage(getFullPath(department?.photo))
+        reset(department)
+    }
+      
+      
     return (
         <>
             {source !== 'modal' && <div className="row">
@@ -105,7 +119,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {},
                                             <h6>{department?.organizationId?.name}</h6>
                                         </div>
                                         <div>
-                                            <FontAwesomeIcon className='ms-text-ligth mx-3 cursor-pointer' icon={faPencil} onClick={() => { }} />
+                                            <FontAwesomeIcon className='ms-text-ligth mx-3 cursor-pointer' icon={faPencil} onClick={() => handleEdit(department.organizationId)} />
                                             <FontAwesomeIcon className='ms-text-ligth cursor-pointer' icon={faTrash} onClick={() => deleteDepartment(department.organizationId._id)} />
                                         </div>
                                     </div>
@@ -121,7 +135,8 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {},
             }
 
             <form onSubmit={handleSubmit(submit)}>
-                <div className='row'>
+                <ImgUpload source={"doctor"} file={(image) => setSelectedImage(image)} editImage={editImage} />
+                <div className='row mt-3'>
                     <div className="col-md-6 mb-3">
                         <label >Name of Department</label>
                         <div className="input-group">
