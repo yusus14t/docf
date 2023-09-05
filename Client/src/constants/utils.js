@@ -62,3 +62,12 @@ export const getImages = async () => {
       return await axiosInstance.get('/super-admin/website-images', getAuthHeader())
     } catch(error){ console.error(error) }
 }
+
+export const  convertTo12HourFormat = ( time24 ) => {
+    if( !time24 ) return '- - : - -'
+    const [hours, minutes] = time24.split(':');
+    const period = parseInt(hours) >= 12 ? 'PM' : 'AM';
+    const hours12 = parseInt(hours) % 12 || 12;
+
+    return `${hours12}:${minutes} ${period}`;
+  }

@@ -21,7 +21,7 @@ const editProfile = async ( body, user, file ) => {
         if( hospital ) return({ message: 'Phone already used.'})
         
         let obj = {
-            fee: detail?.fee,
+            fee: parseInt(detail?.fee),
             address: detail?.address, 
             name: detail?.name,
             phone: detail?.phone,
@@ -105,6 +105,14 @@ const deleteSpecialization = async ({ id }, user) => {
     } catch(error){ console.error(error) }
 }
 
+const getHospitalNameByDepartment = async ({ id }, user) => {
+  try{
+      let hospital = await UserModel.findOne({ _id: user._id }, { hospitalId: 1 }).populate('hospitalId', 'name')
+      console.log(hospital, user.hospitalId)
+      return Success({ hospitalName: hospital?.hospitalId?.name })
+  } catch(error){ console.error(error) }
+}
+
 
 module.exports = {
     editProfile,
@@ -112,5 +120,6 @@ module.exports = {
     addServices,
     getServices,
     deleteService,
-    deleteSpecialization
+    deleteSpecialization,
+    getHospitalNameByDepartment,
 }

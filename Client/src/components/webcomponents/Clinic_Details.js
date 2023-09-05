@@ -1,6 +1,6 @@
 import background from "../../assets.app/img/user-profile-bg-1920x400.jpg";
 import drprofile from "../../assets.app/img/doctors-list/182x280-0.jpg";
-import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from "../../constants/utils";
+import { axiosInstance, convertTo12HourFormat, formatPhone, getAuthHeader, getFullPath } from "../../constants/utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
@@ -94,18 +94,18 @@ function Detail() {
       return(
         <tr>
           <td>{ full }</td>
-          <td>{ day?.morning?.open || '-' }</td>
-          <td>{ day?.morning?.close || '-' }</td>
-          <td>{ day?.evening?.open || '-'}</td>
-          <td>{ day?.evening?.close || '-'}</td>
+          <td>{ convertTo12HourFormat(day?.morning?.open) }</td>
+          <td>{ convertTo12HourFormat(day?.morning?.close) }</td>
+          <td>{ convertTo12HourFormat(day?.evening?.open) }</td>
+          <td>{ convertTo12HourFormat(day?.evening?.close) }</td>
         </tr>
       )
     } else {
       return (
         <tr>
           <td>{ full }</td>
-          <td>{ day?.open || '-' }</td>
-          <td>{ day?.close || '-' }</td>
+          <td>{ convertTo12HourFormat(day?.open) }</td>
+          <td>{ convertTo12HourFormat(day?.close) }</td>
         </tr>
       )
 
@@ -229,28 +229,37 @@ function Detail() {
             </div>
 
             {/* INFO CARD */}
-            <div className="col-md-6 px-3">
-              <div className="clinic-info-details pb-3">
-                <h4 className="mb-3 pt-2  text-center">Info</h4>
-                <h6 className="text-left text-light mx-2">
-                  <span className="text-disabled">Consultation Fee</span> :
-                  Rs&nbsp;
-                  {clinicDetail?.fee}
-                </h6>
-                <div className="description-clinic-detail mb-3 pe-2">
-                  <span className="text-disabled">Services</span> : &nbsp;
-                  {clinicDetail?.services?.length > 0
-                    ? clinicDetail?.services?.map((serv) => `${serv?.name}, `)
-                    : "-"}
+            <div className="col-md-6 ">
+              <div className="clinic-info-details pb-3 mb-3">
+                <h4 className="mb-3 pt-2  text-center text-light">Info</h4>
+
+                <div className="bg-white m-2 rounded p-2">
+                    <h6>Consultation Fee <span className="ms-4">₹{clinicDetail?.fee}</span></h6>
                 </div>
-                <div className="bg-white m-2 rounded p-2">Important Notice</div>
-                {notices?.length > 0 ? notices.map(notice => <div className="bg-white m-2 rounded p-2">
-                  <h6>{notice.title}</h6>
-                  <p>{notice.description}</p>
-                </div>)
-                  :
-                  <div className="bg-white m-2 rounded p-2">No Data</div>
-                }
+                 
+                <div className="bg-white m-2 rounded p-2">
+                  <h6 className="mx-1">Services</h6>
+                  <div className="d-flex flex-wrap">
+                    {clinicDetail?.services?.length > 0
+                      ? clinicDetail?.services?.map((serv) => 
+                          <div className="service-tube m-1">
+                            {serv?.name}
+                          </div>
+                        )
+                      : "-"
+                    }
+                  </div>
+                </div>
+
+                <div className="bg-white m-2 rounded p-2">
+                  <h6>Important Notice</h6>
+                  {notices?.length > 0 && notices.map(notice =>
+                    <div style={{ borderLeft: '5px solid grey', paddingLeft: "1rem" }}>
+                      <h6>{notice.title}</h6>
+                      <p>{notice.description}</p>
+                    </div>)
+                  }
+                </div>
               </div>
               <div className="text-center">
                 <div className="pr-2 ">

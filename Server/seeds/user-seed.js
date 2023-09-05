@@ -2,6 +2,7 @@ const UserModel = require("../models/user-model");
 const AppointmentModel = require("../models/appointment-model");
 const DealModel = require("../models/deal-model");
 const OrganizationModel = require("../models/organization-model");
+const Notifications = require("../models/notification-model");
 
 let user = {
   data: [
@@ -71,7 +72,8 @@ let user = {
     await AppointmentModel.deleteMany({});
     await OrganizationModel.deleteMany({});
     await DealModel.deleteMany({});
-
+    await Notifications.deleteMany({});
+    
     console.log("Seeded Successfull.");
   },
 };

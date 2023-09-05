@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import { ClinicListCard } from '../common-components/ClinicCard';
-import { axiosInstance } from "../../constants/utils";
+import { axiosInstance, convertTo12HourFormat } from "../../constants/utils";
 
 import { Link } from "react-router-dom";
 import clinicPhoto2 from "../../assets.web/img/clinic-grid/348x350-1.jpg";
@@ -35,19 +35,19 @@ function Clinics({ source }) {
           <div>
             <p className="pb-0  cli-time">Morning</p>
             <div>
-              <span className="cli-time">Open: {time?.morning?.open} </span>
+              <span>Open: { convertTo12HourFormat(time?.morning?.open) } </span>
               <br />
-              <span className="cli-time">Close: {time?.morning?.close} </span>
+              <span>Close: { convertTo12HourFormat(time?.morning?.close) } </span>
             </div>
           </div>
-          {/* <div>
-            <p className="pb-0 cli-time">Evening</p>
-            <div>
-              <span className="cli-time">Open: {time?.evening?.open} </span>
-              <br />
-              <span className="cli-time">Close: {time?.evening?.close} </span>
-            </div>
-          </div> */}
+          <div>
+          <p className="pb-0">Evening</p>
+          <div>
+            <span>Open: { convertTo12HourFormat(time?.evening?.open) } </span>
+            <br />
+            <span>Close: { convertTo12HourFormat(time?.evening?.close) } </span>
+          </div>
+        </div>
         </>
       );
     } else {
@@ -79,7 +79,7 @@ function Clinics({ source }) {
               <div className="row ">
                 {/* <ClinicListCard clinics={clinics} /> */}
                 {clinics.length > 0 &&
-                  [...clinics, ...clinics]
+                  clinics
                     .filter(
                       (clinic, index) =>
                         (source === "homepage" && index <= 5) ||

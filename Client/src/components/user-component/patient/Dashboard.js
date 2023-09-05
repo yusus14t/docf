@@ -138,6 +138,9 @@ const Dashbaord = () => {
                 <h6>Token</h6>
               </div>
               <div className="col mx-4 d-flex align-items-center">
+                <h6>Appointment Name</h6>
+              </div>
+              <div className="col mx-4 d-flex align-items-center">
                 <h6>Clinic Name</h6>
               </div>
               <div className="col d-flex align-items-center">
@@ -151,6 +154,9 @@ const Dashbaord = () => {
                     <div>
                       <h6>{appointment?.token}</h6>
                     </div>
+                  </div>
+                  <div className="col mx-4 d-flex align-items-center">
+                    <h6> {appointment?.userId?.name}</h6>
                   </div>
                   <div className="col mx-4 d-flex align-items-center">
                     <h6> {appointment?.departmentId?.name}</h6>

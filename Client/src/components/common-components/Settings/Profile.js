@@ -63,7 +63,6 @@ const Profile = ({ source, setIsOpen = () => {}, refresh = () => {} }) => {
 
     const handleTime = () => {
         let time = getValues('timing')
-        console.log('>>>>>>>>>>>>', time)
 
         if( !time?.day ){ setError('timing.day', { message: 'Day is required'}); return }
         if( !time?.open ){ setError('timing.open', { message: 'Open time is required'}); return }

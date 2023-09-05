@@ -54,6 +54,8 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
 
             } else if ( userInfo.userType === 'PT' ) formData['department'] = { organizationId: params?.id }
 
+            formData['isAnother'] = isAnotherAppointment
+            
             let { data } = await axiosInstance.post('/doctor/add-appointment', formData,);
             setAppointments(data?.appointment)
 
@@ -70,7 +72,6 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
     const addAnonymous = async () => {
         try{
             let { data } = await axiosInstance.post('/doctor/anonymous-appointment');
-            console.log(data, 'anonymous-appointment')
             refresh()
             setIsOpen(false)
         } catch(error){ console.error(error) }

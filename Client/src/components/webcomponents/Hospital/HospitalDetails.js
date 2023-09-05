@@ -3,7 +3,7 @@ import background from "../../../assets.app/img/user-profile-bg-1920x400.jpg";
 import DepartmentCard from "./DepartmentCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
-import { axiosInstance, formatPhone, getFullPath } from "../../../constants/utils";
+import { axiosInstance, convertTo12HourFormat, formatPhone, getFullPath, userInfo } from "../../../constants/utils";
 import { useParams } from "react-router-dom";
 import { FULLDAY } from "../../../constants/constant";
 
@@ -41,8 +41,8 @@ const HospitalDetails = () => {
     return (
       <tr>
         <td>{fullday}</td>
-        <td>{day?.open || '-'}</td>
-        <td>{day?.close || '-'}</td>
+        <td>{ convertTo12HourFormat(day?.open) }</td>
+        <td>{ convertTo12HourFormat(day?.close) }</td>
       </tr>
     )
   }
@@ -63,10 +63,26 @@ const HospitalDetails = () => {
             <div className="col-md-4">
             <div className="">
               <div className="clinic-info-details pb-3">
-                <h4 className="mb-3 pt-2  text-center">Info</h4>
-                  <div className="bg-white m-2 rounded p-2">Consultation Fee: Rs&nbsp;{ hospital.fee } </div>
-                <div className="bg-white m-2 rounded p-2">Important Notice</div>
+                <h4 className="mb-3 pt-2  text-center text-light">Info</h4>
                 <div className="bg-white m-2 rounded p-2">
+                  <h6>Consultation Fee <span className="ms-4">₹{ hospital?.fee}</span></h6>
+                </div>
+                { userInfo.userType !== 'DP' && <div className="bg-white m-2 rounded p-2">
+                  <h6 className="mx-1">Services</h6>
+                  <div className="d-flex flex-wrap">
+                    {hospital.services?.length > 0
+                      ? hospital.services?.map((serv) => 
+                          <div className="service-tube m-1">
+                            {serv?.name}
+                          </div>
+                        )
+                      : "-"
+                    }
+                  </div>
+                </div>}
+
+                <div className="bg-white m-2 rounded p-2">
+                  <h6>Important Notice</h6>
                   {notices?.length > 0 ? notices.map(notice => <div style={{ borderLeft: '5px solid grey', paddingLeft: "1rem" }}>
                     <h6>Title</h6>
                     <p>Provide contextual feedback messages for typical user actions with the handful of available and flexible alert message</p>

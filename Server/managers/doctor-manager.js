@@ -244,8 +244,14 @@ const addAppointment = async (body, user) => {
         userType: "PT",
         primary: true,
       }).save();
+
+    } else if( body?.isAnother ) {
+      patient = await UserModel({
+        ...body,
+        userType: "PT",
+        primary: false,
+      }).save();
     }
-    
     
     let appointment = await AppointmentModel.findOne({
       userId: patient._id,
@@ -260,6 +266,7 @@ const addAppointment = async (body, user) => {
         userId: patient._id,
         departmentId: body.department.organizationId,
         createdBy: user._id,
+        created: user._id
       }).save();
     } else {
       return Error({ message: "Already in your waiting list." });

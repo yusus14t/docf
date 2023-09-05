@@ -17,7 +17,7 @@ import twitter from "../../../assets.app/img/icons/icons8-twitter-100.png";
 
 
 const Settings = () => {
-  const userInfo = JSON.parse(localStorage.getItem('user'))
+  const  userInfo = JSON.parse(localStorage.getItem('user'))
   const [tab, setTab] = useState(['HL', 'CL'].includes(userInfo.userType) ? 'SPECIALIZATION' : 'PROFILE')
   const [isOpen, setIsOpen] = useState(false)
   const [isServiceOpen, setIsServiceOpen] = useState(false)
@@ -29,7 +29,7 @@ const Settings = () => {
   const [services, setServices] = useState([]);
   const [organizationServices, setOrganizationServices] = useState([]);
   const [isEdit, setIsEdit ] = useState({ open: false, type: null, value: null })
-
+  const [hospitalName, setHospitalName] = useState('')
   const [ contact, setContact ] = useState({})
 
   const QRCodeRef = useRef(null)
@@ -40,11 +40,20 @@ const Settings = () => {
     if (tab === 'SPECIALIZATION') getAllSpecialization()
     else if( tab === 'SERVICES' ) getServices()
     else if( tab === 'CONTACT' ) getContact()
+
+    if( userInfo.userType === 'DP' ) getHospitalName()
   }, [tab,])
 
   useEffect(() => {
     getAllCommonSpecialization()
   }, [isOpen])
+
+  const getHospitalName = async () => {
+    try{
+      let { data } = await axiosInstance.get('/hospital/hospital-name')
+      setHospitalName(data?.hospitalName)
+    }catch(error){ console.error(error) }
+  }
 
   const getServices = async () => {
     try{ 
@@ -305,8 +314,9 @@ const Settings = () => {
                             src={logo}
                             alt=""
                           />
-                          <h4 style={{ textAlign: "center" }}>{userInfo?.organizationId?.name}</h4>
+                          <h4 style={{ textAlign: "center" }}>{hospitalName ? hospitalName : userInfo?.organizationId?.name }</h4>
                         </div>
+                        {hospitalName && <p className="text-center">({ userInfo?.organizationId?.name})</p>}
                         <hr />
                         <div style={{ margin: "auto", width: "430px", height: "400px" }}>
                           <h5 style={{ textAlign: "center" }}>
