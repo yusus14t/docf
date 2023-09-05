@@ -110,7 +110,7 @@ function Clinics({ source }) {
                               
                             </span>
                             <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
-                              &#8377;200
+                              &#8377;{clinic?.fee}
                             </span>
                           </div>
                           <div className="clinic-details d-flex flex-row justify-content-between">

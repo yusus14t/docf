@@ -547,9 +547,7 @@ const getAllHospitals = async (body, user) => {
         ...(body?.filter
           ? { "specialization.name": body?.filter?.specialization }
           : {}),
-      },
-      { name: 1, specialization: 1, email: 1, address: 1, photo: 1, timing: 1 }
-    );
+      });
 
     return Success({ organization });
   } catch (error) {

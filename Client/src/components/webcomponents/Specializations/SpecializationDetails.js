@@ -118,6 +118,9 @@ const SpecializationDetails = () => {
                             }
                             alt=""
                           />
+                          <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
+                              &#8377;{hospital?.fee}
+                            </span>
                         </div>
                         <div className="clinic-details d-flex flex-row justify-content-between">
                           <div className="mt-3">
@@ -188,6 +191,9 @@ const SpecializationDetails = () => {
                             />
                             <span className=" p-2 clinic-title">
                               {clinic?.name}
+                            </span>
+                            <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
+                              &#8377;{clinic?.fee}
                             </span>
                           </div>
                           <div className="clinic-details d-flex flex-row justify-content-between">

@@ -75,6 +75,9 @@ const Ultrasound = () => {
                     </div>
                     <div className="dr-details">
                       <h2 className="text-center">{clinic?.name}</h2>
+                      <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
+                        &#8377; {clinic.fee}
+                      </span>
                       <p
                         style={{ background: "#00afb9" }}
                         className="mb-1 dr-spelialization"
