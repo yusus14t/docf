@@ -23,9 +23,7 @@
     text-align: justify;
     padding: 5px;
     margin-left: 10px;
-
-
-    
+    width:70%;    
 }
 
 .details-text{
@@ -36,4 +34,11 @@
     -webkit-line-clamp: 11;
     -webkit-box-orient: vertical;
 
+}
+@media (max-width: 480px){
+
+
+.deatil {
+    width: 100%;
+}
 }

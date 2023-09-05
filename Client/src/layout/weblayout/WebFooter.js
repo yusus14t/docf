@@ -49,7 +49,7 @@ function WebFooter() {
             </Link>
           </div>
           <div style={{ padding:"0" }} className="col-sm-3 ">
-            <img style={{ height: "101px", width:"220px" }} className='rounded' src={sli} alt="" />
+            <img  className='rounded footer-poster' src={sli} alt="" />
           </div>
         </div>
         <hr className="m-0" />

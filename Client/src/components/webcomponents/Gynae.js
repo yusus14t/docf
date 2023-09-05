@@ -11,6 +11,8 @@ import Gynaecology from "../../assets.app/images/Gynaecology.jpg";
 import ivf from "../../assets.app/images/ivf.jpg";
 import TEST from "../../assets.app/images/TEST-TUBE-BABY.jpg";
 import surrogacy from "../../assets.app/images/surrogacy.jpg";
+import { NUMBER_TO_DAY } from "../../constants/constant";
+
 
 
 
@@ -61,7 +63,34 @@ const Gynae = () => {
       console.error(error);
     }
   };
-
+const getTodayTiming = (timing) => {
+  let time = timing?.find((t) => t.day === NUMBER_TO_DAY[2]);
+  console.log(time);
+  if (time) {
+    return (
+      <>
+        <div>
+          <p className="pb-0  cli-time">Morning</p>
+          <div>
+            <span className="cli-time">Open: {time?.morning?.open} </span>
+            <br />
+            <span className="cli-time">Close: {time?.morning?.close} </span>
+          </div>
+        </div>
+        {/* <div>
+            <p className="pb-0 cli-time">Evening</p>
+            <div>
+              <span className="cli-time">Open: {time?.evening?.open} </span>
+              <br />
+              <span className="cli-time">Close: {time?.evening?.close} </span>
+            </div>
+          </div> */}
+      </>
+    );
+  } else {
+    return <>Today Not Available</>;
+  }
+};
   return (
     <>
       <div className="box"></div>
@@ -77,7 +106,11 @@ const Gynae = () => {
             interval={50}
           >
             <div className="slide1">
-              <img src={findImage(WEBSITE_IMAGE.GYNAE_SLIDER)} className="gynae-slide" alt="slide-1" />
+              <img
+                src={findImage(WEBSITE_IMAGE.GYNAE_SLIDER)}
+                className="gynae-slide"
+                alt="slide-1"
+              />
             </div>
             <div className="slide1">
               <img src={slide2} className="gynae-slide" alt="slide-2" />
@@ -96,9 +129,7 @@ const Gynae = () => {
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }}
-          >
-
-          </div>
+          ></div>
         </div>
         {/*------services-------  */}
         <div className="gynae-services ">
@@ -207,7 +238,9 @@ const Gynae = () => {
           <div
             className="hero-banner"
             style={{
-              backgroundImage: `url(${findImage(WEBSITE_IMAGE.GYNAE_BOTTOM_BANNER)})`,
+              backgroundImage: `url(${findImage(
+                WEBSITE_IMAGE.GYNAE_BOTTOM_BANNER
+              )})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
             }}
@@ -327,7 +360,13 @@ const Gynae = () => {
                           alt=""
                         />
                         <span className=" p-2 clinic-title">
-                          {clinic?.name} : <span className="open">close</span>
+                          {clinic?.name}
+                        </span>
+                        <span
+                          style={{ marginLeft: "10px", fontSize: "10px" }}
+                          className="ml-2 p-2 clinic-title"
+                        >
+                          &#8377;200
                         </span>
                       </div>
                       <div className="clinic-details d-flex flex-row justify-content-between">
@@ -359,7 +398,7 @@ const Gynae = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="">
+                        {/* <div className="">
                           <h6 className="text-disabled">Timming</h6>
                           <div className="d-flex flex-column justify-contant-between">
                             <div className="">
@@ -370,6 +409,18 @@ const Gynae = () => {
                                 Evening : 05 PM to 11 PM
                               </p>
                             </div>
+                            <Link
+                              className="text-light clinic-btn  btn btn1 btn-primary shadow-none"
+                              to={`/clinic-detail/${clinic?._id}`}
+                            >
+                              View More
+                            </Link>
+                          </div>
+                        </div> */}
+                        <div className="">
+                          <h6 className="text-disabled">Timming</h6>
+                          <div className="d-flex flex-column justify-contant-around">
+                            {getTodayTiming(clinic?.timing)}
                             <Link
                               className="text-light clinic-btn  btn btn1 btn-primary shadow-none"
                               to={`/clinic-detail/${clinic?._id}`}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../assets.app/css/specialzation.css";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faAlignJustify, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getAuthHeader, getFullPath,axiosInstance,  } from "../../../constants/utils";
 import clinicPhoto2 from "../../../assets.web/img/home-1/1920x1280-1.jpg";
 
@@ -26,6 +26,7 @@ const SpecializationDetails = () => {
     try{
       let { data } = await axiosInstance.get(`/specialization/${params.id}`);
       setSpecialization(data?.specializations);
+      console.log(data);
     } catch(error){ console.error(error) }
   };
    
@@ -51,82 +52,87 @@ const SpecializationDetails = () => {
 
   return (
     <>
-    
+      {console.log(specialization)}
       <div style={{ height: "65px" }}></div>
       <div className="">
         <div className=" banner text-center">
-          <h3 className="title pt-0">
-            {specialization?.name}
-          </h3>
+          <h3 className="title pt-0">{specialization?.name}</h3>
         </div>
       </div>
       {
         <div className="splz-deatial container mt-3">
-          <span className="mb-0">
-            <img className="specialization-image" src={specialization?.pic} alt="" />
-          </span>
-          <div className="deatil">
-            <p className="details-text">{specialization?.description}</p>
+          <div style={{display:"flex",flexWrap:"wrap", justifyContent:"space-between"}} >
+            <div className="mb-0">
+              <img
+                className="specialization-image"
+                src={specialization?.pic}
+                alt=""
+              />
+            </div>
+            <div className="deatil  m-0 ">
+              <p className="details-text">{specialization?.description}</p>
+            </div>
           </div>
 
           <div className="">
             <h2 className="text-center">Hospitals</h2>
             <div className="row">
-              { hospitals?.length > 0 && hospitals.map((hospital) => {
-                return (
-                  <div
-                    className="ml-2 col-lg-4 mb-4 col-md-4 mcard mt-2"
-                    //   key={key}
-                  >
-                    <div className="hospitalCard ">
-                      <span className=" hospital-title">
-                        {hospital.name}
-                      </span>
-                      <div className="hospitalCard-background-img">
-                        <img
-                          className="hospitalCard-background-img"
-                          src={hospital?.photo
-                            ? getFullPath(hospital.photo)
-                            : clinicPhoto2}
-                          alt=""
-                        />
-                      </div>
-                      <div className="clinic-details d-flex flex-row justify-content-between">
-                        <div className="mt-3">
-                          <h6 className="hospital-specialization text-disabled">
-                          {hospital.specialization.length > 1
+              {hospitals?.length > 0 &&
+                hospitals.map((hospital) => {
+                  return (
+                    <div
+                      className="ml-2 col-lg-4 mb-4 col-md-4 mcard mt-2"
+                      //   key={key}
+                    >
+                      <div className="hospitalCard ">
+                        <span className=" hospital-title">{hospital.name}</span>
+                        <div className="hospitalCard-background-img">
+                          <img
+                            className="hospitalCard-background-img"
+                            src={
+                              hospital?.photo
+                                ? getFullPath(hospital.photo)
+                                : clinicPhoto2
+                            }
+                            alt=""
+                          />
+                        </div>
+                        <div className="clinic-details d-flex flex-row justify-content-between">
+                          <div className="mt-3">
+                            <h6 className="hospital-specialization text-disabled">
+                              {hospital.specialization.length > 1
                                 ? "Multi speciality"
                                 : hospital.specialization[0]?.name || "-"}
-                          </h6>
-                          <div className="contact-info mt-3">
-                            <div>
-                              <p className="ml-2 adjust hospital-address  ">
-                                <FontAwesomeIcon
-                                  className="clinic-icon address-icon"
-                                  icon={faLocationDot}
-                                />
-                                {hospital.address || '-'}
-                              </p>
+                            </h6>
+                            <div className="contact-info mt-3">
+                              <div>
+                                <p className="ml-2 adjust hospital-address  ">
+                                  <FontAwesomeIcon
+                                    className="clinic-icon address-icon"
+                                    icon={faLocationDot}
+                                  />
+                                  {hospital.address || "-"}
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="mt-3 hospital-card-timing">
-                          <div className="d-flex flex-column justify-contant-between">
-                            <div className="">
-                              <Link
-                                className="text-light hospital-btn  btn btn1 btn-primary shadow-none"
-                                to={`/hospital/${hospital._id}`}
-                              >
-                                View More
-                              </Link>
+                          <div className="mt-3 hospital-card-timing">
+                            <div className="d-flex flex-column justify-contant-between">
+                              <div className="">
+                                <Link
+                                  className="text-light hospital-btn  btn btn1 btn-primary shadow-none"
+                                  to={`/hospital/${hospital._id}`}
+                                >
+                                  View More
+                                </Link>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </div>
           <div className="">
@@ -157,7 +163,7 @@ const SpecializationDetails = () => {
                               alt=""
                             />
                             <span className=" p-2 clinic-title">
-                              {clinic?.name} 
+                              {clinic?.name}
                             </span>
                           </div>
                           <div className="clinic-details d-flex flex-row justify-content-between">
@@ -175,7 +181,7 @@ const SpecializationDetails = () => {
                                       className="clinic-icon address-icon"
                                       icon={faLocationDot}
                                     />
-                                    {clinic?.address || '-'}
+                                    {clinic?.address || "-"}
                                   </p>
                                 </div>
                               </div>

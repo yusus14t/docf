@@ -29,7 +29,7 @@ function Home() {
       <div
         className=" hero-container"
         style={{
-          background: `url(${ findImage(WEBSITE_IMAGE.HOME_BANNER) })`,
+          background: `url(${findImage(WEBSITE_IMAGE.HOME_BANNER)})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           display: "flex",
@@ -48,7 +48,6 @@ function Home() {
               Our Partners provide best Medical Treament and advice
             </h4>
           </div>
-
         </div>
       </div>
       <div className="mobie">
@@ -57,7 +56,7 @@ function Home() {
 
       {/* <Clinics style={{ margin: "0" }} /> */}
       <div className="">
-        <div className="row">
+        <div className="">
           <DoctorsList source={"homepage"} />
         </div>
 
@@ -73,25 +72,25 @@ function Home() {
         <div className="row mt-2">
           <div className="col-sm-6">
             <div className="col-5 advantages d-flex align-items-center px-3">
-              <h5 className="align-middle">
-                Doctortime is a patient's time saving platform .this is
-                India’s first platform where the patient himself can see the
-                live number at the doctor visit.
+              <h5 className=" mobi-txt align-middle">
+                Doctortime is a patient's time saving platform .this is India’s
+                first platform where the patient himself can see the live number
+                at the doctor visit.
               </h5>
             </div>
             <div className="col-5 advantages d-flex align-items-center px-3">
-              <h5>
-                Patient can avoid both crowd and infection at the doctor‘s
-                place
+              <h5 className="mobi-txt">
+                Patient can avoid both crowd and infection at the doctor‘s place
               </h5>
             </div>
             <div className="col-5 advantages d-flex align-items-center px-3">
-              <h5>
-                You can book your and your known one's Appointment from any where .
+              <h5 className="mobi-txt">
+                You can book your and your known one's Appointment from any
+                where .
               </h5>
             </div>
             <div className="col-5 advantages d-flex align-items-center px-3">
-              <h5>
+              <h5 className="mobi-txt">
                 You can get best doctor of your area’s in your budget.
               </h5>
             </div>

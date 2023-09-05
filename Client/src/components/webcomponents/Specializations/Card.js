@@ -1,8 +1,5 @@
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../../../constants/utils";
+import React from "react";
 
 const Card = ({source, specializations}) => {
   
@@ -13,10 +10,10 @@ const Card = ({source, specializations}) => {
         .filter(
           (card, index) =>
             (source === "slider1" && index <= 3) ||
-            (source === "slider2" && index >= 4 && index <= 5) ||
+            (source === "slider2" && index >= 4 && index <= 7) ||
             (source === "slider3" && index >= 8 && index <= 11) ||
-            (source === "slider4" && index >= 13 && index <=16) ||
-            (source === "slider5" && index >= 17 && index <=20)
+            (source === "slider4" && index >= 12 && index <=15) ||
+            (source === "slider5" && index >= 16 && index <=19)
         )
         .map((specialisation) => {
           return (
@@ -34,7 +31,8 @@ const Card = ({source, specializations}) => {
                       alt=""
                     />
                   </div>
-                  <h2 className="sixe">{specialisation.name}</h2>
+                  <h2 className="sixe m-0">{specialisation?.name}</h2>
+                  <p className="m-0">{specialisation?.nickname}</p>
                 </div>
               </div>
             </Link>

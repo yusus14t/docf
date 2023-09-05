@@ -3,6 +3,7 @@ import './events/index';
 import "./assets.app/css/bootstrap.min.css";
 import "./assets.app/css/style.css";
 import "./assets.app/css/custom.css";
+import "./assets.app/css/mediaqueries.css"
 
 import SnackbarProvider from 'react-simple-snackbar'
 import { BrowserRouter as Router } from 'react-router-dom'

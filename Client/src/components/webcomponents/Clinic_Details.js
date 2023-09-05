@@ -130,8 +130,8 @@ function Detail() {
         >
           <h4 className="clinic-detail-name">{clinicDetail?.name}</h4>
           <div className="d-flex flex-row  clinic-detail-img-container ">
-            <div className="d-flex flex-row  justify-content-around  ">
-              <img
+            <div className="d-flex flex-row  justify-content-between  ">
+              {/* <img
                 className="clinic-detail-img"
                 src={
                   clinicDetail?.doctors
@@ -139,7 +139,7 @@ function Detail() {
                     : NO_PHOTO
                 }
                 alt=""
-              />
+              /> */}
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {clinicDetail?.name}

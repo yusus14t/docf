@@ -30,26 +30,26 @@ function Clinics({ source }) {
     let time = timing?.find( t => t.day === NUMBER_TO_DAY[2] )
     console.log(time)
     if( time ){
-      return(
+      return (
         <>
           <div>
-            <p className="pb-0">Morning</p>
+            <p className="pb-0  cli-time">Morning</p>
             <div>
-              <span>Open: { time?.morning?.open } </span>
+              <span className="cli-time">Open: {time?.morning?.open} </span>
               <br />
-              <span>Close: { time?.morning?.close } </span>
+              <span className="cli-time">Close: {time?.morning?.close} </span>
             </div>
           </div>
-          <div>
-          <p className="pb-0">Evening</p>
-          <div>
-            <span>Open: { time?.evening?.open } </span>
-            <br />
-            <span>Close: { time?.evening?.close } </span>
-          </div>
-        </div>
+          {/* <div>
+            <p className="pb-0 cli-time">Evening</p>
+            <div>
+              <span className="cli-time">Open: {time?.evening?.open} </span>
+              <br />
+              <span className="cli-time">Close: {time?.evening?.close} </span>
+            </div>
+          </div> */}
         </>
-      )
+      );
     } else {
       return(<>
         Today Not Available
@@ -71,6 +71,7 @@ function Clinics({ source }) {
         style={{ background: "#f1f5fc" }}
         className="section section-padding aaside"
       >
+        {console.log(clinics)}
         <div className="asidebox"></div>
         <div className="container">
           <div className="row mt-2 mb-2">
@@ -105,8 +106,11 @@ function Clinics({ source }) {
                               alt=""
                             />
                             <span className=" p-2 clinic-title">
-                              {clinic?.name} :{" "}
-                              <span className="open">close</span>
+                              {clinic?.name}
+                              
+                            </span>
+                            <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
+                              &#8377;200
                             </span>
                           </div>
                           <div className="clinic-details d-flex flex-row justify-content-between">
@@ -140,8 +144,8 @@ function Clinics({ source }) {
                             </div>
                             <div className="">
                               <h6 className="text-disabled">Timming</h6>
-                              <div className="d-flex flex-column justify-contant-between">
-                                {getTodayTiming( clinic?.timing )}
+                              <div className="d-flex flex-column justify-contant-around">
+                                {getTodayTiming(clinic?.timing)}
                                 <Link
                                   className="text-light clinic-btn  btn btn1 btn-primary shadow-none"
                                   to={`/clinic-detail/${clinic?._id}`}
