@@ -196,18 +196,89 @@ const uploadImage = async ( body, file ) => {
 
 const contactInfo = async (params, body, user ) => {
     try {
+        
+        let contact
+        if( params.id === 'CONTACT_QUERY'){
+            await settingModel({
+                id: params.id,
+                data: {
+                    ...body
+                }
+            }).save()
 
-        let contact = await settingModel.updateOne({ id: params.id },
-            {
-                [`data.${body.type}`]: body.value 
-            }
-        )
+        } else if( params.id === 'CONTACT_INFO' ){
+            contact = await settingModel.updateOne({ id: params.id },
+                {
+                    [`data.${body.type}`]: body.value 
+                }
+            )
+        }
+        console.log(contact)
         return Success({ contact });
     } catch ( error ) { 
         console.log(error)
         return Error()
     }
 }
+
+const getWebsiteInfo = async ( params, body ) => {
+    try {
+        let contacts = await settingModel.find({ id: params.id });
+        return Success({ contacts });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const appointmentUsers = async ( params, body ) => {
+    try {
+        let users = await UserModel.aggregate([
+            {
+                $match: {
+                    userType: {
+                        $nin: ['SA']
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: 'organizations',
+                    localField: 'organizationId',
+                    foreignField: '_id',
+                    as: 'organization',
+                    pipeline: [
+                        {
+                            $project: {
+                                name: 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                $unwind: {
+                    path: '$organization',
+                    preserveNullAndEmptyArrays: true
+                },
+                
+            },
+            {
+                $project: {
+                    label: '$name',
+                    label_two: '$organization.name',
+                    value: '$_id'
+                }
+            }
+        ]);
+        console.log(users)
+        return Success({ users });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
 
 module.exports = {
     getProfile,
@@ -221,4 +292,6 @@ module.exports = {
     websiteImages,
     uploadImage,
     contactInfo,
+    getWebsiteInfo,
+    appointmentUsers,
 }

@@ -198,6 +198,12 @@ const websiteSetting = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const allCities = async ( req, res ) => {
+    commonManager.allCities( req.params )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -231,4 +237,5 @@ module.exports = {
     getNotice,
     deleteNotice,
     websiteSetting,
+    allCities,
 }

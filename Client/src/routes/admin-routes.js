@@ -4,6 +4,7 @@ import Notification from '../components/common-components/Notification/Notificat
 import Support from '../components/common-components/Support/Support';
 import Settings from '../components/common-components/Settings/Settings';
 import MR from "../components/user-component/superAdmin/MR";
+import Contacts from "../components/user-component/superAdmin/Contacts";
 
 
 
@@ -13,6 +14,7 @@ const ADMIN = [
     { path: "/admin/support", element: <Support /> },
     { path: "/admin/setting", element: <Settings /> },
     { path: "/admin/mr", element: <MR /> },
+    { path: "/admin/contacts", element: <Contacts /> },
     { path: "/admin/*", element: <Navigate to={'/admin'} /> },
 ]
 

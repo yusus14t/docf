@@ -229,7 +229,7 @@ const Profile = ({ source, setIsOpen = () => {}, refresh = () => {} }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="alert alert-danger border-0 p-2">
+                    { ['HL', 'CL'].includes(userInfo.userType) && <div className="alert alert-danger border-0 p-2">
                         <div className="d-flex justify-content-around">
                             { userInfo?.organizationId?.organizationType === 'Clinic' 
                             ? 
@@ -250,7 +250,7 @@ const Profile = ({ source, setIsOpen = () => {}, refresh = () => {} }) => {
                                 </>
                             }
                         </div>
-                    </div>
+                    </div>}
                     {timing?.length > 0 && ['HL', 'CL'].includes(userInfo.userType) &&
                         timing.map((time) => (
                             <div className="alert alert-secondary border-0 p-2">
@@ -278,21 +278,21 @@ const Profile = ({ source, setIsOpen = () => {}, refresh = () => {} }) => {
                     }
 
                     {[ 'HL', 'CL' ].includes(userInfo.userType) && isTiming && <div className="row mb-3" style={{ paddingRight: 0 }}>
-                      <div className="col-6">
-                        <label htmlFor="">Days</label>
-                        <select
-                          name="days"
-                          className={`form-control ${
-                            errors?.timing?.day ? "border-danger" : ""
-                          }`}
-                          {...register("timing.day")}
-                        >
-                          {days.map((day) => (
-                            <option value={day.value}>{day.day}</option>
-                          ))}
-                        </select>
-                      </div>
+                      
                         {userInfo?.organizationId?.organizationType === 'Clinic' ? <div className="row">
+                            <div className="col-6">
+                                <label htmlFor="">Days</label>
+                                <select
+                                    name="days"
+                                    className={`form-control ${errors?.timing?.day ? "border-danger" : ""
+                                        }`}
+                                    {...register("timing.day")}
+                                >
+                                    {days.map((day) => (
+                                        <option value={day.value}>{day.day}</option>
+                                    ))}
+                                </select>
+                            </div>
                             <div className="evening row mt-3">
                                 <div className='d-flex flex-column col-md-6'>
                                     <div>Morning</div>

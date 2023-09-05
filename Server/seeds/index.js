@@ -15,17 +15,17 @@ const database = mongoose.connection;
 database.once("connected", () => console.log("Database Connected"));
 
 const contactInfo = async () => {
-  let data = await settingModel({
-    id: "CONTACT_INFO",
-    data: {
-      phone: "9528820782",
-      whatsapp: "9528820782",
-      email: "contact@doctortime.in",
-      twitter: "@Doctortime_",
-    },
-  }).save();
-  console.log("Contact created", data);
-};
+    let data = await settingModel({
+        id: 'CONTACT_INFO',
+        data: {
+            phone: '9528820782',
+            whatsapp: '9528820782',
+            email: 'contact@doctortime.in',
+            twitter: 'Doctortime_',
+        }
+    }).save()
+    console.log('Contact created', data)
+}
 
 // Registered Seeds
 const seeds = [

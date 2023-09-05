@@ -37,6 +37,8 @@ router.post('/upload-file', upload.single('file'), commonController.uploadFile )
 
 // website
 router.get('/website/:id', commonController.websiteSetting)
+router.get('/cities', commonController.allCities)
+
 
 
 

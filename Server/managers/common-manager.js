@@ -379,14 +379,6 @@ const allCities = async (body) => {
   }
 };
 
-const oneCity = async (body) => {
-  try {
-    let ciites = cities.data.find((cti) => cti.id === body.id);
-    return Success({ cities });
-  } catch (error) {
-    console.log(error);
-  }
-};
 const getAllClinics = async (body) => {
   try {
     console.log(body);
@@ -789,6 +781,6 @@ module.exports = {
   getNotice,
   createNotice,
   deleteNotice,
-  oneCity,
   websiteSetting,
+  allCities,
 };

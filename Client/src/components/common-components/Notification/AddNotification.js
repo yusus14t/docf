@@ -20,8 +20,8 @@ const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
 
     const fetchDoctors = async () => {
         try {
-            let { data } = await axiosInstance.get('/common/appointment-doctors', getAuthHeader());
-            setDoctors(data?.doctors || [])
+            let { data } = await axiosInstance.get('/super-admin/appointment-users', getAuthHeader());
+            setDoctors(data?.users || [])
         } catch(error) { 
             toasty.error(error?.messgae)
             console.log(error) 
@@ -64,13 +64,8 @@ const Add = ({isOpen, setIsOpen, refresh = () => {}}) => {
                                         options={doctors}
                                         className={`form-control p-0 ${errors.assignedTo ? 'border-danger' : ''}`}
                                         classNamePrefix="select"
-                                        getOptionLabel={({name}) => name}
-                                        getOptionValue={({_id}) => _id}
-                                        formatOptionLabel={(option, meta) => 
-                                            <div className='d-flex justify-content-between'>
-                                                <div><span>{option.name}</span></div>
-                                            </div>
-                                        }
+                                        getOptionLabel={({ label, label_two }) => label || label_two  }
+                                        getOptionValue={({ value }) => value}
                                     />
                                 )}
                             />

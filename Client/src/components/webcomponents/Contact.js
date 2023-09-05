@@ -4,12 +4,15 @@ import phone from "../../assets.app/img/icons/icons8-phonecall-96.png";
 import whatsapp from "../../assets.app/img/icons/icons8-whatsapp-96.png";
 import email from "../../assets.app/img/icons/icons8-email-96.png";
 import twitter from "../../assets.app/img/icons/icons8-twitter-100.png";
-import { axiosInstance, formatPhone } from "../../constants/utils";
+import { axiosInstance, formatPhone, getAuthHeader } from "../../constants/utils";
+import useToasty from "../../hooks/toasty";
 
 const Contact = () => {
   const [ contact, setContact ] = useState({})
+  const toasty = useToasty()
+  const [ query, setQuery ] = useState({ name: null, mobile: null, topic: null, email: null, message: null })
 
-  useEffect(() => {
+  useEffect(() => { 
     getContact()
   }, [])
 
@@ -17,6 +20,13 @@ const Contact = () => {
     try{
       let {data} = await axiosInstance.get('/common/website/CONTACT_INFO')
       setContact(data?.contact?.data)
+    } catch(error){ console.error(error) }
+  }
+
+  const saveContactQuery = async () => {
+    try{
+      await axiosInstance.post('/super-admin/website/CONTACT_QUERY', query, getAuthHeader())
+      toasty.success('Message Sent.')
     } catch(error){ console.error(error) }
   }
 
@@ -84,16 +94,20 @@ const Contact = () => {
               <label htmlFor="">Name</label>
               <input
                 type="text"
-                placeholder="John Dee"
+                placeholder="Enter Name"
                 className="form-control"
+                onChange={(e) => setQuery({ ...query, name: e.target.value })}
               />
             </div>
             <div className="col-sm-6">
               <label htmlFor="">Mobile Number</label>
               <input
-                type="number"
-                placeholder="8474986368"
+                type="text"
+                placeholder="Enter mobile number"
                 className="form-control"
+                maxLength={10}
+                onChange={(e) => setQuery({ ...query, mobile: e.target.value })}
+
               />
             </div>
           </div>
@@ -102,16 +116,19 @@ const Contact = () => {
               <label htmlFor="">Topic</label>
               <input
                 type="text"
-                placeholder="Enter the topic here"
+                placeholder="Enter topic here"
                 className="form-control"
+                onChange={(e) => setQuery({ ...query, topic: e.target.value })}
+
               />
             </div>
             <div className="col-sm-6">
-              <label htmlFor="">Email Address</label>
+              <label htmlFor="">Email Address (optional)</label>
               <input
-                type="number"
-                placeholder="Enter your Email address here (optional)"
+                type="text"
+                placeholder="Enter Email address "
                 className="form-control"
+                onChange={(e) => setQuery({ ...query, email: e.target.value })}
               />
             </div>
           </div>
@@ -123,11 +140,13 @@ const Contact = () => {
               cols="30"
               rows="10"
               placeholder="write your message here"
+              onChange={(e) => setQuery({ ...query, message: e.target.value })}
+
             ></textarea>
           </div>
           <div className="row ">
             <div className="col-6">
-              <button className=" btn-primary btn mx-1">Send Message</button>
+              <button className=" btn-primary btn mx-1" onClick={() => saveContactQuery()}>Send Message</button>
             </div>
           </div>
         </div>
