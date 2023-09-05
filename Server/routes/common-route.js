@@ -36,7 +36,6 @@ router.get('/patient-appointments', commonController.patientAppointments)
 router.post('/upload-file', upload.single('file'), commonController.uploadFile )
 
 // website
-router.get('/cities', commonController.allCities)
 
 
 
