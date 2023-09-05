@@ -20,7 +20,6 @@ const Departments = () => {
     const getDepartments = async () => {
         try{
             let { data } = await axiosInstance.get('/doctor/departments', )
-            console.log('data', data)
             setDepartments(data?.organizations)
         } catch(error){
             console.error(error)
@@ -86,6 +85,7 @@ const Departments = () => {
                 <AddDepartment
                     isOpen={addDepartment}
                     setIsOpen={setAddDepartment}
+                    refresh={() => getDepartments()}
                 />
             }
 

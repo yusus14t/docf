@@ -106,7 +106,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
           </div>
           <div className="row mt-2">
             <div className="col-md-6 mb-3">
-              <label>Specialization of Clininc</label>
+              <label>Specialization of { source === 'Clinic' ? 'Clinic' : 'Hospital'}</label>
               <div className="">
                 <Controller
                   control={control}

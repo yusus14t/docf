@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { axiosInstance } from '../../../constants/utils'
+import { axiosInstance, convertTo12HourFormat } from '../../../constants/utils'
 
 import { Link } from "react-router-dom";
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
@@ -27,9 +27,9 @@ const HospitalGrid = ({source}) => {
     if( time ){
       return(
         <div>
-          <span>Open: { time.open } </span>
+          <span>Open: { convertTo12HourFormat(time.open) } </span>
           <br />
-          <span>Close: { time.close } </span>
+          <span>Close: { convertTo12HourFormat(time.close) } </span>
         </div>
       )
     } else {

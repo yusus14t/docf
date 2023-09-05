@@ -1390,6 +1390,12 @@ input::-webkit-inner-spin-button {
   max-height: 30rem;
   overflow: auto;
 }
+
+.service-tube {
+  background: #dbdbdb;
+  padding: 3px 20px;
+  border-radius: 15px;
+}
   /*==================*************************media queries*******************==========================*/
 @media (max-width: 1400px){
   .fixed, .side-nav.fixed{

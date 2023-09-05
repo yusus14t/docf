@@ -184,7 +184,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
           <ImgUpload source={"doctor"} file={(image) => setSelectedImage(image)} editImage={editImage} />
           <div className="row mt-2">
             <div className="col-6 mb-3">
-              <label >Full Name</label>
+              <label >Doctor Name</label>
               <div className="input-group">
                 <input type="text"
                   className={`form-control ${errors.name ? 'border-danger' : ''}`}

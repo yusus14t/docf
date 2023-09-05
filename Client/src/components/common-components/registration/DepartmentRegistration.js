@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
 
 
-const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}) => {
+const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}, refresh = () => {}}) => {
     const { register, handleSubmit,  formState: { errors, }, setError, getValues, setValue, reset, control } = useForm({ onChange: true })
     const [ specialization, setSpecialization ] = useState([]);
     const [ departments, setDepartments ] = useState([]);
@@ -73,7 +73,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
 
             if( source === 'modal' ) setIsOpen(false)
             else getDepartments()
-    
+            refresh()
         } catch(error){ 
             console.error(error) 
             toasty.error(error.message)
@@ -231,7 +231,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
                         </div>
                     </div>}
                     <div className="px-2">
-                        <div className="alert alert-info alert-outline p-2 mb-2 mt-4">
+                        <div className="alert alert-danger border-0  p-2 mb-2 mt-4">
                             <div className="d-flex justify-content-around">
                                 <div>Day</div>
                                 <div>Open</div>
@@ -240,12 +240,14 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {}}
                             </div>
                         </div>
                         { timing?.length > 0 && 
-                            timing.map( time => <div className="alert alert-info p-2">
+                            timing.map( time => <div className="alert alert-secondary border-0 p-2">
                             <div className="d-flex justify-content-around">
                                 <div>{ time.day }</div>
                                 <div>{ time.open }</div>
                                 <div>{ time.close }</div>
-                                <div><button className="ms-btn-icon btn-primary" onClick={() =>  handleDelete(time)}>D</button></div>
+                                <div>
+                                    <FontAwesomeIcon className=' mx-3 cursor-pointer' icon={faTrash} onClick={() => handleDelete(time)} />
+                                </div>
                             </div>
                         </div>)}
                     </div>

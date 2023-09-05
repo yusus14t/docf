@@ -470,7 +470,7 @@ const patientAppointments = async ( body, user ) => {
         let today = new Date()
         today.setHours(0,0,0,0)
 
-       let appointments = await AppointmentModel.find({ userId: ObjectId(user._id), ...( body?.isToday ? { createdAt: { $gte: today }} : {}) })
+       let appointments = await AppointmentModel.find({ $or: [{userId: ObjectId(user._id)}, {createdBy: ObjectId(user._id)}] , ...( body?.isToday ? { createdAt: { $gte: today }} : {}) })
        .populate('departmentId', 'name address')
        .populate('userId')
 

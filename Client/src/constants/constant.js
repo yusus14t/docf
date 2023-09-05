@@ -89,7 +89,6 @@ export const ORGANIZATION_TYPE = [
     { id: 'HOSPITAL', name: 'Hospital' },
     { id: 'CLINIC', name: 'Clinic' },
     { id: 'DOCTOR', name: 'Doctor' },
-    { id: 'ULTRASOUND', name: 'Ultrasound' },
 ]
 
 export const WEBSITE_IMAGE = {

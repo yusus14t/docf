@@ -37,6 +37,12 @@ const deleteSpecialization = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const getHospitalNameByDepartment = async ( req, res ) => {
+    hospitalManager.getHospitalNameByDepartment( req.params, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     editProfile,
     clinicSpecialization,
@@ -44,4 +50,5 @@ module.exports = {
     getServices,
     deleteService,
     deleteSpecialization,
+    getHospitalNameByDepartment,
 }
