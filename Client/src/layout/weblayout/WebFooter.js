@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import sli from '../../assets.app/images/applicationposter.jpg'
+import logo from "../../assets.app/img/logo/logo.jpg";
 
 
 function WebFooter() {
@@ -8,38 +9,44 @@ function WebFooter() {
       <footer className="sigma_footer style-5 pb-0 footer">
         <div className="row">
           <div style={{ padding: "10px 30px" }} className="col-sm-3 ">
-            <Link to="/contact">
-              <h6 className="text-light">Contact</h6>
-            </Link>
             <Link to="/privacy">
               <h6 className="text-light">Privacy and Policy</h6>
             </Link>
             <Link to="/terms">
               <h6 className="text-light">Term and Condition</h6>
             </Link>
+            <Link to="/pricing-refund-policy">
+              <h6 className="text-light">Pricing and Refund Policy</h6>
+            </Link>
+            <Link>
+              <img className="footer-logo" src={logo} alt="" />
+            </Link>
           </div>
 
           <div style={{ padding: "10px 30px" }} className="col-sm-3">
+            <Link to="/contact">
+              <h6 className="text-light">Contact</h6>
+            </Link>
+            <Link to="/about">
+              <h6 className="text-light">About Us</h6>
+            </Link>
             <Link>
               <h6 className="text-light">FaceBook</h6>
-            </Link>
-            <Link target="_blank" to="https://www.instagram.com/doctortime__/">
-              <h6 className="text-light">Instagram</h6>
-            </Link>
-            <Link target="_blank" to="https://twitter.com/Doctortime_">
-              <h6 className="text-light">Twitter</h6>
             </Link>
           </div>
 
           <div style={{ padding: "10px 30px" }} className="col-sm-3 ">
-            <Link to="/about">
-              <h6 className="text-light">About Us</h6>
+            <Link target="_blank" to="https://twitter.com/Doctortime_">
+              <h6 className="text-light">Twitter</h6>
             </Link>
             <Link
               target="_blank"
               to="https://www.linkedin.com/in/doctor-time-4a7b00278/"
             >
               <h6 className="text-light">Linkedin</h6>
+            </Link>
+            <Link target="_blank" to="https://www.instagram.com/doctortime__/">
+              <h6 className="text-light">Instagram</h6>
             </Link>
             <Link
               target="_blank"
@@ -48,8 +55,8 @@ function WebFooter() {
               <h6 className="text-light">Youtube</h6>
             </Link>
           </div>
-          <div style={{ padding:"0" }} className="col-sm-3 ">
-            <img  className='rounded footer-poster' src={sli} alt="" />
+          <div style={{ padding: "0" }} className="col-sm-3 ">
+            <img className="rounded footer-poster" src={sli} alt="" />
           </div>
         </div>
         <hr className="m-0" />
@@ -61,7 +68,7 @@ function WebFooter() {
             to="https://erahamtech.com"
           >
             EraHam Tech
-          </Link>{" "}
+          </Link>
           | Copyright &#169; Doctor Time. All rights reserved
         </p>
       </footer>

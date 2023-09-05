@@ -10,6 +10,7 @@ import NotFound from "../components/webcomponents/NotFound";
 import NoData from "../components/webcomponents/NoData";
 import Qrcode from "../components/common-components/Qrcode";
 
+import Pricing from "../components/webcomponents/Pricing";
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
 const Doctors = lazy(() => import( '../components/webcomponents/doctor/Doctors'))
 const Clinics = lazy(() => import( "../components/webcomponents/Clinics"))
@@ -21,13 +22,12 @@ const AfterSignup = lazy(() => import('../components/process/AfterSignup'))
 const Gynae = lazy(() => import("../components/webcomponents/Gynae"))
 const Detail = lazy(() => import("../components/webcomponents/doctor/Detail"))
 const HospitalDetails = lazy(() => import("../components/webcomponents/Hospital/HospitalDetails"))
+
 const LogIn = lazy(() => import("../components/authentication/LogIn"));
 const Ultrasound = lazy(() => import("../components/webcomponents/Ultrasound"));
 const SpecializationDetails = lazy(() => import('../components/webcomponents/Specializations/SpecializationDetails'))
-const Homeopathy =lazy(()=> import('../components/webcomponents/Homeopathy'))
-
+const Homeopathy =lazy(()=> import('../components/webcomponents/Homeopathy'));
 const getUserType = () => userInfo?.userType;
-
 const COMMON_ROUTE = [
   { path: "/", element: <Home /> },
   { path: "/doctor-detail", element: <Detail /> },
@@ -47,7 +47,7 @@ const COMMON_ROUTE = [
   { path: "/specialization/:id", element: <SpecializationDetails /> },
   { path: "/privacy", element: <Privacy /> },
   { path: "/terms", element: <Terms /> },
-  {path:"/qr", element:<Qrcode/>},
+  {path:"/pricing-refund-policy", element:<Pricing/>},
 
   {
     path: "/login",

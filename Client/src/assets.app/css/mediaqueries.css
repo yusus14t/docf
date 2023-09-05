@@ -3,14 +3,39 @@
   /* body {
     background-color: red;
   } */
-  .dr-address{
+.about-banner-conatiner{
+  width: 100%;
+  height: 200px;
+}
+.about-banner{
+  width: 100%;
+  height: 200px;
+
+}
+.about-banner2{
+  display: none;
+}
+  .mk-address {
+    font-size: 18px;
+  }
+  .dr-address {
     width: 170px;
   }
-  .cli-time{
+  .user-de{
+    margin-left: 15px;
+  }
+  .app-ing{
+    width: 100px;
+    height: 100px;
+  }
+  .search-items {
+    width: 22rem;
+  }
+  .cli-time {
     font-size: 10px;
     margin: 0;
   }
-  .deatil{
+  .deatil {
     width: 100%;
   }
   .search-page {
@@ -69,7 +94,7 @@
     width: 200px;
     height: 30px;
   }
-  .hospital-address{
+  .hospital-address {
     width: 190px;
     padding-right: 10px;
   }
@@ -317,7 +342,7 @@
   .clinic-detail-name {
     margin-top: 10px;
   }
-  .footer-poster{
+  .footer-poster {
     /* width: 100%; */
   }
   /*-------------------clinic crad--------------*/
@@ -330,7 +355,7 @@
     /* margin: 36px 0 0px 0px; */
     margin-top: 15px;
   }
-  .mobi-txt{
+  .mobi-txt {
     font-size: 15px;
   }
   /*-------------------ends-------------------*/
@@ -365,13 +390,39 @@
 
 /* Media Query for Tablets Ipads portrait mode */
 @media (min-width: 768px) and (max-width: 1024px) {
-  /* body {
-    background-color: blue;
-  } */
-  .clinic-card{
-    width: 400px;
+  .search-items {
+    width: 11rem;
   }
-
+  /* .search-items{
+ width: 18rem;
+} */
+  .clinic-card {
+    width: 350px;
+  }
+  .dr-spelialization {
+    width: 150px;
+  }
+  .dr-address {
+    width: 150px;
+  }
+  .hospitalCard {
+    width: 350px;
+  }
+  .mobi-txt {
+    font-size: 1rem;
+  }
+  .avatar {
+    display: none;
+  }
+  .seacrh-bar-container {
+    z-index: 1 !important;
+  }
+  .main-ch {
+    width: 100%;
+  }
+  .search-page {
+    width: 90%;
+  }
 }
 
 /* Media Query for Laptops and Desktops */
@@ -379,45 +430,44 @@
   /* body {
     background-color: green;
   } */
-  .fixed, .side-nav.fixed{
-    margin-top:58px ;
+  .fixed,
+  .side-nav.fixed {
+    margin-top: 58px;
   }
-  .dr-address{
+  .dr-address {
     width: 150px;
   }
-  .home-search{
+  .home-search {
     width: 90%;
   }
-  .gynae-services-card{
+  .gynae-services-card {
     width: 310px;
   }
-  .dr-spelialization{
+  .dr-spelialization {
     width: 150px;
   }
-  .specialization-card{
+  .specialization-card {
     width: 250px;
   }
-  .hospital-address{
+  .hospital-address {
     width: 160px;
   }
   /* .box {
     height: 59px;
   } */
-  .navbar{
+  .navbar {
     height: 59px;
   }
-  
+
   .city-filter {
     height: 35px;
   }
-  .search-bar{
-    
+  .search-bar {
     height: 35px;
   }
-  .box{
+  .box {
     height: 59px;
   }
-   
 }
 
 /* Media Query for Large screens */
@@ -425,43 +475,42 @@
   body {
     background-color: white;
   }
-  .fixed, .side-nav.fixed{
-    margin-top:58px ;
+  .fixed,
+  .side-nav.fixed {
+    margin-top: 58px;
   }
-  .dr-address{
+  .dr-address {
     width: 150px;
   }
-  .home-search{
+  .home-search {
     width: 90%;
   }
-  .gynae-services-card{
+  .gynae-services-card {
     width: 310px;
   }
-  .dr-spelialization{
+  .dr-spelialization {
     width: 150px;
   }
-  .specialization-card{
+  .specialization-card {
     width: 250px;
   }
-  .hospital-address{
+  .hospital-address {
     width: 160px;
   }
   /* .box {
     height: 59px;
   } */
-  .navbar{
+  .navbar {
     height: 59px;
   }
-  
+
   .city-filter {
     height: 35px;
   }
-  .search-bar{
-    
+  .search-bar {
     height: 35px;
   }
-  .box{
+  .box {
     height: 59px;
   }
-   
 }

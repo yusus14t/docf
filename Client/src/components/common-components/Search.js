@@ -85,10 +85,9 @@ const Search = () => {
                 type="text"
                 onClick={() => setIsOpenSearch(true)}
                 onChange={(e) => {
-                  if( !e.target.value ) setSearchData([])
-                  setFilter({ ...filter, search: e.target.value })
-                }
-                }
+                  if (!e.target.value) setSearchData([]);
+                  setFilter({ ...filter, search: e.target.value });
+                }}
               />
               <FontAwesomeIcon className="search-ico" icon={faSearch} />
               {isOpenSearch && (
@@ -98,7 +97,7 @@ const Search = () => {
                   onClick={() => {
                     setIsOpenSearch(false);
                     setIsFilterOpen(false);
-                    inputRef.current.value = null
+                    inputRef.current.value = null;
                   }}
                 />
               )}
@@ -106,11 +105,11 @@ const Search = () => {
           </li>
         </ul>
         {isFilterOpen && (
-          <div className="w-100" style={{ background: "#fff", height: "60px" }}>
+          <div className="w-100 " style={{ background: "#fff", }}>
             <div className="d-flex justify-content-around align-item-center search-mobile">
               <div>
                 <div
-                  className="d-flex justify-content-between "
+                  className="d-flex justify-content-between search-items"
                   style={{ width: "15rem" }}
                 >
                   <div className="">Consultation Fee</div>
@@ -128,25 +127,25 @@ const Search = () => {
                   }
                 />
               </div>
-              <div>
+              <div className="m-1">
                 <Select
                   isMulti={false}
                   options={cities}
                   getOptionLabel={({ city }) => city}
                   getOptionValue={({ city }) => city}
-                  className={`form-control p-0 w-15`}
+                  className={`form-control p-0  search-items`}
                   classNamePrefix="select"
                   placeholder="Select City"
                   onChange={(e) => setFilter({ ...filter, city: e.city })}
                 />
               </div>
-              <div>
+              <div className="search-items m-1">
                 <Select
                   isMulti={false}
                   options={sepcializations?.length ? sepcializations : []}
                   getOptionLabel={({ name }) => name}
                   getOptionValue={({ id }) => id}
-                  className={`form-control p-0 w-15`}
+                  className={`form-control p-0  `}
                   classNamePrefix="select"
                   placeholder="Select Specialization"
                   onChange={(e) =>
@@ -154,13 +153,13 @@ const Search = () => {
                   }
                 />
               </div>
-              <div>
+              <div className="search-items m-1">
                 <Select
                   isMulti={false}
-                  options={ ORGANIZATION_TYPE }
+                  options={ORGANIZATION_TYPE}
                   getOptionLabel={({ name }) => name}
                   getOptionValue={({ id }) => id}
-                  className={`form-control p-0 w-15`}
+                  className={`form-control p-0  search-items`}
                   classNamePrefix="select"
                   placeholder="Select Type"
                   onChange={(e) => setFilter({ ...filter, type: e.name })}
@@ -172,7 +171,7 @@ const Search = () => {
         {isOpenSearch && (
           <div
             className="py-2 px-0 container main-ch"
-            style={{ background: "black", width: "50%" }}
+            style={{ background: "black" }}
           >
             <div className="search-page container rounded">
               <div className="search-result-container p-0">
@@ -182,8 +181,16 @@ const Search = () => {
                       className="w-50 mr-1 p-2 main-ch"
                       to={
                         clinic?.organizationType === "Hospital"
-                          ? `/hospital/${clinic?.userType ? clinic?.organizationId : clinic._id}`
-                          : `/clinic-detail/${clinic?.userType ? clinic?.organizationId : clinic._id}`
+                          ? `/hospital/${
+                              clinic?.userType
+                                ? clinic?.organizationId
+                                : clinic._id
+                            }`
+                          : `/clinic-detail/${
+                              clinic?.userType
+                                ? clinic?.organizationId
+                                : clinic._id
+                            }`
                       }
                     >
                       <div class="ms-card mb-0">
@@ -208,7 +215,9 @@ const Search = () => {
                                     class="badge badge-outline-danger"
                                     style={{ marginBottom: "50%" }}
                                   >
-                                    { clinic?.userType ? 'Doctor' : clinic?.organizationType}
+                                    {clinic?.userType
+                                      ? "Doctor"
+                                      : clinic?.organizationType}
                                   </span>
                                 </div>
                               </div>

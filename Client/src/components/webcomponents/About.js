@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import about2 from "../../assets.app/images/about2.png";
-import about3 from "../../assets.app/images/about3n.png";
-import about4 from "../../assets.app/images/jk.png";
 import { WEBSITE_IMAGE } from "../../constants/constant";
 import { getFullPath, getImages } from "../../constants/utils";
 
@@ -29,10 +26,10 @@ const About = () => {
   return (
     <>
       <div style={{ height: "60px" }}></div>
-      <h3 className="text-center bg-success text-light p-4">About Us </h3>
+      <h3 className="text-center bg-success text-light p-2">About Us </h3>
 
-      <div style={{ width: "100%", height: "500px" }} className="">
-        <img style={{ width: "100%", height: "500px" }} src={findImage(WEBSITE_IMAGE.ABOUT_BANNER)} alt="" />
+      <div className="about-banner-conatiner">
+        <img className="about-banner" src={findImage(WEBSITE_IMAGE.ABOUT_BANNER)} alt="" />
       </div>
       <div className="container">
         <div style={{ height: "300px" }} className="row">
@@ -55,14 +52,15 @@ const About = () => {
           </div>
           <div style={{ height: "300px" }} className="col-sm-5">
             <img
+              className="about-banner2"
               style={{ height: "300px", width: "100%" }}
               src={findImage(WEBSITE_IMAGE.ABOUT_POSTER_1)}
               alt=""
             />
           </div>
         </div>
-        <div style={{ height: "500px" }} >
-          <img style={{ height: "500px", width: "100%" }} src={findImage(WEBSITE_IMAGE.ABOUT_POSTER_2)} alt="" />
+        <div className="about-banner-container">
+          <img className=" about-banner" src={findImage(WEBSITE_IMAGE.ABOUT_POSTER_2)} alt="" />
         </div>
       </div>
     </>

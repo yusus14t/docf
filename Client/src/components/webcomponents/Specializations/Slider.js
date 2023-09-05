@@ -31,14 +31,14 @@ function Slider() {
           className="d-flex flex-row justify-content-between container mb-0  pt-3 px-4"
         >
           <div style={{ fontSize: "30px" }}>Specialization </div>
-          <div>
+          {/* <div>
             <button className="btn-slider btn-primary">
               <FontAwesomeIcon icon={faArrowLeft} />
             </button>{" "}
             <button className="btn-slider  btn-primary">
               <FontAwesomeIcon icon={faArrowRight} />
             </button>
-          </div>
+          </div> */}
         </div>
         <Carousel
           dynamicHeight={false}
