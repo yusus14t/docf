@@ -59,7 +59,7 @@ const HospitalGrid = ({source}) => {
                   )
                   .map((hospital, key) => (
                     <div
-                      className="ml-2 col-lg-4 mb-4 col-md-4 mcard mt-2"
+                      className="ml-2 col-lg-4 mb-4 col-md-6 mcard mt-2"
                       key={key}
                     >
                       <div className="hospitalCard ">
@@ -74,6 +74,9 @@ const HospitalGrid = ({source}) => {
                             }
                             alt=""
                           />
+                           <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
+                              &#8377; 200
+                            </span>
                         </div>
                         <div className="clinic-details d-flex flex-row justify-content-between">
                           <div className="mt-3">

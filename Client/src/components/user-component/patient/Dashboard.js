@@ -143,9 +143,9 @@ const Dashbaord = () => {
               <div className="col mx-4 d-flex align-items-center">
                 <h6>Clinic Name</h6>
               </div>
-              <div className="col d-flex align-items-center">
+              {/* <div className="col d-flex align-items-center">
                 <h6>Address</h6>
-              </div>
+              </div> */}
             </div>
             {appointments.length > 0 && appointments.map((appointment, key) => {
               return (
@@ -161,9 +161,7 @@ const Dashbaord = () => {
                   <div className="col mx-4 d-flex align-items-center">
                     <h6> {appointment?.departmentId?.name}</h6>
                   </div>
-                  <div className="col d-flex align-items-center">
-                    <h6>{appointment?.departmentId?.address || '-'}</h6>
-                  </div>
+                  
                   <div className="col d-flex align-items-center">
                     <button className="btn btn-primary mt-1 rounded shadow-none" onClick={() => { setAppointment(appointment); setOpenAppointmentModal(true) }}>View</button>
                   </div>
@@ -294,8 +292,11 @@ const Dashbaord = () => {
           <hr />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
-              <h2 style={{ textAlign: "center" }}>{appointment?.departmentId?.name || 'Hospital Name'}</h2>
-              <h6 style={{ marginLeft: "16px" }}>{new Date(appointment?.createdAt).toLocaleString()}</h6>
+              <h2 style={{  }}>{appointment?.departmentId?.name || 'Hospital Name'}</h2>
+              <h6 style={{ marginLeft: "10px" }}>{new Date(appointment?.createdAt).toLocaleString()}</h6>
+              <div className="col mk-address d-flex align-items-center">
+                    <h6>{appointment?.departmentId?.address || '-'}</h6>
+              </div>
             </div>
             <div style={{ width: "60px", height: "60px", borderRadius: "6px", backgroundColor: "#8df7c4" }}>
               <h3 style={{ textAlign: "center", margin: "5px 0 0 0", marginTop: "20%" }}>{appointment?.token}</h3>
@@ -303,16 +304,16 @@ const Dashbaord = () => {
           </div>
           <hr />
           <div  >
-            <div style={{display: "flex", justifyContent: "space-between", padding: "0 3.5rem"}}>
+            <div style={{display: "flex", justifyContent: "space-between", }}>
               <div>
                 <img
+                className="app-ing"
                   src={ appointment?.userId?.photo ? getFullPath(appointment?.userId?.photo) : NO_PHOTO }
-                  style={{width: "150px", height: "150px", borderRadius: "6px"}}
                   alt=""
                 />
               </div>
               <div>
-                <div style={{display: "flex", flexDirection: "column", margin: "auto" }}>
+                <div className="user-de" style={{display: "flex", flexDirection: "column",  }}>
                   <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "0"}}>
                     <span style={{margin: "0", color: "black"}}>Name : </span>{ appointment?.userId?.name || 'Patient Name'}
                   </h4>

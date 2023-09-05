@@ -41,12 +41,12 @@ function Clinics({ source }) {
             </div>
           </div>
           <div>
-          <p className="pb-0">Evening</p>
+          {/* <p className="pb-0">Evening</p>
           <div>
             <span>Open: { convertTo12HourFormat(time?.evening?.open) } </span>
             <br />
             <span>Close: { convertTo12HourFormat(time?.evening?.close) } </span>
-          </div>
+          </div> */}
         </div>
         </>
       );
@@ -87,7 +87,7 @@ function Clinics({ source }) {
                     )
                     .map((clinic, key) => (
                       <div
-                        className="col-lg-4 mb-4 col-md-4 mcard mt-4"
+                        className="col-lg-4 mb-4 col-md-6 mcard mt-4"
                         key={key}
                       >
                         <div

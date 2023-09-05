@@ -4,6 +4,7 @@ import phone from "../../assets.app/img/icons/icons8-phonecall-96.png";
 import whatsapp from "../../assets.app/img/icons/icons8-whatsapp-96.png";
 import email from "../../assets.app/img/icons/icons8-email-96.png";
 import twitter from "../../assets.app/img/icons/icons8-twitter-100.png";
+import location from "../../assets.app/img/icons/location.png";
 import { axiosInstance, formatPhone, getAuthHeader } from "../../constants/utils";
 import useToasty from "../../hooks/toasty";
 
@@ -18,7 +19,7 @@ const Contact = () => {
 
   const getContact = async () => {
     try{
-      let {data} = await axiosInstance.get('/common/website/CONTACT_INFO')
+      let {data} = await axiosInstance.get('/website/CONTACT_INFO')
       setContact(data?.contact?.data)
     } catch(error){ console.error(error) }
   }
@@ -45,7 +46,7 @@ const Contact = () => {
                 </div>
                 <div className="contact-kk ">
                   <Link to={`tel:${contact.phone}`} className="href_location">
-                    +91 { formatPhone(contact?.phone) } 
+                    +91 {formatPhone(contact?.phone)} 
                   </Link>
                 </div>
               </div>
@@ -56,8 +57,11 @@ const Contact = () => {
                   <img className="contact-icons" src={whatsapp} alt="" />
                 </div>
                 <div className="contact-kk">
-                  <Link target="_blank" to={`https://wa.me/${contact.whatsapp}`}>
-                    +91 { formatPhone(contact.whatsapp)}
+                  <Link
+                    target="_blank"
+                    to={`https://wa.me/${contact.whatsapp}`}
+                  >
+                    +91 {formatPhone(contact.whatsapp)}
                   </Link>
                 </div>
               </div>
@@ -80,8 +84,29 @@ const Contact = () => {
                   <img src={twitter} className="contact-icons" alt="" />
                 </div>
                 <div className=" contact-kk">
-                  <Link target="_blank" to={`https://twitter.com/${contact.twitter}`}>
+                  <Link
+                    target="_blank"
+                    to={`https://twitter.com/${contact.twitter}`}
+                  >
                     @{contact.twitter}
+                  </Link>
+                </div>
+              </div>
+            </li>
+            <li className="mb-4">
+              <div className="contact-list-item d-flex flex-row justify-content-around ml-5 align-items-center">
+                <div className="contact-icon-container contact-kk">
+                  <img src={location} className="contact-icons" alt="" />
+                </div>
+                <div className=" contact-kk">
+                  <Link
+                    target="_blank"
+                    to={`https://twitter.com/${contact.twitter}`}
+                  >
+                    {/* {contact.twitter} */}
+                    M/s Paai India 3/361,Begpur, <br />
+                    Aligarh-202002 (U.P), India
+                    
                   </Link>
                 </div>
               </div>
@@ -107,7 +132,6 @@ const Contact = () => {
                 className="form-control"
                 maxLength={10}
                 onChange={(e) => setQuery({ ...query, mobile: e.target.value })}
-
               />
             </div>
           </div>
@@ -119,7 +143,6 @@ const Contact = () => {
                 placeholder="Enter topic here"
                 className="form-control"
                 onChange={(e) => setQuery({ ...query, topic: e.target.value })}
-
               />
             </div>
             <div className="col-sm-6">
@@ -141,12 +164,16 @@ const Contact = () => {
               rows="10"
               placeholder="write your message here"
               onChange={(e) => setQuery({ ...query, message: e.target.value })}
-
             ></textarea>
           </div>
           <div className="row ">
             <div className="col-6">
-              <button className=" btn-primary btn mx-1" onClick={() => saveContactQuery()}>Send Message</button>
+              <button
+                className=" btn-primary btn mx-1"
+                onClick={() => saveContactQuery()}
+              >
+                Send Message
+              </button>
             </div>
           </div>
         </div>

@@ -169,7 +169,7 @@ const Settings = () => {
 
   const getContact = async () => {
     try{
-      let {data} = await axiosInstance.get('/common/website/CONTACT_INFO')
+      let {data} = await axiosInstance.get('/website/CONTACT_INFO')
       setContact(data?.contact?.data)
     } catch(error){ console.error(error) }
   }

@@ -13,7 +13,7 @@ const { randomOtp } = require("../constants/utils");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { specialization } = require("../seeds/specialization-seed");
 const noticeModel = require("../models/notice-model");
-const { cities } = require("../seeds/citiesData.json");
+const { cities } = require("../seeds/citiesData");
 const settingModel = require("../models/setting-model");
 
 const sessionInfo = async (request, user) => {

@@ -11,10 +11,10 @@ const About = () => {
   return (
     <>
       <div style={{ height: "60px" }}></div>
-      <h3 className="text-center bg-success text-light p-4">About Us </h3>
+      <h3 className="text-center bg-success text-light p-2">About Us </h3>
 
-      <div style={{ width: "100%", height: "500px" }} className="">
-        <img style={{ width: "100%", height: "500px" }} src={about2} alt="" />
+      <div className="about-banner-conatiner">
+        <img className="about-banner" src={about2} alt="" />
       </div>
       <div className="container">
         <div style={{ height: "300px" }} className="row">
@@ -37,14 +37,15 @@ const About = () => {
           </div>
           <div style={{ height: "300px" }} className="col-sm-5">
             <img
+              className="about-banner2"
               style={{ height: "300px", width: "100%" }}
               src={about3}
               alt=""
             />
           </div>
         </div>
-        <div style={{ height: "500px" }} >
-          <img style={{ height: "500px", width: "100%" }} src={about4} alt="" />
+        <div className="about-banner-container">
+          <img className=" about-banner" src={about4} alt="" />
         </div>
       </div>
     </>

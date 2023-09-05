@@ -14,7 +14,10 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
         setActiveNav(pathname[2])
     }, [pathname,])
 
-
+const Logout = () => {
+  localStorage.clear();
+  window.location.replace("/login");
+};
     return (
         <aside className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ${!isOpen ? 'ms-aside-left' : ''} `} style={{ paddingBottom: '6rem' }}>
             <div className="logo-sn ms-d-block-lg">
@@ -26,7 +29,9 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
                         <h5 className="text-center text-white mt-2">{['SA', 'MR', 'PT', 'AD'].includes(userInfo.userType) ? userInfo?.name : userInfo?.organizationId?.name}</h5>
                         <h6 className="text-center text-white mb-3">{userInfo?.userType !== 'DR' ? userRoutes[userInfo?.userType].title : userInfo?.organizationId?.organizationType?.toUpperCase()}</h6>
                     </div>
+                    
                 </div>
+                
             </div>
             <ul className="accordion ms-main-aside fs-14 overflow-auto">
                 {MODULES.filter((m) => m.access.includes(userInfo?.userType)).map((module, key) => <li className={`menu-item ${activeNav === module.id && 'nav-link-active'}`} onClick={() => { mobileView && setIsOpen(false) }} key={key}>
@@ -34,7 +39,11 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
                         <span>{module.title}</span>
                     </Link>
                 </li>)}
+                
             </ul>
+            
+             <button className="btn  btn-dark btn-md" onClick={() => Logout()}>Logout</button>
+             
         </aside>
     );
 }

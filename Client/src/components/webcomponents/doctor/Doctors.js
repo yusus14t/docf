@@ -47,7 +47,7 @@ const handle = ()=>{
                     )
                     .map((doctor, key) => (
                       <>
-                        <div className="col-lg-4 col-md-4 mcard" key={key}>
+                        <div className="col-lg-4 col-md-6 mcard" key={key}>
                           <Link to={`/clinic-detail/${doctor?.organizationId}`}>
                             <div
                               onClick={handle}
