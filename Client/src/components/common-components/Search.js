@@ -46,7 +46,7 @@ const Search = () => {
   
   const getAllCities = async () => {
     try {
-      let { data } = await axiosInstance.get("/common/cities");
+      let { data } = await axiosInstance.get("/cities");
       setCities(data?.cities);
     } catch (error) {
       console.error(error);
