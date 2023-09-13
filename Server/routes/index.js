@@ -37,7 +37,7 @@ router.get("/get-specializations", commonController.allSpecializations);
 router.get("/specialization/:id", commonController.oneSpecialization);
 router.get('/website-images', superAdminController.websiteImages );
 router.get("/website/:id", commonController.websiteSetting);
-
+router.get('/cities', commonController.allCities)
 
 router.get("/search", commonController.search);
 

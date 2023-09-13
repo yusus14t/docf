@@ -276,6 +276,9 @@ const Gynae = () => {
                         src={Hospital?.photo ? getFullPath(Hospital?.photo) : NO_PHOTO }
                         alt=""
                       />
+                      <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
+                        &#8377; {Hospital.fee}
+                      </span>
                     </div>
                     <div className="clinic-details d-flex flex-row justify-content-between">
                       <div className="mt-3">
@@ -351,7 +354,7 @@ const Gynae = () => {
                           style={{ marginLeft: "10px", fontSize: "10px" }}
                           className="ml-2 p-2 clinic-title"
                         >
-                          &#8377;{clinic?.name}
+                          &#8377;{clinic?.fee}
                         </span>
                       </div>
                       <div className="clinic-details d-flex flex-row justify-content-between">
