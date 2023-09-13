@@ -58,10 +58,13 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
             
             let { data } = await axiosInstance.post('/doctor/add-appointment', formData,);
             setAppointments(data?.appointment)
-
+            
             setIsOpen(false)
             refresh()
             toasty.success(data?.message)
+
+            if( data.redirectUrl ) window.location.href = data.redirectUrl
+            
         } catch (error) {
             setIsOpen(false)
             toasty.error(error?.message)

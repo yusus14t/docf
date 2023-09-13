@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const multer = require('multer');
@@ -6,7 +5,7 @@ const ftp = require("basic-ftp");
 const fs = require("fs");
 const path = require('path');
 const QRCode = require('qrcode');
-
+const crypto = require('crypto')
 
 const Error = ({ message = 'Something went wrong!', code = 500, status = 'Fail', ...args }) => {
   return { message, code, status, ...args }
@@ -17,11 +16,9 @@ const Success = ({ message = 'Successfully..', code = 200, status = 'OK', ...arg
 }
 
 const encryptPassword = async (password) => {
-  const salt = await bcrypt.genSalt(10)
-  return await bcrypt.hash(password, salt)
 }
 
-const comparePassword = async (password, hashPassword) => await bcrypt.compare(password, hashPassword)
+const comparePassword = async (password, hashPassword) => ''
 
 const createToken = (id) => jwt.sign({ _id: id }, process.env.JWT_SECRET)
 
@@ -113,15 +110,58 @@ const QRCodeGenerate = async (data, filename) => {
   } catch (error) { console.log(error) }
 }
 
+class Payment {
+  constructor(txnId, userId, amount){
+    this.amount = amount
+    this.txnId = txnId
+    this.userId = userId
+  }
+  
+  create_checksum = () => {
+
+    const orderData = {
+      "merchantId": "PGTESTPAYUAT",
+      "merchantTransactionId": String(this.txnId),
+      "merchantUserId": String(this.userId),
+      "amount": this.amount*100,
+      "redirectUrl": 'http://localhost:3000/payment-success/',
+      "redirectMode": "REDIRECT",
+      "callbackUrl": "http://localhost:3000/payment-failed/",
+      "mobileNumber": "9999999999",
+      "paymentInstrument": {
+        "type": "PAY_PAGE"
+      }
+    };
+
+    const b64Data = Buffer.from(JSON.stringify(orderData)).toString('base64')
+    const checksum = crypto.createHash('sha256')
+    .update(b64Data + '/pg/v1/pay' + '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399')
+    .digest('hex') + '###1'
+  
+    return { b64Data, checksum }
+  }
+
+
+  create_payment = async function () {
+    try {
+      let { b64Data, checksum } = this.create_checksum()
+      return await axios.post('https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay', { request: b64Data }, { headers: { accept: 'application/json', 'Content-Type': 'application/json', 'X-VERIFY': checksum }} )
+    }catch( error ){ return error }  
+  }
+}
+
+
+
 
 module.exports = {
+  Errors,
+  upload,
   Error, Success,
   encryptPassword, comparePassword,
   createToken,
-  Errors,
   randomOtp,
   smsService,
-  upload,
   uploadToBucket,
   QRCodeGenerate,
+  Payment, 
 }

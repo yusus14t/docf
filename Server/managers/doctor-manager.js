@@ -1,12 +1,11 @@
 const AppointmentModel = require("../models/appointment-model");
-const { Success, Error, uploadToBucket } = require("../constants/utils");
+const { Success, Error, uploadToBucket, createPayment, Payment } = require("../constants/utils");
 const UserModel = require("../models/user-model");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { EventEmitter } = require("events");
 const OrganizationModel = require("../models/organization-model");
 const DealModel = require("../models/deal-model");
-const { pipeline } = require("stream");
-
+const { createChecksum } = require('../constants/utils')
 const eventEmitter = new EventEmitter();
 
 const getAppointments = async (body, user) => {
@@ -217,7 +216,7 @@ const deleteDoctor = async (body, user) => {
   }
 };
 
-const addAppointment = async (body, user) => {
+const addAppointment = async (body, user, response ) => {
   try {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -288,9 +287,18 @@ const addAppointment = async (body, user) => {
       data: Obj,
     });
 
+    
+
+    let payment =  new Payment(appointment._id, appointment.userId, 10 ) 
+    let { data: paymentData } = await payment.create_payment()
+
+    let redirectUrl = null
+    if( paymentData.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+
     return Success({
       message: "Appointment successfully created",
       appointment: Obj,
+      redirectUrl
     });
   } catch (error) {
     console.log(error);

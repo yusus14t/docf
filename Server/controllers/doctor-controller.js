@@ -23,7 +23,7 @@ const deleteDoctor = async ( req, res ) => {
 }
 
 const addAppointment = async ( req, res ) => {
-    DoctorManager.addAppointment( req.body, req.user )
+    DoctorManager.addAppointment( req.body, req.user, res )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
