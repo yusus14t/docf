@@ -8,7 +8,8 @@ import Privacy from "../components/webcomponents/Privacy";
 import Terms from "../components/webcomponents/Terms";
 import NotFound from "../components/webcomponents/NotFound";
 import NoData from "../components/webcomponents/NoData";
-import Qrcode from "../components/common-components/Qrcode";
+import Payment_Success from "../components/common-components/Payment_Success";
+import Payment_Failed from "../components/common-components/Payment_Failed";
 
 import Pricing from "../components/webcomponents/Pricing";
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
@@ -47,7 +48,9 @@ const COMMON_ROUTE = [
   { path: "/specialization/:id", element: <SpecializationDetails /> },
   { path: "/privacy", element: <Privacy /> },
   { path: "/terms", element: <Terms /> },
-  {path:"/pricing-refund-policy", element:<Pricing/>},
+  { path:"/pricing-refund-policy", element:<Pricing/>},
+  { path:"/payment-success", element:<Payment_Success />},
+  { path:"/payment-failed", element:<Payment_Failed />},
 
   {
     path: "/login",
