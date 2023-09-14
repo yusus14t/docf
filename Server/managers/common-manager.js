@@ -15,6 +15,7 @@ const { specialization } = require("../seeds/specialization-seed");
 const noticeModel = require("../models/notice-model");
 const { CITIES } = require("../seeds/citiesData");
 const settingModel = require("../models/setting-model");
+const TransactionModel = require("../models/transaction-model");
 
 const sessionInfo = async (request, user) => {
   try {
@@ -746,6 +747,31 @@ const websiteSetting = async (params) => {
   }
 };
 
+
+const phonepayStatus = async ( body, res ) => {
+  try {
+    let transaction = await TransactionModel.findOne({ refrenceId: body?.providerReferenceId })
+    if( !transaction ){
+      await TransactionModel({
+        status: body?.code,
+        merchantId: body?.merchantId,
+        transactionId: body.transactionId,
+        amount: body.amount,
+        refrenceId: body?.providerReferenceId
+      }).save()
+    }
+
+    if( body.code === 'PAYMENT_SUCCESS' ){
+      await AppointmentModel.updateOne({ _id: ObjectId( body.transactionId )}, { isPaid: true })
+      res.redirect('http://localhost:3000/payment-success')
+    }
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error)
+  }
+};
+
 module.exports = {
   logIn,
   signUp,
@@ -774,4 +800,5 @@ module.exports = {
   deleteNotice,
   websiteSetting,
   allCities,
+  phonepayStatus,
 };

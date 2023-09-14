@@ -6,12 +6,8 @@ const appointmentSchemna = new Schema({
     departmentId:  { type: Schema.Types.ObjectId, ref:'organization' },
     createdBy:  { type: Schema.Types.ObjectId, ref:'user' },
     status: { type: String, enum: ['waiting', 'cancel', 'complete', 'unreached'], default: 'waiting' },
-    payment: {
-            isPaid: { type: Boolean, default: false },
-            amount: { type: Number, defaut: 0 },
-            transactionId: { type: String },
-            date: { type: Date }, 
-        },
+    isPaid: { type: Boolean, default: false },
+
 },{ timestamps: true })
 
 module.exports = model( 'appointment', appointmentSchemna)

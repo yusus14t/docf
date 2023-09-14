@@ -289,11 +289,11 @@ const addAppointment = async (body, user, response ) => {
 
     
 
-    let payment =  new Payment(appointment._id, appointment.userId, 10 ) 
+    let payment =  new Payment(appointment._id, appointment.userId, 1 ) 
     let { data: paymentData } = await payment.create_payment()
-
+    console.log('paymentData', paymentData)
     let redirectUrl = null
-    if( paymentData.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+    if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
 
     return Success({
       message: "Appointment successfully created",
