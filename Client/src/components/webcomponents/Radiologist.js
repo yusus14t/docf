@@ -1,34 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { axiosInstance, getAuthHeader, getFullPath, getImages } from '../../constants/utils';
-import NO_PHOTO from '../../assets.app/images/no-photo.png';
-import { WEBSITE_IMAGE } from '../../constants/constant';
-
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  axiosInstance,
+  getAuthHeader,
+  getFullPath,
+  getImages,
+} from "../../constants/utils";
+import NO_PHOTO from "../../assets.app/images/no-photo.png";
+import {
+  RADIOLOGIST_DEPARTMENT,
+  WEBSITE_IMAGE,
+} from "../../constants/constant";
 
 const Ultrasound = () => {
   const [clinics, setClinics] = useState([]);
-  const [ images, setImages ] = useState([])
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
-    initailizer()
+    initailizer();
 
     getAllClinics();
   }, []);
 
   const initailizer = async () => {
-    let imagesData = await getImages()
-    setImages(imagesData.data.images)
-  }
+    let imagesData = await getImages();
+    setImages(imagesData.data.images);
+  };
 
-  const findImage = ( id ) => {
-    return getFullPath(images.find( image => image.id === id )?.image)
-  }
-
-
+  const findImage = (id) => {
+    return getFullPath(images.find((image) => image.id === id)?.image);
+  };
 
   const getAllClinics = async () => {
     try {
-      let { data } = await axiosInstance.get("/all-clinics", { params: { filter: { specialization: 'Ultrasound' }}, ...getAuthHeader()});
+      let { data } = await axiosInstance.get("/all-clinics", {
+        params: { filter: { specialization: "Ultrasound" } },
+        ...getAuthHeader(),
+      });
       setClinics(data?.clinics);
     } catch (error) {
       console.error(error);
@@ -37,24 +45,33 @@ const Ultrasound = () => {
 
   return (
     <>
-      <div className="box"></div>
-      <div className=" banner text-center text-dark">
-        <h3  className="title p-3  bg-success">Ultrasound</h3>
+      <div className="box bg-light"></div>
+      <div className=" mini-menu position-fixed w-100 bg-light ">
+        <ul className="d-flex mb-0 p-2 overflow-auto">
+          {RADIOLOGIST_DEPARTMENT.map(({ id, name }) => (
+            <li
+              className="bgh py-1 px-3 cursor-pointer rounded mt-1 mx-1"
+              onClick={() => {}}
+            >
+              {name}
+            </li>
+          ))}
+        </ul>
       </div>
-      <div className="px-2 pt-0 ">
+      {/* <div className="px-2 pt-0 ">
         <div
           className="hero-banner"
           style={{
             backgroundColor: "blue",
-            backgroundImage: `url(${findImage(WEBSITE_IMAGE.ULTRASOUND_BANNER)})`,
+            backgroundImage: `url(${findImage(
+              WEBSITE_IMAGE.ULTRASOUND_BANNER
+            )})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
           }}
-        >
-         
-        </div>
-      </div>
-      <div className="container">
+        ></div>
+      </div> */}
+      <div className="container mt-5">
         <div className="row">
           {clinics?.length > 0 &&
             clinics.map((clinic, key) => (
@@ -75,7 +92,10 @@ const Ultrasound = () => {
                     </div>
                     <div className="dr-details">
                       <h2 className="text-center">{clinic?.name}</h2>
-                      <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
+                      <span
+                        style={{ marginLeft: "10px", fontSize: "10px" }}
+                        className="ml-2 p-2 clinic-title"
+                      >
                         &#8377; {clinic.fee}
                       </span>
                       <p
@@ -100,6 +120,6 @@ const Ultrasound = () => {
       </div>
     </>
   );
-}
+};
 
 export default Ultrasound;

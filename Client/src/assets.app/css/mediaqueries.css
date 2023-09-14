@@ -12,6 +12,13 @@
   height: 200px;
 
 }
+.mbgl{
+    margin-left: 40px;
+  }
+  .Header-icon1{
+    font-size: 30px;
+    margin-top: 15px;
+  }
 .about-banner2{
   display: none;
 }
@@ -45,7 +52,10 @@
     width: 15rem !important;
   }
   .search-mobile {
-    flex-direction: column;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    justify-content: center;
+    margin-bottom: 8px;
   }
   .sixe {
     font-size: 12px;
@@ -393,6 +403,18 @@
   .search-items {
     width: 11rem;
   }
+  .department-card-image{
+    width: 105px;
+    height: 140px;
+
+  }
+  .mbgl{
+    margin-left: 420px;
+  }
+  .Header-icon1{
+    font-size: 30px;
+    margin-top: 15px;
+  }
   /* .search-items{
  width: 18rem;
 } */
@@ -433,6 +455,9 @@
   .fixed,
   .side-nav.fixed {
     margin-top: 58px;
+  }
+  .mbgl{
+    display: none;
   }
   .dr-address {
     width: 150px;
@@ -475,9 +500,17 @@
   body {
     background-color: white;
   }
+  .mini-menu{
+    display: flex;
+    justify-content: center;
+  }
   .fixed,
   .side-nav.fixed {
     margin-top: 58px;
+  }
+
+  .mbgl{
+    display: none !important;
   }
   .dr-address {
     width: 150px;
@@ -489,6 +522,7 @@
     width: 310px;
   }
   .dr-spelialization {
+    font-size: 0.8rem !important;
     width: 150px;
   }
   .specialization-card {

@@ -74,7 +74,7 @@ const HospitalGrid = ({source}) => {
                             }
                             alt=""
                           />
-                           <span style={{marginLeft:"10px", fontSize:"10px"}} className="ml-2 p-2 clinic-title">
+                           <span style={{marginLeft:"10px", fontSize:"15px"}} className="ml-2 p-2 clinic-title">
                               &#8377; {hospital.fee}
                             </span>
                         </div>

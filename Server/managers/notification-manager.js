@@ -42,7 +42,7 @@ const addNotification = async ( body, user ) => {
 
 const deleteNotification = async ( body, user ) => {
     try{
-        if( user.userType !== 'SA' ) return Error({ message: 'Not access to delete'})
+        if( !['SA','MR'].includes(user.userType) ) return Error({ message: 'Not access to delete'})
         await NotificatioModel.deleteOne({_id: ObjectId(body._id) })
         return Success({ message: 'Successfully deleted notification.' })
     } catch(error){ 

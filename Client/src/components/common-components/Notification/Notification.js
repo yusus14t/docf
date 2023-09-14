@@ -100,10 +100,10 @@ const Notification = () => {
                                 </div>  
                                 <div className="col ">
                                     <div className='row'>
-                                        <div className='col-6'>
+                                        {/* <div className='col-6'>
                                             <span className="text-dark ">{notification.status}</span>
-                                        </div>
-                                        { userInfo.userType === 'SA' && <div className='col-6'>
+                                        </div> */}
+                                        { ["SA", "MR"].includes(userInfo.userType) && <div className='col-6'>
                                             <FontAwesomeIcon className='ms-text-dark cursor-pointer' icon={faTrash} onClick={() => handleDelete(notification._id)}  />
                                             <FontAwesomeIcon className='ms-text-dark cursor-pointer mx-3' icon={faEye} onClick={() => handleViewNotification(notification)}  />
                                         </div>}

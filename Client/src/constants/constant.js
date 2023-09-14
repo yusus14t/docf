@@ -49,7 +49,7 @@ export const WEB_MENU_ITEMS = [
          { id: "hospitals", name: "Hospitals", path: "/hospitals" },
          { id: "clinics", name: "Clinics", path: "/clinics" },
          { id: "doctors", name: "Doctors", path: "/doctors" },
-         { id: "ultrasounds", name: "Ultrasounds", path: "/ultrasounds" },
+         { id: "radiologist", name: "Radiologist", path: "/radiologist" },
          { id: "homeopathy", name: "Homeopathy", path: "/homeopathy" },
          { id: "about", name: "About Us", path: "/about" },
          { id: "contact", name: "Contact Us", path: "/contact" },
@@ -79,11 +79,15 @@ export const SERVICES = [
 ]
 
 export const RADIOLOGIST_DEPARTMENT = [
-    { id:'ULTRASOUND', name: 'Ultrasound' },
-    { id:'XRAY', name: 'X-Ray' },
-    { id:'MRI', name: 'MRI' },
-    { id:'CTSCAN', name: 'CT-Scan' },
-]
+    { id: "CTSCAN", name: "CTScan" },
+    { id: "ECHO", name: "ECHO" },
+    { id: "ENDOSCOPY", name: "Endoscopy" },
+    { id: "MRI", name: "MRI" },
+    { id: "NICU", name: "NICU" },
+    { id: "ULTRASOUND", name: "Ultrasound" },
+    { id: "XRAY", name: "XRay" },
+    { id: "ECG", name:"ECG"}
+       ];
 
 export const ORGANIZATION_TYPE = [
     { id: 'HOSPITAL', name: 'Hospital' },

@@ -67,7 +67,7 @@ const Support = () => {
                                         <span className="text-dark">{formatDate(ticket.createdAt)}</span>
                                     </div>                                
                                     <div className="col text-center">
-                                        <span className="text-dark">{ticket.status}</span>
+                                        <span className="text-dark">Recieved</span>
                                     </div>
                                 </div>)}
                                 </div>

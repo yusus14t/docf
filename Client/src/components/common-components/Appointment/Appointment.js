@@ -142,7 +142,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="col-6 mb-3">
+                        {/* <div className="col-6 mb-3">
                             <label className=''>Blood Group</label>
                             <div className="input-group">
                                 <select className={`form-control ${errors?.bloodGroup ? 'border-danger' : ''}`} {...register('bloodGroup', { required: 'Gender is required' })}>
@@ -154,7 +154,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                                     )}
                                 </select>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="col-12 mb-3">
                             <label className=''>Guardian Name (optional)</label>
                             <div className="input-group">
