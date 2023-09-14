@@ -204,6 +204,10 @@ const allCities = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const phonepayStatus = async ( req, res ) => {
+    commonManager.phonepayStatus( req.body, res )
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -238,4 +242,5 @@ module.exports = {
     deleteNotice,
     websiteSetting,
     allCities,
+    phonepayStatus,
 }

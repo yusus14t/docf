@@ -120,23 +120,23 @@ class Payment {
   create_checksum = () => {
 
     const orderData = {
-      "merchantId": "PGTESTPAYUAT",
+      "merchantId": process.env.MERCHANT_ID,
       "merchantTransactionId": String(this.txnId),
       "merchantUserId": String(this.userId),
       "amount": this.amount*100,
-      "redirectUrl": 'http://localhost:3000/payment-success/',
-      "redirectMode": "REDIRECT",
-      "callbackUrl": "http://localhost:3000/payment-failed/",
+      "redirectUrl": 'http://localhost:5000/api/phonepay-status',
+      "redirectMode": "POST",
+      "callbackUrl": "http://localhost:5000/api/phonepay-status",
       "mobileNumber": "9999999999",
       "paymentInstrument": {
         "type": "PAY_PAGE"
       }
     };
-
+    console.log('orderData', orderData)
     const b64Data = Buffer.from(JSON.stringify(orderData)).toString('base64')
     const checksum = crypto.createHash('sha256')
-    .update(b64Data + '/pg/v1/pay' + '099eb0cd-02cf-4e2a-8aca-3e6c6aff0399')
-    .digest('hex') + '###1'
+    .update(b64Data + '/pg/v1/pay' + process.env.MERCHANT_KEY)
+    .digest('hex') + '###'+ process.env.KEY_INDEX
   
     return { b64Data, checksum }
   }
@@ -145,7 +145,10 @@ class Payment {
   create_payment = async function () {
     try {
       let { b64Data, checksum } = this.create_checksum()
-      return await axios.post('https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay', { request: b64Data }, { headers: { accept: 'application/json', 'Content-Type': 'application/json', 'X-VERIFY': checksum }} )
+      console.log('test response',)
+      let response = await axios.post('https://api.phonepe.com/apis/hermes/pg/v1/pay', { request: b64Data }, { headers: { accept: 'application/json', 'Content-Type': 'application/json', 'X-VERIFY': checksum }} )
+      console.log('response', response)
+      return response
     }catch( error ){ return error }  
   }
 }
