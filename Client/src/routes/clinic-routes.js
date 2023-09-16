@@ -8,14 +8,14 @@ import AppointmentList from "../components/common-components/Appointment/Appoint
 import Settings from "../components/common-components/Settings/Settings";
 
 const CLINIC = [
-  { path: "/clinic", element: <Navigate to={"/clinic/dashboard"} /> },
+  { path: "/clinic", element: <Navigate to={"/clinic/dashboard"} />, },
   { path: "/clinic/dashboard", element: <Dashbaord /> },
   { path: "/clinic/patients", element: <Patients /> },
   { path: "/clinic/appointment", element: <AppointmentList /> },
-  { path: "/clinic/notification", element: <Notification /> },
-  { path: "/clinic/support", element: <Support /> },
-  { path: "/clinic/doctors", element: <Doctors /> },
-  { path: "/clinic/setting", element: <Settings /> },
+  { path: "/clinic/notification", element: <Notification />, onExpire: true },
+  { path: "/clinic/support", element: <Support />, onExpire: true },
+  { path: "/clinic/doctors", element: <Doctors />, onExpire: true },
+  { path: "/clinic/setting", element: <Settings />, onExpire: true },
   { path: "/clinic/*", element: <Navigate to={"/clinic/dashboard"} /> },
 ];
 

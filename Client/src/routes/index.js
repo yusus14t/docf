@@ -14,8 +14,7 @@ import Loader from "../layout/Loader";
 import WebLayout from  "../layout/weblayout/WebLayout";
 import AppLayout from "../layout/Index";
 import { userInfo } from "../constants/utils";
-
-const getUser = () => userInfo
+import Expire from "../components/common-components/Expire";
 
 const USER_ROUTES = {
   SA: { path: "/super-admin", id: SUPER_ADMIN },
@@ -27,15 +26,25 @@ const USER_ROUTES = {
   AD: { path: "/admin", id: ADMIN },
 };
 
-export const AllRoutes = () => {
-  let user = getUser();
-  if( !user ) localStorage.clear()
-  if( !user?.isActive ){
-    localStorage.clear()
-    user = null
-  }
-  let userRoute = USER_ROUTES[user?.userType];
+const userRoute = USER_ROUTES[userInfo?.userType]
 
+const expireRoute = [
+  { path: `${userRoute?.path}`, element: <Expire /> },
+  { path: `${userRoute?.path}/dashboard`, element: <Expire /> },
+  (userRoute && userRoute?.id?.filter( route => route.onExpire)),
+  { path: `${userRoute?.path}/*`, element: <Expire /> },
+]
+
+
+
+export const AllRoutes = () => {
+
+  if( !userInfo ) localStorage.clear()
+  if( !userInfo?.isActive ){
+    localStorage.clear()
+  }
+
+  /********* All Common Routes **************/
   let allUseRoutes = [
     {
       path: "/",
@@ -44,17 +53,25 @@ export const AllRoutes = () => {
       children: COMMON_ROUTE,
     },
   ];
+  /****************************************/
 
-  if( userRoute?.path ){
+  /***************** All User based Routes *******************/
+  if (userRoute?.path) {
     allUseRoutes.push({
       path: `/${userRoute?.path}`,
       exact: true,
-      element: user ? <AppLayout /> : <Navigate to={"/login"} />,
-      children: user ? userRoute.id : [],
+      element: userInfo ? <AppLayout /> : <Navigate to={"/login"} />,
+      children: userInfo
+        ? (
+            userInfo?.organizationId?.isPaid || !['DP', 'CL', 'HL'].includes(userInfo?.userType)
+              ? userRoute.id
+              : expireRoute
+          )
+        : [],
     });
   }
+  /**************************************************** */
 
   let routes = useRoutes(allUseRoutes);
-
   return <Suspense fallback={<Loader />}>{routes}</Suspense>;
 };

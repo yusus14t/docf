@@ -16,7 +16,8 @@ router.post('/upload-image', upload.single('file'), superAdminController.uploadI
 router.post('/website/:id', superAdminController.contactInfo );
 router.get('/website/:id', superAdminController.getWebsiteInfo );
 router.get('/appointment-users', superAdminController.appointmentUsers );
-
+router.post('/patient-price', superAdminController.patientPrice );
+router.post('/organization-price', superAdminController.organizationPrice );
 
 
 module.exports = router;

@@ -8,7 +8,7 @@ const jwt_verify = async ( req, res, next ) => {
         req.user = user
         req.userId = verify._id
         next();
-     } catch(error){ res.status(400).send('Invalid Token') }
+     } catch(error){ res.status(401).send('Invalid Token') }
 }
 
 module.exports = {

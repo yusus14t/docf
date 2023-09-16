@@ -44,7 +44,11 @@ router.get("/search", commonController.search);
 //hospitals
 router.get('/hospitals', commonController.getAllHospitals);
 router.get('/hospital-details/:id', commonController.hospitalDetails);
+
 router.post('/phonepay-status', commonController.phonepayStatus);
+router.post('/payment', jwt_verify, commonController.payment);
+
+router.get('/plans', superAdminController.plans );
 
 // stream: Event Driven  
 router.get('/stream', EventHandler )

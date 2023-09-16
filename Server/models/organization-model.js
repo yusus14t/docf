@@ -39,7 +39,7 @@ const organizationSchema = new Schema({
             },
         }
     ],
-
+    isPaid: { type: Boolean, default: false },
     isActive: { type: String, default: false },
     tab: {
         step: { type: String },

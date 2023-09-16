@@ -14,7 +14,7 @@ import phone from "../../../assets.app/img/icons/icons8-phonecall-96.png";
 import whatsapp from "../../../assets.app/img/icons/icons8-whatsapp-96.png";
 import email from "../../../assets.app/img/icons/icons8-email-96.png";
 import twitter from "../../../assets.app/img/icons/icons8-twitter-100.png";
-
+import Payment from "./Payment";
 
 const Settings = () => {
   const  userInfo = JSON.parse(localStorage.getItem('user'))
@@ -186,6 +186,7 @@ const Settings = () => {
                 {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
                 {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('WEBSITE')}>Website</span>}
                 {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('CONTACT')}>Contact</span>}
+                {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PAYMENT')}>Payment</span>}
                 <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
 
               </div>
@@ -414,6 +415,8 @@ const Settings = () => {
                   </div>
                 </>
               )}
+              {tab === "PAYMENT" && <Payment />}
+
             </div>
           </div>
         </div>

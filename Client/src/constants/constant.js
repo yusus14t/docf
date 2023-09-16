@@ -131,3 +131,10 @@ export const NUMBER_TO_DAY = {
     5: 'FRI',
     6: 'SAT',
 }
+
+export const PLAN = {
+    month: 'month',
+    quater: 'quater',
+    halfYear: 'halfYear',
+    year: 'year',
+}

@@ -132,7 +132,7 @@ class Payment {
         "type": "PAY_PAGE"
       }
     };
-    console.log('orderData', orderData)
+
     const b64Data = Buffer.from(JSON.stringify(orderData)).toString('base64')
     const checksum = crypto.createHash('sha256')
     .update(b64Data + '/pg/v1/pay' + process.env.MERCHANT_KEY)
@@ -145,10 +145,9 @@ class Payment {
   create_payment = async function () {
     try {
       let { b64Data, checksum } = this.create_checksum()
-      console.log('test response',)
-      let response = await axios.post('https://api.phonepe.com/apis/hermes/pg/v1/pay', { request: b64Data }, { headers: { accept: 'application/json', 'Content-Type': 'application/json', 'X-VERIFY': checksum }} )
-      console.log('response', response)
-      return response
+      let check = await axios.post(process.env.URL, { request: b64Data }, { headers: { accept: 'application/json', 'Content-Type': 'application/json', 'X-VERIFY': checksum }} )
+      console.log('payment response', check)
+      return check
     }catch( error ){ return error }  
   }
 }
