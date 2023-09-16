@@ -52,7 +52,66 @@
 .dropdown-menu-active:hover {
   background: #00000012;
 }
+.offprice-container {
+  background-color: aliceblue;
+  right: 10px !important;
+  position: absolute;
+  top: 20px !important;
+  padding: 3px;
+  /* border-top-right-radius: 10px; */
+  border-bottom-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+.offprice {
+  font-weight: bolder;
+  color: yellow;
+  font-size: 1.3rem;
 
+  background-image: -webkit-linear-gradient(
+    left,
+    #f00,
+    #ff2b00,
+    #f50,
+    #ff8000,
+    #fa0,
+    /* #ffd500,
+    #ff0, */
+    #d4ff00,
+    #af0,
+    #80ff00,
+    #5f0,
+    #2bff00,
+    #0f0,
+    #00ff2a,
+    #0f5,
+    #00ff80,
+    #0fa,
+    #00ffd5,
+    #0ff,
+    #00d5ff,
+    #0af,
+    #0080ff,
+    #05f,
+    #002aff,
+    #00f,
+    #2b00ff,
+    #50f,
+    #8000ff,
+    #a0f,
+    #d400ff,
+    #f0f,
+    #ff00d4,
+    #f0a,
+    #ff0080,
+    #f05,
+    #ff002b,
+    #f00
+  );
+  -webkit-animation: animatedBackground_a 5s linear infinite alternate;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #0000;
+  background-clip: text;
+}
 .bell-badge {
   position: absolute;
   left: 10px;
@@ -60,7 +119,10 @@
   font-size: 8px;
   color: white;
 }
-
+.bgh {
+  background-color: #dfdede;
+  box-shadow: 0px 10px 24px rgb(0 0 0 / 4%);
+}
 .main-content {
   display: flex;
   flex-direction: row;
@@ -71,6 +133,13 @@
   height: 5rem;
   width: 5rem;
   border: 3px white solid;
+}
+
+.carousel .control-prev.control-arrow:before {
+  border-right: 8px solid #a93c3c !important;
+}
+.carousel .control-next.control-arrow:before {
+  border-left: 8px solid #a93c3c !important;
 }
 .nav-link-active {
   background-color: #ffffff78;
@@ -95,8 +164,8 @@
   width: 100%;
   height: 40px;
 }
-.search-items{
- width: 15rem;
+.search-items {
+  width: 15rem;
 }
 .avatar {
   width: 2.5rem;
@@ -107,16 +176,16 @@
   padding: 10px;
   border-radius: 8px;
 }
-.main-ch{
+.main-ch {
   width: 50%;
 }
-.footer-logo{
+.footer-logo {
   width: 200px;
 }
 .login_button a {
   color: white;
 }
-.footer-poster{
+.footer-poster {
   width: 100%;
   height: 150px;
   padding: 5px 20px 5px 20px;
@@ -241,7 +310,7 @@
   height: 75.5vh;
   overflow-x: hidden;
 }
-.btn{
+.btn {
   padding: 4px;
 }
 .btn-1 {
@@ -600,16 +669,15 @@ input::-webkit-inner-spin-button {
   text-overflow: ellipsis;
   width: 200px;
 }
-.about-banner-conatiner{
+.about-banner-conatiner {
   width: 100%;
   height: 500px;
 }
-.about-banner{
+.about-banner {
   width: 100%;
   height: 500px;
-
 }
-.app-ing{
+.app-ing {
   width: 150px;
   height: 150px;
   border-radius: 6px;
@@ -714,7 +782,10 @@ input::-webkit-inner-spin-button {
   flex-direction: column;
 }
 .token-list-active {
-  border: 1px solid #00000085;
+  border: 2px solid #00000085;
+}
+.token-active {
+  border: 3px solid green;
 }
 .Clinic-basic-details {
   padding-left: 40px;
@@ -803,7 +874,7 @@ input::-webkit-inner-spin-button {
   margin: 10px 0 0 0px;
   width: 100%;
 }
-.cli-time{
+.cli-time {
   margin: 0;
 }
 .clinic-timming {
@@ -1231,8 +1302,8 @@ input::-webkit-inner-spin-button {
 }
 
 .sixe {
-    padding-top: 12px;
-  }  
+  padding-top: 12px;
+}
 .specialization-card {
   width: 300px;
   margin: 10px;
@@ -1345,7 +1416,7 @@ input::-webkit-inner-spin-button {
   flex: 5;
   background-color: #f2f2f2;
 
-  height: 530px;
+  /* height: 530px; */
 }
 .pdash-right {
   flex: 7;
@@ -1399,24 +1470,24 @@ input::-webkit-inner-spin-button {
 }
 
 /* Searchpage */
-.search-page{
+.search-page {
   background-color: #dfdede;
   height: 70vh;
   /* width: 50%; */
   overflow: scroll;
 }
-.search-result-container{
+.search-result-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
-  [role=tooltip].popup-content{
+[role="tooltip"].popup-content {
   width: 500px;
 }
-.pop-up-content{
- border: 1px solid cadetblue;
- width: 500px;
- background-color: #000;
+.pop-up-content {
+  border: 1px solid cadetblue;
+  width: 500px;
+  background-color: #000;
 }
 
 .notice-max-height {
@@ -1445,6 +1516,6 @@ input::-webkit-inner-spin-button {
 .renew-plan-active {
   border: 3px solid #34a0ff;
 }
-  /*==================*************************media queries*******************==========================*/
 
 
+/*==================*************************media queries*******************==========================*/

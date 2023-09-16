@@ -194,15 +194,41 @@ const LogIn = () => {
                 </h3>
               </div>
               <div className="otp mt-2">
-                <label htmlFor="" className='text-disabled'>Enter the OTP</label>
-                <input className='form-control mt-2 letterSpcing' type="text" maxLength={10} name="OTP" id="" placeholder='X X X X' ref={otpRef} />
-                <button onClick={ValidateOTP} className='btn btn-light btn1 mt-4'>Log In</button>
+                <label htmlFor="" className="text-disabled">
+                  Enter the OTP
+                </label>
+                <input
+                  className="form-control mt-2 letterSpcing"
+                  type="text"
+                  maxLength={10}
+                  name="OTP"
+                  id=""
+                  placeholder="X X X X"
+                  ref={otpRef}
+                />
+                <button
+                  onClick={ValidateOTP}
+                  className="btn btn-light btn1 mt-4"
+                >
+                  Log In
+                </button>
               </div>
             </>
           ) : (
             <>
-              <label className='mb-2' htmlFor="Phone">Mobile Number</label>
-              <input id='Phone' className='form-control mb-2 letterSpcing' type="text" maxLength={10} pattern='###-###-####' placeholder='822992255' ref={inputRef} onChange={NumberFormat} />
+              <label className="mb-2" htmlFor="Phone">
+                Mobile Number
+              </label>
+              <input
+                id="Phone"
+                className="form-control mb-2 letterSpcing"
+                type="text"
+                maxLength={10}
+                pattern="###-###-####"
+                placeholder="822992255"
+                ref={inputRef}
+                onChange={NumberFormat}
+              />
               <span>
                 <button
                   onClick={() => userValidate(inputRef.current.value)}
@@ -221,6 +247,20 @@ const LogIn = () => {
           <h4 className="py-3">Select Anyone </h4>
           <div className="col-3 d-flex flex-column justify-content-center">
             <div
+              className="col mb-3 p-3 text-center cursor-pointer"
+              style={{
+                fontSize: "15px",
+                border: "1px solid white",
+                width: "300px",
+                borderRadius: "5px",
+              }}
+              onClick={() => handleTypes("patient")}
+            >
+              <span>To Book Appointments</span>
+              <br />
+              Patient
+            </div>
+            <div
               className="col text-center p-3 cursor-pointer"
               style={{
                 fontSize: "15px",
@@ -230,7 +270,8 @@ const LogIn = () => {
               }}
               onClick={() => handleTypes("hospital")}
             >
-              Hospital
+              <span>Only for &nbsp;</span>
+              &nbsp;Hospitals
             </div>
             <div
               className="col p-3 text-center my-3 cursor-pointer"
@@ -242,19 +283,8 @@ const LogIn = () => {
               }}
               onClick={() => handleTypes("clinic")}
             >
-              Clinic
-            </div>
-            <div
-              className="col p-3 text-center cursor-pointer"
-              style={{
-                fontSize: "15px",
-                border: "1px solid white",
-                width: "300px",
-                borderRadius: "5px",
-              }}
-              onClick={() => handleTypes("patient")}
-            >
-              Patient
+              <span>Only for&nbsp;</span>
+              &nbsp;Clinics
             </div>
           </div>
         </div>

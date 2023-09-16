@@ -10,6 +10,7 @@ import NotFound from "../components/webcomponents/NotFound";
 import NoData from "../components/webcomponents/NoData";
 import Payment_Success from "../components/common-components/Payment_Success";
 import Payment_Failed from "../components/common-components/Payment_Failed";
+import PricingTable from '../components/common-components/PricingTable'
 
 import Pricing from "../components/webcomponents/Pricing";
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
@@ -25,10 +26,12 @@ const Detail = lazy(() => import("../components/webcomponents/doctor/Detail"))
 const HospitalDetails = lazy(() => import("../components/webcomponents/Hospital/HospitalDetails"))
 
 const LogIn = lazy(() => import("../components/authentication/LogIn"));
-const Ultrasound = lazy(() => import("../components/webcomponents/Ultrasound"));
+const Radiologist = lazy(() => import("../components/webcomponents/Radiologist"));
 const SpecializationDetails = lazy(() => import('../components/webcomponents/Specializations/SpecializationDetails'))
 const Homeopathy =lazy(()=> import('../components/webcomponents/Homeopathy'));
+
 const getUserType = () => userInfo?.userType;
+
 const COMMON_ROUTE = [
   { path: "/", element: <Home /> },
   { path: "/doctor-detail", element: <Detail /> },
@@ -43,7 +46,7 @@ const COMMON_ROUTE = [
   { path: "/gynae", element: <Gynae /> },
   { path: "/hospital/:id", element: <HospitalDetails /> },
   { path: "/department/:id", element: <ClinicDetail /> },
-  { path: "/ultrasounds", element: <Ultrasound /> },
+  { path: "/radiologist", element: <Radiologist /> },
   { path: "/homeopathy", element: <Homeopathy /> },
   { path: "/specialization/:id", element: <SpecializationDetails /> },
   { path: "/privacy", element: <Privacy /> },
@@ -51,6 +54,7 @@ const COMMON_ROUTE = [
   { path:"/pricing-refund-policy", element:<Pricing/>},
   { path:"/payment-success", element:<Payment_Success />},
   { path:"/payment-failed", element:<Payment_Failed />},
+  { path:"/pricing", element:<PricingTable/>},
 
   {
     path: "/login",

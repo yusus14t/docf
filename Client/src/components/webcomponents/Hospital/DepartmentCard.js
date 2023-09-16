@@ -5,6 +5,7 @@ import { getFullPath } from "../../../constants/utils";
 const DepartmentCard = ({ departments }) => {
   return (
     <>
+    {console.log(departments)}
         <div className="row">
           {departments?.map(( department, key )=>{
             return (
@@ -30,7 +31,7 @@ const DepartmentCard = ({ departments }) => {
 
                       <div className="color-primary mt-2 d-flex flex-row align-items-center">
                         <Link
-                          className="btn btn btn-secondary w-100"
+                          className="btn btn btn-secondary"
                           to={`/department/${department?.organizationId?._id}`}
                         >
                           View Details

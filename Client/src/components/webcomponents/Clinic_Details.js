@@ -124,7 +124,7 @@ function Detail() {
                 : background
             })`,
             backgroundRepeat: "no-repeat",
-            backgroundSize:"100%"
+            backgroundSize: "100%",
           }}
         >
           <h4 className="clinic-detail-name">{clinicDetail?.name}</h4>
@@ -139,9 +139,11 @@ function Detail() {
                 }
                 alt=""
               /> */}
+              {console.log(clinicDetail)}
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
-                  {clinicDetail?.name}
+                  {/* {clinicDetail?.doctor?.name} */}
+                  alpha
                 </h4>
                 <h6
                   style={{ display: "inline-block" }}
@@ -196,7 +198,9 @@ function Detail() {
                                   : ""
                               }`}
                             >
-                              <div className="token ">
+                              <div className={`token ${list?.token == parseInt(token)
+                                  ? "token-active"
+                                  : ""}`}>
                                 <h4 className="token-list-number">
                                   {list?.token}
                                 </h4>
@@ -233,56 +237,63 @@ function Detail() {
                 <h4 className="mb-3 pt-2  text-center text-light">Info</h4>
 
                 <div className="bg-white m-2 rounded p-2">
-                    <h6>Consultation Fee <span className="ms-4">₹{clinicDetail?.fee}</span></h6>
+                  <h6>
+                    Consultation Fee{" "}
+                    <span className="ms-4">₹{clinicDetail?.fee}</span>
+                  </h6>
                 </div>
-                 
+
                 <div className="bg-white m-2 rounded p-2">
                   <h6 className="mx-1">Services</h6>
                   <div className="d-flex flex-wrap">
                     {clinicDetail?.services?.length > 0
-                      ? clinicDetail?.services?.map((serv) => 
-                          <div className="service-tube m-1">
-                            {serv?.name}
-                          </div>
-                        )
-                      : "-"
-                    }
+                      ? clinicDetail?.services?.map((serv) => (
+                          <div className="service-tube m-1">{serv?.name}</div>
+                        ))
+                      : "-"}
                   </div>
                 </div>
 
                 <div className="bg-white m-2 rounded p-2">
                   <h6>Important Notice</h6>
-                  {notices?.length > 0 && notices.map(notice =>
-                    <div style={{ borderLeft: '5px solid grey', paddingLeft: "1rem" }}>
-                      <h6>{notice.title}</h6>
-                      <p>{notice.description}</p>
-                    </div>)
-                  }
+                  {notices?.length > 0 &&
+                    notices.map((notice) => (
+                      <div
+                        style={{
+                          borderLeft: "5px solid grey",
+                          paddingLeft: "1rem",
+                        }}
+                      >
+                        <h6 className="text-danger">{notice.title}</h6>
+                        <p className="text-danger">{notice.description}</p>
+                      </div>
+                    ))}
                 </div>
               </div>
               <div className="text-center">
                 <div className="pr-2 ">
                   <table className="table  table-bordered">
                     <thead className="thead-light">
-                      {clinicDetail?.organizationType === 'Clinic' ? <tr>
-                        <th>Session</th>
-                        <th>Morn Open</th>
-                        <th>Morn Close</th>
-                        <th>Even Open</th>
-                        <th>Even Close</th>
-                      </tr>
-                      :
-                      <tr>
-                        <th>Session</th>
-                        <th>Open</th>
-                        <th>Close</th>
-                      </tr>
-                      }
+                      {clinicDetail?.organizationType === "Clinic" ? (
+                        <tr>
+                          <th>Session</th>
+                          <th>Morn Open</th>
+                          <th>Morn Close</th>
+                          <th>Even Open</th>
+                          <th>Even Close</th>
+                        </tr>
+                      ) : (
+                        <tr>
+                          <th>Session</th>
+                          <th>Open</th>
+                          <th>Close</th>
+                        </tr>
+                      )}
                     </thead>
                     <tbody>
-                      {Object.entries(FULLDAY).map(([short, day]) => (
-                        getTiming( short, day, clinicDetail?.organizationType )   
-                      ))}
+                      {Object.entries(FULLDAY).map(([short, day]) =>
+                        getTiming(short, day, clinicDetail?.organizationType)
+                      )}
                     </tbody>
                   </table>
                 </div>

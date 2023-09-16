@@ -103,6 +103,17 @@ const Header = () => {
                         <img src={Logo} alt="logo" />
                     </a>
                 </div>
+                <ul className="d-flex mbgl">
+                        {['DP', 'CL', 'HL'].includes(userInfo.userType)  && <>
+                        <li className="ms-nav-item ms-d-none mx-2">
+                            <div className="text-white cursor-pointer " onClick={() => setIsModalOpen(true) }><FontAwesomeIcon className="Header-icon1" icon={faCalendarDays} /></div>
+                        </li>
+                        <li className="ms-nav-item ms-d-none mx-3">
+                            <div className="text-white cursor-pointer" onClick={() => setCustomMessage(true) }><FontAwesomeIcon className="Header-icon1" icon={faClipboard} /></div>
+                        </li>
+                    </>}
+                </ul>
+                
 
                 <ul className="ms-nav-list ms-inline mb-0" id="ms-nav-options">
                     {['DP', 'CL', 'HL'].includes(userInfo.userType)  && <>
@@ -123,6 +134,8 @@ const Header = () => {
                                 <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Notifications</span></h6>
                             </li>
                             <li className="dropdown-divider m-0 fs-12"></li>
+                            <Link to={`${getUserPath()}/notification`}>
+                            
                             {notifications.length ? 
                                 notifications.map( notification => 
                                     <Item>
@@ -138,6 +151,7 @@ const Header = () => {
                                 ) : <Item><span>No Data</span></Item>
 
                             }
+                            </Link>
                             <li className="dropdown-divider m-0 fs-12"></li>
 
                             <Link to={`${getUserPath()}/notification`} className=" dropdown-menu-header">

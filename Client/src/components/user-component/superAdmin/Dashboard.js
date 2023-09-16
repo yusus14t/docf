@@ -63,7 +63,7 @@ const Dashbaord = () => {
                 </div>
             </div>
             <div className='row'>
-                <div class="col-xl-3 col-md-6 col-sm-6">
+                <div className="col-xl-3 col-md-6 col-sm-6">
                     <a href="#">
                         <div class="ms-card card-gradient-custom ms-widget ms-infographics-widget ms-p-relative">
                             <div class="ms-card-body media">
