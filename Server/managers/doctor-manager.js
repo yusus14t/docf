@@ -1,5 +1,6 @@
 const AppointmentModel = require("../models/appointment-model");
-const { Success, Error, uploadToBucket, createPayment, Payment } = require("../constants/utils");
+const SettingModel = require("../models/setting-model");
+const { Success, Error, uploadToBucket, Payment } = require("../constants/utils");
 const UserModel = require("../models/user-model");
 const ObjectId = require("mongoose").Types.ObjectId;
 const { EventEmitter } = require("events");
@@ -216,41 +217,25 @@ const deleteDoctor = async (body, user) => {
   }
 };
 
-const addAppointment = async (body, user, response ) => {
+const addAppointment = async (body, user ) => {
   try {
+    let token
     let today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    let lastAppointment = await AppointmentModel.findOne(
-      {
-        departmentId: ObjectId(body.department.organizationId),
-        createdAt: { $gte: today },
-      },
-      { token: 1 }
-    ).sort({ createdAt: -1 });
-
-    let token = lastAppointment?.token
-      ? Number(lastAppointment.token) + 1
-      : "1";
-
-    let patient = await UserModel.findOne(
-      { phone: body.phone, userType: "PT" },
-      { name: 1, userType: 1, phone: 1, address: 1 }
-    );
-    if (!patient) {
-      patient = await UserModel({
-        ...body,
-        userType: "PT",
-        primary: true,
-      }).save();
-
-    } else if( body?.isAnother ) {
-      patient = await UserModel({
-        ...body,
-        userType: "PT",
-        primary: false,
-      }).save();
+    if( user.userType !== 'PT' ){
+      let lastAppointment = await AppointmentModel.findOne({ 
+          departmentId: ObjectId(body.department.organizationId),
+          createdAt: { $gte: today },
+        }, { token: 1 } ).sort({ createdAt: -1 });
+  
+      token = lastAppointment?.token ? ++lastAppointment.token : "1";
     }
+
+    let patient = await UserModel.findOne({ phone: body.phone, userType: "PT" }, { name: 1, userType: 1, phone: 1, address: 1 });
+
+    if (!patient)  patient = await UserModel({ ...body, userType: "PT", primary: true }).save();
+    else if( body?.isAnother ) patient = await UserModel({ ...body, userType: "PT", primary: false }).save();
     
     let appointment = await AppointmentModel.findOne({
       userId: patient._id,
@@ -265,11 +250,9 @@ const addAppointment = async (body, user, response ) => {
         userId: patient._id,
         departmentId: body.department.organizationId,
         createdBy: user._id,
-        created: user._id
+        created: user._id,
       }).save();
-    } else {
-      return Error({ message: "Already in your waiting list." });
-    }
+    } else { return Error({ message: "Already in your waiting list." }) }
 
     let Obj = {
       _id: appointment._id,
@@ -282,24 +265,23 @@ const addAppointment = async (body, user, response ) => {
         address: patient?.address,
       },
     };
-    eventEmitter.emit("new-appointment", {
-      event: "new-appointment",
-      data: Obj,
-    });
 
-    
 
-    let payment =  new Payment(appointment._id, appointment.userId, 1 ) 
-    let { data: paymentData } = await payment.create_payment()
-    console.log('paymentData', paymentData)
-    let redirectUrl = null
-    if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+    if( user.userType === 'PT' ) {
+      let redirectUrl = null
+      let patientPrice = await SettingModel.findOne({ id: 'PAYMENT', 'data.organization': 'patient' }, { data: 1 })
 
-    return Success({
-      message: "Appointment successfully created",
-      appointment: Obj,
-      redirectUrl
-    });
+      let payment =  new Payment(appointment._id, appointment.userId, patientPrice.data.get('price') ) 
+      let { data: paymentData } = await payment.create_payment()
+
+      if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+      
+      return Success({ message: "Appointment successfully created", appointment: null, redirectUrl })
+    } else {
+      eventEmitter.emit("new-appointment", { event: "new-appointment", data: Obj })
+      return Success({ message: "Appointment successfully created", appointment: Obj })
+    }
+
   } catch (error) {
     console.log(error);
     return Error();

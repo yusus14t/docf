@@ -26,8 +26,7 @@ const Dashbaord = () => {
 
   const getAllAppointments = async () => {
     try {
-      let { data } = await axiosInstance.get('/common/patient-appointments', { params: { isToday: true }, ...getAuthHeader() })
-      console.log('getAllAppointments', data)
+      let { data } = await axiosInstance.get('/common/patient-appointments', { params: { isToday: true }, ...getAuthHeader()})
       setAppointments(data?.appointments)
     } catch (error) { console.error(error) }
   }
@@ -87,6 +86,14 @@ const Dashbaord = () => {
         console.log(err);
       });
   };
+
+  const payment = async ( _id ) => {
+    try{
+      let { data } = await axiosInstance.post('/payment', { _id, type: 'appointment' }, getAuthHeader())
+      if( data.redirectUrl ) window.location.href = data.redirectUrl
+      
+    } catch(error){ console.log(error)}
+  }
 
   return (
     <div style={{ background: "#f2f2f2" }} className="">
@@ -163,7 +170,10 @@ const Dashbaord = () => {
                   </div>
                   
                   <div className="col d-flex align-items-center">
-                    <button className="btn btn-primary mt-1 rounded shadow-none" onClick={() => { setAppointment(appointment); setOpenAppointmentModal(true) }}>View</button>
+                    { appointment?.isPaid 
+                      ? <button className="btn btn-primary mt-1 rounded shadow-none" onClick={() => { setAppointment(appointment); setOpenAppointmentModal(true) }}>View</button>
+                      : <button className="btn btn-primary mt-1 rounded shadow-none" onClick={() => payment(appointment._id)}>Pay Now</button>
+                    }
                   </div>
                 </div>
               );

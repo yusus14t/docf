@@ -1,11 +1,4 @@
-const {
-  Error,
-  Success,
-  createToken,
-  smsService,
-  QRCodeGenerate,
-  uploadToBucket,
-} = require("../constants/utils");
+const { Error, Success, createToken, smsService, QRCodeGenerate, uploadToBucket, Payment } = require("../constants/utils");
 const UserModel = require("../models/user-model");
 const OrganizationModel = require("../models/organization-model");
 const AppointmentModel = require("../models/appointment-model");
@@ -462,6 +455,7 @@ const waitingList = async (body, user) => {
       {
         $match: {
           departmentId: ObjectId(body.id),
+          isPaid: true,
           createdAt: {
             $gte: today,
           },
@@ -581,7 +575,7 @@ const patientAppointments = async (body, user) => {
     today.setHours(0, 0, 0, 0);
 
     let appointments = await AppointmentModel.find({
-      userId: ObjectId(user._id),
+      $or: [{userId: ObjectId(user._id)}, { createdBy: ObjectId(user?._id)}],
       ...(body?.isToday ? { createdAt: { $gte: today } } : {}),
     })
       .populate("departmentId", "name address")
@@ -750,6 +744,7 @@ const websiteSetting = async (params) => {
 
 const phonepayStatus = async ( body, res ) => {
   try {
+    console.log('payment response', body)
     let transaction = await TransactionModel.findOne({ refrenceId: body?.providerReferenceId })
     if( !transaction ){
       await TransactionModel({
@@ -759,18 +754,63 @@ const phonepayStatus = async ( body, res ) => {
         amount: body.amount,
         refrenceId: body?.providerReferenceId
       }).save()
-    }
 
-    if( body.code === 'PAYMENT_SUCCESS' ){
-      await AppointmentModel.updateOne({ _id: ObjectId( body.transactionId )}, { isPaid: true })
-      res.redirect('http://localhost:3000/payment-success')
-    }
+      if (body.code === 'PAYMENT_SUCCESS') {
+  
+        /**************************** For Appointment *************************** */  
+        let appointment = await AppointmentModel.findOne({ _id: body.transactionId })
+        if (appointment) {
+  
+          let today = new Date();
+          today.setHours(0, 0, 0, 0);
+          
+          let lastAppointment = await AppointmentModel.findOne({
+            departmentId: ObjectId(appointment.organizationId),
+            isPaid: true,
+            createdAt: { $gte: today },
+          }, { token: 1 }).sort({ createdAt: -1 });
+  
+          let token = lastAppointment?.token ? ++lastAppointment.token : "1";
+          await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true, token })
+        }
+        /************************************************************* */
+  
+        res.redirect('http://localhost:3000/payment-success')
+      }
 
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send(error)
   }
 };
+
+const payment = async ( body, user ) => {
+  try {
+    console.log(body)
+    let amount = 0
+
+    if( body.type === 'appointment' ){
+      let patientPrice = await settingModel.findOne({ id: 'PAYMENT', 'data.organization': 'patient' }, { data: 1 })
+      amount = patientPrice.data.get('price')
+
+    } else if( user.userType === 'CL'  ){
+      let plan = await settingModel.findOne({ id: 'PAYMENT', 'data.organization': 'clinic', 'data.type': body.plan }, { data: 1 })
+      amount = plan.data.get('price')
+    }
+
+    let redirectUrl = null
+    let payment =  new Payment( body._id, user._id, amount ) 
+    let { data: paymentData } = await payment.create_payment()
+
+    if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+      
+    return Success({ redirectUrl });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 module.exports = {
   logIn,
@@ -801,4 +841,5 @@ module.exports = {
   websiteSetting,
   allCities,
   phonepayStatus,
+  payment,
 };

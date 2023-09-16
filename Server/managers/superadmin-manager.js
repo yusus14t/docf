@@ -279,6 +279,42 @@ const appointmentUsers = async ( params, body ) => {
     }
 }
 
+const plans = async ( params, body ) => {
+    try {
+        let paymentSetting = await settingModel.find({ id: 'PAYMENT' });
+        return Success({ paymentSetting });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const patientPrice = async ( body ) => {
+    try {
+        await settingModel.updateOne({ id: 'PAYMENT', 'data.organization': 'patient' }, { 'data.price': body.price });
+        return Success({ message: 'Price update successfully' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const organizationPrice = async ( body ) => {
+    try {
+
+        for(let [ key, value ] of Object.entries(body.clinic)) {
+            await settingModel.updateOne({ id: 'PAYMENT', 'data.organization': 'clinic', 'data.type': key }, {  'data.price': value.price, 'data.discount': value.discount });
+        } 
+        for(let [ key, value ] of Object.entries(body.hospital)) {
+            await settingModel.updateOne({ id: 'PAYMENT', 'data.organization': 'hospital', 'data.type': key }, {  'data.price': value.price, 'data.discount': value.discount });
+        } 
+        return Success({ message: 'Price update successfully' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
 
 module.exports = {
     getProfile,
@@ -294,4 +330,7 @@ module.exports = {
     contactInfo,
     getWebsiteInfo,
     appointmentUsers,
+    plans,
+    patientPrice,
+    organizationPrice,
 }

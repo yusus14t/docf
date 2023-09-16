@@ -80,6 +80,24 @@ const appointmentUsers = async (req, res) => {
         .catch(err => res.status(500).send(err.data))
 }
 
+const plans = async (req, res) => {
+    superAdminManager.plans(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+const patientPrice = async (req, res) => {
+    superAdminManager.patientPrice(req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+const organizationPrice = async (req, res) => {
+    superAdminManager.organizationPrice(req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
 
 module.exports = {
     getProfile,
@@ -95,4 +113,7 @@ module.exports = {
     contactInfo,
     getWebsiteInfo,
     appointmentUsers,
+    plans,
+    patientPrice,
+    organizationPrice,
 }
