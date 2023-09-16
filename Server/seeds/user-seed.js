@@ -35,7 +35,7 @@ let user = {
       age: 21,
       name: "Mohd Arif",
       email: "",
-      phone: "8476860084",
+      phone: "8476850084",
       address: "688 Royce Street, Hardyville, Wisconsin, 324",
       userType: "AD",
     },
@@ -73,7 +73,7 @@ let user = {
     await OrganizationModel.deleteMany({});
     await DealModel.deleteMany({});
     await Notifications.deleteMany({});
-    
+
     console.log("Seeded Successfull.");
   },
 };

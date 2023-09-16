@@ -7,7 +7,7 @@ import events from "../../events";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarPlus, faEnvelope, faMapMarker,  faPhone, } from "@fortawesome/free-solid-svg-icons";
 import NO_PHOTO from '../../assets.app/images/no-photo.png'
-import { FULLDAY } from "../../constants/constant";
+import { FULLDAY, userRoutes } from "../../constants/constant";
 
 function Detail() {
   const params = useParams();
@@ -127,7 +127,9 @@ function Detail() {
             backgroundSize: "100%",
           }}
         >
-          <h4 className="clinic-detail-name">{clinicDetail?.name}</h4>
+            <h4 className="clinic-detail-name">{clinicDetail?.hospital?.name || clinicDetail.name}</h4>
+
+
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-between  ">
               {/* <img
@@ -142,9 +144,22 @@ function Detail() {
               {console.log(clinicDetail)}
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
-                  {/* {clinicDetail?.doctor?.name} */}
-                  alpha
+                  {/* {clinicDetail?.doctor?.name}
+                    {clinicDetail?.name} */}
+                  {clinicDetail.doctor?.name}
                 </h4>
+                {clinicDetail.organizationType !== "Clinic" && (
+                  <>
+                    <h4 className="text-light clinic-detail-drName rounded">
+                      {clinicDetail.name}{" "}
+                    </h4>
+                    { clinicDetail?.room && <h4 className="text-light clinic-detail-drName rounded">
+                      {/* {clinicDetail?.doctor?.name} */}
+                      Room No: {clinicDetail?.room }
+                    </h4>}
+                  </>
+                )}
+
                 <h6
                   style={{ display: "inline-block" }}
                   className="text-light clinic-detail-drName rounded"
@@ -198,9 +213,13 @@ function Detail() {
                                   : ""
                               }`}
                             >
-                              <div className={`token ${list?.token == parseInt(token)
-                                  ? "token-active"
-                                  : ""}`}>
+                              <div
+                                className={`token ${
+                                  list?.token == parseInt(token)
+                                    ? "token-active"
+                                    : ""
+                                }`}
+                              >
                                 <h4 className="token-list-number">
                                   {list?.token}
                                 </h4>
@@ -250,7 +269,10 @@ function Detail() {
                       ? clinicDetail?.services?.map((serv) => (
                           <div className="service-tube m-1">{serv?.name}</div>
                         ))
-                      : "-"}
+                      : clinicDetail?.hospital?.services?.map((serv) => (
+                          <div className="service-tube m-1">{serv?.name}</div>
+                        ))}
+              
                   </div>
                 </div>
 

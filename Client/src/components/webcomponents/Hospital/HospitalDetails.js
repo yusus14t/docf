@@ -67,7 +67,7 @@ const HospitalDetails = () => {
                 <div className="bg-white m-2 rounded p-2">
                   <h6>Consultation Fee <span className="ms-4">₹{ hospital?.fee}</span></h6>
                 </div>
-                { userInfo.userType !== 'DP' && <div className="bg-white m-2 rounded p-2">
+                { userInfo?.userType !== 'DP' && <div className="bg-white m-2 rounded p-2">
                   <h6 className="mx-1">Services</h6>
                   <div className="d-flex flex-wrap">
                     {hospital.services?.length > 0

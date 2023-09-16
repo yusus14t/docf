@@ -323,10 +323,7 @@ const Dashbaord = () => {
                   </h4>
                   <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "5px 0 0 0"}}>
                     <span style={{color: "black", fontSize:"17px", margin: "0"}} class="m-0 text-dark">Gender : </span>{appointment?.userId?.gender || 'Gender'}
-                  </h4>
-                  <h4 style={{fontWeight: "bold", fontSize:"17px", margin: "5px 0 0 0"}}>
-                    <span style={{margin: "0", color: "black"}} class="m-0 text-dark">Blood Group : </span>{appointment?.userId?.bloodGroup || 'Blood Group'}
-                  </h4>
+                  </h4> 
                 </div>
               </div>
             </div>

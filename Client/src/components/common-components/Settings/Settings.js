@@ -181,8 +181,8 @@ const Settings = () => {
           <div className="ms-panel mb-0 inner-content-height">
             <div className="ms-panel-header ms-panel-custome">
               <div style={{ display: "flex", overflow: "auto"}}>
-                {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
-                {['HL', 'CL'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SERVICES')}>Services</span>}
+                {['HL', 'CL', 'SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
+                {['HL', 'CL', 'SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SERVICES')}>Services</span>}
                 {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
                 {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('WEBSITE')}>Website</span>}
                 {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('CONTACT')}>Contact</span>}

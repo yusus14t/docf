@@ -330,13 +330,14 @@
     /* margin-top: 80px; */
   }
   .clinic-detail-img-container {
-    top: 40px;
+    top: 0px;
     margin-left: 10px;
   }
   .clinic-detail-drName {
     font-size: medium;
     margin-left: 15px;
     width: 174px;
+    font-size: 10px;
   }
   .fixed,
   .side-nav.fixed {
@@ -503,6 +504,12 @@
   .mini-menu{
     display: flex;
     justify-content: center;
+  }
+  .dr-details{
+    margin-left: 15px;
+  }
+  .DRNAME{
+    font-size: 1.2rem;
   }
   .fixed,
   .side-nav.fixed {

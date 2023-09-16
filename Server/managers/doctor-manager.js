@@ -90,16 +90,10 @@ const getAppointments = async (body, user) => {
   }
 };
 
-const editDoctor = async (body, user, file) => {
+const editDoctor = async (body, user, file) => { 
   try {
-    body = JSON.parse(body?.data);
-
-    if (
-      body._id !== user._id &&
-      user.userType !== "SA" &&
-      body?.createdBy?.toString() !== user._id?.toString()
-    )
-      return Error({ message: "You have not permission to edit." });
+    console.log('>>>>', body)
+    // body = JSON.parse(body?.data);
 
     let userObj = {
       name: body?.name,
@@ -504,7 +498,8 @@ const createDoctor = async (body, user, image) => {
           doctor,
         });
     } else {
-      await uploadToBucket( image.filename )
+      if (image?.filename ) await uploadToBucket(image.filename);
+      
       doctor = await UserModel({
         userType: "DR",
         name: body?.name,

@@ -9,12 +9,13 @@ const DepartmentCard = ({ departments }) => {
         <div className="row">
           {departments?.map(( department, key )=>{
             return (
-              <div className="col-md-6" key={key}>
+              <div className="col-lg-6 col-md-10" key={key}>
                 <div className="card p-2 department-card">
                   <div className="d-flex align-items-center">
                     <div className="image">
                       <img
-                        src={department?.organizationId?.photo ? getFullPath( department?.organizationId?.photo) : NO_PHOTO }
+                        src={ department?.organizationId?.doctor?.doctorPhoto ? getFullPath(department?.organizationId?.doctor?.doctorPhoto) : NO_PHOTO}
+                        // src={department?.organizationId?.photo ? getFullPath( department?.organizationId?.photo) : NO_PHOTO }
                         className="rounded department-card-image"
                         alt=""
                       />
@@ -22,12 +23,20 @@ const DepartmentCard = ({ departments }) => {
 
                     <div className="departments-details ">
                       <h5 className="mb-0 mt-0 department-card-name">
-                        { department?.organizationId?.name }
+                        <h5 className="mb-0">
+                          <span className="text-muted mb-0">DR</span> {department?.organizationId?.doctor?.name}
+                        </h5>
+                        <span style={{fontSize:"15px"}} className="mb-0">{department?.organizationId?.name}</span>
                       </h5>
-                      <span>{ department?.organizationId?.specialization ? department?.organizationId?.specialization?.map( sp => sp.name ) : '-' }</span>
+                      <span>
+                        {department?.organizationId?.specialization
+                          ? department?.organizationId?.specialization?.map(
+                              (sp) => sp.name
+                            )
+                          : "-"}
+                      </span>
                       <br />
-                      <span> Room No: { department?.organizationId?.room }</span>
-                     
+                      <span> Room No: {department?.organizationId?.room}</span>
 
                       <div className="color-primary mt-2 d-flex flex-row align-items-center">
                         <Link

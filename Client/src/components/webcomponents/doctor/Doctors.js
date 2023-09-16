@@ -67,7 +67,7 @@ const handle = ()=>{
                               </div>
 
                               <div className="dr-details">
-                                <h2 className="">{doctor?.name}</h2>
+                                <h2 className="DRNAME">{doctor?.name}</h2>
                                 <p className="mb-1 dr-spelialization">
                                   {doctor?.specialization?.name ||
                                     "Specialization"}
@@ -75,7 +75,7 @@ const handle = ()=>{
                                 <p className="mb-1 experience-dr">
                                   Eperience :{ doctor?.experience || '-'}
                                 </p>
-                                <p className="dr-qualifiction mb-1">Qualification: {doctor?.qualification || '-'}</p>
+                                <p className="dr-qualifiction mb-1">Qualification {doctor?.qualification || '-'}</p>
                                 <p className="dr-address">{doctor?.address || '-'}</p>
                               </div>
                             </div>
