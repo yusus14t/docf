@@ -37,22 +37,27 @@ const Expire = () => {
                     <div style={{ minWidth: "390px" }} className="modal-content m-auto ">
                         <div className="modal-header">
                             <h5 className="modal-title has-icon ms-icon-round ">
-                                Plan Expire
+                                {userInfo.organizationId?.billing?.isNewPlan ? 'Select Plan' : 'Plan Expire'}
                             </h5>
                         </div>
                         <div className="modal-body">
-                            <div className="notice-max-height">
+                            { userInfo.userType !== 'DP' ? <div className="notice-max-height">
                                 { plans.length > 0 && plans.map( ( { data : singleplan }, i) => ( i++, <div className={`p-3 my-2 renew-plan-card ${ plan === PLAN[singleplan.type] && 'renew-plan-active' }`} onClick={() => setPlan(PLAN[singleplan.type])}>
                                     <h5>{ singleplan.type }</h5>
                                     <div className='d-flex justify-content-between'>
                                         <div>Plan { i }</div>
-                                        <div>${singleplan.price} - discount {singleplan.discount}</div>
+                                        <div>₹{singleplan.price - singleplan.discount} { singleplan.discount > 0 &&  `- discount ₹ ${singleplan.discount}`}</div>
                                     </div>
                                 </div>))}
                                 <div className="my-3 d-flex justify-content-center">
                                     <button className=" btn btn-primary btn-md shadow-none" onClick={() => submit()}>Pay Now</button>
                                 </div>
                             </div>
+                             :
+                             <div>
+                                Please contact to your hospital
+                             </div>   
+                            }
                         </div>
                     </div>
                 </div>

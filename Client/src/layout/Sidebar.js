@@ -14,10 +14,10 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
         setActiveNav(pathname[2])
     }, [pathname,])
 
-const Logout = () => {
-  localStorage.clear();
-  window.location.replace("/login");
-};
+    const Logout = () => {
+    localStorage.clear();
+    window.location.replace("/login");
+    };
     return (
         <aside className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ${!isOpen ? 'ms-aside-left' : ''} `} style={{ paddingBottom: '6rem' }}>
             <div className="logo-sn ms-d-block-lg">

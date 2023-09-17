@@ -12,13 +12,12 @@ import Doctors from "../components/user-component/Doctors";
 const HOSPITAL = [
   { path: "/hospital", element: <Navigate to={"/hospital/dashboard"} /> },
   { path: "/hospital/dashboard", element: <Dashbaord /> },
-  { path: "/hospital/profile", element: <h1>Profile</h1> },
   { path: "/hospital/patients", element: <Patients /> },
   { path: "/hospital/appointment", element: <AppointmentList /> },
-  { path: "/hospital/notification", element: <Notification /> },
-  { path: "/hospital/support", element: <Support /> },
-  { path: "/hospital/doctors", element: <Doctors /> },
-  { path: "/hospital/setting", element: <Settings /> },
+  { path: "/hospital/notification", element: <Notification />, onExpire: true },
+  { path: "/hospital/support", element: <Support />, onExpire: true },
+  { path: "/hospital/doctors", element: <Doctors />, onExpire: true },
+  { path: "/hospital/setting", element: <Settings />, onExpire: true },
   { path: "/hospital/departments", element: <Departments /> },
   { path: "/hospital/*", element: <Navigate to={"/hospital/dashboard"} /> },
 ];

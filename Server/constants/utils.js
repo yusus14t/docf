@@ -121,8 +121,8 @@ class Payment {
 
     const orderData = {
       "merchantId": process.env.MERCHANT_ID,
-      "merchantTransactionId": String(this.txnId),
-      "merchantUserId": String(this.userId),
+      "merchantTransactionId": String(this.txnId) + '-' +  new Date().getTime(),
+      "merchantUserId": String(this.userId) + '-' + new Date().getTime(),
       "amount": this.amount*100,
       "redirectUrl": 'http://localhost:5000/api/phonepay-status',
       "redirectMode": "POST",
@@ -145,6 +145,8 @@ class Payment {
   create_payment = async function () {
     try {
       let { b64Data, checksum } = this.create_checksum()
+      console.log('b64Data', b64Data)
+      console.log('checksum', checksum)
       let check = await axios.post(process.env.URL, { request: b64Data }, { headers: { accept: 'application/json', 'Content-Type': 'application/json', 'X-VERIFY': checksum }} )
       console.log('payment response', check)
       return check

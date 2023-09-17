@@ -305,7 +305,7 @@ const Gynae = () => {
                             <button className="hospital-btn  btn btn1 btn-primary">
                               <Link
                                 className="text-light"
-                                to={`/hospital/${ Hospital._id }`}
+                                to={`/hospital-detail/${ Hospital._id }`}
                               >
                                 View More
                               </Link>
