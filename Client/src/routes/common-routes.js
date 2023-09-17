@@ -11,8 +11,8 @@ import NoData from "../components/webcomponents/NoData";
 import Payment_Success from "../components/common-components/Payment_Success";
 import Payment_Failed from "../components/common-components/Payment_Failed";
 import PricingTable from '../components/common-components/PricingTable'
-
 import Pricing from "../components/webcomponents/Pricing";
+
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
 const Doctors = lazy(() => import( '../components/webcomponents/doctor/Doctors'))
 const Clinics = lazy(() => import( "../components/webcomponents/Clinics"))

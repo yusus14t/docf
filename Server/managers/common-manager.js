@@ -376,6 +376,8 @@ const getAllClinics = async (body) => {
     if (!body?.isClinic) users.push("Department");
     
     let clinics = await OrganizationModel.find({
+      'billing.isPaid': true,
+      // 'billing.expire': { $lte: new Date },
       organizationType: { $in: users },
       ...(body?.filter?.specialization
         ? { "specialization.name": body?.filter?.specialization }
@@ -550,6 +552,8 @@ const getAllHospitals = async (body, user) => {
     let organization = await OrganizationModel.find(
       {
         organizationType: "Hospital",
+        'billing.isPaid': true,
+        // 'billing.expire': { $lte: new Date },
         ...(body?.filter
           ? { "specialization.name": body?.filter?.specialization }
           : {}),
