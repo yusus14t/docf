@@ -377,6 +377,8 @@ const getAllClinics = async (body) => {
     
     let specialization = body?.filter?.specialization
     let clinics = await OrganizationModel.find({
+      'billing.isPaid': true,
+      // 'billing.expire': { $lte: new Date },
       organizationType: { $in: users },
       ...(specialization
         ? { "specialization.name": { $in: typeof(specialization) === 'string' ? [specialization] : specialization  }}
@@ -551,6 +553,8 @@ const getAllHospitals = async (body, user) => {
     let organization = await OrganizationModel.find(
       {
         organizationType: "Hospital",
+        'billing.isPaid': true,
+        // 'billing.expire': { $lte: new Date },
         ...(body?.filter
           ? { "specialization.name": body?.filter?.specialization }
           : {}),

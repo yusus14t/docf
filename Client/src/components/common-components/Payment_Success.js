@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../../assets.app/css/paymentSuccess.css'
 import logo from '../../assets.app/img/logo/logo.jpg'
+import { userInfo } from '../../constants/utils'
+import { userRoutes } from '../../constants/constant'
 
 const Payment_Success = () => {
+  const pathname = userRoutes[userInfo?.userType]
+
+  useEffect(() => {
+    if( !userInfo ) window.location.replace('/')
+  }, [])
+
   return (
     <>
       <div className="box"></div>
@@ -23,6 +31,7 @@ const Payment_Success = () => {
               <dt className="receipt__item">Total</dt>
               <dd className="receipt__cost"> &#8377; 26.75</dd>
             </div>
+            <button className='btn btn-primary mt-4 w-100 shadow-none' onClick={() => window.location.replace(pathname)  }>Back To Dashboard</button>
           </dl>
         </div>
       </div>
