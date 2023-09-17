@@ -653,7 +653,7 @@ const getClinics = async (body, user) => {
     if (user?.userType === "HL") {
       query = { hospitalId: user?.organizationId, userType: "DP" };
     } else if( user.userType === 'SA' ){
-      query = { userType: body?.source ? 'CL' : 'DP' }
+      query = { userType: 'CL' }
     } else if (!["MR"].includes(user?.userType)){
       query = { organizationId: body?.organizationId };
     } 
