@@ -77,7 +77,7 @@ const Header = () => {
 
     const getNotices = async () => {
         try{
-            let { data } = await axiosInstance.get(`/common/notice/${ userInfo?.organizationId._id }`)
+            let { data } = await axiosInstance.get(`/notice/${ userInfo?.organizationId._id }`)
             setNotices(data?.notices)
         } catch(error){ console.error(error) }
     }

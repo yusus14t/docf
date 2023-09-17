@@ -587,9 +587,7 @@ const hospitalDetails = async (body) => {
             { organizationId: department.organizationId, userType: "DR" },
             { name: 1, doctorPhoto: "$photo" }
           );
-          console.log("doctor", doctor);
           department.organizationId["doctor"] = doctor;
-          console.log("didodo", department.organizationId);
         }
 
         return Success({ details, departments });
@@ -713,7 +711,6 @@ const search = async (body, user) => {
         },
       },
     ]);
-    console.log(doctors);
     return Success({ searchData: [...searchData, ...doctors] });
   } catch (error) {
     console.log(error);
@@ -732,7 +729,6 @@ const uploadFile = async (file) => {
 
 const createNotice = async (body, user) => {
   try {
-    console.log("body", body);
     let notice = await noticeModel({
       organizationId: user.organizationId,
       ...body,

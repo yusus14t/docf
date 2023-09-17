@@ -28,7 +28,6 @@ router.post('/create-ticket', commonController.createTicket)
 
 //notice
 router.post('/notice', commonController.createNotice)
-router.get('/notice/:id', commonController.getNotice)
 router.delete('/notice/:id', commonController.deleteNotice)
 
 //patient

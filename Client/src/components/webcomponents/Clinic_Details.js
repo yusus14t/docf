@@ -81,7 +81,7 @@ function Detail() {
 
   const getNotices = async () => {
     try {
-      let { data } = await axiosInstance.get(`/common/notice/${params.id}`)
+      let { data } = await axiosInstance.get(`/notice/${params.id}`)
       setNotices(data?.notices)
     } catch (error) { console.error(error) }
   }

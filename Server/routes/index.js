@@ -49,6 +49,8 @@ router.post('/phonepay-status', commonController.phonepayStatus);
 router.post('/payment', jwt_verify, commonController.payment);
 
 router.get('/plans', superAdminController.plans );
+router.get('/notice/:id', commonController.getNotice)
+
 
 // stream: Event Driven  
 router.get('/stream', EventHandler )
