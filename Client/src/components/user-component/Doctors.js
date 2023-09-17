@@ -24,7 +24,6 @@ const DoctorsList = () => {
     const getDoctors = async () => {
         try {
             let { data } = await axiosInstance.get('/doctor/allDoctors', {params: { source: 'dashboard', searchInput }, ...getAuthHeader()})
-            console.log(data);
             setDoctors(data.doctors)
         } catch (error) { console.log(error) }
     }

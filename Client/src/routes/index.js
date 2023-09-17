@@ -39,7 +39,13 @@ const expireRoute = [
 // Conditions for expire routes, without login routes and user routes 
 const expireCondition = () => {
   if( !userInfo ) return []
-  
+
+  // For Department check parent hospital billin
+  if( userInfo.userType === 'DP' ){
+    if( !userInfo?.hospitalId?.billing?.isPaid || userInfo?.hospitalId?.billing?.hasExpire ) return expireRoute
+    return userRoute.id
+  }
+
   if ( !userInfo?.organizationId?.billing?.isPaid || userInfo?.organizationId?.billing?.hasExpire ) {
 
     if( ['SA', 'AD', 'MR', 'PT'].includes(userInfo?.userType) ) return userRoute.id

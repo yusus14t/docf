@@ -151,7 +151,6 @@ const LogIn = () => {
 
   const initailizer = async () => {
     let imagesData = await getImages()
-    console.log('>>>>>>>>>>', imagesData.data.images)
     setImages(imagesData.data.images)
   }
 

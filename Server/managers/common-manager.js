@@ -14,10 +14,7 @@ const sessionInfo = async (request, user) => {
   try {
     if (!user) return Success({ message: "" });
 
-    let info = await UserModel.findOne({ _id: user._id }).populate(
-      "organizationId"
-    );
-
+    let info = await UserModel.findOne({ _id: user._id }).populate("organizationId").populate('hospitalId');
     info = JSON.parse(JSON.stringify(info))
 
     if ( ["DP", "CL", "HL"].includes(info.userType) &&  !info?.organizationId?.qrCode ) {

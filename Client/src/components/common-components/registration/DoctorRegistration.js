@@ -32,7 +32,6 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
     } else {
       getClinicSpecialization()
     }
-    console.log("jjjj", source, RID);
   }, [])
 
   const getClinicSpecialization = async () => {
