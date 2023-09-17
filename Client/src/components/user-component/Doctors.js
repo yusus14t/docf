@@ -24,6 +24,7 @@ const DoctorsList = () => {
     const getDoctors = async () => {
         try {
             let { data } = await axiosInstance.get('/doctor/allDoctors', {params: { source: 'dashboard', searchInput }, ...getAuthHeader()})
+            console.log(data);
             setDoctors(data.doctors)
         } catch (error) { console.log(error) }
     }
@@ -38,6 +39,7 @@ const DoctorsList = () => {
 
     const Submit = async (formData) => {
         try{
+            console.log("formData", formData);
             let { data } = await axiosInstance.post('/doctor/edit-doctor', formData, getAuthHeader())
             setDoctors(( prev ) => prev.map( doctor => {
                 if( doctor._id === data?.doctor?._id ) doctor = data?.doctor

@@ -429,11 +429,19 @@ const clinicDetails = async (body) => {
           services: 1,
           timing: 1,
           organizationType: 1,
+          room: 1
         },
       },
     ]);
+    detail = JSON.parse(JSON.stringify(detail[0]));
+    let doctor = await UserModel.findOne({ organizationId: body._id, userType: 'DR'}, { name: 1 })
+    detail['doctor'] = doctor
 
-    return Success({ detail: detail[0] });
+    let hospital = await UserModel.findOne({ organizationId: body._id, userType: 'DP' }, { hospitalId: 1 })
+    let name = await OrganizationModel.findOne({ _id: hospital?.hospitalId }, { name: 1, services: 1  })
+    detail['hospital'] = name
+    
+    return Success({ detail });
   } catch (error) {
     console.log(error);
   }
@@ -555,22 +563,36 @@ const getAllHospitals = async (body, user) => {
 
 const hospitalDetails = async (body) => {
   try {
-    let details = await OrganizationModel.findOne({ _id: body.id });
-    let user = await UserModel.findOne(
-      { organizationId: body.id },
-      { phone: 1 }
-    );
-    details["phone"] = user?.phone;
+        let details = await OrganizationModel.findOne({ _id: body.id });
+        let user = await UserModel.findOne(
+          { organizationId: body.id },
+          { phone: 1 }
+        );
+        details["phone"] = user?.phone;
 
-    let departments = await UserModel.find(
-      { hospitalId: body.id },
-      { organizationId: 1 }
-    ).populate("organizationId", "name room specialization photo");
-    return Success({ details, departments });
-  } catch (error) {
+        let departments = await UserModel.find(
+          { hospitalId: body.id },
+          { organizationId: 1 }
+        ).populate("organizationId", "name room specialization photo");
+
+        departments = JSON.parse(JSON.stringify(departments));
+        
+        for (let department of departments) {
+          let doctor = await UserModel.findOne(
+            { organizationId: department.organizationId, userType: "DR" },
+            { name: 1, doctorPhoto: "$photo" }
+          );
+          console.log("doctor", doctor);
+          department.organizationId["doctor"] = doctor;
+          console.log("didodo", department.organizationId);
+        }
+
+        return Success({ details, departments });
+      } catch (error) {
     console.log(error);
   }
 };
+
 
 const patientAppointments = async (body, user) => {
   try {

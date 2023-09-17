@@ -22,16 +22,17 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
 
   useEffect(() => {
 
-    if( RID ){
-      getDoctorsInOrganization()
-      getDepartments()
-      if( ['modal'].includes(source) ){
-        getAllSpecialization()
-      } else {
-        getClinicSpecialization()
-      }
-      
+    // if( RID ){
+    // }
+    getDoctorsInOrganization()
+    getDepartments()
+
+    if( ['modal'].includes(source) ){
+      getAllSpecialization()
+    } else {
+      getClinicSpecialization()
     }
+    console.log("jjjj", source, RID);
   }, [])
 
   const getClinicSpecialization = async () => {
@@ -76,7 +77,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
     try {      
 
       if(!values?._id){
-        values['organizationId'] = source === 'Hospital' || userInfo.userType === 'HL'? values.department?._id : RID
+        values['organizationId'] = source === 'Hospital' || userInfo.userType === 'HL'? values.department?._id : (RID || userInfo.organizationId)
         values['tab'] = tab
       }
       
