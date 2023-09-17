@@ -29,12 +29,26 @@ const USER_ROUTES = {
 const userRoute = USER_ROUTES[userInfo?.userType]
 
 const expireRoute = [
+  ...(userRoute ? userRoute?.id?.filter( route => route.onExpire) : []),
   { path: `${userRoute?.path}`, element: <Expire /> },
   { path: `${userRoute?.path}/dashboard`, element: <Expire /> },
-  (userRoute && userRoute?.id?.filter( route => route.onExpire)),
   { path: `${userRoute?.path}/*`, element: <Expire /> },
 ]
 
+
+// Conditions for expire routes, without login routes and user routes 
+const expireCondition = () => {
+  if( !userInfo ) return []
+  
+  if ( !userInfo?.organizationId?.billing?.isPaid || userInfo?.organizationId?.billing?.hasExpire ) {
+
+    if( ['SA', 'AD', 'MR', 'PT'].includes(userInfo?.userType) ) return userRoute.id
+    return expireRoute
+
+  } else {
+    return userRoute.id
+  } 
+}
 
 
 export const AllRoutes = () => {
@@ -57,17 +71,12 @@ export const AllRoutes = () => {
 
   /***************** All User based Routes *******************/
   if (userRoute?.path) {
+
     allUseRoutes.push({
       path: `/${userRoute?.path}`,
       exact: true,
       element: userInfo ? <AppLayout /> : <Navigate to={"/login"} />,
-      children: userInfo
-        ? (
-            userInfo?.organizationId?.isPaid || !['DP', 'CL', 'HL'].includes(userInfo?.userType)
-              ? userRoute.id
-              : expireRoute
-          )
-        : [],
+      children: expireCondition()
     });
   }
   /**************************************************** */

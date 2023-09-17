@@ -117,9 +117,9 @@ const Header = () => {
 
                 <ul className="ms-nav-list ms-inline mb-0" id="ms-nav-options">
                     {['DP', 'CL', 'HL'].includes(userInfo.userType)  && <>
-                        <li className="ms-nav-item ms-d-none mx-2">
+                       {( userInfo?.organizationId?.billing?.isPaid || !userInfo?.organizationId?.billing?.hasExpire ) && <li className="ms-nav-item ms-d-none mx-2">
                             <div className="text-white cursor-pointer " onClick={() => setIsModalOpen(true) }><FontAwesomeIcon className="Header-icon" icon={faCalendarDays} />Make an appointment</div>
-                        </li>
+                        </li>}
                         <li className="ms-nav-item ms-d-none mx-3">
                             <div className="text-white cursor-pointer" onClick={() => setCustomMessage(true) }><FontAwesomeIcon className="Header-icon" icon={faClipboard} />Noticeboard</div>
                         </li>

@@ -18,10 +18,9 @@ const sessionInfo = async (request, user) => {
       "organizationId"
     );
 
-    if (
-      ["DP", "CL", "HL"].includes(info.userType) &&
-      !info?.organizationId?.qrCode
-    ) {
+    info = JSON.parse(JSON.stringify(info))
+
+    if ( ["DP", "CL", "HL"].includes(info.userType) &&  !info?.organizationId?.qrCode ) {
       let link = "https://doctortime.in";
       if (info.userType === "HL")
         link += `/hospital/${info.organizationId._id}`;
@@ -38,6 +37,10 @@ const sessionInfo = async (request, user) => {
         { qrCode: filename }
       );
       info.organizationId.qrCode = filename;
+    } 
+
+    if( ["DP", "CL", "HL"].includes(info.userType) ){
+      info.organizationId.billing.hasExpire  =  new Date(info.organizationId?.billing?.expire) < new Date() 
     }
 
     return Success({ user: info });
@@ -770,7 +773,7 @@ const phonepayStatus = async ( body, res ) => {
     console.log('payment response', body)
     let transaction = await TransactionModel.findOne({ refrenceId: body?.providerReferenceId })
     if( !transaction ){
-      await TransactionModel({
+      transaction = await TransactionModel({
         status: body?.code,
         merchantId: body?.merchantId,
         transactionId: body.transactionId,
@@ -779,6 +782,7 @@ const phonepayStatus = async ( body, res ) => {
       }).save()
 
       if (body.code === 'PAYMENT_SUCCESS') {
+        body.transactionId = body.transactionId.split('-')[0]
   
         /**************************** For Appointment *************************** */  
         let appointment = await AppointmentModel.findOne({ _id: body.transactionId })
@@ -797,8 +801,32 @@ const phonepayStatus = async ( body, res ) => {
           await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true, token })
         }
         /************************************************************* */
-  
+        let organization = await OrganizationModel.findOne({ _id: body.transactionId })
+        if( organization ){
+
+          let Days = 0
+          let date = new Date()
+          if( organization.billing.plan === 'month' ) Days = 30
+          else if( organization.billing.plan === 'quater' ) Days = 90
+          else if( organization.billing.plan === 'halfYearly' ) Days = 180
+          else if( organization.billing.plan === 'yearly' ) Days = 365
+
+          date.setDate(date.getDate() + Days)
+
+          await OrganizationModel.updateOne({ _id: body.transactionId }, {
+            billing: {
+              isPaid: true,
+              expire: date,
+              isNewPlan: false,
+              transactionId: transaction._id,
+            }
+          })
+        }
         res.redirect('http://localhost:3000/payment-success')
+        
+      } else {
+        
+        res.redirect('http://localhost:3000/')
       }
 
     }
@@ -817,16 +845,20 @@ const payment = async ( body, user ) => {
       let patientPrice = await settingModel.findOne({ id: 'PAYMENT', 'data.organization': 'patient' }, { data: 1 })
       amount = patientPrice.data.get('price')
 
-    } else if( user.userType === 'CL'  ){
-      let plan = await settingModel.findOne({ id: 'PAYMENT', 'data.organization': 'clinic', 'data.type': body.plan }, { data: 1 })
-      amount = plan.data.get('price')
+    } else if( [ 'CL', 'HL' ].includes(user.userType) ){
+      let plan = await settingModel.findOne({ id: 'PAYMENT', 'data.organization': user.userType === 'CL' ? 'clinic' : 'hospital', 'data.type': body.plan }, { data: 1 })
+      amount = +plan.data.get('price') - +plan.data.get('discount')
+
+      await OrganizationModel.updateOne({ _id: user.organizationId }, { 'billing.plan': body.plan })
     }
 
     let redirectUrl = null
-    let payment =  new Payment( body._id, user._id, amount ) 
-    let { data: paymentData } = await payment.create_payment()
-
-    if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+    if( amount ){
+      let payment =  new Payment( body._id, user._id, amount ) 
+      let { data: paymentData } = await payment.create_payment()
+  
+      if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+    }
       
     return Success({ redirectUrl });
   } catch (error) {

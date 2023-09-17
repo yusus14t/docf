@@ -39,7 +39,15 @@ const organizationSchema = new Schema({
             },
         }
     ],
-    isPaid: { type: Boolean, default: false },
+    
+    billing: {
+        isPaid: { type: Boolean, default: false },
+        expire: { type: Date },
+        trnsactionId: { type: Schema.Types.ObjectId, ref: 'transaction'},
+        isNewPlan: { type: Boolean, default: true },
+        plan: { type: String },
+    },
+
     isActive: { type: String, default: false },
     tab: {
         step: { type: String },

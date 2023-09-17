@@ -41,7 +41,7 @@ const DepartmentCard = ({ departments }) => {
                       <div className="color-primary mt-2 d-flex flex-row align-items-center">
                         <Link
                           className="btn btn btn-secondary"
-                          to={`/department/${department?.organizationId?._id}`}
+                          to={`/department-detail/${department?.organizationId?._id}`}
                         >
                           View Details
                         </Link>

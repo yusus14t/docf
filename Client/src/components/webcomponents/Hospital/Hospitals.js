@@ -104,7 +104,7 @@ const HospitalGrid = ({source}) => {
                               <div className="">
                                 <Link
                                   className="text-light hospital-btn  btn btn1 btn-primary shadow-none"
-                                  to={`/hospital/${hospital._id}`}
+                                  to={`/hospital-detail/${hospital._id}`}
                                 >
                                   View More
                                 </Link>

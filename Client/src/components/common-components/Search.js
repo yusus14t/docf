@@ -181,7 +181,7 @@ const Search = () => {
                       className="w-50 mr-1 p-2 main-ch"
                       to={
                         clinic?.organizationType === "Hospital"
-                          ? `/hospital/${
+                          ? `/hospital-detail/${
                               clinic?.userType
                                 ? clinic?.organizationId
                                 : clinic._id
