@@ -124,9 +124,9 @@ class Payment {
       "merchantTransactionId": String(this.txnId) + '-' +  new Date().getTime(),
       "merchantUserId": String(this.userId) + '-' + new Date().getTime(),
       "amount": this.amount*100,
-      "redirectUrl": 'http://localhost:5000/api/phonepay-status',
+      "redirectUrl": 'https://doctortime.in/api/phonepay-status',
       "redirectMode": "POST",
-      "callbackUrl": "http://localhost:5000/api/phonepay-status",
+      "callbackUrl": "https://doctortime.in/api/phonepay-status",
       "mobileNumber": "9999999999",
       "paymentInstrument": {
         "type": "PAY_PAGE"

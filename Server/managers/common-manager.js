@@ -826,11 +826,11 @@ const phonepayStatus = async ( body, res ) => {
             }
           })
         }
-        res.redirect('http://localhost:3000/payment-success')
+        res.redirect('https://doctortime.in/payment-success')
         
       } else {
         
-        res.redirect('http://localhost:3000/')
+        res.redirect('https://doctortime.in/')
       }
 
     }
