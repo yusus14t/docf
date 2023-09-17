@@ -796,13 +796,13 @@ const phonepayStatus = async ( body, res ) => {
           today.setHours(0, 0, 0, 0);
           
           let lastAppointment = await AppointmentModel.findOne({
-            departmentId: ObjectId(appointment.organizationId),
+            departmentId: ObjectId(appointment.departmentId),
             isPaid: true,
             createdAt: { $gte: today },
           }, { token: 1 }).sort({ createdAt: -1 });
   
-          let token = lastAppointment?.token ? ++lastAppointment.token : "1";
-          await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true, token })
+          let token = lastAppointment?.token ? +lastAppointment.token + 1 : "1";
+          await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true,  token })
         }
         /************************************************************* */
         let organization = await OrganizationModel.findOne({ _id: body.transactionId })
@@ -826,11 +826,11 @@ const phonepayStatus = async ( body, res ) => {
             }
           })
         }
-        res.redirect('https://doctortime.in/payment-success')
+        res.redirect(process.env.REDIRECT_SUCCESS_URL)
         
       } else {
         
-        res.redirect('https://doctortime.in/')
+        res.redirect(process.env.REDIRECT_URL)
       }
 
     }

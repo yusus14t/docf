@@ -124,9 +124,9 @@ class Payment {
       "merchantTransactionId": String(this.txnId) + '-' +  new Date().getTime(),
       "merchantUserId": String(this.userId) + '-' + new Date().getTime(),
       "amount": this.amount*100,
-      "redirectUrl": 'https://doctortime.in/api/phonepay-status',
+      "redirectUrl": `${process.env.REDIRECT_SERVER_URL}/api/phonepay-status`,
       "redirectMode": "POST",
-      "callbackUrl": "https://doctortime.in/api/phonepay-status",
+      "callbackUrl": `${process.env.REDIRECT_SERVER_URL}/api/phonepay-status`,
       "mobileNumber": "9999999999",
       "paymentInstrument": {
         "type": "PAY_PAGE"
@@ -145,10 +145,7 @@ class Payment {
   create_payment = async function () {
     try {
       let { b64Data, checksum } = this.create_checksum()
-      console.log('b64Data', b64Data)
-      console.log('checksum', checksum)
       let check = await axios.post(process.env.URL, { request: b64Data }, { headers: { accept: 'application/json', 'Content-Type': 'application/json', 'X-VERIFY': checksum }} )
-      console.log('payment response', check)
       return check
     }catch( error ){ return error }  
   }

@@ -54,13 +54,11 @@ function Homeopathy() {
             backgroundImage: `url(${findImage(WEBSITE_IMAGE.HOMEOPATHY_BANNER)})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            position: "relative",
-            zIndex: "500",
           }}
         >
         </div>
       </div>
-      <div style={{ marginTop: "-85px" }} className="row ">
+      <div  className="row ">
         <DoctorsList source={"homepage"} filter={{ specialization: 'Homeopathy' }} />
       </div>
       <div className="container">

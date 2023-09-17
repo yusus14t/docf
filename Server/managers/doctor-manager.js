@@ -736,7 +736,7 @@ const hospitalSpecialization = async (body, user) => {
     let specialization = organization?.specialization?.length
       ? organization?.specialization.map((spe) => ({
           name: spe.name,
-          id: spe.name.toLocaleUpperCase(),
+          id: spe.id,
         }))
       : [];
     return Success({ specialization });

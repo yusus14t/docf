@@ -116,7 +116,9 @@ function Clinics({ source }) {
                           <div className="clinic-details d-flex flex-row justify-content-between">
                             <div className="mt-2">
                               <h6 className="clinic-specialization text-disabled">
-                                {"Dermatologist"}
+                              {clinic.specialization.length > 1
+                                ? "Multi speciality"
+                                : clinic.specialization[0]?.name || "-"}
                               </h6>
                               <div className="contact-info">
                                 <h6 className="text-disabled mt-1">
