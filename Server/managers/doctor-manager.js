@@ -797,6 +797,7 @@ const anonymousAppointment = async (body, user) => {
         userType: "PT",
         phone: '0000000000',
         primary: false,
+        isPaid: true,
       }).save();
     }
 
