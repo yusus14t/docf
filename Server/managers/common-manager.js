@@ -372,13 +372,14 @@ const getAllClinics = async (body) => {
     let users = ["Clinic"];
     if (!body?.isClinic) users.push("Department");
     
+    let specialization = body?.filter?.specialization
     let clinics = await OrganizationModel.find({
       organizationType: { $in: users },
-      ...(body?.filter?.specialization
-        ? { "specialization.name": body?.filter?.specialization }
+      ...(specialization
+        ? { "specialization.name": { $in: typeof(specialization) === 'string' ? [specialization] : specialization  }}
         : {}),
     });
-    return Success({ clinics });
+    return Success({ clinics });0
   } catch (error) {
     console.log(error);
   }

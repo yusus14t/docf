@@ -1489,7 +1489,10 @@ input::-webkit-inner-spin-button {
   width: 500px;
   background-color: #000;
 }
-
+.ultraActive{
+  background-color: rgb(20, 95, 76);
+  color:white
+}
 .notice-max-height {
   max-height: 30rem;
   overflow: auto;

@@ -2,8 +2,8 @@ let specialization = {
   data: [
     {
       id: "PUMONOLOGIST",
-      name: "Punomologist",
-      nickname: "(LUNGS)",
+      name: "Punomologist (LUNGS)",
+      // nickname: "(LUNGS)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/punomo.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/PUMONOLOGIST.jpg",
@@ -15,7 +15,7 @@ let specialization = {
     {
       id: "HEPATOLOGIST",
       name: "Hepatologist",
-      nickname: "(Liver)",
+      // nickname: "(Liver)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/hepatologist.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/HEPATOLOGIST.jpg",
@@ -28,8 +28,8 @@ let specialization = {
     },
     {
       id: "NEPHROLOGIST",
-      name: "Nephrologist",
-      nickname: "(Kidney)",
+      name: "Nephrologist (Kidney)",
+      // nickname: "(Kidney)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/nep.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/NEPHROLOGIST.jpg",
@@ -42,8 +42,8 @@ let specialization = {
     },
     {
       id: "DERMATOLOGIST",
-      name: "Dermatologist",
-      nickname: "(Skin)",
+      name: "Dermatologist (Skin)",
+      // nickname: "(Skin)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/derma.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/DERMATALOGIST.jpg",
@@ -55,8 +55,8 @@ let specialization = {
     },
     {
       id: "ENDOCRINOLOGIST",
-      name: "Endocrinologist",
-      nickname: "(Diabetes)",
+      name: "Endocrinologist (Diabetes)",
+      // nickname: "(Diabetes)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/endo.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/1.ENDOCRINOLOGIST.jpg",
@@ -69,8 +69,8 @@ The fascinating field of endocrinology explains the complex relationships betwee
     },
     {
       id: "UROLOGIST",
-      name: "Urologist",
-      nickname: "Urinary System",
+      name: "Urologist (Urinary System)",
+      // nickname: "Urinary System",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/uro.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/UROLOGY.jpg",
@@ -83,8 +83,8 @@ Urologists play a vital role in the healthcare ecosystem, addressing a wide rang
     },
     {
       id: "GENERAL-PHYSICIAN",
-      name: "General Physician",
-      nickname: "(Common Doctor)",
+      name: "General Physician (Common Doctor)",
+      // nickname: "(Common Doctor)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/general.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/GENERALPHYSICIAN.jpg",
@@ -96,7 +96,7 @@ Urologists play a vital role in the healthcare ecosystem, addressing a wide rang
     {
       id: "RADIOCOLOGIST",
       name: "Radiologist",
-      nickname: "",
+      // nickname: "",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/radio.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/radiology.jpg",
@@ -108,8 +108,8 @@ Radiologists are the guiding light in the realm of radiology, illuminating the p
     },
     {
       id: "ORTHOPEDIC",
-      name: "Orthophedic",
-      nickname: "(Knee & Hip)",
+      name: "Orthophedic (Knee & Hip)",
+      // nickname: "(Knee & Hip)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/ortha.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/ORTHOPEDIC.jpg",
@@ -121,8 +121,8 @@ In order to increase mobility, reduce pain, and enhance the overall quality of l
     },
     {
       id: "PAEDIATRICIAN",
-      name: "Paediatrician",
-      nickname: "(Child's Doctor)",
+      name: "Paediatrician (Child's Doctor)",
+      // nickname: "(Child's Doctor)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/pedi.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/PEDIATRICIAN.jpg",
@@ -134,8 +134,8 @@ Paediatricians can diagnose and treat a wide range of health conditions in child
     },
     {
       id: "RHEUMATOLOGISTS",
-      name: "Rheumatologist",
-      nickname: "(Joint Pain)",
+      name: "Rheumatologist (Joint Pain)",
+      // nickname: "(Joint Pain)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/rhea.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/RHEUMATALOGY.jpg",
@@ -149,8 +149,8 @@ Advances in rheumatology research continue to shape the field, leading to improv
     },
     {
       id: "CARDIOLOGIST",
-      name: "Cardiologist",
-      nickname: "(Heart)",
+      name: "Cardiologist (Heart)",
+      // nickname: "(Heart)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/cardio.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/CARDIOLOGIST.jpg",
@@ -164,8 +164,8 @@ To ensure the well-being of people with cardiovascular issues, cardiology and th
     },
     {
       id: "NEUROLOGIST",
-      name: "Neurologist",
-      nickname: "(Brain)",
+      name: "Neurologist (Brain)",
+      // nickname: "(Brain)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/neu.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/NEPHROLOGIST.jpg",
@@ -177,8 +177,8 @@ The advances in neurology pave the way for a future where neurological disorders
     },
     {
       id: "GYNECOLOGIST",
-      name: "Gynecologist",
-      nickname: "(Woman's Health)",
+      name: "Gynecologist (Woman's Health)",
+      // nickname: "(Woman's Health)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/gynae.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/1.gynaclogist.jpg",
@@ -193,8 +193,8 @@ The advances in neurology pave the way for a future where neurological disorders
     },
     {
       id: "ONCOLOGIST",
-      name: "Oncologist",
-      nickname: "(Cancer)",
+      name: "Oncologist (Cancer)",
+      // nickname: "(Cancer)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/ono.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/ONCOLOGIST.jpg",
@@ -207,8 +207,8 @@ We can expect even more novel and individualised methods to tackle this terrible
     },
     {
       id: "OPHTHALMOLOGIST",
-      name: "Ophthalmologist",
-      nickname: "(Eyes)",
+      name: "Ophthalmologist (Eyes)",
+      // nickname: "(Eyes)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/optha.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/1.OPTHALMOLOGIST.jpg",
@@ -221,8 +221,8 @@ The field of ophthalmology promises a brighter future where visual impairments a
     },
     {
       id: "PSYCHIATRISTS",
-      name: "Psychiatrist",
-      nickname: "Depression",
+      name: "Psychiatrist (Depression)",
+      // nickname: "Depression",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/pschy.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/PHYCHIATRISSTS.jpg",
@@ -234,8 +234,8 @@ The field of ophthalmology promises a brighter future where visual impairments a
     },
     {
       id: "IMMUNOLOGIST",
-      name: "Immunologist",
-      nickname: "(Liver)",
+      name: "Immunologist (Liver)",
+      // nickname: "(Liver)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/immune.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/immunology.jpg",
@@ -249,8 +249,8 @@ Immunologists are the defenders of our health, striving to understand and harnes
 
     {
       id: "GASTROENTEROLOGIST",
-      name: "Gastroenterologist",
-      nickname: "Stomach",
+      name: "Gastroenterologist (Stomach)",
+      // nickname: "Stomach",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/gastro.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/gastroenterologist.jpg",
@@ -260,6 +260,42 @@ Immunologists are the defenders of our health, striving to understand and harnes
                     In order to enhance digestive health, gastroenterologists emphasise the value of preventive care and patient education. They support routine screenings like colonoscopies in order to identify and stop colorectal cancer, which is the third biggest cause of cancer-related deaths globally. In order to properly manage chronic illnesses, they also teach patients about dietary adjustments, lifestyle changes, and the proper use of medications.
                     Gastroenterologists employ a multidisciplinary approach, combining advanced diagnostic techniques, medical therapies, and surgical interventions to provide comprehensive care. Regular consultations with a gastroenterologist and adherence to preventive measures can contribute to long-term gastrointestinal well-being.
 `,
+    },
+    {
+      id: "HOMEOPATHY",
+      name: "Homeopathy",
+    },
+    {
+      id: "CTSCAN",
+      name: "CTscan",
+    },
+    {
+      id: "ECHO",
+      name: "ECHO",
+    },
+    {
+      id: "ECG",
+      name: "ECG",
+    },
+    {
+      id: "ENDOSCOPY",
+      name: "Endoscopy",
+    },
+    {
+      id: "MRI",
+      name: "MRI",
+    },
+    {
+      id: "NICU",
+      name: "NICU",
+    },
+    {
+      id: "ULTRASOUND",
+      name: "Ultrasound",
+    },
+    {
+      id: "XRAY",
+      name: "X-ray",
     },
   ],
   function: async () => {

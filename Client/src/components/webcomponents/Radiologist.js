@@ -15,9 +15,17 @@ import {
 const Ultrasound = () => {
   const [clinics, setClinics] = useState([]);
   const [images, setImages] = useState([]);
+  const [specialization, setSpecialization] = useState(null)
+ 
+
+
+useEffect(()=>{
+getAllClinics()
+},[specialization])
 
   useEffect(() => {
     initailizer();
+
 
     getAllClinics();
   }, []);
@@ -34,7 +42,7 @@ const Ultrasound = () => {
   const getAllClinics = async () => {
     try {
       let { data } = await axiosInstance.get("/all-clinics", {
-        params: { filter: { specialization: "Ultrasound" } },
+        params: { filter: { specialization: specialization || RADIOLOGIST_DEPARTMENT.map(radiologist=> radiologist.name) } },
         ...getAuthHeader(),
       });
       setClinics(data?.clinics);
@@ -46,12 +54,12 @@ const Ultrasound = () => {
   return (
     <>
       <div className="box bg-light"></div>
-      <div className=" mini-menu position-fixed w-100 bg-light ">
+      <div style={{zIndex:"99"}} className=" mini-menu position-fixed w-100 bg-light  ">
         <ul className="d-flex mb-0 p-2 overflow-auto">
           {RADIOLOGIST_DEPARTMENT.map(({ id, name }) => (
             <li
-              className="bgh py-1 px-3 cursor-pointer rounded mt-1 mx-1"
-              onClick={() => {}}
+              className={`bgh py-1 px-3 cursor-pointer rounded mt-1 mx-1  ${specialization === name && "ultraActive"}`}
+              onClick={() => {setSpecialization(name)}}
             >
               {name}
             </li>
@@ -76,6 +84,7 @@ const Ultrasound = () => {
           {clinics?.length > 0 &&
             clinics.map((clinic, key) => (
               <div className="col-lg-4 col-md-4 mcard" key={key}>
+                {console.log(clinic)}
                 <Link to={`/clinic-detail/${clinic._id}`}>
                   <div
                     style={{ background: "#edede9", border: "none" }}
@@ -89,20 +98,31 @@ const Ultrasound = () => {
                         }
                         alt=""
                       />
-                    </div>
-                    <div className="dr-details">
-                      <h2 className="text-center">{clinic?.name}</h2>
-                      <span
-                        style={{ marginLeft: "10px", fontSize: "10px" }}
+                      <div
+                        style={{
+                          fontSize: "10px",
+                          height: "30px",
+                          marginTop: "10px",
+                          marginLeft: "",
+                          width: "50px",
+                          zIndex:"1"
+                        }}
                         className="ml-2 p-2 clinic-title"
                       >
-                        &#8377; {clinic.fee}
-                      </span>
+                        <h6 style={{ fontSize: "12px" }}>
+                          &#8377; {clinic.fee}
+                        </h6>
+                      </div>
+                    </div>
+
+                    <div className="dr-details">
+                      <h2 className="text-center">{clinic?.name}</h2>
+
                       <p
                         style={{ background: "#00afb9" }}
                         className="mb-1 dr-spelialization"
                       >
-                        Ultrasound
+                        {clinic?.specialization[0].name}
                       </p>
                       <p className="mb-1 experience-dr">
                         Experience: {clinic?.experience || "-"}
