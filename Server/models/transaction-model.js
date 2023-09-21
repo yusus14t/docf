@@ -4,8 +4,9 @@ const transactionSchema = new Schema({
     status: { type: String },
     merchantId: { type: String },
     transactionId: { type: String },
-    amoount: { type: String },
+    amount: { type: String },
     refrenceId: { type: String },
+    type: { type: String },
     appointmentId: { type: Schema.Types.ObjectId, ref: 'appointment' },
 
 },{ timestamps: true })
