@@ -54,12 +54,20 @@ getAllClinics()
   return (
     <>
       <div className="box bg-light"></div>
-      <div style={{zIndex:"99"}} className=" mini-menu position-fixed w-100 bg-light  ">
+      <div
+        style={{ zIndex: "99" }}
+        className=" mini-menu position-fixed w-100 bg-light  "
+      >
+        {console.log("clini", clinics)}
         <ul className="d-flex mb-0 p-2 overflow-auto">
           {RADIOLOGIST_DEPARTMENT.map(({ id, name }) => (
             <li
-              className={`bgh py-1 px-3 cursor-pointer rounded mt-1 mx-1  ${specialization === name && "ultraActive"}`}
-              onClick={() => {setSpecialization(name)}}
+              className={`bgh py-1 px-3 cursor-pointer rounded mt-1 mx-1  ${specialization ===
+                name && "ultraActive"}`}
+              onClick={() => {
+                setSpecialization(name);
+              }}
+              key={id}
             >
               {name}
             </li>
@@ -105,7 +113,7 @@ getAllClinics()
                           marginTop: "10px",
                           marginLeft: "",
                           width: "50px",
-                          zIndex:"1"
+                          zIndex: "1",
                         }}
                         className="ml-2 p-2 clinic-title"
                       >
@@ -117,19 +125,21 @@ getAllClinics()
 
                     <div className="dr-details">
                       <h2 className="text-center">{clinic?.name}</h2>
-
+                        
                       <p
                         style={{ background: "#00afb9" }}
                         className="mb-1 dr-spelialization"
                       >
                         {clinic?.specialization[0].name}
                       </p>
+                      <p className="mb-0">{clinic?.doctor?.name}</p>
                       <p className="mb-1 experience-dr">
-                        Experience: {clinic?.experience || "-"}
+                        Experience: {clinic?.doctor?.experience || "-"}
                       </p>
-                      <p className="dr-qualifiction mb-1">
+                      
+                      {/* <p className="dr-qualifiction mb-1">
                         {clinic?.qualification || "-"}
-                      </p>
+                      </p> */}
                       <p className="dr-address">{clinic?.address || "-"}</p>
                     </div>
                   </div>

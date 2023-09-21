@@ -407,7 +407,8 @@ const getAllClinics = async (body) => {
             },
             {
               $project: {
-                name: 1
+                name: 1,
+                experience: 1
               }
             },
             {
