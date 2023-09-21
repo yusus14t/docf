@@ -98,6 +98,7 @@ const createClinic = async (body, userInfo) => {
 const createHospital = async (body, userInfo) => {
   try {
     let organization = await UserModel.findOne({ phone: body.phone }).lean();
+
     if (!organization) {
       organization = await OrganizationModel({
         registration: body?.registration,
@@ -141,6 +142,7 @@ const createHospital = async (body, userInfo) => {
           registrationNo: body?.registrationNo,
           email: body?.email,
           name: body?.name,
+          phone: body.phone
         }
       );
       await UserModel.updateOne({ _id: organization._id }, { isActive: true });
@@ -262,7 +264,7 @@ const organizationDetails = async (body, user, file) => {
     if (detail?.specialization?.length)
       detail.specialization = detail?.specialization?.map((s) => ({
         name: s.name,
-        id: s.value,
+        id: s.id,
       }));
 
     if (file) await uploadToBucket(file.filename);
@@ -373,14 +375,58 @@ const getAllClinics = async (body) => {
     if (!body?.isClinic) users.push("Department");
     
     let specialization = body?.filter?.specialization
-    let clinics = await OrganizationModel.find({
-      'billing.isPaid': true,
-      // 'billing.expire': { $lte: new Date },
-      organizationType: { $in: users },
-      ...(specialization
-        ? { "specialization.name": { $in: typeof(specialization) === 'string' ? [specialization] : specialization  }}
-        : {}),
-    });
+
+    let specializationCond =  typeof(specialization) === 'string' ? [specialization] : specialization 
+    let clinics = await OrganizationModel.aggregate([
+      {
+        $match: {
+          'billing.isPaid': true,
+          organizationType: { $in: users },
+          ...(specialization
+            ? {
+              $or: [
+                { "specialization.name": { $in: specializationCond } },
+                { "specialization.id": { $in: specializationCond } }
+              ]
+            }
+            : {}),
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          let: { organizationId: '$_id' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$organizationId', '$$organizationId']
+                },
+                userType: 'DR'
+              }
+            },
+            {
+              $project: {
+                name: 1
+              }
+            },
+            {
+              $limit: 1
+            }
+          ],
+          as: 'doctor'
+        }
+      },
+      {
+        $unwind: {
+          path: '$doctor',
+          preserveNullAndEmptyArrays: true
+        },
+
+      }
+    ])
+
+
     return Success({ clinics });0
   } catch (error) {
     console.log(error);
@@ -505,27 +551,25 @@ const waitingList = async (body, user) => {
 
 const setUserType = async (body) => {
   try {
+
     let userTypes = {
       hospital: "HL",
       clinic: "CL",
       patient: "PT",
     };
+
     let userType = null;
     let organization = null;
-    if (body.type === "hospital") {
-      userType = "HL";
-      if (!body?.organizationId) {
-        organization = await OrganizationModel({
-          organizationType: "Hospital",
-        }).save();
-      }
-    } else if (["clinic"].includes(body.type)) {
+
+    if (["hospital", "clinic"].includes(body.type)) {
       userType = userTypes[body.type];
+    
       if (!body?.organizationId) {
         organization = await OrganizationModel({
-          organizationType: body.type === "clinic" ? "Clinic" : "Ultrasound",
+          organizationType: body.type === "hospital" ? "Hospital" : "Clinic",
         }).save();
       }
+
     } else userType = "PT";
 
     let user = await UserModel.findOneAndUpdate(
@@ -553,7 +597,7 @@ const getAllHospitals = async (body, user) => {
         'billing.isPaid': true,
         // 'billing.expire': { $lte: new Date },
         ...(body?.filter
-          ? { "specialization.name": body?.filter?.specialization }
+          ? {$or: [{ "specialization.name": body?.filter?.specialization }, { "specialization.id": body?.filter?.specialization }]}
           : {}),
       });
 

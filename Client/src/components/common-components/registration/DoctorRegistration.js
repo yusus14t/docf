@@ -54,8 +54,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
   const getDepartments = async () => {
     try {
         let { data } = await axiosInstance.get('/doctor/departments', { params: { organizationId: RID }, ...getAuthHeader() })
-
-        let dep = data?.organizations?.map( de => ({ name: de?.organizationId?.name, _id: de?.organizationId?._id, specialization: de?.organizationId?.specialization[0]?.id || null }))
+        let dep = data?.organizations?.map( de => ({ name: de?.organizationId?.name, _id: de?.organizationId?._id, id: de?.organizationId?.specialization[0]?.id || null }))
         setDepartments(dep)
 
     } catch(error) { console.error(error) }
@@ -86,8 +85,9 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
       
       let response = null
       if(values?._id){
+        formData['source'] = 'organization'
         response = await axiosInstance.post('/doctor/edit-doctor', formData)
-  
+
         setDoctors( prev => prev.map( old => {
           if( old._id.toString() === response?.data?.doctor?._id ) old = response?.data?.doctor
           return old
@@ -103,7 +103,6 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
           phone: data?.doctor?.phone,
           qualification: data?.doctor?.qualification,
           experience: data?.doctor?.experience,
-          aboutme: data?.doctor?.aboutme,
           specialization: data?.doctor?.specialization,
           address: data?.doctor?.address,
           photo: data?.doctor?.photo,
@@ -115,7 +114,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
       }
 
       setEditImage(null)
-      reset({ name: null, email: null, qualification: null, experience: null, aboutme: null, specialization: null, address: null, phone: null })
+      reset({ name: null, email: null, qualification: null, experience: null, specialization: null, address: null, phone: null })
       toasty.success(response?.data?.message)
     } catch (error) { 
       console.log(error)
@@ -278,7 +277,7 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
                     <Select
                       {...field}
                       isMulti={false}
-                      options={source === 'Hospital' || userInfo.userType === 'HL' ? specialization.filter( a => a.id === watch('department')?.specialization ) : specialization}
+                      options={source === 'Hospital' || userInfo.userType === 'HL' ? specialization.filter( a => a.id === watch('department')?.id ) : specialization}
                       getOptionLabel={({ name }) => name}
                       getOptionValue={({ id }) => id}
                       className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
@@ -297,18 +296,6 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
                   className={`form-control ${errors.address ? 'border-danger' : ''}`}
                   placeholder="Enter Address"
                   {...register(`address`, {
-                    required: 'Address is required'
-                  })}
-                />
-              </div>
-            </div>
-            <div className="col-md-12 mb-3">
-              <label className=''>About ME</label>
-              <div className="input-group">
-                <textarea type="text" rows={7}
-                  className={`form-control ${errors.aboutme ? 'border-danger' : ''}`}
-                  placeholder="Describe yourself"
-                  {...register(`aboutme`, {
                     required: 'Address is required'
                   })}
                 />

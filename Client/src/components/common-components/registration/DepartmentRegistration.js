@@ -66,6 +66,7 @@ const DepartmentRegistration = ({tab, setTab, source='', id, setIsOpen=() => {},
 
     const submit = async (formValues) => {
         try{    
+  
             formValues['timing'] = timing
             formValues['organizationId'] = RID
 

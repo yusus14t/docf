@@ -21,7 +21,7 @@ const editProfile = async ( body, user, file ) => {
         if( hospital ) return({ message: 'Phone already used.'})
         
         let obj = {
-            fee: parseInt(detail?.fee),
+            fee: detail?.fee ? parseInt(detail?.fee) : 0,
             address: detail?.address, 
             name: detail?.name,
             phone: detail?.phone,
@@ -46,7 +46,7 @@ const editProfile = async ( body, user, file ) => {
 const clinicSpecialization = async (body, user) => {
     try{
         let specializations = await organizationModel.findOne({_id: body.id }, { specialization: 1 })
-        specializations = specializations?.specialization?.map( spe => ({ id: spe.name?.toUpperCase(), name: spe?.name  }))
+        specializations = specializations?.specialization?.map( spe => ({ id: spe.id, name: spe?.name  }))
         return Success({ specializations })
     } catch(error){ console.error(error) }
 }

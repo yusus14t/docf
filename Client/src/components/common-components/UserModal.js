@@ -83,10 +83,6 @@ const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
                     <span className="m-0 text-dark">Gender : </span>
                     {appointment?.userId?.gender || " - " }
                   </h6>
-                  <h6 className="font-weight-bold">
-                    <span className="m-0 text-dark">Blood Group : </span>
-                    {appointment?.userId?.bloodGroup || " - " }
-                  </h6>
                 </div>
                 <div className="user-token m-auto ">
                   <h3 className="text-center ">{appointment?.token}</h3>

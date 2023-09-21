@@ -70,7 +70,7 @@ const handle = ()=>{
                                 <h2 className="DRNAME">{doctor?.name}</h2>
                                 <p className="mb-1 dr-spelialization">
                                   {doctor?.specialization?.name ||
-                                    "Specialization"}
+                                    (doctor?.specialization?.length ? doctor?.specialization[0]?.name : '-')}
                                 </p>
                                 <p className="mb-1 experience-dr">
                                   Eperience :{ doctor?.experience || '-'}
