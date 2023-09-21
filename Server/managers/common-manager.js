@@ -813,36 +813,46 @@ const websiteSetting = async (params) => {
 const phonepayStatus = async ( body, res ) => {
   try {
     console.log('payment response', body)
+
+    let redirectUrl = process.env.REDIRECT_URL
+
     let transaction = await TransactionModel.findOne({ refrenceId: body?.providerReferenceId })
     if( !transaction ){
       transaction = await TransactionModel({
         status: body?.code,
         merchantId: body?.merchantId,
         transactionId: body.transactionId,
-        amount: body.amount,
+        amount: body.amount / 100,
         refrenceId: body?.providerReferenceId
       }).save()
 
       if (body.code === 'PAYMENT_SUCCESS') {
+        redirectUrl = process.env.REDIRECT_SUCCESS_URL
+
         body.transactionId = body.transactionId.split('-')[0]
   
         /**************************** For Appointment *************************** */  
-        let appointment = await AppointmentModel.findOne({ _id: body.transactionId })
+        let appointment = await AppointmentModel.findOne({ _id: body.transactionId }).populate('departmentId')
         if (appointment) {
   
           let today = new Date();
           today.setHours(0, 0, 0, 0);
           
           let lastAppointment = await AppointmentModel.findOne({
-            departmentId: ObjectId(appointment.departmentId),
+            departmentId: ObjectId(appointment.departmentId._id),
             isPaid: true,
             createdAt: { $gte: today },
           }, { token: 1 }).sort({ createdAt: -1 });
   
           let token = lastAppointment?.token ? +lastAppointment.token + 1 : "1";
           await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true,  token })
+
+          if( appointment.departmentId?.organizationType === 'Clinic' ) redirectUrl = `${ process.env.REDIRECT_URL }/clinic-detail/${ appointment.departmentId._id }`
+          else redirectUrl = `${ process.env.REDIRECT_URL }/department-detail/${ appointment.departmentId._id }`
         }
         /************************************************************* */
+
+        /************************* Organization Billing ************************* */
         let organization = await OrganizationModel.findOne({ _id: body.transactionId })
         if( organization ){
 
@@ -863,12 +873,17 @@ const phonepayStatus = async ( body, res ) => {
               transactionId: transaction._id,
             }
           })
+
+          await TransactionModel.updateOne({ _id: transaction._id }, { type: organization.billing.plan })
+          redirectUrl = `${process.env.REDIRECT_SUCCESS_URL}?trxId=${transaction._id}`
         }
-        res.redirect(process.env.REDIRECT_SUCCESS_URL)
+        /************************************************************************ */
+
+        res.redirect(redirectUrl)
         
       } else {
         
-        res.redirect(process.env.REDIRECT_URL)
+        res.redirect(redirectUrl)
       }
 
     }
@@ -909,6 +924,17 @@ const payment = async ( body, user ) => {
 };
 
 
+const getTransaction = async ({ id }, user) => {
+  try {
+    let transaction = await TransactionModel.findOne({ _id: id }, { amount: 1, type: 1 });
+    console.log(transaction)
+    return Success({ transaction });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 module.exports = {
   logIn,
   signUp,
@@ -939,4 +965,5 @@ module.exports = {
   allCities,
   phonepayStatus,
   payment,
+  getTransaction,
 };

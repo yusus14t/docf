@@ -214,6 +214,12 @@ const payment = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const getTransaction = async ( req, res ) => {
+    commonManager.getTransaction( req.params, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     logIn,
     signUp,
@@ -250,4 +256,5 @@ module.exports = {
     allCities,
     phonepayStatus,
     payment,
+    getTransaction
 }
