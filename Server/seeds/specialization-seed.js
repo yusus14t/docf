@@ -2,7 +2,7 @@ let specialization = {
   data: [
     {
       id: "PUMONOLOGIST",
-      name: "Punomologist (LUNGS)",
+      name: "Pulnomologist (LUNGS)",
       // nickname: "(LUNGS)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/punomo.jpg",
       icon1:
@@ -14,7 +14,7 @@ let specialization = {
     },
     {
       id: "HEPATOLOGIST",
-      name: "Hepatologist",
+      name: "Hepatologist (Liver)",
       // nickname: "(Liver)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/hepatologist.jpg",
       icon1:
@@ -95,7 +95,7 @@ Urologists play a vital role in the healthcare ecosystem, addressing a wide rang
     },
     {
       id: "RADIOCOLOGIST",
-      name: "Radiologist",
+      name: "Radiologist (Ultrasound, MRI & X-RAy)",
       // nickname: "",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/radio.jpg",
       icon1:
@@ -168,7 +168,7 @@ To ensure the well-being of people with cardiovascular issues, cardiology and th
       // nickname: "(Brain)",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/neu.jpg",
       icon1:
-        "https://imaginr.erahamtech.com/uploads/specialization_img/NEPHROLOGIST.jpg",
+        "https://imaginr.erahamtech.com/uploads/specialization_img/1.NEUROLOGIST%20.jpg",
       description: `Neurology is the branch of medicine dedicated to studying the complex workings of the nervous system which holds the key to understanding the complexities of the human brain. The fascinating field that roots in the structure, functioning, and disorders of the nervous system, highlighting the enigmatic workings of the nervous system. With breakthroughs in research and technological advancements, neurology continues to unravel the mysteries of the brain, structuring the way for innovative treatments and improving the lives of patients. 
 The central processing unit of the body is the nervous system, which is made up of the brain, spinal cord, and a huge network of nerves. Neurologists study how this complex system works and interacts, focusing on how nerve cells, or neurons, send and process information through electrical and chemical signals. We can now understand intricate processes like vision, locomotion, memory, and cognition thanks to this investigation.
 Neurologists play an important role in the diagnosis and treatment of a wide spectrum of neurological illnesses. Neurology is the study of numerous disorders that affect brain function, ranging from common conditions like migraines and epilepsy to more serious conditions like Alzheimer's disease and Parkinson's disease. Neurologists can view the anatomy of the brain and spot anomalies that lead to neurological symptoms using cutting-edge imaging methods like MRI and CT scans. These discoveries aid in the development of focused treatment plans that include medicine, surgery, and rehabilitation techniques and enhance patient results.
@@ -234,9 +234,10 @@ The field of ophthalmology promises a brighter future where visual impairments a
     },
     {
       id: "IMMUNOLOGIST",
-      name: "Immunologist (Liver)",
+      name: "Immunologist (Immunity System)",
       // nickname: "(Liver)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/immune.jpg",
+      pic:
+        "https://imaginr.erahamtech.com/uploads/specialization_img/immunologist.jpg",
       icon1:
         "https://imaginr.erahamtech.com/uploads/specialization_img/immunology.jpg",
       description: `Immunologists are medical experts who research and comprehend the immune system, the body's natural defence against viruses and diseases. Their area of expertise is in deciphering the workings of this complicated biological system and creating plans to avoid, detect, and treat immunological problems. Immunologists are essential to preserving public health in a time of newly developing diseases and international health risks. Immunologists contribute to the creation of cutting-edge medicines and treatments for a variety of immunological illnesses by understanding the underlying mechanisms.
@@ -249,7 +250,7 @@ Immunologists are the defenders of our health, striving to understand and harnes
 
     {
       id: "GASTROENTEROLOGIST",
-      name: "Gastroenterologist (Stomach)",
+      name: "Gastroenterologist (Acidity & Gas)",
       // nickname: "Stomach",
       pic: "https://imaginr.erahamtech.com/uploads/spe_img/gastro.jpg",
       icon1:
@@ -264,6 +265,15 @@ Immunologists are the defenders of our health, striving to understand and harnes
     {
       id: "HOMEOPATHY",
       name: "Homeopathy",
+      icon1:
+        "https://imaginr.erahamtech.com/uploads/specialization_img/homeopathy.png",
+      pic: "https://imaginr.erahamtech.com/uploads/specialization_img/2.png",
+      description: `Homeopathy is a holistic system of alternative medicine that has been practiced for over two centuries, founded by the German physician Samuel Hahnemann in the late 18th century. It is based on the principle of "like cures like," which means that a substance that causes symptoms in a healthy person can be used in a highly diluted form to treat similar symptoms in a sick individual. This concept is known as the Law of Similars.
+One of the core principles of homeopathy is the use of highly diluted remedies. Homeopathic remedies are prepared through a process called potentization, which involves serial dilution and succussion (vigorous shaking). The more a remedy is diluted and succussed, the more potent it becomes in homeopathic terms. This process is believed to enhance the healing properties of the substance while minimizing any potential side effects.
+Homeopathy takes a holistic approach to healing, considering not only the physical symptoms but also the mental, emotional, and spiritual aspects of an individual. Homeopathic practitioners conduct in-depth consultations to understand the patient's overall state of health and tailor treatments accordingly. This individualized approach aims to stimulate the body's natural healing mechanisms, promoting balance and well-being.
+Critics of homeopathy argue that the extreme dilutions render the remedies essentially indistinguishable from pure water, and they question its efficacy beyond a placebo effect. Nevertheless, many people around the world continue to seek homeopathic treatments for a wide range of health issues, from chronic conditions like allergies and arthritis to acute ailments like colds and flu.
+Homeopathy is often chosen as an alternative or complementary therapy, especially by those seeking natural and gentle healing methods with minimal side effects. It is non-invasive and can be used in conjunction with conventional medicine, making it a versatile option for individuals looking to explore diverse approaches to healthcare.
+In conclusion, homeopathy is a holistic system of alternative medicine rooted in the principle of "like cures like" and the use of highly diluted remedies. While its efficacy remains a topic of debate, its popularity persists among those seeking a gentle and individualized approach to healing that considers the whole person, not just their physical symptoms.`,
     },
     {
       id: "CTSCAN",

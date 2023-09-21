@@ -30,7 +30,7 @@ function WebFooter() {
             <Link to="/about">
               <h6 className="text-light">About Us</h6>
             </Link>
-            <Link>
+            <Link target='_blank' to="https://www.facebook.com/profile.php?id=61550823415174">
               <h6 className="text-light">FaceBook</h6>
             </Link>
           </div>

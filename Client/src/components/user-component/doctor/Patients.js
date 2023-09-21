@@ -20,7 +20,7 @@ const Patients = () => {
       {console.log(patients)}
       <div className="row">
         <div className="col-md-12">
-          <div className="ms-panel inner-content-height">
+          <div style={{overflow:"auto"}} className="ms-panel inner-content-height">
             <div className="ms-panel-header ms-panel-custome">
               <h6>Patient List</h6>
             </div>
