@@ -33,6 +33,9 @@ const Support = () => {
                             <div  class="table-responsive scrollbar-deep-purple ">
                                 <div style={{position:"absolute", width:"99%", zIndex:"9"}}  className="row mx-0 ms-panel-header ">
                                     <div className="col text-center ">
+                                        <span className="text-light ml-4">S.No</span>
+                                    </div>
+                                    <div className="col text-center ">
                                         <span className="text-light ml-4">Issue</span>
                                     </div>
                                     <div className="col text-center">
@@ -50,8 +53,11 @@ const Support = () => {
                                 </div>
                                 <div className="mx-4 mt-10  " style={{height:"65vh", marginTop:"50px"}}>
 
-                                {tickets.length > 0 && tickets.map( ticket =>
+                                {tickets.length > 0 && tickets.map( (ticket, i) =>
                                     <div className="row dropdown-menu-active py-1 ">
+                                    <div className="col text-center " style={{ width: "150px"}}>
+                                        { i+1 }
+                                    </div>
                                     <div className="col text-center ">
                                         <span className="text-dark align-middle">{ticket.title}</span>
                                     </div>
@@ -64,10 +70,10 @@ const Support = () => {
                                         <span className="text-dark">{ticket.senderId?.phone}</span>
                                     </div>}                                
                                     <div className="col text-center">
-                                        <span className="text-dark">{formatDate(ticket.createdAt)}</span>
+                                        <span className="text-dark">{new Date(ticket.createdAt).toLocaleString()}</span>
                                     </div>                                
                                     <div className="col text-center">
-                                        <span className="text-dark">Recieved</span>
+                                        <span className="text-dark">{['SA', 'AD'].includes(userInfo?.userType) ? 'Sent' : 'Recieved'}</span>
                                     </div>
                                 </div>)}
                                 </div>

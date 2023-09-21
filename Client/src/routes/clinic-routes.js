@@ -12,9 +12,9 @@ const CLINIC = [
   { path: "/clinic/dashboard", element: <Dashbaord /> },
   { path: "/clinic/patients", element: <Patients /> },
   { path: "/clinic/appointment", element: <AppointmentList /> },
+  { path: "/clinic/doctors", element: <Doctors /> },
   { path: "/clinic/notification", element: <Notification />, onExpire: true },
   { path: "/clinic/support", element: <Support />, onExpire: true },
-  { path: "/clinic/doctors", element: <Doctors />, onExpire: true },
   { path: "/clinic/setting", element: <Settings />, onExpire: true },
   { path: "/clinic/*", element: <Navigate to={"/clinic/dashboard"} /> },
 ];

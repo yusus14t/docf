@@ -47,7 +47,7 @@ const Gynae = () => {
 
   const getHospitals = async () => {
     try {
-      let { data } = await axiosInstance.get('/hospitals', { params: { filter: { specialization: 'Gynecologist' },  }, ...getAuthHeader() })
+      let { data } = await axiosInstance.get('/hospitals', { params: { filter: { specialization: 'GYNECOLOGIST' },  }, ...getAuthHeader() })
       setHospitals(data?.organization)
       console.log(data.organization)
     } catch(error){ console.error(error) }
@@ -56,7 +56,7 @@ const Gynae = () => {
 
   const getAllClinics = async () => {
     try {
-      let { data } = await axiosInstance.get("/all-clinics", { params: { isClinic: true, filter: {specialization: 'Gynecologist'} }, ...getAuthHeader() });
+      let { data } = await axiosInstance.get("/all-clinics", { params: { isClinic: true, filter: {specialization: 'GYNECOLOGIST'} }, ...getAuthHeader() });
       setClinics(data?.clinics);
     } catch (error) {
       console.error(error);
@@ -283,7 +283,7 @@ const Gynae = () => {
                     <div className="clinic-details d-flex flex-row justify-content-between">
                       <div className="mt-3">
                         <h6 className="hospital-specialization text-disabled">
-                          { Hospital?.specialization > 0 ? 'Multi Specialist' : Hospital?.specialization[0].name }
+                          { Hospital?.specialization?.length > 0 ? 'Multi Specialist' : Hospital?.specialization[0].name }
                         </h6>
                         <div className="contact-info mt-3">
                           <div>
@@ -360,7 +360,11 @@ const Gynae = () => {
                       <div className="clinic-details d-flex flex-row justify-content-between">
                         <div className="mt-2">
                           <h6 className="clinic-specialization text-disabled">
-                            {"Dermatologist"}
+                          <h6 className="clinic-specialization text-disabled">
+                              {clinic.specialization.length > 1
+                                ? "Multi speciality"
+                                : clinic.specialization[0]?.name || "-"}
+                              </h6>
                           </h6>
                           <div className="contact-info">
                             <h6 className="text-disabled mt-1">

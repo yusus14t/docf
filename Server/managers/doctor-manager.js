@@ -93,7 +93,6 @@ const getAppointments = async (body, user) => {
 
 const editDoctor = async (body, user, file) => { 
   try {
-    console.log('>>>>', body)
     // body = JSON.parse(body?.data);
 
     let userObj = {
@@ -101,12 +100,13 @@ const editDoctor = async (body, user, file) => {
       email: body?.email,
       phone: body?.phone,
       qualification: body?.qualification,
-      specialization: body?.specialization?.id,
-      experience: body?.experience,
       address: body?.address,
+      experience: body?.experience,
       aboutme: body?.aboutme,
       photo: body?.photo,
     };
+
+    if( body?.source !== "organization" ) userObj.specialization = body?.specialization
 
     
     if (file){
@@ -581,7 +581,7 @@ const createDepartment = async (body, userInfo, file ) => {
     body = JSON.parse(body?.data);
     let organization = await UserModel.findOne({ phone: body.phone }).lean();
     if (!organization) {
-      await uploadToBucket( file.filename )
+      if( file?.filename ) await uploadToBucket( file.filename )
 
       organization = await OrganizationModel({
         registration: body?.registration,
@@ -595,7 +595,7 @@ const createDepartment = async (body, userInfo, file ) => {
         timing: body?.timing,
         room: body?.room,
         specialization: body?.specialization,
-        photo: file.filename
+        photo: file?.filename
       }).save();
 
       let user = await UserModel({
@@ -700,6 +700,9 @@ const patients = async (body, user) => {
       {
         $group: {
           _id: "$userId",
+          createdAt: {
+            $push: "$createdAt"
+          }
         },
       },
       {
@@ -718,6 +721,7 @@ const patients = async (body, user) => {
           phone: "$user.phone",
           gender: "$user.gender",
           address: "$user.address",
+          createdAt: {$first: "$createdAt"}
         },
       },
     ]);

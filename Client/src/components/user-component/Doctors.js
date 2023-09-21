@@ -84,7 +84,7 @@ const DoctorsList = () => {
                                                     <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => handleDelete(doctor)} icon={faTrash}></FontAwesomeIcon>
                                                 </div>
                                             </div>
-                                            <p className="fs-12 my-1 text-disabled">{doctor?.specialization?.name || 'Neurologist'}</p>
+                                            <p className="fs-12 my-1 text-disabled">{doctor?.specialization?.name || '-'}</p>
                                             <h6 className="mt-0">
                                                 <span className="fs-14">
                                                     <i className="fas fa-map-marker-alt"></i>
