@@ -595,7 +595,9 @@ const createDepartment = async (body, userInfo, file ) => {
         timing: body?.timing,
         room: body?.room,
         specialization: body?.specialization,
-        photo: file?.filename
+        photo: file?.filename,
+
+        ...(userInfo.userType === 'HL' ? { billing: { isPaid: true, isNewPlan: true }} : {})
       }).save();
 
       let user = await UserModel({

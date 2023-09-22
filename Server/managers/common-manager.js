@@ -372,7 +372,7 @@ const getAllClinics = async (body) => {
   try {
     
     let users = ["Clinic"];
-    if (!body?.isClinic) users.push("Department");
+    if (!JSON.parse(body?.isClinic || true)) users.push("Department");
     
     let specialization = body?.filter?.specialization
 
@@ -380,7 +380,7 @@ const getAllClinics = async (body) => {
     let clinics = await OrganizationModel.aggregate([
       {
         $match: {
-          'billing.isPaid': true,
+        'billing.isPaid': true,
           organizationType: { $in: users },
           ...(specialization
             ? {
@@ -873,6 +873,11 @@ const phonepayStatus = async ( body, res ) => {
               transactionId: transaction._id,
             }
           })
+
+          if( organization.organizationType === "Hospital" ){
+            let departments = await UserModel.find({ hospitalId: organization._id }, { organizationId: 1 })
+            await OrganizationModel.updateMany({ _id: departments.map( department => ObjectId(department.organizationId) )}, { 'billing.isPaid': true })
+          }
 
           await TransactionModel.updateOne({ _id: transaction._id }, { type: organization.billing.plan })
           redirectUrl = `${process.env.REDIRECT_SUCCESS_URL}?trxId=${transaction._id}`

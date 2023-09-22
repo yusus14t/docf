@@ -305,7 +305,7 @@ In conclusion, homeopathy is a holistic system of alternative medicine rooted in
     },
     {
       id: "XRAY",
-      name: "X-ray",
+      name: "XRay",
     },
   ],
   function: async () => {

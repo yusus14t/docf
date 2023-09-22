@@ -239,7 +239,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
                                 <div class="col-12 mb-4">
                                     <button type='submit' className='btn btn-primary shadow-none mb-2' onClick={() => setIsAnotherAppointment(true)}>Add Another</button>
                                     <br />
-                                    <span className='text-disable'>Select Card</span>
+                                    <span className='text-disable bold'>Select Card</span>
                                     <div class={`ms-card card-gradient-dark ms-widget ms-infographics-widget mb-0 ${selected && 'appointment-selected'}`} onClick={() => { setSelected(selected ? null : userInfo); setCardError('') }}>
                                         <div class="ms-card-body media">
                                             <div class="media-body">

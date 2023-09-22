@@ -42,7 +42,7 @@ getAllClinics()
   const getAllClinics = async () => {
     try {
       let { data } = await axiosInstance.get("/all-clinics", {
-        params: { filter: { specialization: specialization || RADIOLOGIST_DEPARTMENT.map(radiologist=> radiologist.name) } },
+        params: { filter: { specialization: specialization || RADIOLOGIST_DEPARTMENT.map(radiologist=> radiologist.name) }, isClinic: false },
         ...getAuthHeader(),
       });
       setClinics(data?.clinics);
@@ -93,7 +93,13 @@ getAllClinics()
             clinics.map((clinic, key) => (
               <div className="col-lg-4 col-md-4 mcard" key={key}>
                 {console.log(clinic)}
-                <Link to={`/clinic-detail/${clinic._id}`}>
+                <Link
+                  to={
+                    clinic.organizationType === "Clinic"
+                      ? `/clinic-detail/${clinic._id}`
+                      : `/department-detail/${clinic._id}`
+                  }
+                >
                   <div
                     style={{ background: "#edede9", border: "none" }}
                     className="Dr-container mb-3 d-flex p-3"
@@ -125,18 +131,19 @@ getAllClinics()
 
                     <div className="dr-details">
                       <h2 className="text-center">{clinic?.name}</h2>
-                        
+
                       <p
                         style={{ background: "#00afb9" }}
                         className="mb-1 dr-spelialization"
                       >
-                        {clinic?.specialization[0].name}
+                        {/* {clinic?.specialization[0].name} */}
+                        {specialization}
                       </p>
                       <p className="mb-0">{clinic?.doctor?.name}</p>
                       <p className="mb-1 experience-dr">
                         Experience: {clinic?.doctor?.experience || "-"}
                       </p>
-                      
+
                       {/* <p className="dr-qualifiction mb-1">
                         {clinic?.qualification || "-"}
                       </p> */}

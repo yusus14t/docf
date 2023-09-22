@@ -127,8 +127,9 @@ function Detail() {
             backgroundSize: "100%",
           }}
         >
-            <h4 className="clinic-detail-name">{clinicDetail?.hospital?.name || clinicDetail.name}</h4>
-
+          <h4 className="clinic-detail-name">
+            {clinicDetail?.hospital?.name || clinicDetail.name}
+          </h4>
 
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-between  ">
@@ -146,17 +147,13 @@ function Detail() {
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {/* {clinicDetail?.doctor?.name}
                     {clinicDetail?.name} */}
-                  {clinicDetail.doctor?.name}
+                  DR {clinicDetail.doctor?.name}
                 </h4>
                 {clinicDetail.organizationType !== "Clinic" && (
                   <>
                     <h4 className="text-light clinic-detail-drName rounded">
                       {clinicDetail.name}{" "}
                     </h4>
-                    { clinicDetail?.room && <h4 className="text-light clinic-detail-drName rounded">
-                      {/* {clinicDetail?.doctor?.name} */}
-                      Room No: {clinicDetail?.room }
-                    </h4>}
                   </>
                 )}
 
@@ -167,6 +164,12 @@ function Detail() {
                   {clinicDetail?.specialization?.map((spe) => spe.name) ||
                     "Specialization"}
                 </h6>
+                {clinicDetail?.room && (
+                  <h4 className="text-light clinic-detail-drName rounded">
+                    {/* {clinicDetail?.doctor?.name} */}
+                    Room No: {clinicDetail?.room}
+                  </h4>
+                )}
               </div>
             </div>
             <div
@@ -272,7 +275,6 @@ function Detail() {
                       : clinicDetail?.hospital?.services?.map((serv) => (
                           <div className="service-tube m-1">{serv?.name}</div>
                         ))}
-              
                   </div>
                 </div>
 
