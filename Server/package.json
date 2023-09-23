@@ -6,7 +6,8 @@
   "scripts": {
     "test": "test",
     "start": "nodemon server",
-    "seeds": "node seeds/index.js"
+    "seeds": "node seeds/index.js",
+    "clear": "node seeds/clear.js"
   },
   "author": "AcadTech",
   "license": "ISC",

@@ -98,6 +98,19 @@ const organizationPrice = async (req, res) => {
         .catch(err => res.status(500).send(err.data))
 }
 
+const createCustomSpecialization = async (req, res) => {
+    superAdminManager.createCustomSpecialization(req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+const deleteCustomSpecialization = async (req, res) => {
+    superAdminManager.deleteCustomSpecialization(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
+
 
 module.exports = {
     getProfile,
@@ -116,4 +129,6 @@ module.exports = {
     plans,
     patientPrice,
     organizationPrice,
+    createCustomSpecialization,
+    deleteCustomSpecialization,
 }

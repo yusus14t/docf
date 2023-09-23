@@ -138,3 +138,14 @@ export const PLAN = {
     halfYear: 'halfYear',
     year: 'year',
 }
+
+export const SETTING_TABS = [
+    { name: 'Website', id: 'WEBSITE', access: ['SA', 'AD']},
+    { name: 'Specialization', id: 'SPECIALIZATION', access: ['HL', 'CL' ]},
+    { name: 'Specialization', id: 'CUSTOM_SPECIALIZATION', access: ['SA', 'AD' ]},
+    { name: 'Services', id: 'SERVICES', access: ['HL', 'CL', 'SA', 'AD']},
+    { name: 'QR Code', id: 'QRCODE', access: ['HL', 'CL', 'DP']},
+    { name: 'Contact', id: 'CONTACT', access: ['SA', 'AD']},
+    { name: 'Payment', id: 'PAYMENT', access: ['SA', 'AD']},
+    { name: 'Profile', id: 'PROFILE', access: ['HL', 'CL', 'SA', 'AD', 'DP', 'MR', 'PT']},
+]
