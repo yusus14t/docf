@@ -74,7 +74,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
 
     const addAnonymous = async () => {
         try{
-            let { data } = await axiosInstance.post('/doctor/anonymous-appointment');
+            await axiosInstance.post('/doctor/anonymous-appointment');
             refresh()
             setIsOpen(false)
         } catch(error){ console.error(error) }
