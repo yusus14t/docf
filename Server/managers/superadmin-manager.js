@@ -4,6 +4,7 @@ const OrganizationModel  = require('../models/organization-model');
 const { Success, Error, uploadToBucket } = require('../constants/utils');
 const websiteImageModel = require('../models/website-image-model');
 const settingModel = require('../models/setting-model');
+const specializationModel = require('../models/specialization-model');
 
 
 const getProfile = async ( body ) => {
@@ -316,6 +317,29 @@ const organizationPrice = async ( body ) => {
 }
 
 
+const createCustomSpecialization = async ( body ) => {
+    try {
+        body.customSpecialization  = body.customSpecialization.trim()
+        await specializationModel({ id: body.customSpecialization.toUpperCase(), name: body.customSpecialization, isDefault: false }).save() 
+        return Success({ message: 'Price update successfully' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const deleteCustomSpecialization = async ( body ) => {
+    try {
+        console.log(body)
+        await specializationModel.deleteOne({ id: body.id }) 
+        return Success({ message: 'Specialization successfully deleted' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+
 module.exports = {
     getProfile,
     analytics,
@@ -333,4 +357,6 @@ module.exports = {
     plans,
     patientPrice,
     organizationPrice,
+    createCustomSpecialization,
+    deleteCustomSpecialization,
 }

@@ -90,9 +90,8 @@ module.exports.setting = {
             }
         },
     ],
-    function: async () => {
+    store: async () => {
         await settingModel.deleteMany()
         await settingModel.insertMany(this.setting.data)
-        console.log('complete...')
     }
 }

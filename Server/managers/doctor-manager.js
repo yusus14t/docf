@@ -6,7 +6,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const { EventEmitter } = require("events");
 const OrganizationModel = require("../models/organization-model");
 const DealModel = require("../models/deal-model");
-const { createChecksum } = require('../constants/utils')
+const specializationModel = require("../models/specialization-model");
 const eventEmitter = new EventEmitter();
 
 const getAppointments = async (body, user) => {
@@ -144,6 +144,13 @@ const getAllDoctors = async (body, user) => {
 
     } else if( user && user.userType !== 'SA' ) {
       query['createdBy'] = user._id
+    }
+
+    if( body?.source === "doctor-page" ) {
+      let paidDepartmentIds = await OrganizationModel.find({ 'billing.isPaid' : true , organizationType: {$in: [ 'Clinic', 'Department' ]}}, { _id: 1 })
+      paidDepartmentIds = paidDepartmentIds.map( id => ObjectId(id._id))
+
+      query['organizationId'] = { $in: paidDepartmentIds }
     }
 
     let doctors = await UserModel.aggregate([
@@ -735,17 +742,24 @@ const patients = async (body, user) => {
 
 const hospitalSpecialization = async (body, user) => {
   try {
-    let organization = await OrganizationModel.findOne(
-      { _id: body?.organizationId || user.organizationId },
-      { specialization: 1 }
-    );
-    let specialization = organization?.specialization?.length
-      ? organization?.specialization.map((spe) => ({
-          name: spe.name,
-          id: spe.id,
-        }))
-      : [];
-    return Success({ specialization });
+    let specialization
+    if( ['SA', 'AD'].includes(user.userType)  ){
+      specialization = await specializationModel.find({ isDefault: false })
+    }
+    else{
+      let organization = await OrganizationModel.findOne(
+        { _id: body?.organizationId || user.organizationId },
+        { specialization: 1 }
+      );
+      specialization = organization?.specialization?.length
+        ? organization?.specialization.map((spe) => ({
+            name: spe.name,
+            id: spe.id,
+          }))
+        : [];
+      }
+      return Success({ specialization });
+
   } catch (error) {
     console.log(error);
   }
