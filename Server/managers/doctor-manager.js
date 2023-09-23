@@ -3,11 +3,10 @@ const SettingModel = require("../models/setting-model");
 const { Success, Error, uploadToBucket, Payment } = require("../constants/utils");
 const UserModel = require("../models/user-model");
 const ObjectId = require("mongoose").Types.ObjectId;
-const { EventEmitter } = require("events");
 const OrganizationModel = require("../models/organization-model");
 const DealModel = require("../models/deal-model");
 const specializationModel = require("../models/specialization-model");
-const eventEmitter = new EventEmitter();
+const { eventEmitter } = require('../events');
 
 const getAppointments = async (body, user) => {
   try {
@@ -252,6 +251,7 @@ const addAppointment = async (body, user ) => {
         departmentId: body.department.organizationId,
         createdBy: user._id,
         created: user._id,
+        isPaid: user.userType === 'PT' ? false : true
       }).save();
     } else { return Error({ message: "Already in your waiting list." }) }
 
@@ -850,31 +850,6 @@ const anonymousAppointment = async (body, user) => {
   }
 };
 
-
-const EventHandler = (req, res) => {
-  res.writeHead(200, {
-    "Content-Type": "text/event-stream",
-    "Cache-Control": "no-cache",
-    "Access-Control-Allow-Origin": "*"
-  });
-
-  const sendResponse = (data, event) => {
-    res.write(`event: ${event}\n`);
-    res.write(`data: ${JSON.stringify(data)}`);
-    res.write("\n\n");
-  };
-
-  eventEmitter.on("new-appointment", (data) =>
-    sendResponse(data, "new-appointment")
-  );
-
-  eventEmitter.on("re-appointment", (data) =>
-    sendResponse(data, "re-appointment")
-  );
-
-  eventEmitter.on("status", (data) => sendResponse(data, "status"));
-};
-
 module.exports = {
   getAppointments,
   editDoctor,
@@ -897,5 +872,4 @@ module.exports = {
   addSpecialization,
   getClinics,
   anonymousAppointment,
-  EventHandler,
 };

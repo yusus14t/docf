@@ -10,6 +10,7 @@ const { CITIES } = require("../seeds/citiesData");
 const settingModel = require("../models/setting-model");
 const TransactionModel = require("../models/transaction-model");
 const specializationModel = require("../models/specialization-model");
+const { eventEmitter } = require("../events");
 
 const sessionInfo = async (request, user) => {
   try {
@@ -458,6 +459,7 @@ const clinicDetails = async (body) => {
                 },
                 createdAt: { $gte: today },
                 status: "waiting",
+                isPaid: true
               },
             },
           ],
@@ -855,8 +857,28 @@ const phonepayStatus = async ( body, res ) => {
           let token = lastAppointment?.token ? +lastAppointment.token + 1 : "1";
           await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true,  token })
 
-          if( appointment.departmentId?.organizationType === 'Clinic' ) redirectUrl = `${ process.env.REDIRECT_URL }/clinic-detail/${ appointment.departmentId._id }`
+          let patient = await UserModel.findOne({ _id: appointment.userId })
+
+
+          
+          if ( appointment.departmentId?.organizationType === 'Clinic' ) redirectUrl = `${ process.env.REDIRECT_URL }/clinic-detail/${ appointment.departmentId._id }`
           else redirectUrl = `${ process.env.REDIRECT_URL }/department-detail/${ appointment.departmentId._id }`
+          
+          eventEmitter.emit("new-appointment", {
+            event: "new-appointment",
+            data: {
+              _id: appointment._id,
+              departmentId: appointment.departmentId._id,
+              token,
+              user: {
+                _id: patient._id,
+                name: patient.name,
+                phone: patient.phone,
+                address: patient?.address,
+              }
+            }
+          })
+
         }
         /************************************************************* */
 
