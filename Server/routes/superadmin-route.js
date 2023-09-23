@@ -20,6 +20,7 @@ router.post('/patient-price', superAdminController.patientPrice );
 router.post('/organization-price', superAdminController.organizationPrice );
 router.post('/create-specialization', superAdminController.createCustomSpecialization)
 router.delete('/specialization/:id', superAdminController.deleteCustomSpecialization)
-
+router.post('/create-service', superAdminController.createCustomService)
+router.delete('/service/:id', superAdminController.deleteCustomService)
 
 module.exports = router;

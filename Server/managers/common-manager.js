@@ -11,6 +11,7 @@ const settingModel = require("../models/setting-model");
 const TransactionModel = require("../models/transaction-model");
 const specializationModel = require("../models/specialization-model");
 const { eventEmitter } = require("../events");
+const serviceModel = require("../models/service-model");
 
 const sessionInfo = async (request, user) => {
   try {
@@ -969,6 +970,15 @@ const getTransaction = async ({ id }, user) => {
   }
 };
 
+const getServices = async ( body , user) => {
+  try {
+    let services = await serviceModel.find({});
+    return Success({ services });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 module.exports = {
   logIn,
@@ -1001,4 +1011,5 @@ module.exports = {
   phonepayStatus,
   payment,
   getTransaction,
+  getServices,
 };

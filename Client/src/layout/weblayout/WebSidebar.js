@@ -14,8 +14,8 @@ function WebSidebar({ isOpen, setIsOpen }) {
     { id: "hospitals", name: "Hospitals", path: "/hospitals" },
     { id: "clinics", name: "Clinics", path: "/clinics" },
     { id: "doctors", name: "Doctors", path: "/doctors" },
-    { id: "ultrasound", name: "Ultrasound", path: "/ultrasound" },
-    { id: "ultrasound", name: "Homeopathy", path: "/homeopathy" },
+    { id: "radiologist", name: "Radiologist", path: "/radiologist" },
+    { id: "homeopathy", name: "Homeopathy", path: "/homeopathy" },
     { id: "aboutus", name: "About Us", path: "/about" },
     { id: "contactus", name: "Contact Us", path: "/contact" },
   ];
@@ -48,9 +48,11 @@ function WebSidebar({ isOpen, setIsOpen }) {
               />
             </Link>
             <p className="m-title">
-              {userInfo.name ||
-                userInfo.hospitalId?.name ||
-                userInfo.organizationId?.name}
+              {userInfo ? (
+                userInfo.name ||
+                  userInfo.hospitalId?.name ||
+                  userInfo.organizationId?.name
+              ) :""}
             </p>
           </div>
           <div className="m-footer">
@@ -77,7 +79,11 @@ function WebSidebar({ isOpen, setIsOpen }) {
           <div className="">
             <ul className="m-menu">
               {MENU_ITEM.map((item, key) => (
-                <li className="m-menu-item w-100 pe-3" key={key} onClick={() => setIsOpen( !isOpen )}>
+                <li
+                  className="m-menu-item w-100 pe-3"
+                  key={key}
+                  onClick={() => setIsOpen(!isOpen)}
+                >
                   <Link to={item.path} className="text-white " key={item.id}>
                     <div className=" d-flex justify-content-between">
                       <div>{item.name}</div>

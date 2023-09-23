@@ -33,6 +33,7 @@ const Settings = () => {
   const [hospitalName, setHospitalName] = useState('')
   const [ contact, setContact ] = useState({})
   const [ customSpecialization, setCustomSpecialization ] = useState(null);
+  const [customServices, setCustomServices] = useState(null);
 
   const QRCodeRef = useRef(null)
   const inputRef = useRef(null)
@@ -40,10 +41,14 @@ const Settings = () => {
 
   useEffect(() => {
     if (['SPECIALIZATION', "CUSTOM_SPECIALIZATION"].includes(tab)) getAllSpecialization()
-    else if( tab === 'SERVICES' ) getServices()
     else if( tab === 'CONTACT' ) getContact()
+    else if( ['SERVICES', 'CUSTOM_SERVICES'].includes(tab) ){
+      if( ['SA', 'AD'].includes(userInfo.userType)) getAllServices()
+      else getServices()
+    }
 
     if( userInfo.userType === 'DP' ) getHospitalName()
+    
   }, [tab,])
 
   useEffect(() => {
@@ -57,6 +62,14 @@ const Settings = () => {
     }catch(error){ console.error(error) }
   }
 
+   const getAllServices = async () => {
+     try {
+       let { data } = await axiosInstance.get("/services");
+       setOrganizationServices(data?.services);
+     } catch (error) {
+       console.error(error);
+     }
+   };
   const getServices = async () => {
     try{ 
       let { data } = await axiosInstance.get('/hospital/services')
@@ -192,6 +205,24 @@ const Settings = () => {
       toasty.success('Successfully deleted')
     }catch(error){ console.log(error) }
   }
+
+  const createCustomService = async () => {
+    try{
+      await axiosInstance.post('/super-admin/create-service', { customServices }, getAuthHeader())
+      toasty.success('Sucessfully created')
+      setCustomServices('')
+      setOrganizationServices( old => [...old, { id: customServices.toUpperCase(), name: customServices }])
+    }catch(error){ console.log(error) }
+  }
+
+   const deleteCustomService = async ( id ) => {
+    try{
+      await axiosInstance.delete(`/super-admin/service/${id}`, getAuthHeader())
+      setOrganizationServices((old) => old.filter((ser) => ser.id !== id));
+      toasty.success('Successfully deleted')
+    }catch(error){ console.log(error) }
+  }
+
 
   return (
     <div className="ms-content-wrapper">
@@ -471,6 +502,59 @@ const Settings = () => {
                                     icon={faTrash}
                                     onClick={() =>
                                       deleteCustomSpecialization(specialization.id)
+                                    }
+                                  ></FontAwesomeIcon>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </>}
+              { tab === "CUSTOM_SERVICES" &&    <>
+                  <div className="row m-2">
+                    <div className="col-md-8 col-sm-12">
+                      <h4>Service</h4>
+                    </div>
+                    <div className="col-md-4 col-sm-8">
+                      <div className="d-flex">
+                        <input className="form-control" placeholder="Custom Service" value={customServices} onChange={(e) => setCustomServices(e.target.value)} />
+                        <button className="btn btn-primary shadow-none btn-md mx-3" onClick={() => createCustomService()}>Save</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ms-panel-body py-0 ">
+                    <div className="table-responsive">
+                      <table className="table table-hover  thead-primary">
+                        <thead style={{ backgroundColor: "#A2A2A252" }}>
+                          <tr>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Id
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Name
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Delete
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {organizationServices?.length > 0 &&
+                            organizationServices.map((service) => (
+                              <tr>
+                                <td className="ms-table-f-w">
+                                  {service.id}
+                                </td>
+                                <td>{service.name}</td>
+                                <td>
+                                  <FontAwesomeIcon
+                                    style={{ marginLeft: "8px" }}
+                                    className="cursor-pointer"
+                                    icon={faTrash}
+                                    onClick={() =>
+                                      deleteCustomService(service.id)
                                     }
                                   ></FontAwesomeIcon>
                                 </td>

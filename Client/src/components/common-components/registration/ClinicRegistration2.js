@@ -4,7 +4,7 @@ import ImgUpload from '../Imgupload';
 import { useEffect, useState } from 'react';
 import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 import useToasty from '../../../hooks/toasty';
-import { DAYS, SERVICES } from '../../../constants/constant'
+import { DAYS } from '../../../constants/constant'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,11 +15,13 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
     const [specializations, setSpecializations] = useState([])
     const [ timing, setTiming ] = useState([]);
     const [ days, setDays ] = useState(DAYS)
+    const [services,setServices] =useState([])
 
     const toasty = useToasty();
 
     useEffect(() => {
         getAllSpecialization()
+        getServices()
     }, [tab])
 
     const getAllSpecialization = async () => {
@@ -30,7 +32,14 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
             console.error(error)
         }
     }
-
+    const getServices = async () => {
+      try {
+        let { data } = await axiosInstance.get("/services");
+        setServices(data?.services);
+      } catch (error) {
+        console.error(error);
+      }
+    };
     const submit = async ( values ) => {
         try{
             values['_id'] = organization?._id || JSON.parse(localStorage.getItem('RID'))
@@ -169,7 +178,7 @@ const CLiniRegistration2 = ({ source, tab,setTab, organization = {} }) => {
                     <Select
                       {...field}
                       isMulti={true}
-                      options={SERVICES}
+                      options={services}
                       getOptionLabel={({ name }) => name}
                       getOptionValue={({ id }) => id}
                       className={`form-control p-0 ${

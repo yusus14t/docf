@@ -110,25 +110,38 @@ const deleteCustomSpecialization = async (req, res) => {
         .catch(err => res.status(500).send(err.data))
 }
 
+const createCustomService = async (req, res) => {
+    superAdminManager.createCustomService(req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
 
+const deleteCustomService = async (req, res) => {
+    superAdminManager.deleteCustomService(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+
+}
 
 module.exports = {
-    getProfile,
-    analytics,
-    hospitals,
-    clinics,
-    patients,
-    MRs,
-    createMR,
-    deleteMR,
-    websiteImages,
-    uploadImage,
-    contactInfo,
-    getWebsiteInfo,
-    appointmentUsers,
-    plans,
-    patientPrice,
-    organizationPrice,
-    createCustomSpecialization,
-    deleteCustomSpecialization,
-}
+  getProfile,
+  analytics,
+  hospitals,
+  clinics,
+  patients,
+  MRs,
+  createMR,
+  deleteMR,
+  websiteImages,
+  uploadImage,
+  contactInfo,
+  getWebsiteInfo,
+  appointmentUsers,
+  plans,
+  patientPrice,
+  organizationPrice,
+  createCustomSpecialization,
+  deleteCustomSpecialization,
+  createCustomService,
+  deleteCustomService,
+};
