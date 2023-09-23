@@ -360,7 +360,7 @@ const LogIn = () => {
               <input
                 type="text"
                 className={`form-control mb-2 `}
-                placeholder="Enter Full name"
+                placeholder="Enter Father name"
                 {...register("fatherName")}
               />
             </div>

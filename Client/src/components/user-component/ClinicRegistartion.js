@@ -26,9 +26,13 @@ const ClinicRegistartion = ({ isSelfCreated, source }) => {
 
             if (data?.organization?.organizationType !== 'Clinic') return
 
-            if (tabData?.step === 'STEP1' && tabData?.isComplete) setTab('STEP2')
-            else if (tabData?.step === 'STEP2' && tabData?.isComplete) setTab('STEP3')
-            else setTab(tabData?.step || 'FINAL')
+            if (tabData?.step === "STEP1" && tabData?.isComplete)
+              setTab("STEP2");
+            else if (tabData?.step === "STEP2" && tabData?.isComplete)
+              setTab("STEP3");
+            else if (tabData?.step) setTab(tabData?.step);
+            else {localStorage.removeItem("RID");
+                   window.location.reload();}
 
         } catch (error) {
             console.error(error)
@@ -55,7 +59,7 @@ const ClinicRegistartion = ({ isSelfCreated, source }) => {
             console.log(error)
         }
     }
-
+    
     const exit = () => {
         localStorage.removeItem('RID')
         setTab('STEP1')
@@ -70,7 +74,7 @@ const ClinicRegistartion = ({ isSelfCreated, source }) => {
               { !isSelfCreated && <li style={{marginTop:"15px"}} role="tab" className={`${tab === "STEP1" ? "current" : "disabled"} cursor-pointer`} aria-disabled="false" aria-selected="False"><span className="current-info audible tabName ">Registration</span></li>}
               <li style={{marginTop:"15px"}} role="tab" className={`${tab === "STEP2" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"> <span className='tabName'>Details</span> </li>
               <li style={{marginTop:"15px"}} role="tab" className={`${tab === "STEP3" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Doctors</span></li>
-              <li style={{marginTop:"15px"}} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Final</span></li>
+              {/* <li style={{marginTop:"15px"}} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Final</span></li> */}
             </ul>
           </div>
           { tab !== 'STEP1' && <div className='d-flex justify-content-end mb-2'>
@@ -144,7 +148,7 @@ const ClinicRegistartion = ({ isSelfCreated, source }) => {
             }
             {tab === "STEP2" && <CLiniRegistration2 tab={tab} setTab={setTab} source={source || 'Clinic' } organization={organization} /> }
             {tab === "STEP3" && <DoctorRegistration tab={tab} setTab={setTab} source={source || 'Clinic' } organization={organization} /> }
-            {tab === "FINAL" && <DealRegistration tab={tab} source={source || 'Clinic' } setTab={setTab} organization={organization} /> }
+            {/* {tab === "FINAL" && <DealRegistration tab={tab} source={source || 'Clinic' } setTab={setTab} organization={organization} /> } */}
           </div>
         </div>
       </div>

@@ -665,8 +665,8 @@ const search = async (body, user) => {
         $match: {
           organizationType: {
             $in: ["Hospital", "Clinic"],
-            'billing.isPaid': true 
           },
+          'billing.isPaid': true, 
           $and: [
             body?.fee > 0 ? { fee: { $lte: body?.fee } } : {},
             body?.city
