@@ -27,7 +27,7 @@ const Card = ({source, specializations}) => {
                     /> */}
                     <img
                       style={{ width: "85px", height: "85px", borderRadius:"50%" }}
-                      src={specialisation?.icon1}
+                      src={specialisation?.icon}
                       alt=""
                     />
                   </div>

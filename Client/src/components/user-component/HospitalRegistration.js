@@ -74,7 +74,7 @@ const HospitalRegistartion = () => {
               <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "STEP2" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"> <span className='tabName'>Details</span> </li>
               <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "STEP3" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Deartments</span></li>
               <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "STEP4" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Doctors</span></li>
-              <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Final</span></li>
+              {/* <li style={{ marginTop: "15px" }} role="tab" className={`${tab === "FINAL" ? "current" : "disabled"} cursor-pointer`} aria-disabled="true"><span className='tabName'>Final</span></li> */}
             </ul>
           </div>
           { tab !== 'STEP1' && <div className='d-flex justify-content-end mb-2'>
@@ -150,7 +150,7 @@ const HospitalRegistartion = () => {
             {tab === "STEP2" && <ClinicRegistartion2 source={'Hospital'} tab={tab} setTab={setTab} />}
             {tab === "STEP3" && <DepartmentRegistration source={'Hospital'} tab={tab} setTab={setTab} />}
             {tab === "STEP4" && <DoctorRegistration source={'Hospital'} tab={tab} setTab={setTab} organization={organization} />}
-            {tab === "FINAL" && <DealRegistration source={'Hospital'} tab={tab} setTab={setTab} />}
+            {/* {tab === "FINAL" && <DealRegistration source={'Hospital'} tab={tab} setTab={setTab} />} */}
           </div>
         </div>
       </div>

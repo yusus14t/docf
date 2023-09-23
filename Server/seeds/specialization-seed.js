@@ -1,11 +1,13 @@
-let specialization = {
+const specializationModel = require("../models/specialization-model");
+
+module.exports.specialization = {
   data: [
     {
       id: "PUMONOLOGIST",
       name: "Pulnomologist (LUNGS)",
       // nickname: "(LUNGS)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/punomo.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/punomo.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/PUMONOLOGIST.jpg",
       description: `Pulmonology, a medical speciality devoted to the study and treatment of disorders affecting the respiratory system, is vital to the health and well-being of people all over the world. Any disturbance in the lungs' ability to perform their essential functions of exchanging oxygen and removing carbon dioxide might have a negative impact on one's general health. In the fight against respiratory disorders, pulmonologists are vital medical specialists as they are capable of recognising and treating a variety of respiratory ailments.
                     The diagnosis and treatment of lung cancer, asthma, pneumonia, chronic obstructive pulmonary disease (COPD), and sleep disorders like sleep apnoea are only a few of the conditions covered by the speciality of pulmonology. These experts have an in-depth understanding of the intricate anatomy and physiology of the respiratory system, which enables them to recognise and efficiently treat respiratory diseases.
@@ -16,8 +18,8 @@ let specialization = {
       id: "HEPATOLOGIST",
       name: "Hepatologist (Liver)",
       // nickname: "(Liver)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/hepatologist.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/hepatologist.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/HEPATOLOGIST.jpg",
       description: `Hepatology, a department of medicine dedicated to the study and treatment of liver diseases, is a science that continues to enhance our understanding of the liver's complex organ. The liver is incredibly important for metabolism, detoxification, and immunological function, which helps to maintain our general health and well-being. Hepatologists devote countless hours to the diagnosis, treatment, and prevention of many liver disorders, greatly advancing medical knowledge.
         To provide complete care for patients with liver problems, hepatologists use a multidisciplinary approach, working in conjunction with gastroenterologists, radiologists, surgeons, and other experts. Hepatologists treat a wide range of diseases and illnesses, from cirrhosis and liver cancer to viral hepatitis and alcoholic liver disease.
@@ -30,8 +32,8 @@ let specialization = {
       id: "NEPHROLOGIST",
       name: "Nephrologist (Kidney)",
       // nickname: "(Kidney)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/nep.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/nep.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/NEPHROLOGIST.jpg",
       description: `Hepatology, a department of medicine dedicated to the study and treatment of liver diseases, is a science that continues to enhance our understanding of the liver's complex organ. The liver is incredibly important for metabolism, detoxification, and immunological function, which helps to maintain our general health and well-being. Hepatologists devote countless hours to the diagnosis, treatment, and prevention of many liver disorders, greatly advancing medical knowledge.
       To provide complete care for patients with liver problems, hepatologists use a multidisciplinary approach, working in conjunction with gastroenterologists, radiologists, surgeons, and other experts. Hepatologists treat a wide range of diseases and illnesses, from cirrhosis and liver cancer to viral hepatitis and alcoholic liver disease.
@@ -44,10 +46,10 @@ let specialization = {
       id: "DERMATOLOGIST",
       name: "Dermatologist (Skin)",
       // nickname: "(Skin)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/derma.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/derma.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/DERMATALOGIST.jpg",
-      description: `Dermatology is a medical speciality that studies and treats skin, hair, and nails. It is a fascinating topic that is essential to advancing general well-being. Dermatologists are skilled in identifying and treating a wide range of skin issues, shielding us from dangerous diseases, and enhancing our natural attractiveness because they have a thorough understanding of the anatomy and physiology of the skin.
+      description: `Dermatology is a medical speciality that studies and treats skin, hair, and nails. It is a fascinating toimage that is essential to advancing general well-being. Dermatologists are skilled in identifying and treating a wide range of skin issues, shielding us from dangerous diseases, and enhancing our natural attractiveness because they have a thorough understanding of the anatomy and physiology of the skin.
       Acne, eczema, psoriasis, skin cancer, and issues associated with ageing are among the many conditions treated by dermatologists. Dermatologists use their knowledge to evaluate, diagnose, and carry out unique treatment regimens to address various problems. To improve accuracy and efficacy in diagnosis and treatment, they use cutting-edge technology including Dermoscopy and laser therapy.
       Although dermatology has a significant impact on how we look, its significance goes far beyond aesthetics. Our skin serves as a barrier, protecting us from viruses, the environment, and damaging ultraviolet (UV) radiation. Dermatologists put in a lot of effort to find and handle skin cancers like melanoma, basal cell carcinoma, and squamous cell carcinoma, making sure that they are treated early for better outcomes.
       Dermatologists promote preventative actions to keep the health of the skin. Dermatologists are essential in preventing skin cancer and accelerated ageing by educating people about the potential dangers of excessive UV exposure.
@@ -57,8 +59,8 @@ let specialization = {
       id: "ENDOCRINOLOGIST",
       name: "Endocrinologist (Diabetes)",
       // nickname: "(Diabetes)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/endo.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/endo.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/1.ENDOCRINOLOGIST.jpg",
       description: `A fascinating area of medicine that digs into the complexities of the endocrine system is endocrinology, the study of hormones and their impact on the body. Understanding hormones released by numerous glands, their control, and their effects on general health are the main goals of this field of study. In order to ensure that the human body is operating properly, endocrinologists are crucial in the diagnosis and treatment of illnesses related to hormones.
 The pituitary, thyroid, adrenal, and pancreatic are just a few of the numerous glands that make and release hormones into the bloodstream as part of the endocrine system. Numerous physiological functions, such as growth and development, metabolism, reproduction, and mood regulation, are coordinated by these chemical messengers.
@@ -71,11 +73,11 @@ The fascinating field of endocrinology explains the complex relationships betwee
       id: "UROLOGIST",
       name: "Urologist (Urinary System)",
       // nickname: "Urinary System",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/uro.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/uro.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/UROLOGY.jpg",
       description: `Urologists are doctors who specialise in the diagnosis and treatment of conditions affecting the male reproductive system and urinary tract system. They have experience treating a variety of illnesses, including as infertility, prostate cancer, kidney stones, and urinary tract infections. The specialty of urology has made incredible strides in recent years, enabling urologists to deliver state-of-the-art care and enhance patients' quality of life.
-When it comes to surgical advancements, urologists are at the forefront, using minimally invasive methods that lessen patient discomfort and hasten recovery. The area has seen a revolution thanks to laparoscopic and robotic-assisted operations, which have made procedures like prostatectomies and nephrectomies precise and effective. These developments have greatly decreased hospital stays and postoperative problems, which is advantageous to patients everywhere.
+When it comes to surgical advancements, urologists are at the forefront, using minimally invasive methods that lessen patient discomfort and hasten recovery. The area has seen a revolution thanks to laparoscoimage and robotic-assisted operations, which have made procedures like prostatectomies and nephrectomies precise and effective. These developments have greatly decreased hospital stays and postoperative problems, which is advantageous to patients everywhere.
 The diagnosis and treatment of numerous urologic cancers, including prostate, bladder, kidney, and testicular cancer, depend heavily on urologists. Urologists now use genetic testing to customise treatment approaches based on the molecular profiles of specific patients thanks to the development of precision medicine. With less needless intervention and better treatment outcomes, this personalised strategy raises patient survival rates and their general wellbeing.
 Beyond cancer, urologists are crucial in managing men's health issues. They are experts in treating issues like infertility, erectile dysfunction, and urine incontinence. Urologists can improve men's fertility chances and restore sexual function with thorough examinations and cutting-edge therapies, greatly enhancing their quality of life.
 Urologists play a vital role in the healthcare ecosystem, addressing a wide range of conditions related to the urinary tract and male reproductive system. Their expertise, coupled with surgical innovations, personalized cancer treatments, and advanced technologies, allows urologists to provide superior care to patients. As the field of urology continues to evolve, we can expect further advancements that will revolutionize patient outcomes and contribute to a healthier future for all.
@@ -85,8 +87,8 @@ Urologists play a vital role in the healthcare ecosystem, addressing a wide rang
       id: "GENERAL-PHYSICIAN",
       name: "General Physician (Common Doctor)",
       // nickname: "(Common Doctor)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/general.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/general.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/GENERALPHYSICIAN.jpg",
       description: `General physicians, also known as primary care physicians or family doctors, play a crucial role in the healthcare system. They are the front line of defence for individuals seeking medical care, providing comprehensive and continuous care to patients of all ages and backgrounds. They provide primary care services, such as routine check-ups, vaccinations, preventive screenings, and health counselling. These doctors serve as the first point of contact for patients, addressing a broad spectrum of health concerns and coordinating specialized care when necessary.
                     The continuity of treatment is made possible by the long-term connections that general practitioners develop with their patients. They are better able to offer individualised care and preventive care when they are aware of a patient's medical history, family dynamics, and lifestyle issues. They manage and organise specialist recommendations, serving as gatekeepers for the healthcare system. 
@@ -97,8 +99,8 @@ Urologists play a vital role in the healthcare ecosystem, addressing a wide rang
       id: "RADIOCOLOGIST",
       name: "Radiologist (Ultrasound, MRI & X-RAy)",
       // nickname: "",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/radio.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/radio.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/radiology.jpg",
       description: `Radiology, a specialized branch of medicine dedicated to the interpretation of medical imaging, relies on the expertise and skill of radiologists. These medical professionals possess a profound understanding of imaging techniques and play a critical role in diagnosing and treating a wide range of conditions. In this article, we explore the invaluable contributions of radiologists and shed light on their pivotal role in achieving precision diagnosis and treatment.
 the essential players in understanding the complex subtleties of medical imaging. They have a thorough understanding of human anatomy and are qualified to spot even the slightest anomalies or irregularities in images obtained via X-rays, CT scans, MRIs, and other imaging modalities. Radiologists offer crucial insights that support proper diagnosis and help doctors create successful treatment regimens through their astute analysis and interpretation of the images they are responsible for reading.
@@ -110,8 +112,8 @@ Radiologists are the guiding light in the realm of radiology, illuminating the p
       id: "ORTHOPEDIC",
       name: "Orthophedic (Knee & Hip)",
       // nickname: "(Knee & Hip)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/ortha.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/ortha.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/ORTHOPEDIC.jpg",
       description: `Orthopaedics, a specialized branch of medicine, focuses on the diagnosis, treatment, and prevention of conditions affecting the musculoskeletal system. With its primary goal of restoring functionality and alleviating pain, orthopaedics plays a crucial role in improving the quality of life for individuals of all ages. By employing a combination of surgical and non-surgical interventions, orthopaedic specialists tackle a wide range of issues, including fractures, joint disorders, spinal conditions, and sports injuries.
 Orthopaedic care includes a number of sub-disciplines, including child orthopaedics, sports medicine, and orthopaedic surgery. Orthopaedic surgeons are adept in carrying out complex treatments to treat spinal abnormalities, replace joints, fix fractures, and mend torn ligaments or tendons. These experts can improve surgical precision, speed up recovery, and lessen post-operative problems by using cutting-edge technologies like robotic surgery.
@@ -123,11 +125,11 @@ In order to increase mobility, reduce pain, and enhance the overall quality of l
       id: "PAEDIATRICIAN",
       name: "Paediatrician (Child's Doctor)",
       // nickname: "(Child's Doctor)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/pedi.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/pedi.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/PEDIATRICIAN.jpg",
       description: `Paediatricians are medical professionals who specialize in the care of infants, children, and adolescents.  They undergo extensive training in child health, including medical conditions that are unique to babies, children, and adolescents. Paediatricians can diagnose and treat a wide range of health conditions in children, from minor illnesses to more serious conditions that require specialized care.
-Paediatricians also provide immunizations to protect children against diseases such as measles, mumps, rubella, and chickenpox. They may also order tests, such as blood tests or X-rays, to diagnose and treat various health conditions in children. In addition to providing medical care, paediatricians also educate parents and caregivers about child health and development. They may provide advice on topics such as nutrition, sleep, safety, and behaviour management.
+Paediatricians also provide immunizations to protect children against diseases such as measles, mumps, rubella, and chickenpox. They may also order tests, such as blood tests or X-rays, to diagnose and treat various health conditions in children. In addition to providing medical care, paediatricians also educate parents and caregivers about child health and development. They may provide advice on toimages such as nutrition, sleep, safety, and behaviour management.
 Regular visits to a paediatrician are important for several reasons. First, they allow paediatricians to monitor a child's growth and development, and ensure that they are meeting important developmental milestones. This is important because early intervention is key when it comes to addressing developmental delays or other health concerns. Secondly, paediatricians also allow for the early detection of health problems. Paediatricians can identify and treat health conditions such as asthma, allergies, and diabetes before they become more serious. Additionally, paediatricians can provide guidance on how to prevent common childhood illnesses, such as colds and flu. Newborn care is an important aspect of paediatric care. Paediatricians play a critical role in ensuring that newborns are healthy and developing properly.
 Paediatricians can diagnose and treat a wide range of health conditions in children, from minor illnesses to more serious conditions that require specialized care. Some common conditions that paediatricians may treat include Ear infections, stomach flu, allergies, asthma, diabetes, ADHD, autism spectrum disorder, depression and anxiety.  Paediatricians may also refer children to specialists, such as paediatric cardiologists, neurologists, or allergists, for specialized care, paediatricians play a critical role in ensuring that children are healthy and developing properly.
 `,
@@ -136,8 +138,8 @@ Paediatricians can diagnose and treat a wide range of health conditions in child
       id: "RHEUMATOLOGISTS",
       name: "Rheumatologist (Joint Pain)",
       // nickname: "(Joint Pain)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/rhea.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/rhea.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/RHEUMATALOGY.jpg",
       icon2:
         "https://catimage.net/images/2023/08/24/RHEUMATALOGY-JOINT-PAIN.jpg",
@@ -151,8 +153,8 @@ Advances in rheumatology research continue to shape the field, leading to improv
       id: "CARDIOLOGIST",
       name: "Cardiologist (Heart)",
       // nickname: "(Heart)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/cardio.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/cardio.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/CARDIOLOGIST.jpg",
       icon2: "https://catimage.net/images/2023/08/24/CARDIOLOGIST.jpg",
       description: `Cardiology is a field of medicine that focuses on understanding, identifying, and treating cardiac conditions that are essential to preserving cardiovascular health. Cardiologists are the trained specialists at the centre of this area. These specialised doctors constitute a vital part of healthcare in our contemporary society because they have the training and experience necessary to prevent, identify, and treat heart disease.
@@ -166,8 +168,8 @@ To ensure the well-being of people with cardiovascular issues, cardiology and th
       id: "NEUROLOGIST",
       name: "Neurologist (Brain)",
       // nickname: "(Brain)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/neu.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/neu.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/1.NEUROLOGIST%20.jpg",
       description: `Neurology is the branch of medicine dedicated to studying the complex workings of the nervous system which holds the key to understanding the complexities of the human brain. The fascinating field that roots in the structure, functioning, and disorders of the nervous system, highlighting the enigmatic workings of the nervous system. With breakthroughs in research and technological advancements, neurology continues to unravel the mysteries of the brain, structuring the way for innovative treatments and improving the lives of patients. 
 The central processing unit of the body is the nervous system, which is made up of the brain, spinal cord, and a huge network of nerves. Neurologists study how this complex system works and interacts, focusing on how nerve cells, or neurons, send and process information through electrical and chemical signals. We can now understand intricate processes like vision, locomotion, memory, and cognition thanks to this investigation.
@@ -179,8 +181,8 @@ The advances in neurology pave the way for a future where neurological disorders
       id: "GYNECOLOGIST",
       name: "Gynecologist (Woman's Health)",
       // nickname: "(Woman's Health)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/gynae.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/gynae.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/1.gynaclogist.jpg",
       description: `A medical speciality devoted to providing comprehensive care for women's reproductive health is Gynaecology. Gynaecologists play a vital role in the diagnosis and treatment of a variety of diseases that affect the female reproductive system. Gynaecologists offer indispensable medical knowledge and support to women throughout their lives, from menstruation issues to pregnancy-related care and gynaecological cancers.
       Menstrual health is one of the main areas on which gynaecologists concentrate. They offer appropriate medical measures and individualized treatment programmes to assist women in managing irregular periods, heavy bleeding, and excruciating cramps. Gynaecologists help their patients feel physically comfortable and emotionally well-adjusted by addressing menstrual issues.
@@ -195,8 +197,8 @@ The advances in neurology pave the way for a future where neurological disorders
       id: "ONCOLOGIST",
       name: "Oncologist (Cancer)",
       // nickname: "(Cancer)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/ono.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/ono.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/ONCOLOGIST.jpg",
       description: `Oncology is the branch of medicine that deals with the diagnosis and treatment of cancer. Significant advances in understanding cancer biology and creating cutting-edge treatment methods have been accomplished. These developments have improved cancer patients' quality of life as well as their chances of survival.
 The development of precision medicine is one of oncology's greatest accomplishments. Oncologists can customise treatment approaches to target particular molecular abnormalities causing the growth of cancer by studying the genetic makeup of tumours. Tyrosine kinase inhibitors and immunotherapies are two examples of targeted medicines that have proven to be very effective in treating different forms of cancer. These therapies spare healthy tissues while also attacking cancer cells directly, reducing adverse effects.
@@ -209,8 +211,8 @@ We can expect even more novel and individualised methods to tackle this terrible
       id: "OPHTHALMOLOGIST",
       name: "Ophthalmologist (Eyes)",
       // nickname: "(Eyes)",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/optha.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/optha.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/1.OPTHALMOLOGIST.jpg",
       description: `Ophthalmology is the area of medicine devoted to the study and treatment of eye conditions, and it is essential for maintaining and improving our priceless sense of sight. Ophthalmologists are redefining how we identify, treat, and prevent eye problems thanks to ongoing advances in technology and research, opening the door to better vision and a higher standard of living.
 The introduction of laser eye surgery is one of the biggest advances in ophthalmology. LASIK (Laser-Assisted in Situ Keratomileusis) is one of the procedures that has changed millions of people's lives. LASIK corrects refractive defects such myopia (near sightedness), hyperopia (farsightedness), and astigmatism by reshaping the cornea. Patients can finally say goodbye to their glasses and contact lenses and benefit from convenience and visual independence.
@@ -223,8 +225,8 @@ The field of ophthalmology promises a brighter future where visual impairments a
       id: "PSYCHIATRISTS",
       name: "Psychiatrist (Depression)",
       // nickname: "Depression",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/pschy.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/pschy.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/PHYCHIATRISSTS.jpg",
       description: `Psychiatry, the branch of medicine dedicated to detecting and treating mental diseases, relies not only on the competence of psychiatrists but also on the vital contributions of psychologists. Psychologists play a significant role in delivering complete care through their special grasp of human behaviour and psychological processes, whereas psychiatrists focus on the medical elements of mental health. The importance of psychologists in psychiatry is examined in this article, with a focus on their contributions to diagnosis, treatment, and study.
           Through their specialised knowledge and skills psychologists perform the assessment process in psychiatry. By employing various psychological tests, interviews, counselling sessions and observations they evaluate the patient’s cognitive, emotional, and behavioural functioning. These comprehensive assessments provide valuable insights into the patient’s treatment, contributing to the formulation of treatment plans tailored to individual needs.
@@ -236,9 +238,9 @@ The field of ophthalmology promises a brighter future where visual impairments a
       id: "IMMUNOLOGIST",
       name: "Immunologist (Immunity System)",
       // nickname: "(Liver)",
-      pic:
+      image:
         "https://imaginr.erahamtech.com/uploads/specialization_img/immunologist.jpg",
-      icon1:
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/immunology.jpg",
       description: `Immunologists are medical experts who research and comprehend the immune system, the body's natural defence against viruses and diseases. Their area of expertise is in deciphering the workings of this complicated biological system and creating plans to avoid, detect, and treat immunological problems. Immunologists are essential to preserving public health in a time of newly developing diseases and international health risks. Immunologists contribute to the creation of cutting-edge medicines and treatments for a variety of immunological illnesses by understanding the underlying mechanisms.
 Another crucial component of an immunologist's job is identifying and treating immunological diseases. To diagnose illnesses like allergies, autoimmune diseases, immunodeficiencies, and hypersensitive reactions, they use a variety of diagnostic procedures and laboratory testing. Immunologists provide individualised treatment programmes to effectively manage these conditions once a diagnosis has been made, with the goal of enhancing patients' quality of life and overall health outcomes.
@@ -252,8 +254,8 @@ Immunologists are the defenders of our health, striving to understand and harnes
       id: "GASTROENTEROLOGIST",
       name: "Gastroenterologist (Acidity & Gas)",
       // nickname: "Stomach",
-      pic: "https://imaginr.erahamtech.com/uploads/spe_img/gastro.jpg",
-      icon1:
+      image: "https://imaginr.erahamtech.com/uploads/spe_img/gastro.jpg",
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/gastroenterologist.jpg",
       description: `Gastroenterology is a branch of medicine that focuses on identifying, treating, and preventing conditions that impact the digestive system. The field covers a broad spectrum of disorders, from simple conditions like Crohn's disease and gastritis to sophisticated ones like liver cirrhosis and acid reflux. An essential part of maintaining and regaining the digestive system's health, which is essential for general well-being, is played by gastroenterologists.
                     The diagnosis and treatment of diseases of the oesophagus, stomach, small intestine, colon, rectum, pancreas, gallbladder, liver, and biliary system are the specialities of gastroenterologists. They evaluate the gastrointestinal tract using a variety of diagnostic methods, such as endoscopy, colonoscopy, and imaging tests, to provide a precise diagnosis.
@@ -265,15 +267,15 @@ Immunologists are the defenders of our health, striving to understand and harnes
     {
       id: "HOMEOPATHY",
       name: "Homeopathy",
-      icon1:
+      icon:
         "https://imaginr.erahamtech.com/uploads/specialization_img/homeopathy.png",
-      pic: "https://imaginr.erahamtech.com/uploads/specialization_img/2.png",
+      image: "https://imaginr.erahamtech.com/uploads/specialization_img/2.png",
       description: `Homeopathy is a holistic system of alternative medicine that has been practiced for over two centuries, founded by the German physician Samuel Hahnemann in the late 18th century. It is based on the principle of "like cures like," which means that a substance that causes symptoms in a healthy person can be used in a highly diluted form to treat similar symptoms in a sick individual. This concept is known as the Law of Similars.
 One of the core principles of homeopathy is the use of highly diluted remedies. Homeopathic remedies are prepared through a process called potentization, which involves serial dilution and succussion (vigorous shaking). The more a remedy is diluted and succussed, the more potent it becomes in homeopathic terms. This process is believed to enhance the healing properties of the substance while minimizing any potential side effects.
 Homeopathy takes a holistic approach to healing, considering not only the physical symptoms but also the mental, emotional, and spiritual aspects of an individual. Homeopathic practitioners conduct in-depth consultations to understand the patient's overall state of health and tailor treatments accordingly. This individualized approach aims to stimulate the body's natural healing mechanisms, promoting balance and well-being.
 Critics of homeopathy argue that the extreme dilutions render the remedies essentially indistinguishable from pure water, and they question its efficacy beyond a placebo effect. Nevertheless, many people around the world continue to seek homeopathic treatments for a wide range of health issues, from chronic conditions like allergies and arthritis to acute ailments like colds and flu.
 Homeopathy is often chosen as an alternative or complementary therapy, especially by those seeking natural and gentle healing methods with minimal side effects. It is non-invasive and can be used in conjunction with conventional medicine, making it a versatile option for individuals looking to explore diverse approaches to healthcare.
-In conclusion, homeopathy is a holistic system of alternative medicine rooted in the principle of "like cures like" and the use of highly diluted remedies. While its efficacy remains a topic of debate, its popularity persists among those seeking a gentle and individualized approach to healing that considers the whole person, not just their physical symptoms.`,
+In conclusion, homeopathy is a holistic system of alternative medicine rooted in the principle of "like cures like" and the use of highly diluted remedies. While its efficacy remains a toimage of debate, its popularity persists among those seeking a gentle and individualized approach to healing that considers the whole person, not just their physical symptoms.`,
     },
     {
       id: "CTSCAN",
@@ -308,11 +310,8 @@ In conclusion, homeopathy is a holistic system of alternative medicine rooted in
       name: "XRay",
     },
   ],
-  function: async () => {
-    await UserModel.deleteMany({});
-    await UserModel.insertMany(specialization.data);
-    console.log("Seeded Successfull.");
+  store: async () => {
+    await specializationModel.deleteMany({});
+    await specializationModel.insertMany(this.specialization.data);
   },
 };
-
-module.exports = { specialization };

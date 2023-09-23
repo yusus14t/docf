@@ -7,7 +7,7 @@ import logo from "../../assets.app/img/logo/logo.jpg";
 function WebFooter() {
     return (
       <footer className="sigma_footer style-5 pb-0 footer">
-        <div className="row">
+        <div className="row mx-0">
           <div style={{ padding: "10px 30px" }} className="col-sm-3 ">
             <Link to="/privacy">
               <h6 className="text-light">Privacy and Policy</h6>

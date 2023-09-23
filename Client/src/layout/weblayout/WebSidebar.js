@@ -7,15 +7,15 @@ import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { userRoutes } from "../../constants/constant";
 import { getFullPath } from "../../constants/utils";
 
-function WebSidebar({ isOpen }) {
+function WebSidebar({ isOpen, setIsOpen }) {
   const MENU_ITEM = [
     { id: "home", name: "Home", path: "/" },
     { id: "gynae", name: "Gynae", path: "/gynae" },
     { id: "hospitals", name: "Hospitals", path: "/hospitals" },
     { id: "clinics", name: "Clinics", path: "/clinics" },
     { id: "doctors", name: "Doctors", path: "/doctors" },
-    { id: "ultrasound", name: "Ultrasound", path: "/ultrasound" },
-    { id: "ultrasound", name: "Homeopathy", path: "/homeopathy" },
+    { id: "radiologist", name: "Radiologist", path: "/radiologist" },
+    { id: "homeopathy", name: "Homeopathy", path: "/homeopathy" },
     { id: "aboutus", name: "About Us", path: "/about" },
     { id: "contactus", name: "Contact Us", path: "/contact" },
   ];
@@ -47,7 +47,13 @@ function WebSidebar({ isOpen }) {
                 alt="logo"
               />
             </Link>
-            <p className="m-title">Arif Mohd</p>
+            <p className="m-title">
+              {userInfo ? (
+                userInfo.name ||
+                  userInfo.hospitalId?.name ||
+                  userInfo.organizationId?.name
+              ) :""}
+            </p>
           </div>
           <div className="m-footer">
             {userInfo ? (
@@ -59,10 +65,7 @@ function WebSidebar({ isOpen }) {
                   Dashboard
                 </Link>
 
-                <Link
-                  onClick={logout}
-                  className="m-login"
-                >
+                <Link onClick={logout} className="m-login">
                   LogOut
                 </Link>
               </>
@@ -76,8 +79,12 @@ function WebSidebar({ isOpen }) {
           <div className="">
             <ul className="m-menu">
               {MENU_ITEM.map((item, key) => (
-                <li className="m-menu-item" key={key}>
-                  <Link to={item.path} className="text-white" key={item.id}>
+                <li
+                  className="m-menu-item w-100 pe-3"
+                  key={key}
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  <Link to={item.path} className="text-white " key={item.id}>
                     <div className=" d-flex justify-content-between">
                       <div>{item.name}</div>
                       <div>

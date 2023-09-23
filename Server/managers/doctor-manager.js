@@ -3,11 +3,10 @@ const SettingModel = require("../models/setting-model");
 const { Success, Error, uploadToBucket, Payment } = require("../constants/utils");
 const UserModel = require("../models/user-model");
 const ObjectId = require("mongoose").Types.ObjectId;
-const { EventEmitter } = require("events");
 const OrganizationModel = require("../models/organization-model");
 const DealModel = require("../models/deal-model");
-const { createChecksum } = require('../constants/utils')
-const eventEmitter = new EventEmitter();
+const specializationModel = require("../models/specialization-model");
+const { eventEmitter } = require('../events');
 
 const getAppointments = async (body, user) => {
   try {
@@ -146,6 +145,13 @@ const getAllDoctors = async (body, user) => {
       query['createdBy'] = user._id
     }
 
+    if( body?.source === "doctor-page" ) {
+      let paidDepartmentIds = await OrganizationModel.find({ 'billing.isPaid' : true , organizationType: {$in: [ 'Clinic', 'Department' ]}}, { _id: 1 })
+      paidDepartmentIds = paidDepartmentIds.map( id => ObjectId(id._id))
+
+      query['organizationId'] = { $in: paidDepartmentIds }
+    }
+
     let doctors = await UserModel.aggregate([
       {
         $match: {
@@ -245,6 +251,7 @@ const addAppointment = async (body, user ) => {
         departmentId: body.department.organizationId,
         createdBy: user._id,
         created: user._id,
+        isPaid: user.userType === 'PT' ? false : true
       }).save();
     } else { return Error({ message: "Already in your waiting list." }) }
 
@@ -596,6 +603,7 @@ const createDepartment = async (body, userInfo, file ) => {
         room: body?.room,
         specialization: body?.specialization,
         photo: file?.filename,
+        phone: body.phone,
 
         ...(userInfo.userType === 'HL' ? { billing: { isPaid: true, isNewPlan: true }} : {})
       }).save();
@@ -735,17 +743,24 @@ const patients = async (body, user) => {
 
 const hospitalSpecialization = async (body, user) => {
   try {
-    let organization = await OrganizationModel.findOne(
-      { _id: body?.organizationId || user.organizationId },
-      { specialization: 1 }
-    );
-    let specialization = organization?.specialization?.length
-      ? organization?.specialization.map((spe) => ({
-          name: spe.name,
-          id: spe.id,
-        }))
-      : [];
-    return Success({ specialization });
+    let specialization
+    if( ['SA', 'AD'].includes(user.userType)  ){
+      specialization = await specializationModel.find({ isDefault: false })
+    }
+    else{
+      let organization = await OrganizationModel.findOne(
+        { _id: body?.organizationId || user.organizationId },
+        { specialization: 1 }
+      );
+      specialization = organization?.specialization?.length
+        ? organization?.specialization.map((spe) => ({
+            name: spe.name,
+            id: spe.id,
+          }))
+        : [];
+      }
+      return Success({ specialization });
+
   } catch (error) {
     console.log(error);
   }
@@ -835,31 +850,6 @@ const anonymousAppointment = async (body, user) => {
   }
 };
 
-
-const EventHandler = (req, res) => {
-  res.writeHead(200, {
-    "Content-Type": "text/event-stream",
-    "Cache-Control": "no-cache",
-    "Access-Control-Allow-Origin": "*"
-  });
-
-  const sendResponse = (data, event) => {
-    res.write(`event: ${event}\n`);
-    res.write(`data: ${JSON.stringify(data)}`);
-    res.write("\n\n");
-  };
-
-  eventEmitter.on("new-appointment", (data) =>
-    sendResponse(data, "new-appointment")
-  );
-
-  eventEmitter.on("re-appointment", (data) =>
-    sendResponse(data, "re-appointment")
-  );
-
-  eventEmitter.on("status", (data) => sendResponse(data, "status"));
-};
-
 module.exports = {
   getAppointments,
   editDoctor,
@@ -882,5 +872,4 @@ module.exports = {
   addSpecialization,
   getClinics,
   anonymousAppointment,
-  EventHandler,
 };

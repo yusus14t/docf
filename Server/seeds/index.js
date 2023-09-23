@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const UserSeed = require("../seeds/user-seed");
 const SettingSeed = require("../seeds/website-seed");
+const specializationSeed = require("./specialization-seed");
+const serviceSeed = require("./service-seeds")
 
 // Database Connection
 mongoose.set("strictQuery", false);
@@ -14,21 +16,24 @@ database.once("connected", () => console.log("Database Connected"));
 
 // Registered Seeds
 const seeds = [
-  { name: "user", function: () => UserSeed.user.function() },
-  { name: "setting", function: () => SettingSeed.setting.function() },
+  { name: "user", store: () => UserSeed.user.store() },
+  { name: "setting", store: () => SettingSeed.setting.store() },
+  { name: "specialization", store: () => specializationSeed.specialization.store() },
+  { name: "service", store: ()=> serviceSeed.service.store()},
 ];
 
 let args = process.argv.slice(2);
 
 const Seeding = async () => {
-  seeds.map((seed) => {
+  for( let seed of seeds ) {
     if (!args.length || args.includes(seed.name)) {
       console.log(`Seeding ${seed.name} ....`);
-      seed.function();
+      await seed.store();
     }
-  });
+  };
+  console.log("Seeded Successfull.");
+  process.exit();
 };
 
 Seeding();
-
 // node seeds

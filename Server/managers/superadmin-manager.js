@@ -4,6 +4,8 @@ const OrganizationModel  = require('../models/organization-model');
 const { Success, Error, uploadToBucket } = require('../constants/utils');
 const websiteImageModel = require('../models/website-image-model');
 const settingModel = require('../models/setting-model');
+const specializationModel = require('../models/specialization-model');
+const serviceModel = require('../models/service-model');
 
 
 const getProfile = async ( body ) => {
@@ -316,21 +318,70 @@ const organizationPrice = async ( body ) => {
 }
 
 
-module.exports = {
-    getProfile,
-    analytics,
-    hospitals,
-    clinics,
-    patients,
-    MRs,
-    createMR,
-    deleteMR,
-    websiteImages,
-    uploadImage,
-    contactInfo,
-    getWebsiteInfo,
-    appointmentUsers,
-    plans,
-    patientPrice,
-    organizationPrice,
+const createCustomSpecialization = async ( body ) => {
+    try {
+        body.customSpecialization  = body.customSpecialization.trim()
+        await specializationModel({ id: body.customSpecialization.toUpperCase(), name: body.customSpecialization, isDefault: false }).save() 
+        return Success({ message: 'Price update successfully' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
 }
+
+const deleteCustomSpecialization = async ( body ) => {
+    try {
+        console.log(body)
+        await specializationModel.deleteOne({ id: body.id }) 
+        return Success({ message: 'Specialization successfully deleted' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const createCustomService = async ( body ) => {
+    try {
+        body.customServices  = body.customServices.trim()
+        await serviceModel({ id: body.customServices.toUpperCase(), name: body.customServices, isDefault: false }).save() 
+        return Success({ message: 'Service update successfully' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const deleteCustomService = async ( body ) => {
+    try {
+        console.log(body)
+        await serviceModel.deleteOne({ id: body.id }); 
+        return Success({ message: 'Service successfully deleted' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+
+module.exports = {
+  getProfile,
+  analytics,
+  hospitals,
+  clinics,
+  patients,
+  MRs,
+  createMR,
+  deleteMR,
+  websiteImages,
+  uploadImage,
+  contactInfo,
+  getWebsiteInfo,
+  appointmentUsers,
+  plans,
+  patientPrice,
+  organizationPrice,
+  createCustomSpecialization,
+  deleteCustomSpecialization,
+  createCustomService,
+  deleteCustomService,
+};

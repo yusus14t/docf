@@ -87,7 +87,7 @@ const SpecializationDetails = () => {
             <div className="mb-0">
               <img
                 className="specialization-image"
-                src={specialization?.pic}
+                src={specialization?.image}
                 alt=""
               />
             </div>

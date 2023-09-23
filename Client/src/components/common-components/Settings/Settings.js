@@ -15,6 +15,7 @@ import whatsapp from "../../../assets.app/img/icons/icons8-whatsapp-96.png";
 import email from "../../../assets.app/img/icons/icons8-email-96.png";
 import twitter from "../../../assets.app/img/icons/icons8-twitter-100.png";
 import Payment from "./Payment";
+import { SETTING_TABS } from "../../../constants/constant";
 
 const Settings = () => {
   const  userInfo = JSON.parse(localStorage.getItem('user'))
@@ -31,17 +32,23 @@ const Settings = () => {
   const [isEdit, setIsEdit ] = useState({ open: false, type: null, value: null })
   const [hospitalName, setHospitalName] = useState('')
   const [ contact, setContact ] = useState({})
+  const [ customSpecialization, setCustomSpecialization ] = useState(null);
+  const [customServices, setCustomServices] = useState(null);
 
   const QRCodeRef = useRef(null)
   const inputRef = useRef(null)
   const toasty = useToasty()
 
   useEffect(() => {
-    if (tab === 'SPECIALIZATION') getAllSpecialization()
-    else if( tab === 'SERVICES' ) getServices()
+    if (['SPECIALIZATION', "CUSTOM_SPECIALIZATION"].includes(tab)) getAllSpecialization()
     else if( tab === 'CONTACT' ) getContact()
+    else if( ['SERVICES', 'CUSTOM_SERVICES'].includes(tab) ){
+      if( ['SA', 'AD'].includes(userInfo.userType)) getAllServices()
+      else getServices()
+    }
 
     if( userInfo.userType === 'DP' ) getHospitalName()
+    
   }, [tab,])
 
   useEffect(() => {
@@ -55,6 +62,14 @@ const Settings = () => {
     }catch(error){ console.error(error) }
   }
 
+   const getAllServices = async () => {
+     try {
+       let { data } = await axiosInstance.get("/services");
+       setOrganizationServices(data?.services);
+     } catch (error) {
+       console.error(error);
+     }
+   };
   const getServices = async () => {
     try{ 
       let { data } = await axiosInstance.get('/hospital/services')
@@ -65,7 +80,7 @@ const Settings = () => {
 
   const getAllSpecialization = async () => {
     try {
-      let { data } = await axiosInstance.get('/doctor/hospital-specialization')
+      let { data } = await axiosInstance.get('/doctor/hospital-specialization', { params: { source: 'setting' }, ...getAuthHeader()})
       setSpecializations(data?.specialization)
     } catch (error) {
       console.error(error)
@@ -174,6 +189,41 @@ const Settings = () => {
     } catch(error){ console.error(error) }
   }
 
+  const createCustomSpecialization = async () => {
+    try{
+      await axiosInstance.post('/super-admin/create-specialization', { customSpecialization }, getAuthHeader())
+      toasty.success('Sucessfully created')
+      setCustomSpecialization('')
+      setSpecializations( old => [...old, { id: customSpecialization.toUpperCase(), name: customSpecialization }])
+    }catch(error){ console.log(error) }
+  }
+
+  const deleteCustomSpecialization = async ( id ) => {
+    try{
+      await axiosInstance.delete(`/super-admin/specialization/${id}`, getAuthHeader())
+      setSpecializations( old => old.filter( spe => spe.id !== id ))
+      toasty.success('Successfully deleted')
+    }catch(error){ console.log(error) }
+  }
+
+  const createCustomService = async () => {
+    try{
+      await axiosInstance.post('/super-admin/create-service', { customServices }, getAuthHeader())
+      toasty.success('Sucessfully created')
+      setCustomServices('')
+      setOrganizationServices( old => [...old, { id: customServices.toUpperCase(), name: customServices }])
+    }catch(error){ console.log(error) }
+  }
+
+   const deleteCustomService = async ( id ) => {
+    try{
+      await axiosInstance.delete(`/super-admin/service/${id}`, getAuthHeader())
+      setOrganizationServices((old) => old.filter((ser) => ser.id !== id));
+      toasty.success('Successfully deleted')
+    }catch(error){ console.log(error) }
+  }
+
+
   return (
     <div className="ms-content-wrapper">
       <div className="row mr-0">
@@ -181,14 +231,7 @@ const Settings = () => {
           <div className="ms-panel mb-0 inner-content-height">
             <div className="ms-panel-header ms-panel-custome">
               <div style={{ display: "flex", overflow: "auto"}}>
-                {['HL', 'CL', 'SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SPECIALIZATION')}>Specialization</span>}
-                {['HL', 'CL', 'SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('SERVICES')}>Services</span>}
-                {['HL', 'CL', 'DP'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('QRCODE')}>QR Code</span>}
-                {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('WEBSITE')}>Website</span>}
-                {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('CONTACT')}>Contact</span>}
-                {['SA', 'AD'].includes(userInfo.userType) && <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PAYMENT')}>Payment</span>}
-                <span className="btn btn-info btn-md mx-3" onClick={() => setTab('PROFILE')}>Profile</span>
-
+                {SETTING_TABS.filter( tab => tab.access.includes(userInfo.userType)).map(( stab, key ) => <span className={`btn btn-md mx-3 ${ tab === stab.id ? 'btn-light' : 'btn-info' }`} key={key} onClick={() => setTab(stab.id)}>{ stab.name }</span> )}
               </div>
             </div>
             <div className="ms-panel-body p-0 content-height">
@@ -416,7 +459,112 @@ const Settings = () => {
                 </>
               )}
               {tab === "PAYMENT" && <Payment />}
-
+              { tab === "CUSTOM_SPECIALIZATION" &&    <>
+                  <div className="row m-2">
+                    <div className="col-md-8 col-sm-12">
+                      <h4>Specialization</h4>
+                    </div>
+                    <div className="col-md-4 col-sm-8">
+                      <div className="d-flex">
+                        <input className="form-control" placeholder="Custom Specialization" value={customSpecialization} onChange={(e) => setCustomSpecialization(e.target.value)} />
+                        <button className="btn btn-primary shadow-none btn-md mx-3" onClick={() => createCustomSpecialization()}>Save</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ms-panel-body py-0 ">
+                    <div className="table-responsive">
+                      <table className="table table-hover  thead-primary">
+                        <thead style={{ backgroundColor: "#A2A2A252" }}>
+                          <tr>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Id
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Name
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Delete
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {specializations?.length > 0 &&
+                            specializations.map((specialization) => (
+                              <tr>
+                                <td className="ms-table-f-w">
+                                  {specialization.id}
+                                </td>
+                                <td>{specialization.name}</td>
+                                <td>
+                                  <FontAwesomeIcon
+                                    style={{ marginLeft: "8px" }}
+                                    className="cursor-pointer"
+                                    icon={faTrash}
+                                    onClick={() =>
+                                      deleteCustomSpecialization(specialization.id)
+                                    }
+                                  ></FontAwesomeIcon>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </>}
+              { tab === "CUSTOM_SERVICES" &&    <>
+                  <div className="row m-2">
+                    <div className="col-md-8 col-sm-12">
+                      <h4>Service</h4>
+                    </div>
+                    <div className="col-md-4 col-sm-8">
+                      <div className="d-flex">
+                        <input className="form-control" placeholder="Custom Service" value={customServices} onChange={(e) => setCustomServices(e.target.value)} />
+                        <button className="btn btn-primary shadow-none btn-md mx-3" onClick={() => createCustomService()}>Save</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="ms-panel-body py-0 ">
+                    <div className="table-responsive">
+                      <table className="table table-hover  thead-primary">
+                        <thead style={{ backgroundColor: "#A2A2A252" }}>
+                          <tr>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Id
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Name
+                            </th>
+                            <th scope="col" style={{ color: "#000" }}>
+                              Delete
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {organizationServices?.length > 0 &&
+                            organizationServices.map((service) => (
+                              <tr>
+                                <td className="ms-table-f-w">
+                                  {service.id}
+                                </td>
+                                <td>{service.name}</td>
+                                <td>
+                                  <FontAwesomeIcon
+                                    style={{ marginLeft: "8px" }}
+                                    className="cursor-pointer"
+                                    icon={faTrash}
+                                    onClick={() =>
+                                      deleteCustomService(service.id)
+                                    }
+                                  ></FontAwesomeIcon>
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </>}
             </div>
           </div>
         </div>

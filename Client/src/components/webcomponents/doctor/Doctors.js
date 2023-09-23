@@ -14,7 +14,7 @@ function DoctorsList({ source, filter }) {
 
   const getAllDoctors = async () => {
     try{
-      let { data } = await axiosInstance.get("/all-doctors", {params: { filter }, ...getAuthHeader() });
+      let { data } = await axiosInstance.get("/all-doctors", {params: { filter, source: 'doctor-page' }, ...getAuthHeader() });
       setDoctors(data?.doctors);
     } catch(error){ 
       console.error(error)

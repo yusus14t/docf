@@ -55,7 +55,7 @@ getAllClinics()
     <>
       <div className="box bg-light"></div>
       <div
-        style={{ zIndex: "99" }}
+        
         className=" mini-menu position-fixed w-100 bg-light  "
       >
         {console.log("clini", clinics)}
@@ -119,7 +119,6 @@ getAllClinics()
                           marginTop: "10px",
                           marginLeft: "",
                           width: "50px",
-                          zIndex: "1",
                         }}
                         className="ml-2 p-2 clinic-title"
                       >

@@ -283,7 +283,7 @@ const Gynae = () => {
                     <div className="clinic-details d-flex flex-row justify-content-between">
                       <div className="mt-3">
                         <h6 className="hospital-specialization text-disabled">
-                          { Hospital?.specialization?.length > 0 ? 'Multi Specialist' : Hospital?.specialization[0].name }
+                          { Hospital?.specialization?.length > 1 ? 'Multi Specialist' : Hospital?.specialization[0].name }
                         </h6>
                         <div className="contact-info mt-3">
                           <div>

@@ -9,6 +9,9 @@ const noticeModel = require("../models/notice-model");
 const { CITIES } = require("../seeds/citiesData");
 const settingModel = require("../models/setting-model");
 const TransactionModel = require("../models/transaction-model");
+const specializationModel = require("../models/specialization-model");
+const { eventEmitter } = require("../events");
+const serviceModel = require("../models/service-model");
 
 const sessionInfo = async (request, user) => {
   try {
@@ -352,7 +355,7 @@ const validateOtp = async (body) => {
 
 const allSpecializations = async (body) => {
   try {
-    let specializations = specialization.data;
+    let specializations = await specializationModel.find({});
     return Success({ specializations });
   } catch (error) {
     console.log(error);
@@ -457,6 +460,7 @@ const clinicDetails = async (body) => {
                 },
                 createdAt: { $gte: today },
                 status: "waiting",
+                isPaid: true
               },
             },
           ],
@@ -665,6 +669,7 @@ const search = async (body, user) => {
           organizationType: {
             $in: ["Hospital", "Clinic"],
           },
+          'billing.isPaid': true, 
           $and: [
             body?.fee > 0 ? { fee: { $lte: body?.fee } } : {},
             body?.city
@@ -727,6 +732,7 @@ const search = async (body, user) => {
               $project: {
                 organizationType: 1,
                 fee: 1,
+                billing: 1
               },
             },
           ],
@@ -734,6 +740,11 @@ const search = async (body, user) => {
       },
       {
         $unwind: "$organization",
+      },
+      {
+        $match: {
+          'organization.billing.isPaid': true
+        }
       },
       {
         $project: {
@@ -847,8 +858,28 @@ const phonepayStatus = async ( body, res ) => {
           let token = lastAppointment?.token ? +lastAppointment.token + 1 : "1";
           await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true,  token })
 
-          if( appointment.departmentId?.organizationType === 'Clinic' ) redirectUrl = `${ process.env.REDIRECT_URL }/clinic-detail/${ appointment.departmentId._id }`
+          let patient = await UserModel.findOne({ _id: appointment.userId })
+
+
+          
+          if ( appointment.departmentId?.organizationType === 'Clinic' ) redirectUrl = `${ process.env.REDIRECT_URL }/clinic-detail/${ appointment.departmentId._id }`
           else redirectUrl = `${ process.env.REDIRECT_URL }/department-detail/${ appointment.departmentId._id }`
+          
+          eventEmitter.emit("new-appointment", {
+            event: "new-appointment",
+            data: {
+              _id: appointment._id,
+              departmentId: appointment.departmentId._id,
+              token,
+              user: {
+                _id: patient._id,
+                name: patient.name,
+                phone: patient.phone,
+                address: patient?.address,
+              }
+            }
+          })
+
         }
         /************************************************************* */
 
@@ -939,6 +970,15 @@ const getTransaction = async ({ id }, user) => {
   }
 };
 
+const getServices = async ( body , user) => {
+  try {
+    let services = await serviceModel.find({});
+    return Success({ services });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 module.exports = {
   logIn,
@@ -971,4 +1011,5 @@ module.exports = {
   phonepayStatus,
   payment,
   getTransaction,
+  getServices,
 };
