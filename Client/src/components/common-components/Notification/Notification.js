@@ -64,19 +64,22 @@ const Notification = () => {
                         <div  class="table-responsive scrollbar-deep-purple ">
                             <div style={{position:"absolute", width:"99%", zIndex:"9"}}  className="row mx-0 ms-panel-header ">
                                 <div className="col  ">
+                                    <span className="text-light ml-4">S.No</span>
+                                </div>
+                                <div className="col  ">
                                     <span className="text-light ml-4">Title</span>
                                 </div>
                                 <div className="col ">
                                     <span className="text-light">Message</span>
                                 </div>                                
-                                <div className="col ">
+                                {/* <div className="col ">
                                     <span className="text-light">Assignees Name</span>
-                                </div>                                
+                                </div>                                 */}
                                 <div className="col ">
                                     <span className="text-light">Priority</span>
                                 </div>                                
                                 <div className="col ">
-                                    <span className="text-light">Status</span>
+                                    <span className="text-light">View / Delete</span>
                                 </div>
                                 {/* <div className="col ">
                                     <span className="text-light">fghjk</span>
@@ -84,17 +87,20 @@ const Notification = () => {
                             </div>
                             <div className="mx-4 mt-6  " style={{height:"65vh", marginTop:"50px"}}>
 
-                            {notifications.map( notification =>
+                            {notifications.map(( notification , i) =>
                                  <div className="row dropdown-menu-active  pt-2 ">
+                                    <div className="col  ">
+                                    <span className="text-dark align-middle"> {i + 1} </span>
+                                </div>
                                 <div className="col  ">
                                     <span className="text-dark align-middle"> {notification.title.slice(0,20)}{ notification.title.length > 20 ? '...' : ''} </span>
                                 </div>
                                 <div className="col ">
                                     <span className="text-dark">{notification.message.slice(0,30)}{ notification.message.length > 30 ? '...' : ''}</span>
                                 </div>                                
-                                <div className="col ">  
+                                {/* <div className="col ">  
                                     {notification.assigneeIds.filter( assignee => userInfo.userType === 'SA' ||  assignee._id.toString() == userInfo._id.toString() ).map( assignee => <span className="text-dark">{assignee.firstName} {assignee.lastName},</span> )}
-                                </div>                                
+                                </div>                                 */}
                                 <div className="col ">
                                     <span class={`badge badge-gradient-${PRIORITY_COLORS[notification.priority]}`}>{notification.priority}</span>
                                 </div>  
@@ -103,7 +109,7 @@ const Notification = () => {
                                         {/* <div className='col-6'>
                                             <span className="text-dark ">{notification.status}</span>
                                         </div> */}
-                                        { ["SA", "MR"].includes(userInfo.userType) && <div className='col-6'>
+                                        { ["SA", "MR","DP","CL","HL"].includes(userInfo.userType) && <div className='col-6'>
                                             <FontAwesomeIcon className='ms-text-dark cursor-pointer' icon={faTrash} onClick={() => handleDelete(notification._id)}  />
                                             <FontAwesomeIcon className='ms-text-dark cursor-pointer mx-3' icon={faEye} onClick={() => handleViewNotification(notification)}  />
                                         </div>}
@@ -145,10 +151,10 @@ const Notification = () => {
                         <div className='col-12'>
                             <p className='h6'><span className='text-dark'>Message : </span> {notification.message}</p>
                         </div>
-                        <div className='col-12'>
+                        {/* <div className='col-12'>
                             <h6 className='text-disable mt-4'>Assignees</h6>
                             {notification.assigneeIds.map( assignee => <span className="text-disable mx-2">{assignee.firstName} {assignee.lastName},</span> )}
-                        </div>
+                        </div> */}
                     </div>
                 </Modal>
             }

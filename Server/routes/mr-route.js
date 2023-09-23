@@ -10,3 +10,4 @@ router.get('/analytics', mrController.analytics)
 router.delete('/orgnization/:id', mrController.deleteOrganization)
 
 module.exports = router;
+ 

@@ -73,7 +73,7 @@ const Support = () => {
                                         <span className="text-dark">{new Date(ticket.createdAt).toLocaleString()}</span>
                                     </div>                                
                                     <div className="col text-center">
-                                        <span className="text-dark">{['SA', 'AD'].includes(userInfo?.userType) ? 'Sent' : 'Recieved'}</span>
+                                        <span className="text-dark">{['SA', 'AD'].includes(userInfo?.userType) ? 'Recieved' : 'Sent'}</span>
                                     </div>
                                 </div>)}
                                 </div>

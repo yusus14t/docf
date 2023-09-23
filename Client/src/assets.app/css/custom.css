@@ -1145,7 +1145,7 @@ input::-webkit-inner-spin-button {
   width: 100%;
 }
 .hospital-specialization {
-  font-size: 22px;
+  font-size: 14px;
   padding: 2px;
   border-radius: 3px;
   color: white;
@@ -1155,6 +1155,11 @@ input::-webkit-inner-spin-button {
 }
 /*--------------------------end-------------------*/
 
+.list-address {
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
 /*------------------hospital-details------------------*/
 .hospital-banner {
   width: 100%;

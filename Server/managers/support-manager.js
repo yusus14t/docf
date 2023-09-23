@@ -13,6 +13,13 @@ const createTicket = async (body, user) => {
         let superAdmins = await UserModel.find({ userType: 'SA' }, {_id: 1})
         let superAdminIds = superAdmins.map( admin => admin._id )
 
+        let organizationName =null
+        if (user.userType !== "PT"){
+            let organization = await organizationModel.findOne({_id: user.organizationId}, {name: 1})
+            organizationName = organization.name
+        }
+
+
         let ticket = await TicketModel({
             ticketNo: '',
             title: body.title,
@@ -20,10 +27,9 @@ const createTicket = async (body, user) => {
             createdBy: user._id,
             senderId: user._id,
         }).save();
-        
         await NotificatioModel({ 
             title: 'New Ticker Raised',
-            message: `${user.name} will raised a ticket.`,
+            message: `${organizationName ||  user.name} raised a ticket.`,
             priority: 'high',
             assigneeIds: superAdminIds,
             createdBy: user._id
