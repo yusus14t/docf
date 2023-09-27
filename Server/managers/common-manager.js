@@ -543,7 +543,7 @@ const waitingList = async (body, user) => {
       },
       {
         $sort: {
-          createdAt: -1,
+          token: 1,
         },
       },
     ]);

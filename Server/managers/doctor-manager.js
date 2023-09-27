@@ -82,6 +82,11 @@ const getAppointments = async (body, user) => {
           department: "$department.name",
         },
       },
+      {
+        $sort: {
+          token: 1
+        }
+      }
     ]);
     return Success({ message: "Appointment fetch successfully", appointments });
   } catch (error) {
