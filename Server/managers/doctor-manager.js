@@ -84,7 +84,7 @@ const getAppointments = async (body, user) => {
       },
       {
         $sort: {
-          token: 1
+          updatedAt: -1
         }
       }
     ]);
