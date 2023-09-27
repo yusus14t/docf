@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import ImgUpload from "../../common-components/Imgupload";
 import useToasty from '../../../hooks/toasty';
 import { toPng, toBlob } from 'html-to-image'
-
+import logo from "../../../assets.app/img/logo/logo.jpg"
 const Dashbaord = () => {
   const userInfo = JSON.parse(localStorage.getItem('user'))
   const [appointments, setAppointments] = useState([])
@@ -298,14 +298,15 @@ const Dashbaord = () => {
           class="p-2 rounded mb-3"
           ref={appointmentCarRef}
         >
-          <h4 style={{ marginLeft: "20px" }} class="">Appointment Card</h4>
+          <img style={{width:"100px"}} src={logo} alt="" />
+          <span className="d-inline-block ml-4"><h4 style={{ marginLeft: "20px" }} class="">Appointment Card</h4></span>
           <hr />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>
               <h2 style={{  }}>{appointment?.departmentId?.name || 'Hospital Name'}</h2>
               <h6 style={{ marginLeft: "10px" }}>{new Date(appointment?.createdAt).toLocaleString()}</h6>
               <div className="col mk-address d-flex align-items-center">
-                    <h6>{appointment?.departmentId?.address || '-'}</h6>
+                    <h6>{appointment?.departmentId?.address || '----'}</h6>
               </div>
             </div>
             <div style={{ width: "60px", height: "60px", borderRadius: "6px", backgroundColor: "#8df7c4" }}>

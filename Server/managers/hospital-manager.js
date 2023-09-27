@@ -5,19 +5,22 @@ const ObjectId = require('mongoose').Types.ObjectId
 
 const editProfile = async ( body, user, file ) => {
     try{
+      console.log('file', file)
         let detail = JSON.parse(JSON.stringify(body))
         if( detail ) detail = JSON.parse(detail.data)
 
         if( file ) await uploadToBucket( file.filename );
+        
         
         if( user.userType === 'PT' ){
             if ( file ) detail['photo'] = file?.filename
             await UserModel.updateOne({ _id: ObjectId(user._id) }, { ...detail })
             return Success({ message: 'Profile Edit Successfully.'})
         }
-
+        console.log("11111111111");
         let hospital = await UserModel.findOne({ phone: detail?.phone, _id: { $ne: user._id } })
 
+        console.log("222222222");
         if( hospital ) return({ message: 'Phone already used.'})
         
         let obj = {
@@ -28,11 +31,12 @@ const editProfile = async ( body, user, file ) => {
             email: detail?.email,
             timing: detail?.timing,
         }
+        console.log("3333333");
+
 
         if ( file ) {
             obj['photo'] = file?.filename
         }
-        
         await organizationModel.updateOne({ _id: user.organizationId }, obj)
 
         if( ['SA', 'MR' ,'AD'].includes(user.userType)) await UserModel.updateOne({ _id: user._id }, obj)
