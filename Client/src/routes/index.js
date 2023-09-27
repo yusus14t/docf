@@ -42,7 +42,7 @@ const expireCondition = () => {
 
   // For Department check parent hospital billin
   if( userInfo.userType === 'DP' ){
-    if( !userInfo?.hospitalId?.billing?.isPaid || userInfo?.hospitalId?.billing?.hasExpire ) return expireRoute
+    if( !userInfo?.organizationId?.billing?.isPaid || userInfo?.organizationId?.billing?.hasExpire ) return expireRoute
     return userRoute.id
   }
 

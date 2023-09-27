@@ -227,6 +227,7 @@ const addAppointment = async (body, user ) => {
       let lastAppointment = await AppointmentModel.findOne({ 
           departmentId: ObjectId(body.department.organizationId),
           createdAt: { $gte: today },
+          isPaid: true,
         }, { token: 1 } ).sort({ createdAt: -1 });
   
       token = lastAppointment?.token ? ++lastAppointment.token : "1";
@@ -587,6 +588,8 @@ const createDepartment = async (body, userInfo, file ) => {
   try {
     body = JSON.parse(body?.data);
     let organization = await UserModel.findOne({ phone: body.phone }).lean();
+    let hopsital = await OrganizationModel.findOne({ _id: userInfo.organizationId }, { billing: 1 })
+
     if (!organization) {
       if( file?.filename ) await uploadToBucket( file.filename )
 
@@ -604,8 +607,7 @@ const createDepartment = async (body, userInfo, file ) => {
         specialization: body?.specialization,
         photo: file?.filename,
         phone: body.phone,
-
-        ...(userInfo.userType === 'HL' ? { billing: { isPaid: true, isNewPlan: true }} : {})
+        ...(userInfo.userType === 'HL' ? { billing: hopsital.billing } : {})
       }).save();
 
       let user = await UserModel({
@@ -804,7 +806,7 @@ const anonymousAppointment = async (body, user) => {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    let lastAppointment = await AppointmentModel.findOne({departmentId: ObjectId(user.organizationId), createdAt: { $gte: today }}, { token: 1 } )
+    let lastAppointment = await AppointmentModel.findOne({departmentId: ObjectId(user.organizationId), createdAt: { $gte: today }, isPaid: true }, { token: 1 } )
     .sort({ createdAt: -1 });
 
     let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : 1;
