@@ -30,7 +30,10 @@ function WebFooter() {
             <Link to="/about">
               <h6 className="text-light">About Us</h6>
             </Link>
-            <Link target='_blank' to="https://www.facebook.com/profile.php?id=61550823415174">
+            <Link
+              target="_blank"
+              to="https://www.facebook.com/profile.php?id=61550823415174"
+            >
               <h6 className="text-light">FaceBook</h6>
             </Link>
           </div>
@@ -61,15 +64,14 @@ function WebFooter() {
         </div>
         <hr className="m-0" />
         <p className="mb-0 p-2 text-center text-light">
-          Made by{" "}
+          | Copyright &#169; Doctor Time. All rights reserved | Made by{" "}
           <Link
             style={{ color: "skyblue" }}
             target="_blank"
             to="https://erahamtech.com"
           >
-            EraHam Tech
+            EraHam Tech &nbsp;
           </Link>
-          | Copyright &#169; Doctor Time. All rights reserved
         </p>
       </footer>
     );

@@ -1,11 +1,11 @@
-@media (max-width: 375px) {
+/* @media (max-width: 370px) {
   .dr-spelialization {
     display: none;
   }
   body {
     background-color: rgb(0, 255, 47);
   }
-}
+} */
 /* Media Query for Mobile Devices */
 @media (max-width: 480px) {
   /* body {
