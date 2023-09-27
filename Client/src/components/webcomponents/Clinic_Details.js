@@ -152,7 +152,7 @@ function Detail() {
                 {clinicDetail.organizationType !== "Clinic" && (
                   <>
                     <h4 className="text-light clinic-detail-drName rounded">
-                      {clinicDetail.name}{" "}
+                      Dept. {clinicDetail.name}{" "}
                     </h4>
                   </>
                 )}

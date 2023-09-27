@@ -135,8 +135,8 @@ getAllClinics()
                         style={{ background: "#00afb9" }}
                         className="mb-1 dr-spelialization"
                       >
-                        {/* {clinic?.specialization[0].name} */}
-                        {specialization}
+                        { specialization || clinic.specialization[0]?.name }
+                        
                       </p>
                       <p className="mb-0">{clinic?.doctor?.name}</p>
                       <p className="mb-1 experience-dr">
