@@ -215,7 +215,7 @@ const Gynae = () => {
                   alt=""
                 />
               </span>
-              <h3>IFV</h3>
+              <h3>IVF</h3>
               <p className="p-2">
                 In vitro fertilization (IVF) is a type of assisted reproductive
                 technology
