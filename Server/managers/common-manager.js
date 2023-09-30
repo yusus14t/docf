@@ -525,6 +525,9 @@ const waitingList = async (body, user) => {
         },
       },
       {
+        $sort: { updatedAt: 1 },
+      },
+      {
         $lookup: {
           from: "users",
           localField: "userId",
@@ -539,11 +542,6 @@ const waitingList = async (body, user) => {
           name: "$user.name",
           phone: "$user.phone",
           address: "$user.address",
-        },
-      },
-      {
-        $sort: {
-          token: 1,
         },
       },
     ]);
