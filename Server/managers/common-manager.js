@@ -702,66 +702,71 @@ const search = async (body, user) => {
       });
 
     let searchData = await OrganizationModel.aggregate(aggregateQuery);
-    let doctors = await UserModel.aggregate([
-      {
-        $match: {
-          userType: "DR",
-          $and: [
-            body?.search
-              ? { name: { $regex: body.search, $options: "i" } }
-              : {},
-            body?.city
-              ? { address: { $regex: body?.city, $options: "i" } }
-              : {},
-            body?.specialization
-              ? { "specialization.name": body?.specialization }
-              : {},
-          ],
+    
+    let doctors = []
+    if( body?.type === 'Doctor' ) {
+      doctors = await UserModel.aggregate([
+        {
+          $match: {
+            userType: 'DR',
+            $and: [
+              body?.search
+                ? { name: { $regex: body.search, $options: "i" } }
+                : {},
+              body?.city
+                ? { address: { $regex: body?.city, $options: "i" } }
+                : {},
+              body?.specialization
+                ? { "specialization.name": body?.specialization }
+                : {},
+            ],
+          },
         },
-      },
-      {
-        $lookup: {
-          from: "organizations",
-          localField: "organizationId",
-          foreignField: "_id",
-          as: "organization",
-          pipeline: [
-            {
-              $project: {
-                organizationType: 1,
-                fee: 1,
-                billing: 1
+        {
+          $lookup: {
+            from: "organizations",
+            localField: "organizationId",
+            foreignField: "_id",
+            as: "organization",
+            pipeline: [
+              {
+                $project: {
+                  organizationType: 1,
+                  fee: 1,
+                  billing: 1
+                },
               },
-            },
-          ],
+            ],
+          },
         },
-      },
-      {
-        $unwind: "$organization",
-      },
-      {
-        $match: {
-          'organization.billing.isPaid': true
-        }
-      },
-      {
-        $project: {
-          name: 1,
-          email: 1,
-          address: 1,
-          photo: 1,
-          userType: 1,
-          organizationId: 1,
-          organizationType: "$organization.organizationType",
-          fee: "$organization.fee",
+        {
+          $unwind: "$organization",
         },
-      },
-      {
-        $match: {
-          ...(body?.fee > 0 ? { fee: { $lte: body?.fee } } : {}),
+        {
+          $match: {
+            'organization.billing.isPaid': true
+          }
         },
-      },
-    ]);
+        {
+          $project: {
+            name: 1,
+            email: 1,
+            address: 1,
+            photo: 1,
+            userType: 1,
+            organizationId: 1,
+            organizationType: "$organization.organizationType",
+            fee: "$organization.fee",
+          },
+        },
+        {
+          $match: {
+            ...(body?.fee > 0 ? { fee: { $lte: body?.fee } } : {}),
+          },
+        },
+      ]);
+    }
+
     return Success({ searchData: [...searchData, ...doctors] });
   } catch (error) {
     console.log(error);
