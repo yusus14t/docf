@@ -14,7 +14,7 @@ const createTicket = async (body, user) => {
         let superAdminIds = superAdmins.map( admin => admin._id )
 
         let organizationName =null
-        if (user.userType !== "PT"){
+        if (["CL", "HL", "DP"].includes(user.userType)){
             let organization = await organizationModel.findOne({_id: user.organizationId}, {name: 1})
             organizationName = organization.name
         }

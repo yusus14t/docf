@@ -671,7 +671,7 @@ const search = async (body, user) => {
           },
           'billing.isPaid': true, 
           $and: [
-            body?.fee > 0 ? { fee: { $lte: body?.fee } } : {},
+            parseInt(body?.fee) > 0 ? { fee: { $lte: parseInt(body?.fee) } } : {},
             body?.city
               ? { address: { $regex: body?.city, $options: "i" } }
               : {},
