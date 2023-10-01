@@ -525,6 +525,9 @@ const waitingList = async (body, user) => {
         },
       },
       {
+        $sort: { updatedAt: 1 },
+      },
+      {
         $lookup: {
           from: "users",
           localField: "userId",
@@ -539,11 +542,6 @@ const waitingList = async (body, user) => {
           name: "$user.name",
           phone: "$user.phone",
           address: "$user.address",
-        },
-      },
-      {
-        $sort: {
-          createdAt: -1,
         },
       },
     ]);
@@ -671,7 +669,7 @@ const search = async (body, user) => {
           },
           'billing.isPaid': true, 
           $and: [
-            body?.fee > 0 ? { fee: { $lte: body?.fee } } : {},
+            parseInt(body?.fee) > 0 ? { fee: { $lte: parseInt(body?.fee) } } : {},
             body?.city
               ? { address: { $regex: body?.city, $options: "i" } }
               : {},
@@ -891,23 +889,20 @@ const phonepayStatus = async ( body, res ) => {
           let date = new Date()
           if( organization.billing.plan === 'month' ) Days = 30
           else if( organization.billing.plan === 'quater' ) Days = 90
-          else if( organization.billing.plan === 'halfYearly' ) Days = 180
-          else if( organization.billing.plan === 'yearly' ) Days = 365
+          else if( organization.billing.plan === 'halfYear' ) Days = 180
+          else if( organization.billing.plan === 'year' ) Days = 365
 
           date.setDate(date.getDate() + Days)
 
-          await OrganizationModel.updateOne({ _id: body.transactionId }, {
-            billing: {
-              isPaid: true,
-              expire: date,
-              isNewPlan: false,
-              transactionId: transaction._id,
-            }
+          await OrganizationModel.updateOne({ _id: body.transactionId },  {
+              "billing.isPaid": true,
+              "billing.expire": date,
+              "billing.isNewPlan": false,
           })
 
           if( organization.organizationType === "Hospital" ){
             let departments = await UserModel.find({ hospitalId: organization._id }, { organizationId: 1 })
-            await OrganizationModel.updateMany({ _id: departments.map( department => ObjectId(department.organizationId) )}, { 'billing.isPaid': true })
+            await OrganizationModel.updateMany({ _id: { $in: departments.map( department => ObjectId(department.organizationId))}}, {billing: { isPaid: true,  expire: date,  isNewPlan: false }})
           }
 
           await TransactionModel.updateOne({ _id: transaction._id }, { type: organization.billing.plan })
@@ -963,7 +958,6 @@ const payment = async ( body, user ) => {
 const getTransaction = async ({ id }, user) => {
   try {
     let transaction = await TransactionModel.findOne({ _id: id }, { amount: 1, type: 1 });
-    console.log(transaction)
     return Success({ transaction });
   } catch (error) {
     console.log(error);
