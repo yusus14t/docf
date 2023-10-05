@@ -122,7 +122,7 @@ class Payment {
     const orderData = {
       "merchantId": process.env.MERCHANT_ID,
       "merchantTransactionId": String(this.txnId) + '-' +  new Date().getTime(),
-      "merchantUserId": String(this.userId) + '-' + new Date().getTime(),
+      "merchantUserId": new Date().getTime(),
       "amount": this.amount*100,
       "redirectUrl": `${process.env.REDIRECT_SERVER_URL}/api/phonepay-status`,
       "redirectMode": "POST",
