@@ -827,24 +827,26 @@ const websiteSetting = async (params) => {
 const phonepayStatus = async ( body, res ) => {
   try {
     console.log('payment response', body)
-
+    let txn = await TransactionModel.findOne({ id: body.transactionId })
+    body.transactionId = txn.appointmentId || body.transactionId;
+    console.log("txn", txn);
     let redirectUrl = process.env.REDIRECT_URL
 
     let transaction = await TransactionModel.findOne({ refrenceId: body?.providerReferenceId })
+
     if( !transaction ){
       transaction = await TransactionModel({
         status: body?.code,
         merchantId: body?.merchantId,
         transactionId: body.transactionId,
         amount: body.amount / 100,
-        refrenceId: body?.providerReferenceId
-      }).save()
+        refrenceId: body?.providerReferenceId,
+      }).save();
 
       if (body.code === 'PAYMENT_SUCCESS') {
         redirectUrl = process.env.REDIRECT_SUCCESS_URL
 
-        body.transactionId = body.transactionId.split('-')[0]
-  
+        console.log('body', body.transactionId )
         /**************************** For Appointment *************************** */  
         let appointment = await AppointmentModel.findOne({ _id: body.transactionId }).populate('departmentId')
         if (appointment) {
@@ -947,10 +949,14 @@ const payment = async ( body, user ) => {
 
     let redirectUrl = null
     if( amount ){
-      let payment =  new Payment( body._id, user._id, amount ) 
+      let txnId = new Date().getTime()
+      let payment =  new Payment( txnId, user._id, amount ) 
       let { data: paymentData } = await payment.create_payment()
-  
-      if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+      console.log()
+      if( paymentData?.success ){
+        await TransactionModel.create({ id: txnId, appointmentId: body._id });
+        redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+      }
     }
       
     return Success({ redirectUrl });

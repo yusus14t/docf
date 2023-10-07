@@ -12,6 +12,7 @@ const OrganizationModel = require("../models/organization-model");
 const DealModel = require("../models/deal-model");
 const specializationModel = require("../models/specialization-model");
 const { eventEmitter } = require("../events");
+const transactionModel = require("../models/transaction-model");
 
 const getAppointments = async (body, user) => {
   try {
@@ -306,13 +307,15 @@ const addAppointment = async (body, user) => {
         { data: 1 }
       );
 
+      let txnId = new Date().getTime()
       let payment = new Payment(
-        appointment._id,
+        txnId,
         appointment.userId,
         patientPrice.data.get("price")
       );
-      let { data: paymentData } = await payment.create_payment();
 
+      let { data: paymentData } = await payment.create_payment();
+      await transactionModel({ id : txnId, appointmentId: appointment._id }).save()
       if (paymentData?.success)
         redirectUrl = paymentData.data.instrumentResponse.redirectInfo.url;
 
