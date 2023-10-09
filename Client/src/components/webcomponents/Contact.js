@@ -169,7 +169,7 @@ const Contact = () => {
           <div className="row ">
             <div className="col-6">
               <button
-                className=" btn-primary btn mx-1"
+                className=" btn-primary shadow-none btn mx-1"
                 onClick={() => saveContactQuery()}
               >
                 Send Message
