@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-// import { ClinicListCard } from '../common-components/ClinicCard';
 import { axiosInstance, convertTo12HourFormat } from "../../constants/utils";
 
 import { Link } from "react-router-dom";
-import clinicPhoto2 from "../../assets.web/img/clinic-grid/348x350-1.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getFullPath } from "../../constants/utils";
 import { NUMBER_TO_DAY } from "../../constants/constant";
+import NO_PHOTO from "../../assets.app/images/no-photo.png";
+
 
 function Clinics({ source }) {
   const [clinics, setClinics] = useState([]);
@@ -101,7 +101,7 @@ function Clinics({ source }) {
                               src={
                                 clinic?.photo
                                   ? getFullPath(clinic?.photo)
-                                  : clinicPhoto2
+                                  : NO_PHOTO
                               }
                               alt=""
                             />

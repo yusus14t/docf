@@ -5,7 +5,6 @@ import { getFullPath } from "../../../constants/utils";
 const DepartmentCard = ({ departments }) => {
   return (
     <>
-    {console.log(departments)}
         <div className="row">
           {departments?.map(( department, key )=>{
             return (
