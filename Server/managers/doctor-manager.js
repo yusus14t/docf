@@ -12,6 +12,7 @@ const OrganizationModel = require("../models/organization-model");
 const DealModel = require("../models/deal-model");
 const specializationModel = require("../models/specialization-model");
 const { eventEmitter } = require("../events");
+const transactionModel = require("../models/transaction-model");
 
 const getAppointments = async (body, user) => {
   try {
@@ -246,7 +247,7 @@ const addAppointment = async (body, user) => {
         { token: 1 }
       ).sort({ token: 1 });
 
-      token = lastAppointment?.token ? ++lastAppointment.token : "1";
+      token = lastAppointment?.token ? ++lastAppointment.token : 1;
     }
 
     let patient = await UserModel.findOne(
@@ -306,12 +307,15 @@ const addAppointment = async (body, user) => {
         { data: 1 }
       );
 
+      let txnId = new Date().getTime()
       let payment = new Payment(
-        appointment._id,
+        // appointment._id,
+        txnId,
         patientPrice.data.get("price")
       );
-      let { data: paymentData } = await payment.create_payment();
 
+      let { data: paymentData } = await payment.create_payment();
+      await transactionModel({ id : txnId, appointmentId: appointment._id }).save()
       if (paymentData?.success)
         redirectUrl = paymentData.data.instrumentResponse.redirectInfo.url;
 
@@ -364,7 +368,7 @@ const reAppointment = async (body) => {
 
     let Obj = {
       user: appointment.userId,
-      token: appointment.token,
+      token: +appointment.token,
       _id: appointment._id,
     };
 
@@ -865,7 +869,6 @@ const anonymousAppointment = async (body, user) => {
   try {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
-
     let lastAppointment = await AppointmentModel.findOne(
       {
         departmentId: ObjectId(user.organizationId),
@@ -874,7 +877,6 @@ const anonymousAppointment = async (body, user) => {
       },
       { token: 1 }
     ).sort({ token: -1 });
-
     let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : 1;
 
     let patient = await UserModel.findOne(

@@ -490,7 +490,6 @@ const clinicDetails = async (body) => {
       },
     ]);
     detail = JSON.parse(JSON.stringify(detail[0]));
-    console.log('>>>>>>>>>', detail)
     let doctor = await UserModel.findOne({ organizationId: body._id, userType: 'DR'}, { name: 1 })
     detail['doctor'] = doctor
 
@@ -833,28 +832,27 @@ const websiteSetting = async (params) => {
 const phonepayStatus = async ( body, res ) => {
   try {
     console.log('payment response', body)
-
+    let txn = await TransactionModel.findOne({ id: body.transactionId })
+    body.transactionId = txn.appointmentId || body.transactionId;
     let redirectUrl = process.env.REDIRECT_URL
 
     let transaction = await TransactionModel.findOne({ refrenceId: body?.providerReferenceId })
+
     if( !transaction ){
       transaction = await TransactionModel({
         status: body?.code,
         merchantId: body?.merchantId,
         transactionId: body.transactionId,
         amount: body.amount / 100,
-        refrenceId: body?.providerReferenceId
-      }).save()
+        refrenceId: body?.providerReferenceId,
+      }).save();
 
       if (body.code === 'PAYMENT_SUCCESS') {
         redirectUrl = process.env.REDIRECT_SUCCESS_URL
 
-        body.transactionId = body.transactionId.split('-')[0]
-  
         /**************************** For Appointment *************************** */  
         let appointment = await AppointmentModel.findOne({ _id: body.transactionId }).populate('departmentId')
         if (appointment) {
-          console.log('appointment', appointment)
           let today = new Date();
           today.setHours(0, 0, 0, 0);
           
@@ -864,9 +862,7 @@ const phonepayStatus = async ( body, res ) => {
             createdAt: { $gte: today },
           }, { token: 1 }).sort({ token: -1 });
           
-          console.log('>>>>>>>>> lastAppointment', lastAppointment)
-          let token = lastAppointment?.token ? +lastAppointment.token + 1 : "1";
-          console.log('>>>>>>>>> token', token)
+          let token = lastAppointment?.token ? +lastAppointment.token + 1 : 1;
           await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true,  token })
 
           let patient = await UserModel.findOne({ _id: appointment.userId })
@@ -955,12 +951,16 @@ const payment = async ( body, user ) => {
 
     let redirectUrl = null
     if( amount ){
-      // let payment =  new Payment( body._id, user._id, amount ) 
-      let payment =  new Payment( body._id,  amount ) 
+      // let payment =  new Payment( body._id,  amount ) 
       
+      let txnId = new Date().getTime()
+      let payment =  new Payment( txnId, amount ) 
       let { data: paymentData } = await payment.create_payment()
-  
-      if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+      console.log()
+      if( paymentData?.success ){
+        await TransactionModel.create({ id: txnId, appointmentId: body._id });
+        redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
+      }
     }
       
     return Success({ redirectUrl });

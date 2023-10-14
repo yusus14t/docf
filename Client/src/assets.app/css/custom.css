@@ -33,6 +33,16 @@
   position: relative;
   top: 82px;
 }
+.btn-primary:hover{
+  background-color: #00bf63;
+}
+.btn-primary:focus{
+  background-color: #112C2F;
+}
+.btn-primary:active{
+  background-color: #112C2F !important;
+}
+
 /* .ms-main-aside {
   height: 25rem;
 } */

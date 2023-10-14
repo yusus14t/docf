@@ -51,7 +51,7 @@ function Detail() {
       setClinicDetail(detail);
       setTiming(detail?.timing)
       let token = '00'
-      token = detail?.token?.length === 1  ? 
+      token = detail?.token < 10  ? 
               `0${detail?.token}` : 
               detail?.token || '00'
 

@@ -1,7 +1,7 @@
 const { Schema, model} = require('mongoose');
 
 const appointmentSchemna = new Schema({
-    token: { type: String },
+    token: { type: Number },
     userId: { type: Schema.Types.ObjectId, ref:'user' },
     departmentId:  { type: Schema.Types.ObjectId, ref:'organization' },
     createdBy:  { type: Schema.Types.ObjectId, ref:'user' },

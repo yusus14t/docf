@@ -84,8 +84,8 @@ const HospitalDetails = () => {
                 <div className="bg-white m-2 rounded p-2">
                   <h6>Important Notice</h6>
                   {notices?.length > 0 ? notices.map(notice => <div style={{ borderLeft: '5px solid grey', paddingLeft: "1rem" }}>
-                    <h6>Title</h6>
-                    <p>Provide contextual feedback messages for typical user actions with the handful of available and flexible alert message</p>
+                    <h6 className="text-danger">{notice.title}</h6>
+                    <p className="text-danger">{notice.description}</p>
                   </div>)
                     :
                     <div className="bg-white m-2 rounded p-2">No Data</div>
