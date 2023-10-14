@@ -244,7 +244,7 @@ const addAppointment = async (body, user) => {
           isPaid: true,
         },
         { token: 1 }
-      ).sort({ createdAt: -1 });
+      ).sort({ token: 1 });
 
       token = lastAppointment?.token ? ++lastAppointment.token : "1";
     }
@@ -308,7 +308,6 @@ const addAppointment = async (body, user) => {
 
       let payment = new Payment(
         appointment._id,
-        appointment.userId,
         patientPrice.data.get("price")
       );
       let { data: paymentData } = await payment.create_payment();
@@ -416,11 +415,14 @@ const analytics = async (body, user) => {
           ],
           currentToken: [
             {
-              $match: { status: "waiting", createdAt: { $gte: today } },
+              $match: { status: "waiting", createdAt: { $gte: today }, isPaid: true,  },
             },
             {
-              $limit: 1,
+              $sort: { token: 1 }
             },
+            {
+              $limit: 2,
+            }
           ],
         },
       },
@@ -433,6 +435,7 @@ const analytics = async (body, user) => {
         },
       },
     ]);
+    
     return Success({ analytics: analytics[0] });
   } catch (error) {
     console.log(error);
@@ -870,7 +873,7 @@ const anonymousAppointment = async (body, user) => {
         isPaid: true,
       },
       { token: 1 }
-    ).sort({ createdAt: -1 });
+    ).sort({ token: -1 });
 
     let token = lastAppointment?.token ? Number(lastAppointment.token) + 1 : 1;
 

@@ -111,10 +111,9 @@ const QRCodeGenerate = async (data, filename) => {
 }
 
 class Payment {
-  constructor(txnId, userId, amount){
+  constructor(txnId, amount){
     this.amount = amount
     this.txnId = txnId
-    this.userId = userId
   }
   
   create_checksum = () => {
@@ -132,7 +131,7 @@ class Payment {
         "type": "PAY_PAGE"
       }
     };
-
+    console.log('>>>> order data', orderData)
     const b64Data = Buffer.from(JSON.stringify(orderData)).toString('base64')
     const checksum = crypto.createHash('sha256')
     .update(b64Data + '/pg/v1/pay' + process.env.MERCHANT_KEY)

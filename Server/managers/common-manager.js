@@ -463,6 +463,11 @@ const clinicDetails = async (body) => {
                 isPaid: true
               },
             },
+            {
+              $sort: { 
+                token: 1
+              }
+            }
           ],
           as: "appointment",
         },
@@ -485,6 +490,7 @@ const clinicDetails = async (body) => {
       },
     ]);
     detail = JSON.parse(JSON.stringify(detail[0]));
+    console.log('>>>>>>>>>', detail)
     let doctor = await UserModel.findOne({ organizationId: body._id, userType: 'DR'}, { name: 1 })
     detail['doctor'] = doctor
 
@@ -848,17 +854,19 @@ const phonepayStatus = async ( body, res ) => {
         /**************************** For Appointment *************************** */  
         let appointment = await AppointmentModel.findOne({ _id: body.transactionId }).populate('departmentId')
         if (appointment) {
-  
+          console.log('appointment', appointment)
           let today = new Date();
           today.setHours(0, 0, 0, 0);
           
           let lastAppointment = await AppointmentModel.findOne({
-            departmentId: ObjectId(appointment.departmentId._id),
+            departmentId: appointment.departmentId._id,
             isPaid: true,
             createdAt: { $gte: today },
-          }, { token: 1 }).sort({ createdAt: -1 });
-  
+          }, { token: 1 }).sort({ token: -1 });
+          
+          console.log('>>>>>>>>> lastAppointment', lastAppointment)
           let token = lastAppointment?.token ? +lastAppointment.token + 1 : "1";
+          console.log('>>>>>>>>> token', token)
           await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true,  token })
 
           let patient = await UserModel.findOne({ _id: appointment.userId })
@@ -947,7 +955,9 @@ const payment = async ( body, user ) => {
 
     let redirectUrl = null
     if( amount ){
-      let payment =  new Payment( body._id, user._id, amount ) 
+      // let payment =  new Payment( body._id, user._id, amount ) 
+      let payment =  new Payment( body._id,  amount ) 
+      
       let { data: paymentData } = await payment.create_payment()
   
       if( paymentData?.success ) redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 
