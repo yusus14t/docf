@@ -108,7 +108,7 @@ const patients = async ( body ) => {
     try {
         let today = new Date()
         today.setHours(0, 0, 0, 0)
-        let patients = await UserModel.find({ userType: 'PT', ...( !!body.istoday ? { createdAt: { $gte: today } } : {} )  })
+        let patients = await UserModel.find({ userType: 'PT', ...( !!body.istoday ? { createdAt: { $gte: today } } : {} )  }).sort({ createdAt: -1 })
         return Success({ patients });
     } catch ( error ) { 
         console.log(error)
@@ -225,7 +225,7 @@ const contactInfo = async (params, body, user ) => {
 
 const getWebsiteInfo = async ( params, body ) => {
     try {
-        let contacts = await settingModel.find({ id: params.id });
+        let contacts = await settingModel.find({ id: params.id }).sort({ createdAt: -1 });
         return Success({ contacts });
     } catch ( error ) { 
         console.log(error)

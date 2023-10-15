@@ -205,7 +205,14 @@ const getAllDoctors = async (body, user) => {
           experience: 1,
           qualification: 1,
         },
+      
       },
+      {
+        $sort: {
+          createdAt: -1
+      }
+    },
+
     ]);
 
     return Success({ doctors });
@@ -711,7 +718,7 @@ const getDepartments = async (body, user) => {
 
     if (user.userType === "SA") query = { userType: "DP" };
 
-    let organizations = await UserModel.find(query).populate("organizationId");
+    let organizations = await UserModel.find(query).populate("organizationId").sort({ createdAt: -1 });
     return Success({ organizations });
   } catch (error) {
     console.log(error);
@@ -732,7 +739,7 @@ const getClinics = async (body, user) => {
 
     let departments = await UserModel.find(query)
       .populate("organizationId", "photo name room specialization")
-      .populate("hospitalId", "name email fee organizationType");
+      .populate("hospitalId", "name email fee organizationType").sort({ createdAt: -1 });
     return Success({ departments });
   } catch (error) {
     console.log(error);
