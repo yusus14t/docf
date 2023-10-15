@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const UserSeed = require("../seeds/user-seed");
 const SettingSeed = require("../seeds/website-seed");
 const specializationSeed = require("./specialization-seed");
-const serviceSeed = require("./service-seeds")
+const serviceSeed = require("./service-seeds");
+const appointmentModel = require("../models/appointment-model");
 
 // Database Connection
 mongoose.set("strictQuery", false);
@@ -20,6 +21,9 @@ const seeds = [
   { name: "setting", store: () => SettingSeed.setting.store() },
   { name: "specialization", store: () => specializationSeed.specialization.store() },
   { name: "service", store: ()=> serviceSeed.service.store()},
+  { name: "appointment", store: async () => {
+    await appointmentModel.deleteMany({})
+  }},
 ];
 
 let args = process.argv.slice(2);

@@ -245,7 +245,7 @@ const addAppointment = async (body, user) => {
           isPaid: true,
         },
         { token: 1 }
-      ).sort({ token: 1 });
+      ).sort({ token: -1 });
 
       token = lastAppointment?.token ? ++lastAppointment.token : 1;
     }
