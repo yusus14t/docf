@@ -22,8 +22,6 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
 
   useEffect(() => {
 
-    // if( RID ){
-    // }
     getDoctorsInOrganization()
     getDepartments()
 
