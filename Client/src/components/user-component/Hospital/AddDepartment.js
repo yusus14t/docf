@@ -1,3 +1,5 @@
+
+
 import Modal from "../../common-components/Modal";
 import DepartmentRegistration from "../../common-components/registration/DepartmentRegistration";
 

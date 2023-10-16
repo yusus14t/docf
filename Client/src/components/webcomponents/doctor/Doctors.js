@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import store from '../../redux/Store';
 import { axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
-import ProfilePhoto from "../../../assets.web/img/doctor-details/243x264.jpg";
+import nopic from "../../../assets.app/images/no_images/no_doctor.png";
 import { Navigate, Link } from "react-router-dom"
 
 function DoctorsList({ source, filter }) {
@@ -60,7 +60,7 @@ const handle = ()=>{
                                   src={
                                     doctor?.photo
                                       ? getFullPath(doctor?.photo)
-                                      : ProfilePhoto
+                                      : nopic
                                   }
                                   alt=""
                                 />

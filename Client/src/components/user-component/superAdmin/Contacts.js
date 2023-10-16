@@ -28,6 +28,9 @@ const Contacts = () => {
                     <div class="table-responsive scrollbar-deep-purple ">
                         <div style={{ position: "absolute", width: "99%", zIndex: "9" }} className="row mx-0 ms-panel-header ">
                             <div className="col text-center ">
+                                <span className="text-light ml-4">S.No</span>
+                            </div>
+                            <div className="col text-center ">
                                 <span className="text-light ml-4">Name</span>
                             </div>
                             <div className="col text-center">
@@ -45,8 +48,11 @@ const Contacts = () => {
                         </div>
                         <div className="mx-4 mt-10  " style={{ height: "65vh", marginTop: "50px" }}>
 
-                            {contacts.length > 0 && contacts.map(contact =>
+                            {contacts.length > 0 && contacts.map((contact, index) =>
                                 <div className="row dropdown-menu-active py-1 ">
+                                    <div className="col text-center ">
+                                        <span className="text-dark align-middle">{index +1}</span>
+                                    </div>
                                     <div className="col text-center ">
                                         <span className="text-dark align-middle">{contact.data.name}</span>
                                     </div>

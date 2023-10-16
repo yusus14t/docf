@@ -104,7 +104,7 @@ const Contact = () => {
                     to={`https://twitter.com/${contact.twitter}`}
                   >
                     {/* {contact.twitter} */}
-                    M/s Paai India 3/361,Begpur, <br />
+                    M/s Paai India 3/361, <br />
                     Aligarh-202002 (U.P), India
                     
                   </Link>

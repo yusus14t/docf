@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import DrAvatar from "../../assets.app/img/DoctorAvatar.png"
-import axios from "axios";
+import DrAvatar from "../../assets.app/images/no_images/no_doctor.png";
+import uploadimg from "../../assets.app/images/no_images/upload_img.jpg";
+
 
 
 export default function ImgUpload({ source, file=() => {}, editImage = null }) {
@@ -20,12 +21,12 @@ export default function ImgUpload({ source, file=() => {}, editImage = null }) {
     <>
       <label htmlFor="upload-button" className={` cursor-pointer ${source === 'clinic' ? 'w-100' : ""}`}>
         {image.preview || editImage? 
-        (<div className={` contain ${source === 'clinic' ? 'clinic-profile' : 'doctor-profile'}`}>
+        (<div className={` contain  ${source === 'clinic' ? 'clinic-profile' : 'doctor-profile'}`}>
           <img src={image.preview || editImage} className={` h-100 w-100 p-1 rounded ${source === 'clinic' ? 'h20' : 'h-100'}`} alt="dummy" width='100%' />
         </div>
         ) :
-          (<div className={` contain ${source === 'clinic' ? 'clinic-profile' : 'doctor-profile'}`} >
-                <img src={DrAvatar} className={source !== 'clinic' ? 'h-100 w-100 p-1' : ""} alt="" />
+          (<div className={`  contain ${source === 'clinic' ? 'clinic-profile' : 'doctor-profile'}`} >
+                <img src={source === 'clinic'? uploadimg : DrAvatar } className={source !== 'clinic' ? 'h-100 w-100 p-1' : "h-100  p-1"} alt="" />
             </div>
           )}
       </label>

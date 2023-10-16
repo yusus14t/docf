@@ -71,7 +71,7 @@ const DoctorsList = () => {
                                 <div className="ms-card-body">
                                     <div className="media mb-0 fs-14">
                                         <div className="me-2 align-self-center">
-                                            <img src={getFullPath(doctor.photo)} className="ms-img-round" alt="people" />
+                                            <img src={getFullPath(doctor.photo  )} className="ms-img-round" alt="people" />
                                         </div>
                                         <div className="media-body">
                                             <h6>{doctor?.name}</h6>
@@ -89,7 +89,7 @@ const DoctorsList = () => {
                                                 <span className="fs-14">
                                                     <i className="fas fa-map-marker-alt"></i>
                                                 </span>
-                                                {doctor?.clinic || 'Madani Clinic'}</h6>
+                                                {doctor?.clinic || ''}</h6>
                                         </div>
                                     </div>
                                 </div>
