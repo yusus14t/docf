@@ -65,7 +65,7 @@ module.exports.sitmaps = async (req, res) => {
   for (const organization of organizations) {
     sitemap += "<url>";
     // sitemap += `<loc>https://doctortime.in/${organization.organizationType == "Clinic" ? "clinic-detail" : "hospital-detail"}/${organization.organizationId}</loc>`;
-    sitemap += `<loc>http://localhost:3000/${organization.organizationType == "Clinic" ? "clinic-detail" : "hospital-detail"}/${organization._id}</loc>`;
+    sitemap += `<loc>https://doctortime.in/${organization.organizationType == "Clinic" ? "clinic-detail" : "hospital-detail"}/${organization._id}</loc>`;
 
     sitemap += "</url>";
   }
