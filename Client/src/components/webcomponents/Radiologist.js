@@ -118,7 +118,7 @@ getAllClinics()
                           height: "30px",
                           marginTop: "10px",
                           marginLeft: "",
-                          width: "50px",
+                          width: "60px",
                         }}
                         className="ml-2 p-2 clinic-title"
                       >

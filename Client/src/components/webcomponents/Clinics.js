@@ -28,7 +28,6 @@ function Clinics({ source }) {
   const getTodayTiming = ( timing ) => {
 
     let time = timing?.find( t => t.day === NUMBER_TO_DAY[2] )
-    console.log(time)
     if( time ){
       return (
         <>
@@ -71,7 +70,6 @@ function Clinics({ source }) {
         style={{ background: "#f1f5fc" }}
         className="section section-padding aaside"
       >
-        {console.log(clinics)}
         <div className="asidebox"></div>
         <div className="container">
           <div className="row mt-2 mb-2">

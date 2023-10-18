@@ -45,7 +45,7 @@ export const DAYS = [
 
 export const WEB_MENU_ITEMS = [
          { id: "home", name: "Home", path: "/" },
-         { id: "gynae", name: "Gynae", path: "/gynae" },
+         { id: "gynae", name: "Gynecologist", path: "/gynae" },
          { id: "hospitals", name: "Hospitals", path: "/hospitals" },
          { id: "clinics", name: "Clinics", path: "/clinics" },
          { id: "doctors", name: "Doctors", path: "/doctors" },
@@ -150,3 +150,11 @@ export const SETTING_TABS = [
     { name: 'Payment', id: 'PAYMENT', access: ['SA', 'AD']},
     { name: 'Profile', id: 'PROFILE', access: ['HL', 'CL', 'SA', 'AD', 'DP', 'MR', 'PT']},
 ]
+
+
+export const SEO = {
+    HOMEPAGE: { 
+        description: 'Homepage description',
+        keyword: 'Doctor time homepage',
+    } 
+}
