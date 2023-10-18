@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { axiosInstance, getAuthHeader, getFullPath } from "../../constants/utils";
 import Modal from "../common-components/Modal";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import useToasty from '../../hooks/toasty';
 import DoctorRegistration from "../common-components/registration/DoctorRegistration";
+import ImgUpload from "../common-components/Imgupload";
+import Select from "react-select";
+
 
 const DoctorsList = () => {
     const [editModal, setEditModal] = useState(false);
@@ -14,12 +17,20 @@ const DoctorsList = () => {
     const [editData, setEditData] = useState({})
     const [searchInput, setSearchInput] = useState('');
     const toasty = useToasty();
-    const { register, handleSubmit, reset, formState:{ errors }} = useForm({ onChange: true })
+    const { register, handleSubmit, reset, formState:{ errors }, control} = useForm({ onChange: true })
     const userInfo = JSON.parse(localStorage.getItem('user'))
+    const [ selectedImage, setSelectedImage ] = useState(null)
+    const [specialization, setSpecialization] = useState([])
+
+
 
     useEffect(() => {
         getDoctors()
     }, [searchInput,])
+
+    useEffect(() => {
+        getClinicSpecialization()
+    }, [])
 
     const getDoctors = async () => {
         try {
@@ -28,17 +39,26 @@ const DoctorsList = () => {
         } catch (error) { console.log(error) }
     }
 
+    const getClinicSpecialization = async () => {
+        try{
+          let { data } = await axiosInstance.get(`/hospital/clinic-specialization/${userInfo.organizationId._id}`)
+          setSpecialization(data?.specializations)
+        } catch(error){ console.error(error) }
+      }
+
     const handleDelete = async (doctor) => {
         try {
             await axiosInstance.post('/doctor/delete-doctor', { _id: doctor._id }, getAuthHeader());
             setDoctors((old) => old.filter(d => d._id !== doctor._id))
-            toasty.success()
         } catch (error) { console.log(error) }
     }
 
-    const Submit = async (formData) => {
+    const Submit = async ( values ) => {
         try{
-            console.log("formData", formData);
+            let formData = new FormData()
+            formData.append('data', JSON.stringify(values))
+            formData.append('image', selectedImage)
+
             let { data } = await axiosInstance.post('/doctor/edit-doctor', formData, getAuthHeader())
             setDoctors(( prev ) => prev.map( doctor => {
                 if( doctor._id === data?.doctor?._id ) doctor = data?.doctor
@@ -106,7 +126,11 @@ const DoctorsList = () => {
                     closeButton={false}
                     submitButton={false}
                 >
+                    <div> 
+                        <ImgUpload source={"doctor"} file={(image) => setSelectedImage(image)} editImage={getFullPath(editData.photo)} />
+                    </div>
                     <form onSubmit={handleSubmit(Submit)} id="test">
+
                         <div className='row'>
                             <div className="col-12 mb-3">
                                 <label className=''>Full Name</label>
@@ -160,16 +184,52 @@ const DoctorsList = () => {
                                 />
                             </div>
                         </div>
-                        <div className="input-group mb-3">
-                            <div className="col">
-                                <label >Active</label>
+                        <div className="row">
+                            <div className="col-6 mb-3">
+                                <label >Experience</label>
+                                <div className="input-group">
+                                    <input type="text"
+                                        className={`form-control ${errors.experience ? 'border-danger' : ''}`}
+                                        placeholder="Enter Experience"
+                                        {...register(`experience`, {
+                                            required: 'Experience is required'
+                                        })}
+                                    />
+                                </div>
                             </div>
-                            <label class="ms-switch">
-                                <input type="checkbox"
-                                    {...register('isActive')}
+                            <div className="col-6 mb-3">
+                                <label >Qualifications</label>
+                                <div className="input-group">
+                                    <input type="text"
+                                        className={`form-control ${errors.qualification ? 'border-danger' : ''}`}
+                                        placeholder="Enter Qualifications"
+                                        {...register(`qualification`, {
+                                            required: 'Qualification is required'
+                                        })}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6 mb-3">
+                            <label >Select Specialization</label>
+                            <div className="">
+                                <Controller
+                                    control={control}
+                                    name="specialization"
+                                    rules={{ required: 'Query must be select' }}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            isMulti={false}
+                                            options={specialization}
+                                            getOptionLabel={({ name }) => name}
+                                            getOptionValue={({ id }) => id}
+                                            className={`form-control p-0 ${errors.specialization ? 'border-danger' : ''}`}
+                                            classNamePrefix="select"
+                                        />
+                                    )}
                                 />
-                                <span class="ms-switch-slider round"></span>
-                            </label>
+                            </div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-light" onClick={() => setEditModal(false)}>Cancel</button>

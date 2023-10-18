@@ -101,7 +101,9 @@ const getAppointments = async (body, user) => {
 
 const editDoctor = async (body, user, file) => {
   try {
-    // body = JSON.parse(body?.data);
+    body = JSON.parse(body?.data);
+
+    console.log( '><><><><', body )
 
     let userObj = {
       name: body?.name,
