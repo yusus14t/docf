@@ -101,7 +101,7 @@ function Homeopathy() {
                       <div className="clinic-details d-flex flex-row justify-content-between">
                         <div className="mt-2">
                           <h6 className="clinic-specialization text-disabled">
-                            {"Dermatologist"}
+                            {"Homeopathy"}
                           </h6>
                           <div className="contact-info">
                             <h6 className="text-disabled mt-1">

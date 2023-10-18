@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
-import { userRoutes as userRouteConstant } from "../constants/constant";
+import { SEO, userRoutes as userRouteConstant } from "../constants/constant";
 
 import Hospitals from "../components/webcomponents/Hospital/Hospitals";
 import { userInfo } from "../constants/utils";
@@ -12,6 +12,7 @@ import Payment_Success from "../components/common-components/Payment_Success";
 import Payment_Failed from "../components/common-components/Payment_Failed";
 import PricingTable from '../components/common-components/PricingTable'
 import Pricing from "../components/webcomponents/Pricing";
+import AddHead from "../components/seo/AddHead";
 
 const ClinicDetail = lazy(() => import( '../components/webcomponents/Clinic_Details'))
 const Doctors = lazy(() => import( '../components/webcomponents/doctor/Doctors'))
@@ -33,7 +34,7 @@ const Homeopathy =lazy(()=> import('../components/webcomponents/Homeopathy'));
 const getUserType = () => userInfo?.userType;
 
 const COMMON_ROUTE = [
-  { path: "/", element: <Home /> },
+  { path: "/", element: <AddHead seoContent={SEO.HOMEPAGE} > <Home /></AddHead> },
   { path: "/doctor-detail", element: <Detail /> },
   { path: "/department-login", element: <DepartmentSignUp /> },
   { path: "/doctors", element: <Doctors /> },
