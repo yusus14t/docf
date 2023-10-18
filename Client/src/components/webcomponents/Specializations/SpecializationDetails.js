@@ -32,7 +32,7 @@ const SpecializationDetails = () => {
    
   const getAllClinics = async () => {
     try {
-      let { data } = await axiosInstance.get("/all-clinics", { params: { filter: {specialization: specialization?.name }, isClinic: true }, ...getAuthHeader()});
+      let { data } = await axiosInstance.get("/all-clinics", { params: { filter: {specialization: specialization?.id }, isClinic: true }, ...getAuthHeader()});
       setClinics(data?.clinics);
     } catch (error) {
       console.error(error);
@@ -41,7 +41,7 @@ const SpecializationDetails = () => {
 
   const getAllHospitals = async () => {
     try {
-      let { data } = await axiosInstance.get("/hospitals", { params: { filter: {specialization: specialization?.name }}, ...getAuthHeader()});
+      let { data } = await axiosInstance.get("/hospitals", { params: { filter: {specialization: specialization?.id }}, ...getAuthHeader()});
       setHospitals( data?.organization );
     } catch (error) {
       console.error(error);
@@ -199,7 +199,7 @@ const SpecializationDetails = () => {
                           <div className="clinic-details d-flex flex-row justify-content-between">
                             <div className="mt-2">
                               <h6 className="clinic-specialization text-disabled">
-                                {"Dermatologist"}
+                              {clinic?.specialization.length ? clinic.specialization[0].name : "-"}
                               </h6>
                               <div className="contact-info">
                                 <h6 className="text-disabled mt-1">
