@@ -3,7 +3,7 @@ const specializationModel = require("../models/specialization-model");
 module.exports.specialization = {
   data: [
     {
-      id: "PUMONOLOGIST",
+      id: "PULMONOLOGIST",
       name: "Pulnomologist (LUNGS)",
       // nickname: "(LUNGS)",
       image: "https://imaginr.erahamtech.com/uploads/spe_img/punomo.jpg",

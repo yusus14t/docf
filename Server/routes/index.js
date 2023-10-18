@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express();
+const sitemap = require('../sitemap')
 const commonController = require(`../controllers/common-controller`);
 const doctorContoller = require(`../controllers/doctor-controller`);
 const superAdminController = require('../controllers/superadmin-controller')
@@ -56,6 +57,8 @@ router.get("/services", commonController.getServices)
 
 // stream: Event Driven  
 router.get('/stream', EventHandler )
+
+router.get("/sitemap.xml", sitemap.sitmaps);
 
 
 router.get('/ping', (req, res) => {
