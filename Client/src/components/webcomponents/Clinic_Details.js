@@ -147,7 +147,7 @@ function Detail() {
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {/* {clinicDetail?.doctor?.name}
                     {clinicDetail?.name} */}
-                  DR {clinicDetail.doctor?.name}
+                  {clinicDetail.doctor?.name}
                 </h4>
                 {clinicDetail.organizationType !== "Clinic" && (
                   <>

@@ -23,7 +23,7 @@ const DepartmentCard = ({ departments }) => {
                     <div className="departments-details ">
                       <h5 className="mb-0 mt-0 department-card-name">
                         <h5 className="mb-0">
-                          <span className="text-dark mb-0">DR</span> {department?.organizationId?.doctor?.name}
+                          <span className="text-dark mb-0"></span> {department?.organizationId?.doctor?.name}
                         </h5>
                         <span style={{fontSize:"15px"}} className="mb-0">Dept. &nbsp;{department?.organizationId?.name}</span>
                       </h5>

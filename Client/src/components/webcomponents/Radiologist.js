@@ -91,7 +91,7 @@ getAllClinics()
         <div className="row">
           {clinics?.length > 0 &&
             clinics.map((clinic, key) => (
-              <div className="col-lg-4 col-md-4 mcard" key={key}>
+              <div className="col-lg-4 col-md-6  mcard" key={key}>
                 {console.log(clinic)}
                 <Link
                   to={
