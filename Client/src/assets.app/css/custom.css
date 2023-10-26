@@ -3,7 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+.specialZation-icon{
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+}
 .card-gradient-custom1 {
   background: rgb(0, 118, 215);
   background: linear-gradient(
@@ -231,7 +235,8 @@
   padding: 2px;
 }
 .m-container {
-  height: 100vh;
+    height: auto;
+    overflow: scroll;
 }
 .m-footer {
   text-align: center;

@@ -26,7 +26,8 @@ const Card = ({source, specializations}) => {
                       icon={faHeart}
                     /> */}
                     <img
-                      style={{ width: "85px", height: "85px", borderRadius:"50%" }}
+                    className="specialZation-icon"
+                      // style={{ width: "85px", height: "85px", borderRadius:"50%" }}
                       src={specialisation?.icon}
                       alt=""
                     />

@@ -277,7 +277,7 @@ const SpecializationDetails = () => {
                                   : clinic.specialization[0]?.name || "-"}
                               </h6>
                               <div className="contact-info">
-                                <h6 className="text-disabled mt-1">
+                                <h6 className="text-disabled mt-1 clinic-cont">
                                   Contact Info :
                                 </h6>
                                 <div>
@@ -285,7 +285,7 @@ const SpecializationDetails = () => {
                                     className="clinic-icon"
                                     icon={faPhone}
                                   />
-                                  <p className="d-inline-block ml-2 mb-0">
+                                  <p className="d-inline-block ml-2 mb-0 clinic-phne">
                                     {clinic?.phone ? "+91" + clinic?.phone : ""}
                                   </p>
                                 </div>
