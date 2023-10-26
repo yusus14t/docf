@@ -17,6 +17,7 @@ module.exports.setting = {
                 organization: 'clinic',
                 price: 1000,
                 discount: 0,
+                isDefault: true
             }
         },
         {
@@ -26,6 +27,7 @@ module.exports.setting = {
                 organization: 'clinic',
                 price: 2500,
                 discount: 500,
+                isDefault: true
             }
         },
         {
@@ -35,6 +37,7 @@ module.exports.setting = {
                 organization: 'clinic',
                 price: 5000,
                 discount: 1000,
+                isDefault: true
             }
         },
         {
@@ -44,6 +47,7 @@ module.exports.setting = {
                 organization: 'clinic',
                 price: 10000,
                 discount: 2000,
+                isDefault: true
             }
         },
         {
@@ -53,6 +57,7 @@ module.exports.setting = {
                 organization: 'hospital',
                 price: 2000,
                 discount: 0,
+                isDefault: true
             }
         },
         {
@@ -62,6 +67,7 @@ module.exports.setting = {
                 organization: 'hospital',
                 price: 5500,
                 discount: 500,
+                isDefault: true
             }
         },
         {
@@ -71,6 +77,7 @@ module.exports.setting = {
                 organization: 'hospital',
                 price: 11000,
                 discount: 1000,
+                isDefault: true
             }
         },
         {
@@ -80,6 +87,7 @@ module.exports.setting = {
                 organization: 'hospital',
                 price: 22000,
                 discount: 2000,
+                isDefault: true
             }
         },
         {
@@ -87,6 +95,7 @@ module.exports.setting = {
             data: {
                 organization: 'patient',
                 price: 10,
+                isDefault: true
             }
         },
     ],

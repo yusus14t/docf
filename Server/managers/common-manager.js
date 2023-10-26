@@ -485,7 +485,8 @@ const clinicDetails = async (body) => {
           services: 1,
           timing: 1,
           organizationType: 1,
-          room: 1
+          room: 1,
+          bookingStatus: 1,
         },
       },
     ]);

@@ -124,6 +124,12 @@ const anonymousAppointment = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const onlineBookingStatus = async ( req, res ) => {
+    DoctorManager.onlineBookingStatus( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     getAppointments,
     editDoctor,
@@ -145,5 +151,6 @@ module.exports = {
     hospitalSpecialization,
     addSpecialization,
     getClinics,
-    anonymousAppointment
+    anonymousAppointment,
+    onlineBookingStatus,
 }
