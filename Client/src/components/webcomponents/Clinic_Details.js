@@ -6,8 +6,8 @@ import Appointment from "../common-components/Appointment/Appointment";
 import events from "../../events";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarPlus, faEnvelope, faMapMarker,  faPhone, } from "@fortawesome/free-solid-svg-icons";
-import NO_PHOTO from '../../assets.app/images/no-photo.png'
-import { FULLDAY, userRoutes } from "../../constants/constant";
+import { FULLDAY } from "../../constants/constant";
+
 
 function Detail() {
   const params = useParams();
@@ -16,6 +16,7 @@ function Detail() {
   const [token, setToken] = useState('00')
   const [isOpen, setIsOpen] = useState(false);
   const [timing, setTiming] = useState([])
+  const [ isBookingStatus, setIsBookingStatus ] = useState(false)
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [notices, setNotices] = useState([])
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function Detail() {
     events.addEventListener('re-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) )) 
     events.addEventListener('new-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) ))
     events.addEventListener('status', ( event ) => statusEventHandler( JSON.parse(event.data) )) 
+    events.addEventListener('booking-status', ( event ) => bookingEventHandler( JSON.parse(event.data) )) 
 
   }, []);
 
@@ -38,6 +40,10 @@ function Detail() {
   const statusEventHandler = ( event ) => {
     getClinicDetail()
     getWaitingList()
+  }
+
+  const bookingEventHandler = ( status ) => {
+    setIsBookingStatus( status.bookingStatus )
   }
 
 
@@ -56,6 +62,8 @@ function Detail() {
               detail?.token || '00'
 
       setToken( token )
+
+      setIsBookingStatus( data.detail?.bookingStatus )
     } catch (error) {
       console.error(error);
     }
@@ -142,7 +150,6 @@ function Detail() {
                 }
                 alt=""
               /> */}
-              {console.log(clinicDetail)}
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
                   {/* {clinicDetail?.doctor?.name}
@@ -182,18 +189,17 @@ function Detail() {
             </div>
           </div>
         </div>
-
         {(userInfo?.userType === "PT" || !userInfo) && (
           <div
             className="bookappoint cursor-pointer"
-            onClick={() => handleAppointmentModal()}
+            onClick={() =>  isBookingStatus ?  handleAppointmentModal() : null }
           >
             <FontAwesomeIcon
               className="bookappointment-icon"
               icon={faCalendarPlus}
             />
 
-            <h5 className="p-2">Book Appointment</h5>
+            <h5 className="p-2">{ isBookingStatus ? 'Book Appointment' : 'Booking Closed' }</h5>
           </div>
         )}
 

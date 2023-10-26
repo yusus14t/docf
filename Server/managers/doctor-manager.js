@@ -931,6 +931,19 @@ const anonymousAppointment = async (body, user) => {
   }
 };
 
+const onlineBookingStatus = async (body, user) => {
+  try {
+
+    await OrganizationModel.updateOne({ _id: user.organizationId }, body )
+    eventEmitter.emit("booking-status", body)
+
+    return Success({ message: "Specialization created succesfully."});
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getAppointments,
   editDoctor,
@@ -953,4 +966,5 @@ module.exports = {
   addSpecialization,
   getClinics,
   anonymousAppointment,
+  onlineBookingStatus,
 };

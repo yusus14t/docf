@@ -54,7 +54,7 @@ const organizationSchema = new Schema({
         isComplete: { type: Boolean },
     },
     createdBy: { type: Schema.Types.ObjectId },
-
+    bookingStatus: { type: Boolean }, 
 },{ timestamps:  true })
 
 module.exports = model('organization', organizationSchema)
