@@ -123,6 +123,20 @@ const deleteCustomService = async (req, res) => {
 
 }
 
+const addNewPlan = async (req, res) => {
+    superAdminManager.addNewPlan(req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+
+}
+
+const deletePlan = async (req, res) => {
+    superAdminManager.deletePlan(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+
+}
+
 module.exports = {
   getProfile,
   analytics,
@@ -144,4 +158,6 @@ module.exports = {
   deleteCustomSpecialization,
   createCustomService,
   deleteCustomService,
+  addNewPlan,
+  deletePlan,
 };
