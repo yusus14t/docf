@@ -22,5 +22,7 @@ router.post('/create-specialization', superAdminController.createCustomSpecializ
 router.delete('/specialization/:id', superAdminController.deleteCustomSpecialization)
 router.post('/create-service', superAdminController.createCustomService)
 router.delete('/service/:id', superAdminController.deleteCustomService)
+router.post('/new-plan', superAdminController.addNewPlan)
+router.delete('/plan/:id', superAdminController.deletePlan)
 
 module.exports = router;

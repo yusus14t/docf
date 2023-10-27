@@ -38,4 +38,8 @@ eventEmitter.on("status", (data) =>
     sendResponse(data, "status")
 );
 
+eventEmitter.on("booking-status", (data) =>
+    sendResponse(data, "booking-status")
+);
+
 

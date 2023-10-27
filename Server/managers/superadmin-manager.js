@@ -362,6 +362,39 @@ const deleteCustomService = async ( body ) => {
     }
 }
 
+const addNewPlan = async ( body ) => {
+    try {
+        let type = `DAY_${body.days}`
+        await settingModel.create({ 
+            id: 'PAYMENT', 
+            data: { 
+                organization: body.organization, 
+                type,
+                price: body.price,
+                discount: '0',
+                days: body.days,
+                isDefault: false 
+            }
+        })
+
+        return Success({ message: 'Plan successfully created' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const deletePlan = async ( params ) => {
+    try {
+        console.log(params._id)
+        await settingModel.deleteOne({ _id: ObjectId(params._id) })
+
+        return Success({ message: 'plan successfully deleted' });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
 
 module.exports = {
   getProfile,
@@ -384,4 +417,6 @@ module.exports = {
   deleteCustomSpecialization,
   createCustomService,
   deleteCustomService,
+  addNewPlan,
+  deletePlan
 };
