@@ -301,7 +301,7 @@ function Detail() {
                 </div>
               </div>
               <div className="text-center">
-                <div className="pr-2 ">
+                <div className="pr-2 m-text">
                   <table className="table  table-bordered">
                     <thead className="thead-light">
                       {clinicDetail?.organizationType === "Clinic" ? (

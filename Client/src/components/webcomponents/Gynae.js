@@ -123,7 +123,6 @@ const Gynae = () => {
           <div
             className="hero-banner"
             style={{
-              backgroundColor: "blue",
               backgroundImage: `url(${findImage(WEBSITE_IMAGE.GYNAE_BANNER)})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
@@ -247,7 +246,7 @@ const Gynae = () => {
         </div>
         {/* <h3>Our Partners</h3> */}
 
-        <div className="partner row">
+        <div className="partner ">
           <div className="row m-auto">
             <div className="container">
               <h3 className="text-center underline">

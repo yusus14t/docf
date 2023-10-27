@@ -76,8 +76,8 @@ function WebSidebar({ isOpen, setIsOpen }) {
             )}
             {/* <Link>logout</Link> */}
           </div>
-          <div className="">
-            <ul className="m-menu">
+          <div className="height-auto ">
+            <ul className="m-menu ">
               {MENU_ITEM.map((item, key) => (
                 <li
                   className="m-menu-item w-100 pe-3"

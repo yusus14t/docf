@@ -50,7 +50,6 @@ function Homeopathy() {
         <div
           className="hero-banner"
           style={{
-            backgroundColor: "blue",
             backgroundImage: `url(${findImage(WEBSITE_IMAGE.HOMEOPATHY_BANNER)})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",

@@ -421,6 +421,9 @@
     top: 0px;
     margin-left: 10px;
   }
+  .m-text{
+    font-size: 10px;
+  }
   .clinic-detail-drName {
     font-size: medium;
     margin-left: 5px;
@@ -432,7 +435,7 @@
     margin-top: 75px;
   }
   .clinic-footer-address {
-    width: 200px;
+    width: 100%;
   }
   .clinic-detail-img {
     height: 100px;
@@ -475,6 +478,7 @@
   }
   /*slider*/
   .loginContainer {
+    min-height: 500px;
     background-image: none;
     background-color: rgb(1, 1, 1);
   }
