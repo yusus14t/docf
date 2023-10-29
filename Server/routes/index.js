@@ -34,6 +34,7 @@ router.get('/user-by-email', commonController.getUserByEmail);
 router.get('/all-clinics', commonController.getAllClinics);
 router.get('/clinic-detail', commonController.clinicDetails);
 router.get('/waiting-list/:id', commonController.waitingList);
+router.get("/unreached-list/:id", commonController.unreachedList);
 router.get("/all-doctors", doctorContoller.getAllDoctors);
 router.get("/get-specializations", commonController.allSpecializations);
 router.get("/specialization/:id", commonController.oneSpecialization);

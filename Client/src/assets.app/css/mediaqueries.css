@@ -16,6 +16,10 @@
     height: 75px;
   } */
   
+  .mini-menu{
+    position: absolute;
+    top: 115px;
+  }
   .department-card{
 
   }
@@ -393,10 +397,10 @@
   }
   .current-clicnic-token {
     height: 60px;
-    width: 60px;
+    width: 90px;
     font-size: 16px;
-
-    margin: 40px 0 0 90px;
+    text-align: center;
+    margin: 40px 0 0 35%;
   }
   .current-clicnic-token h1 {
     /* margin: 7px !important; */
@@ -416,6 +420,8 @@
   .clinicbanner {
     height: 200px;
     /* margin-top: 80px; */
+    position: absolute;
+    top: 110px;
   }
   .clinic-detail-img-container {
     top: 0px;
@@ -798,7 +804,6 @@
     height: 60px;
     width: 60px;
     font-size: 16px;
-
     margin: 40px 0 0 90px;
   }
   .current-clicnic-token h1 {
@@ -889,6 +894,9 @@
     width: 11rem;
 
   }
+  .current-clicnic-token{
+    margin-left: 20%;
+  }
   .Dr-container{
     width: 350px;
     height: 250px;
@@ -941,6 +949,9 @@
   /* body {
     background-color: green;
   } */
+
+  
+  
   .fixed,
   .side-nav.fixed {
     margin-top: 58px;
@@ -963,7 +974,7 @@
     width: 90%;
   }
   .gynae-services-card {
-    width: 310px;
+    width: 270px;
   }
   .dr-spelialization {
     width: 150px;
@@ -1004,6 +1015,8 @@
   body {
     background-color: white;
   }
+  
+  
   .clinic-title {
     font-size: 15px;
   }

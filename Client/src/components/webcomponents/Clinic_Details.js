@@ -13,6 +13,7 @@ function Detail() {
   const params = useParams();
   const [clinicDetail, setClinicDetail] = useState({});
   const [waitingList, setWaitingList] = useState([]);
+  const [unreachedList, setUnreachedList] = useState([]);
   const [token, setToken] = useState('00')
   const [isOpen, setIsOpen] = useState(false);
   const [timing, setTiming] = useState([])
@@ -25,6 +26,7 @@ function Detail() {
     getWaitingList();
     getClinicDetail();
     getNotices();
+    getUnreachedList();
 
     events.addEventListener('re-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) )) 
     events.addEventListener('new-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) ))
@@ -59,7 +61,7 @@ function Detail() {
       let token = '00'
       token = detail?.token < 10  ? 
               `0${detail?.token}` : 
-              detail?.token || '00'
+              detail?.token || '000'
 
       setToken( token )
 
@@ -79,6 +81,18 @@ function Detail() {
     }
   };
 
+  const getUnreachedList = async () => {
+    try {
+      let { data } = await axiosInstance.get(
+        `/unreached-list/${params.id}`,
+        getAuthHeader()
+      );
+
+      setUnreachedList(data?.unreached);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleAppointmentModal = () => {
     if (!userInfo)
       navigate("/login", {

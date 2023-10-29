@@ -372,7 +372,7 @@ const reAppointment = async (body) => {
   try {
     let appointment = await AppointmentModel.findOneAndUpdate(
       { _id: ObjectId(body?._id) },
-      { status: "waiting" }
+      { status: "reached" }
     ).populate("userId", "name address phone");
 
     let Obj = {
@@ -381,7 +381,7 @@ const reAppointment = async (body) => {
       _id: appointment._id,
     };
 
-    eventEmitter.emit("re-appointment", { event: "re-appointment", data: Obj });
+    // eventEmitter.emit("re-appointment", { event: "re-appointment", data: Obj });
 
     return Success({ ...body, message: "Re-appointment successfully" });
   } catch (error) {

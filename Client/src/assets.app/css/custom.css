@@ -990,12 +990,12 @@ input::-webkit-inner-spin-button {
   padding: 15px;
 }
 .current-clicnic-token {
-  width: 100px;
+  width: 135px;
   height: 100px;
   color: white;
   border-radius: 12px;
   background-color: #0076d7;
-  margin: 5% 0 200px 60%;
+  margin: 5% 0 200px 48% !important;
 }
 .bookappoint {
   z-index: 999;

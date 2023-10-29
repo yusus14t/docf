@@ -558,6 +558,50 @@ const waitingList = async (body, user) => {
   }
 };
 
+const unreachedList = async (body, user) => {
+  try {
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let appointment = await AppointmentModel.aggregate([
+      {
+        $match: {
+          departmentId: ObjectId(body.id),
+          isPaid: true,
+          createdAt: {
+            $gte: today,
+          },
+          status: "unreached",
+        },
+      },
+      {
+        $sort: { updatedAt: 1 },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $project: {
+          token: 1,
+          name: "$user.name",
+          phone: "$user.phone",
+          address: "$user.address",
+        },
+      },
+    ]);
+
+    return Success({ unreached: appointment });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const setUserType = async (body) => {
   try {
 
@@ -1022,4 +1066,5 @@ module.exports = {
   payment,
   getTransaction,
   getServices,
+  unreachedList,
 };
