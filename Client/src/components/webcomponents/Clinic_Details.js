@@ -20,6 +20,8 @@ function Detail() {
   const [ isBookingStatus, setIsBookingStatus ] = useState(false)
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [notices, setNotices] = useState([])
+  const [activeTab, setActiveTab] = useState(0);
+
   const navigate = useNavigate();
  
   useEffect(() => {
@@ -101,6 +103,10 @@ function Detail() {
     setIsOpen(true);
   };
 
+
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
   const getNotices = async () => {
     try {
       let { data } = await axiosInstance.get(`/notice/${params.id}`)
@@ -206,14 +212,16 @@ function Detail() {
         {(userInfo?.userType === "PT" || !userInfo) && (
           <div
             className="bookappoint cursor-pointer"
-            onClick={() =>  isBookingStatus ?  handleAppointmentModal() : null }
+            onClick={() => (isBookingStatus ? handleAppointmentModal() : null)}
           >
             <FontAwesomeIcon
               className="bookappointment-icon"
               icon={faCalendarPlus}
             />
 
-            <h5 className="p-2">{ isBookingStatus ? 'Book Appointment' : 'Booking Closed' }</h5>
+            <h5 className="p-2">
+              {isBookingStatus ? "Book Appointment" : "Booking Closed"}
+            </h5>
           </div>
         )}
 
@@ -222,54 +230,126 @@ function Detail() {
             {/* WAITING LIST */}
             <div className="col-md-6 ">
               <div className="wating-area-clinic">
-                <h4 className="text-center mb-3">Waiting List</h4>
-                <div className="token-list-container ">
-                  {waitingList?.length ? (
-                    <ul className={`token-list $`}>
-                      {waitingList.map((list, key) => (
-                        <li className=" p-2" key={key}>
-                          <div className="mt-auto">
-                            <div
-                              className={`token-list-item d-flex flex-row justify-content-around ${
-                                list?.token == parseInt(token)
-                                  ? "token-list-active"
-                                  : ""
-                              }`}
-                            >
+                <div className="d-flex justify-content-center waitinglistContainer">
+                  <span className="text-center bg-success p-2">
+                    <button
+                      onClick={() => handleTabClick(0)}
+                      className={`btn position-inline p-2 btn-primary waitinglist  ${
+                        activeTab === 0 ? "activeList" : ""
+                      }`}
+                    >
+                      Waiting List
+                    </button>
+                  </span>
+                  <span className="text-center bg-success p-2">
+                    <button
+                      onClick={() => handleTabClick(1)}
+                      className={`btn position-inline p-2 btn-primary waitinglist ${
+                        activeTab === 1 ? "activeList" : ""
+                      }`}
+                    >
+                      Unreached List
+                    </button>
+                  </span>
+                </div>
+                {activeTab === 0 && (
+                  <div className="token-list-container  rounded ">
+                    {waitingList?.length ? (
+                      <ul className={`token-list $`}>
+                        {waitingList.map((list, key) => (
+                          <li className=" p-2" key={key}>
+                            <div className="mt-auto">
                               <div
-                                className={`token ${
+                                className={`token-list-item d-flex flex-row justify-content-around ${
                                   list?.token == parseInt(token)
-                                    ? "token-active"
+                                    ? "token-list-active"
                                     : ""
                                 }`}
                               >
-                                <h4 className="token-list-number">
-                                  {list?.token}
-                                </h4>
-                              </div>
-                              <div className="token-list-detail">
-                                <h4 className="list-patient-name mb-1">
-                                  {list?.name}
-                                </h4>
-                                <p className="mb-0 list-mobile-no">
-                                  Mobile Number : +91{" "}
-                                  {list?.phone
-                                    ? `xxx-xxx-${list?.phone.slice(-4)}`
-                                    : "----------"}
-                                </p>
-                                <p className="mb-0 list-address">
-                                  Address : {list?.address}
-                                </p>
+                                <div
+                                  className={`token ${
+                                    list?.token == parseInt(token)
+                                      ? "token-active"
+                                      : ""
+                                  }`}
+                                >
+                                  <h4 className="token-list-number">
+                                    {list?.token}
+                                  </h4>
+                                </div>
+                                <div className="token-list-detail">
+                                  <h4 className="list-patient-name mb-1">
+                                    {list?.name}
+                                  </h4>
+                                  <p className="mb-0 list-mobile-no">
+                                    Mobile Number : +91{" "}
+                                    {list?.phone
+                                      ? `xxx-xxx-${list?.phone.slice(-4)}`
+                                      : "----------"}
+                                  </p>
+                                  <p className="mb-0 list-address">
+                                    Address : {list?.address}
+                                  </p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <span>No Data</span>
-                  )}
-                </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span>No Data</span>
+                    )}
+                  </div>
+                )}
+                {activeTab === 1 && (
+                  <div className="token-list-container ">
+                    {unreachedList?.length ? (
+                      <ul className={`token-list $`}>
+                        {unreachedList.map((list, key) => (
+                          <li className=" p-2" key={key}>
+                            <div className="mt-auto">
+                              <div
+                                className={`token-list-item d-flex flex-row justify-content-around ${
+                                  list?.token == parseInt(token)
+                                    ? "token-list-active"
+                                    : ""
+                                }`}
+                              >
+                                <div
+                                  className={`token ${
+                                    list?.token == parseInt(token)
+                                      ? "token-active"
+                                      : ""
+                                  }`}
+                                >
+                                  <h4 className="token-list-number">
+                                    {list?.token}
+                                  </h4>
+                                </div>
+                                <div className="token-list-detail">
+                                  <h4 className="list-patient-name mb-1">
+                                    {list?.name}
+                                  </h4>
+                                  <p className="mb-0 list-mobile-no">
+                                    Mobile Number : +91{" "}
+                                    {list?.phone
+                                      ? `xxx-xxx-${list?.phone.slice(-4)}`
+                                      : "----------"}
+                                  </p>
+                                  <p className="mb-0 list-address">
+                                    Address : {list?.address}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span>No Data</span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 

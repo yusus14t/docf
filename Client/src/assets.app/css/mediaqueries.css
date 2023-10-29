@@ -15,7 +15,10 @@
   /* .box{
     height: 75px;
   } */
-  
+  .waitinglistContainer{
+  margin-top: 112px;
+  position: relative;
+}
   .mini-menu{
     position: absolute;
     top: 115px;
@@ -136,7 +139,7 @@
     width: 100% !important;
   }
   .seacrh-bar-container {
-    z-index: 1 !important;
+    z-index: 2 !important;
     height: 45px;
     /* margin-top: 15px; */
 
@@ -391,6 +394,9 @@
   .clinic-detail-item {
     font-size: 15px !important;
   }
+  .waitinglist{
+    margin: 0 16px;
+  }
   .clinic-detail-timming {
     margin-left: 0;
     margin-top: 20px;
@@ -400,7 +406,7 @@
     width: 90px;
     font-size: 16px;
     text-align: center;
-    margin: 40px 0 0 35%;
+    margin: 40px 0 0 35% !important;
   }
   .current-clicnic-token h1 {
     /* margin: 7px !important; */

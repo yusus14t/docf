@@ -8,6 +8,18 @@
   height: 85px;
   border-radius: 50%;
 }
+
+.activeList{
+  background-color: #00bf63 !important;
+  /* font-size: 28px; */
+}
+
+.waitinglist{
+  z-index: 1;
+  position: relative;
+  margin-left: 50px;
+  /* font-size: 28px; */
+}
 .card-gradient-custom1 {
   background: rgb(0, 118, 215);
   background: linear-gradient(
