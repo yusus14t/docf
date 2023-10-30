@@ -42,12 +42,12 @@ function Detail() {
   }
 
   let reAppointmentHandler = ( event ) => {
-    getUnreachedList()
   }
-
+  
   const statusEventHandler = ( event ) => {
     getClinicDetail()
     getWaitingList()
+    getUnreachedList()
   }
 
   const bookingEventHandler = ( status ) => {
