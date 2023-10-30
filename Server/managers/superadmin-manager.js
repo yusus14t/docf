@@ -386,7 +386,7 @@ const addNewPlan = async ( body ) => {
 
 const deletePlan = async ( params ) => {
     try {
-        await settingModel.deleteOne({ _id: ObjectId(params._id) })
+        await settingModel.deleteOne({ _id: ObjectId(params.id) })
 
         return Success({ message: 'plan successfully deleted' });
     } catch ( error ) { 
