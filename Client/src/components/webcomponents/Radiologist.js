@@ -56,7 +56,7 @@ getAllClinics()
       <div className="box bg-light"></div>
       <div
         
-        className=" mini-menu position-fixed w-100 bg-light  "
+        className=" mini-menu  w-100 bg-light  "
       >
         {console.log("clini", clinics)}
         <ul className="d-flex mb-0 p-2 overflow-auto">

@@ -3649,9 +3649,9 @@ input:checked+.ms-switch-slider.ms-switch-dark {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color:#112C2F;
-  border-color:#112C2F;
+  color: #fff !important;
+  background-color:#112C2F !important;
+  border-color:#112C2F !important;
 }
 
 .btn-white {

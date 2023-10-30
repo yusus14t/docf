@@ -149,9 +149,9 @@ const getAllDoctors = async (body, user) => {
 
       departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
       query["organizationId"] = { $in: departmentIds };
-    } else if (user && user.userType !== "SA") {
-      query["createdBy"] = user._id;
-    }
+    } else if (user && !["SA", 'AD'].includes(user.userType)) {
+             query["createdBy"] = user._id;
+           }
 
     if (body?.source === "doctor-page") {
       let paidDepartmentIds = await OrganizationModel.find(
@@ -372,7 +372,7 @@ const reAppointment = async (body) => {
   try {
     let appointment = await AppointmentModel.findOneAndUpdate(
       { _id: ObjectId(body?._id) },
-      { status: "waiting" }
+      { status: "reached" }
     ).populate("userId", "name address phone");
 
     let Obj = {
@@ -381,7 +381,7 @@ const reAppointment = async (body) => {
       _id: appointment._id,
     };
 
-    eventEmitter.emit("re-appointment", { event: "re-appointment", data: Obj });
+    eventEmitter.emit("status", { event: "status", data: Obj });
 
     return Success({ ...body, message: "Re-appointment successfully" });
   } catch (error) {
@@ -638,7 +638,7 @@ const setAppointmentStatus = async (body) => {
 
     eventEmitter.emit("status", {
       event: "status",
-      data: { appointmentId: body._id },
+      data: { appointmentId: body },
     });
 
     return Success({ ...body, message: "Status update successfully" });
@@ -718,7 +718,7 @@ const getDepartments = async (body, user) => {
       userType: "DP",
     };
 
-    if (user.userType === "SA") query = { userType: "DP" };
+    if (["SA", 'AD'].includes(user.userType)) query = { userType: "DP" };
 
     let organizations = await UserModel.find(query).populate("organizationId").sort({ createdAt: -1 });
     return Success({ organizations });
@@ -733,11 +733,11 @@ const getClinics = async (body, user) => {
 
     if (user?.userType === "HL") {
       query = { hospitalId: user?.organizationId, userType: "DP" };
-    } else if (user.userType === "SA") {
-      query = { userType: "CL" };
-    } else if (!["MR"].includes(user?.userType)) {
-      query = { organizationId: body?.organizationId };
-    }
+    } else if (["SA", 'AD'].includes(user.userType)) {
+             query = { userType: "CL" };
+           } else if (!["MR"].includes(user?.userType)) {
+             query = { organizationId: body?.organizationId };
+           }
 
     let departments = await UserModel.find(query)
       .populate("organizationId", "photo name room specialization")

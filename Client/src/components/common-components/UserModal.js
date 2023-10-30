@@ -103,7 +103,7 @@ const UserModal = ({isOpen, setIsOpen, appointmentId, refresh = () => {}}) => {
           { appointment.status !== 'unreached' ? <div className='d-flex float-right' >
             <button type="button" className="btn btn-danger shadow-none mx-2"  onClick={() => patientStatus('unreached')}>Unreached</button>
             <button type="button" className="btn btn-primary shadow-none mx-2" onClick={() => patientStatus('reached')}>Reached</button>
-          </div> : <button type="button" className="btn btn-primary shadow-none mx-2" onClick={() => reAppointment()}>Re-Appointment</button>
+          </div> : <button type="button" className="btn btn-primary shadow-none mx-2" onClick={() => reAppointment()}>Reached</button>
           }
         </div>
       </Modal>

@@ -137,6 +137,11 @@ const waitingList = async ( req, res ) => {
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
+const unreachedList = async ( req, res ) => {
+    commonManager.unreachedList( req.params, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
 
 const setUserType = async ( req, res ) => {
     commonManager.setUserType( req.body, req.user )
@@ -263,4 +268,5 @@ module.exports = {
     payment,
     getTransaction,
     getServices,
+    unreachedList,
 }
