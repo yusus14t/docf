@@ -6,7 +6,7 @@ const websiteImageModel = require('../models/website-image-model');
 const settingModel = require('../models/setting-model');
 const specializationModel = require('../models/specialization-model');
 const serviceModel = require('../models/service-model');
-
+const ObjectId = require('mongoose').Types.ObjectId
 
 const getProfile = async ( body ) => {
     try {
@@ -386,7 +386,6 @@ const addNewPlan = async ( body ) => {
 
 const deletePlan = async ( params ) => {
     try {
-        console.log(params._id)
         await settingModel.deleteOne({ _id: ObjectId(params._id) })
 
         return Success({ message: 'plan successfully deleted' });
