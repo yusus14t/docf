@@ -381,7 +381,7 @@ const reAppointment = async (body) => {
       _id: appointment._id,
     };
 
-    // eventEmitter.emit("re-appointment", { event: "re-appointment", data: Obj });
+    eventEmitter.emit("status", { event: "status", data: Obj });
 
     return Success({ ...body, message: "Re-appointment successfully" });
   } catch (error) {
@@ -638,7 +638,7 @@ const setAppointmentStatus = async (body) => {
 
     eventEmitter.emit("status", {
       event: "status",
-      data: { appointmentId: body._id },
+      data: { appointmentId: body },
     });
 
     return Success({ ...body, message: "Status update successfully" });

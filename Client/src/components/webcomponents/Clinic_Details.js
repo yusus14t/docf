@@ -30,7 +30,7 @@ function Detail() {
     getNotices();
     getUnreachedList();
 
-    events.addEventListener('re-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) )) 
+    events.addEventListener('re-appointment', ( event ) => reAppointmentHandler( JSON.parse(event.data) )) 
     events.addEventListener('new-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) ))
     events.addEventListener('status', ( event ) => statusEventHandler( JSON.parse(event.data) )) 
     events.addEventListener('booking-status', ( event ) => bookingEventHandler( JSON.parse(event.data) )) 
@@ -41,9 +41,13 @@ function Detail() {
     getWaitingList()
   }
 
+  let reAppointmentHandler = ( event ) => {
+  }
+  
   const statusEventHandler = ( event ) => {
     getClinicDetail()
     getWaitingList()
+    getUnreachedList()
   }
 
   const bookingEventHandler = ( status ) => {
