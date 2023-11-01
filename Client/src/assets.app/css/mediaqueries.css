@@ -306,13 +306,13 @@
   }
   
   .token {
-    margin: 4px 0 0 -40px;
+    margin: 4px 0 0 -35px;
     height: 50px;
     width: 50px;
   }
   .token-list-number {
-    font-size: 30px;
-    margin-top: 6px;
+    font-size: 23px;
+    margin-top: 10px;
   }
   .token-list-detail {
     margin-left: -50px;
@@ -501,7 +501,9 @@
   /* body {
     background-color: yellow;
   } */
-
+  .waitinglist {
+    z-index: 1;
+  }
   .Dr-container{
     height: 200px;
   }
@@ -571,7 +573,7 @@
     width: 100% !important;
   }
   .seacrh-bar-container {
-    z-index: 1 !important;
+    z-index: 3 !important;
     /* margin-top: 15px; */
   }
   .search-bar {
@@ -896,6 +898,15 @@
 
 /* Media Query for Tablets Ipads portrait mode */
 @media (min-width: 768px) and (max-width: 1024px) {
+  .list-patient-name{
+    font-size:18px ;
+  }
+  .gynae-services-card{
+    width: 270px;
+  }
+  .deatil{
+    width: calc(98% - 310px) !important
+  }
   .search-items {
     width: 11rem;
 
@@ -904,7 +915,7 @@
     margin-left: 20%;
   }
   .Dr-container{
-    width: 350px;
+    width: 340px;
     height: 250px;
   }
   .department-card-image {
@@ -940,13 +951,20 @@
     display: none;
   }
   .seacrh-bar-container {
-    z-index: 1 !important;
+    z-index: 9 !important;
+  }
+  .token-list-number{
+    font-size: 40px;
+    margin-top: 15px;
   }
   .main-ch {
     width: 100%;
   }
   .search-page {
     width: 90%;
+  }
+  .clinic-detail-drName{
+      width: 200px;
   }
 }
 

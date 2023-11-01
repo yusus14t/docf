@@ -105,7 +105,7 @@ const SpecializationDetails = () => {
                 hospitals.map((hospital) => {
                   return (
                     <div
-                      className="ml-2 col-lg-4 mb-4 col-md-4 mcard mt-2"
+                      className="ml-2 col-lg-4 mb-4 col-md-6 mcard mt-2"
                       //   key={key}
                     >
                       <div className="hospitalCard ">
