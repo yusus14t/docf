@@ -137,6 +137,20 @@ const deletePlan = async (req, res) => {
 
 }
 
+const getExpireOrganizations = async (req, res) => {
+    superAdminManager.getExpireOrganizations(req.params, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+
+}
+
+const sendPLanMessage = async (req, res) => {
+    superAdminManager.sendPLanMessage(req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+
+}
+
 module.exports = {
   getProfile,
   analytics,
@@ -160,4 +174,6 @@ module.exports = {
   deleteCustomService,
   addNewPlan,
   deletePlan,
+  getExpireOrganizations,
+  sendPLanMessage,
 };

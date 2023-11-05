@@ -3,7 +3,7 @@ import image from "../../../assets.app/img/dashboard/doctor-1.jpg"
 import { axiosInstance, getAuthHeader } from '../../../constants/utils';
 import Appointment from '../../common-components/Appointment/Appointment';
 import UserModal from '../../common-components/UserModal';
-import { DoughnutChart, LineChart } from '../../common-components/Chart';
+import { DoughnutChart } from '../../common-components/Chart';
 import useToasty from '../../../hooks/toasty';
 import events from '../../../events';
 
@@ -13,11 +13,8 @@ const Dashbaord = () => {
     const [appointments, setAppointments] = useState([]);
     const [unreachedData, setUnreachedData] = useState([]);
     const [appointmentData, setAppointmentData] = useState({}) 
-    const [isWeekChart, setIsWeekChart] = useState(true)
-    const [chartData, setChartData] = useState({})
     const [analyticsData, setAnalyticsData] = useState({})
     const [ doghnutData, setDoghnutData ] = useState({ gender: [], status: [] })
-    const userInfo = JSON.parse(localStorage.getItem('user'))
     const toasty = useToasty();
 
     useEffect(() => {
@@ -83,7 +80,7 @@ const Dashbaord = () => {
                                     <h6>Today Patients</h6>
                                     <div className='d-flex justify-content-start'>
                                         <div className='ms-card-change  me-3'><span className='fs-07 text-white'>Today </span>{analyticsData?.today || '0'}</div>
-                                        <div className='ms-card-change '><span className='fs-07 text-white'>Total </span>{analyticsData?.total || '0'}</div>
+                                        {/* <div className='ms-card-change '><span className='fs-07 text-white'>Total </span>{analyticsData?.total || '0'}</div> */}
                                     </div>
                                 </div>
                             </div>
