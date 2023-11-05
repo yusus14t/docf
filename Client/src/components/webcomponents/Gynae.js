@@ -256,7 +256,7 @@ const Gynae = () => {
             { hospitals?.length >  0 && hospitals.map((Hospital) => {
               return (
                 <div
-                  className="ml-2 col-lg-4 mb-4 col-md-4 mcard mt-2 "
+                  className="ml-2 col-lg-4 mb-4 col-md-6 mcard mt-2 "
                   // key={key}
                 >
                   <div
@@ -330,7 +330,7 @@ const Gynae = () => {
               clinics
                 .filter((e, i) => i < 3)
                 .map((clinic, key) => (
-                  <div className="col-lg-4 mb-4 col-md-4 mcard mt-4" key={key}>
+                  <div className="col-lg-4 mb-4 col-md-6 mcard mt-4" key={key}>
                     <div
                       style={{ background: "#ffffff" }}
                       className="clinic-card "

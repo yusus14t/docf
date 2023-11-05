@@ -57,14 +57,14 @@ function Homeopathy() {
         >
         </div>
       </div>
-      <div  className="row ">
+      <div  className=" ">
         <DoctorsList source={"homepage"} filter={{ specialization: 'Homeopathy' }} />
       </div>
       <div className="container">
         <div className="partner row">
           
-          <div className="row m-auto">
-            <div className="container">
+          <div className="row px-0 m-auto">
+            <div className="container ">
               <h3 className="text-center underline">
                 <span className="under">Clinics</span>
               </h3>
@@ -74,7 +74,7 @@ function Homeopathy() {
               clinics
                 .filter((e, i) => i < 3)
                 .map((clinic, key) => (
-                  <div className="col-lg-4 mb-4 col-md-4 mcard mt-4" key={key}>
+                  <div className="col-lg-4 mb-4 col-md-6  mcard mt-4" key={key}>
                     <div
                       style={{ background: "#ffffff" }}
                       className="clinic-card "
