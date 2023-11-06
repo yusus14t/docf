@@ -315,7 +315,7 @@ const signUp = async (body, user) => {
       }).save();
     }
 
-    console.log("----------> OTP ", otp);
+    // console.log("----------> OTP ", otp);
 
     let response = { message: "otp Sent" };
     if (process.env.ENVIRONMENT !== "development") {
@@ -326,7 +326,7 @@ const signUp = async (body, user) => {
         return Error({ message: `${response?.message} - ${otp}`, user });
     }
 
-    return Success({ message: `${response?.message} - ${otp}`, user });
+    return Success({ message: `${response?.message}`, user });
   } catch (error) {
     console.log(error);
   }

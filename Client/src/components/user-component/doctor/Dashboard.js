@@ -114,7 +114,7 @@ const Dashbaord = () => {
                                     <h6>Today Patients</h6>
                                     <div className='d-flex justify-content-start'>
                                         <div className='ms-card-change  me-3'><span className='fs-07 text-white'>Today </span>{analyticsData?.today || '0'}</div>
-                                        <div className='ms-card-change '><span className='fs-07 text-white'>Total </span>{analyticsData?.total || '0'}</div>
+                                        {/* <div className='ms-card-change '><span className='fs-07 text-white'>Total </span>{analyticsData?.total || '0'}</div> */}
                                     </div>
                                 </div>
                             </div>

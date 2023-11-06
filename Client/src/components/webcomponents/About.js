@@ -29,10 +29,14 @@ const About = () => {
       <h3 className="text-center bg-success text-light p-2">About Us </h3>
 
       <div className="about-banner-conatiner">
-        <img className="about-banner" src={findImage(WEBSITE_IMAGE.ABOUT_BANNER)} alt="" />
+        <img
+          className="about-banner"
+          src={findImage(WEBSITE_IMAGE.ABOUT_BANNER)}
+          alt=""
+        />
       </div>
       <div className="container">
-        <div style={{ height: "300px" }} className="row">
+        <div style={{ height: "auto" }} className="row ">
           <div className="col-sm-7 mt-3">
             <h3 className="text-center">WELCOME TO DOCTORTIME!</h3>
             <h5 style={{ textAlign: "justify" }}>
@@ -59,8 +63,12 @@ const About = () => {
             />
           </div>
         </div>
-        <div className="about-banner-container">
-          <img className=" about-banner" src={findImage(WEBSITE_IMAGE.ABOUT_POSTER_2)} alt="" />
+        <div className="about-banner-container mb-2">
+          <img
+            className=" about-banner"
+            src={findImage(WEBSITE_IMAGE.ABOUT_POSTER_2)}
+            alt=""
+          />
         </div>
       </div>
     </>

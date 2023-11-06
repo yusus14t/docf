@@ -1,7 +1,7 @@
 
 const UserModel  = require('../models/user-model'); 
 const OrganizationModel  = require('../models/organization-model'); 
-const { Success, Error, uploadToBucket } = require('../constants/utils');
+const { Success, Error, uploadToBucket, smsService } = require('../constants/utils');
 const websiteImageModel = require('../models/website-image-model');
 const settingModel = require('../models/setting-model');
 const specializationModel = require('../models/specialization-model');
@@ -395,6 +395,41 @@ const deletePlan = async ( params ) => {
     }
 }
 
+const getExpireOrganizations = async ( params ) => {
+    try {
+        let next5Day = new Date()
+        next5Day.setDate( next5Day.getDate() + 21 )
+
+        let organizations = await OrganizationModel.find({
+            organizationType: {
+                $in: [ 'Clinic', 'Department' ]
+            },
+            "billing.expire": {
+                $gte: new Date(),
+                $lte: next5Day
+            }
+        }, { name: 1, phone: 1, billing: 1 })
+
+        return Success({ organizations });
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+const sendPLanMessage = async (body ) => {
+    try {
+        for( let phone of body.phones ){
+            await smsService(body.message, phone)
+        }
+        return Success({});
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
+
 module.exports = {
   getProfile,
   analytics,
@@ -417,5 +452,7 @@ module.exports = {
   createCustomService,
   deleteCustomService,
   addNewPlan,
-  deletePlan
+  deletePlan,
+  getExpireOrganizations,
+  sendPLanMessage,
 };

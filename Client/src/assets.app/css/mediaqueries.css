@@ -901,6 +901,9 @@
   .list-patient-name{
     font-size:18px ;
   }
+  .login_button{
+    display: none;
+  }
   .gynae-services-card{
     width: 270px;
   }
@@ -951,7 +954,7 @@
     display: none;
   }
   .seacrh-bar-container {
-    z-index: 9 !important;
+    z-index: 3 !important;
   }
   .token-list-number{
     font-size: 40px;

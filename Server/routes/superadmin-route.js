@@ -25,4 +25,7 @@ router.delete('/service/:id', superAdminController.deleteCustomService)
 router.post('/new-plan', superAdminController.addNewPlan)
 router.delete('/plan/:id', superAdminController.deletePlan)
 
+router.get('/expire-organizations', superAdminController.getExpireOrganizations )
+router.post('/plan-message', superAdminController.sendPLanMessage)
+
 module.exports = router;
