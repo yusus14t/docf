@@ -68,8 +68,8 @@ const multerStorage = multer.diskStorage({
 const upload = multer({ storage: multerStorage })
 
 
-const uploadToBucket = async (filename) => {
-  if (process.env.ENVIRONMENT === 'development') return filename
+const uploadToBucket = async ( filename, localPath, remotePath = process.env.ROOT_DIRECTORY ) => {
+  // if (process.env.ENVIRONMENT === 'development') return filename
   
   const client = new ftp.Client();
   client.ftp.verbose = true;
@@ -82,15 +82,13 @@ const uploadToBucket = async (filename) => {
       secure: false,
     });
     
-    const remotePath = process.env.ROOT_DIRECTORY
-    const remoteFullPath = remotePath+filename
+    localPath = localPath || path.join(__dirname, '..', '/uploads', filename)
+    const localFile = fs.createReadStream( localPath );
 
-    const localFilePath = path.join(__dirname, '..', '/uploads', filename)
-    const localFile = fs.createReadStream(localFilePath);
-    await client.uploadFrom(localFile, remoteFullPath);
-
-    fs.unlinkSync(localFilePath)
+    await client.uploadFrom(localFile, remotePath + filename);
+    fs.unlinkSync( localPath )
     return filename
+
   } catch (err) {
     console.error("Error uploading image:", err);
     return err
