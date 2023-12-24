@@ -23,7 +23,9 @@ database.on('error', (error) => console.log(error) )
 database.once('connected', () => console.log('Database Connected') )
 
 app.use(express.json());
-app.use(cors({ origin: ['http://localhost' ] }))
+// app.use(cors({ origin: ['http://localhost:3000'] }))
+app.use(cors({ origin: '*' }))
+
 
 // Configurations for "body-parser"
 app.use(

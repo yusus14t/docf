@@ -393,6 +393,27 @@ const getAllClinics = async (body) => {
               ]
             }
             : {}),
+
+          ...( body?.search ? {
+            name: {
+              $regex: body.search,
+              $options: 'i',
+            }
+          } : {} ),
+
+          ...( body?.filter?.fee ? {
+            fee: {
+              $lte: parseInt(body.filter.fee)
+            }
+          } : {} ),
+
+          ...( body?.filter?.city ? {
+            address: {
+              $regex: body.filter.city,
+              $options: 'i'
+            }
+          } : {} ),
+
         }
       },
       {
@@ -490,9 +511,11 @@ const clinicDetails = async (body) => {
         },
       },
     ]);
+
+
     detail = JSON.parse(JSON.stringify(detail[0]));
-    let doctor = await UserModel.findOne({ organizationId: body._id, userType: 'DR'}, { name: 1 })
-    detail['doctor'] = doctor
+    let doctor = await UserModel.find({ organizationId: body._id, userType: 'DR'}, { name: 1, address: 1, photo: 1, specialization: 1, organizationId: 1  })
+    detail['doctors'] = doctor
 
     let hospital = await UserModel.findOne({ organizationId: body._id, userType: 'DP' }, { hospitalId: 1 })
     let name = await OrganizationModel.findOne({ _id: hospital?.hospitalId }, { name: 1, services: 1  })
@@ -644,14 +667,44 @@ const setUserType = async (body) => {
 
 const getAllHospitals = async (body, user) => {
   try {
+
+    let specialization = body?.filter?.specialization
+
+    let specializationCond =  typeof(specialization) === 'string' ? [specialization] : specialization 
+
     let organization = await OrganizationModel.find(
       {
         organizationType: "Hospital",
         'billing.isPaid': true,
-        // 'billing.expire': { $lte: new Date },
-        ...(body?.filter
-          ? {$or: [{ "specialization.name": body?.filter?.specialization }, { "specialization.id": body?.filter?.specialization }]}
-          : {}),
+
+        ...( specialization
+          ? {
+            $or: [
+              { "specialization.name": { $in: specializationCond } },
+              { "specialization.id": { $in: specializationCond } }
+            ]
+        } : {}),
+
+        ...( body?.search ? {
+          name: {
+            $regex: body.search,
+            $options: "i"
+          }
+        } : {} ),
+
+        ...( body?.filter?.fee ? {
+          fee: {
+            $lte: parseInt(body.filter.fee)
+          }
+        } : {} ),
+
+        ...( body?.filter?.city ? {
+          address: {
+            $regex: body.filter.city,
+            $options: 'i'
+          }
+        } : {} ),
+        
       });
 
     return Success({ organization });
@@ -714,108 +767,129 @@ const search = async (body, user) => {
     let aggregateQuery = [
       {
         $match: {
-          organizationType: {
-            $in: ["Hospital", "Clinic"],
-          },
-          'billing.isPaid': true, 
+
+          organizationType: { $in: ["Hospital", "Clinic"] },
+          'billing.isPaid': true,
+
           $and: [
             parseInt(body?.fee) > 0 ? { fee: { $lte: parseInt(body?.fee) } } : {},
+
             body?.city
               ? { address: { $regex: body?.city, $options: "i" } }
               : {},
+            
             body?.specialization
               ? { "specialization.name": body?.specialization }
               : {},
+            
             body?.type ? { organizationType: body?.type } : {},
           ],
         },
       },
+
       {
         $project: {
-          organizationType: 1,
           photo: 1,
           name: 1,
           email: 1,
           address: 1,
+          type: '$organizationType',
         },
       },
     ];
 
-    if (body?.search)
+    if (body?.search) {
       aggregateQuery.push({
-        $match: {
-          name: {
+        $match: {  name: {
             $regex: body.search,
             $options: "i",
-          },
-        },
+          }},
       });
+    }
+
+    if (body?.limit) {
+      aggregateQuery.push({
+        $limit: parseInt(body.limit)
+      });
+    }
+
+
 
     let searchData = await OrganizationModel.aggregate(aggregateQuery);
-    
-    let doctors = []
-    if( body?.type === 'Doctor' ) {
-      doctors = await UserModel.aggregate([
-        {
-          $match: {
-            userType: 'DR',
-            $and: [
-              body?.search
-                ? { name: { $regex: body.search, $options: "i" } }
-                : {},
-              body?.city
-                ? { address: { $regex: body?.city, $options: "i" } }
-                : {},
-              body?.specialization
-                ? { "specialization.name": body?.specialization }
-                : {},
-            ],
-          },
+
+    let doctors = await UserModel.aggregate([
+      {
+        $match: {
+          userType: 'DR',
+          $and: [
+
+            body?.search
+              ? { name: { $regex: body.search, $options: "i" } }
+              : {},
+
+            body?.city
+              ? { address: { $regex: body?.city, $options: "i" } }
+              : {},
+
+            body?.specialization
+              ? { "specialization.name": body?.specialization }
+              : {},
+
+          ],
         },
-        {
-          $lookup: {
-            from: "organizations",
-            localField: "organizationId",
-            foreignField: "_id",
-            as: "organization",
-            pipeline: [
-              {
-                $project: {
-                  organizationType: 1,
-                  fee: 1,
-                  billing: 1
-                },
+      },
+
+      {
+        $lookup: {
+          from: "organizations",
+          localField: "organizationId",
+          foreignField: "_id",
+          as: "organization",
+          pipeline: [
+            {
+              $project: {
+                organizationType: 1,
+                fee: 1,
+                billing: 1
               },
-            ],
-          },
+            },
+          ],
         },
-        {
-          $unwind: "$organization",
+      },
+      {
+        $unwind: "$organization",
+      },
+
+      {
+        $match: {
+          'organization.billing.isPaid': true
+        }
+      },
+      {
+        $limit: body.limit ? parseInt(body.limit) : 20
+      },
+
+      {
+        $project: {
+          name: 1,
+          email: 1,
+          address: 1,
+          photo: 1,
+          organizationId: 1,
+          organizationType: "$organization.organizationType",
+          type: 'Doctor',
+          fee: "$organization.fee",
         },
-        {
-          $match: {
-            'organization.billing.isPaid': true
-          }
+      },
+
+      {
+        $match: {
+          ...(body?.fee > 0 ? { fee: { $lte: body?.fee } } : {}),
         },
-        {
-          $project: {
-            name: 1,
-            email: 1,
-            address: 1,
-            photo: 1,
-            userType: 1,
-            organizationId: 1,
-            organizationType: "$organization.organizationType",
-            fee: "$organization.fee",
-          },
-        },
-        {
-          $match: {
-            ...(body?.fee > 0 ? { fee: { $lte: body?.fee } } : {}),
-          },
-        },
-      ]);
-    }
+      },
+
+    ]);
+
 
     return Success({ searchData: [...searchData, ...doctors] });
   } catch (error) {
