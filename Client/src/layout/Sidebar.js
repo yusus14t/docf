@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import NO_PHOTO from '../assets.app/images/no-photo.png'
 import { Link, useLocation } from 'react-router-dom';
 import { MODULES, userRoutes } from '../constants/constant';
-import { axiosInstance, getAuthHeader, getFullPath } from '../constants/utils';
+import { Logout, axiosInstance, getAuthHeader, getFullPath } from '../constants/utils';
 import Modal from '../components/common-components/Modal';
 
 function Sidebar({ isOpen, setIsOpen, mobileView }) {
@@ -24,11 +24,6 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
             getExpireOrganizations()
         }
     }, [ expirePlanModal ])
-
-    const Logout = () => {
-        localStorage.clear();
-        window.location.replace("/login");
-    };
 
     const bookingStatus = async ( status ) => {
         try{

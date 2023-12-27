@@ -9,7 +9,7 @@ import useNotification from '../hooks/Notification';
 import { Link } from "react-router-dom";
 import { userRoutes } from "../constants/constant";
 import Modal from "../components/common-components/Modal";
-import { axiosInstance, getAuthHeader } from "../constants/utils";
+import { Logout, axiosInstance, getAuthHeader } from "../constants/utils";
 import useToasty from "../hooks/toasty";
 
 
@@ -47,11 +47,6 @@ const Header = () => {
         if( ['CL', 'HL', 'DP'].includes(userInfo.userType))
         getNotices()
     }, [isCustomMessage])
-
-    const Logout = () => {
-        localStorage.clear()
-        window.location.replace('/login')
-    }
 
     const getNotifications = async () => {
         try { 
