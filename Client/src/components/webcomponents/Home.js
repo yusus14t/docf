@@ -106,9 +106,6 @@ function Home() {
         </div>
       </div>
 
-      {/* <Services /> */}
-
-      {/* testimonials */}
     </>
   );
 }

@@ -5,17 +5,13 @@ import logo from '../../assets.app/img/logo/logo.jpg'
 import WebSidebar from "./WebSidebar";
 import { Dropdown, Item } from "../../components/common-components/Dropdown";
 import { WEB_MENU_ITEMS, userRoutes } from "../../constants/constant";
-import { getFullPath } from "../../constants/utils";
+import { getFullPath, Logout } from "../../constants/utils";
 
 const WebHeader = () => {
   const userInfo = JSON.parse(localStorage.getItem('user'))
   const [isLogin] = useState(Boolean(userInfo))
   const [isSideBbarOpen, setIsSidebarOpen] = useState(false);
 
-  const Logout = () => {
-    localStorage.clear()
-    window.location.replace('/login')
-  }
 
   return (
     <>
