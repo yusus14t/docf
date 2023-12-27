@@ -55,7 +55,6 @@ const HospitalDetails = () => {
         <img className="hopsiptal-banner-img" src={hospital?.photo ? getFullPath(hospital?.photo) : background} alt="" />
       </div>
       <div className="p-4">
-          {/* <DepartmentCard /> */}
           <div className="row">
             <div className="col-md-8">
               {departments.length > 0 && <DepartmentCard departments={departments} />}

@@ -1,11 +1,14 @@
+require('dotenv/config');
 const express = require('express')
 const app = express();
 const routes = require('./routes/index');
 const cors = require('cors');
-const env = require('dotenv/config');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const path = require('path');
+
+
+// Backup System 
+if( process.env.ENVIRONMENT === 'production' )  require('./backup/backup');
 
 
 //  Data Base Connection
@@ -20,7 +23,9 @@ database.on('error', (error) => console.log(error) )
 database.once('connected', () => console.log('Database Connected') )
 
 app.use(express.json());
+// app.use(cors({ origin: ['http://localhost:3000'] }))
 app.use(cors({ origin: '*' }))
+
 
 // Configurations for "body-parser"
 app.use(
