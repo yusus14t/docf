@@ -315,7 +315,7 @@ const signUp = async (body, user) => {
       }).save();
     }
 
-    // console.log("----------> OTP ", otp);
+    console.log("----------> OTP ", otp);
 
     let response = { message: "otp Sent" };
     if (process.env.ENVIRONMENT !== "development") {

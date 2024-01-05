@@ -71,3 +71,8 @@ export const  convertTo12HourFormat = ( time24 ) => {
 
     return `${hours12}:${minutes} ${period}`;
   }
+
+export const truncate = (str,length)=>{
+    if(str?.length <= length) return str
+    return str?.substring(0,length) + "..."
+    }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { axiosInstance, convertTo12HourFormat } from '../../../constants/utils'
+import { axiosInstance, convertTo12HourFormat, truncate } from '../../../constants/utils'
 
 import { Link } from "react-router-dom";
 import NO_PHOTO from "../../../assets.app/images/no_images/no_hospital.jpg";
@@ -63,7 +63,7 @@ const HospitalGrid = ({source}) => {
                       key={key}
                     >
                       <div className="hospitalCard ">
-                        <span className=" hospital-title">{hospital.name}</span>
+                        <span className=" hospital-title">{truncate(hospital.name, 28)}</span>
                         <div className="hospitalCard-background-img">
                           <img
                             className="hospitalCard-background-img"
