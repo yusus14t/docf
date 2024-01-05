@@ -27,5 +27,5 @@ router.delete('/plan/:id', superAdminController.deletePlan)
 
 router.get('/expire-organizations', superAdminController.getExpireOrganizations )
 router.post('/plan-message', superAdminController.sendPLanMessage)
-
+router.post('/payment-option', superAdminController.setPaymentOption)
 module.exports = router;

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from "../../../constants/utils";
+import { axiosInstance, formatPhone, getAuthHeader, getFullPath, userInfo } from "../../../constants/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faIndianRupeeSign, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../common-components/Modal";
 import useToasty from '../../../hooks/toasty'
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
-
+import { MenuIcon } from "../../common-components/icons";
+import { Dropdown } from '../../common-components/Dropdown'
+import { Item } from "../../common-components/Dropdown";
 
 const Clinics = ({ source }) => {
     const [clinics, setClinics] = useState([]);
@@ -61,9 +63,17 @@ const Clinics = ({ source }) => {
                                                     <div className="div">
                                                         <span style={{ marginBottom: "50%" }} class="badge badge-outline-danger">{clinic?.organizationType}</span>
                                                     </div>
-                                                    <div style={{ marginLeft: "15px" }} className="float-last">
-                                                        <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" icon={faTrash} onClick={() => {setClinic(clinic); setDeleteModal(true)} }></FontAwesomeIcon>
-                                                    </div>
+                                                   <Dropdown
+                                                        toggle={
+                                                            <div className="cursor-pointer" style={{ width: '25px' }}>
+                                                                <img src={MenuIcon} className="w-100 h-100" />
+                                                            </div>
+                                                        }
+                                                   > 
+                                                        <Item onClick={() => {setClinic( clinic ); setDeleteModal(true)}} >
+                                                             <FontAwesomeIcon icon={faTrash} className="me-2" /> Delete 
+                                                        </Item>
+                                                   </Dropdown>
                                                 </div>
                                                 <p className="fs-12 my-1 text-disabled">{clinic?.organizationId?.address || '-'}</p>
                                                 <h6 className="mt-0">
@@ -89,6 +99,10 @@ const Clinics = ({ source }) => {
             >
                 Do you want to delete this department?
             </Modal>}
+
+           
+
+
         </div>
     )
 }

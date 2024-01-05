@@ -113,6 +113,7 @@ const createHospital = async (body, userInfo) => {
         name: body?.name,
         email: body?.email,
         createdBy: userInfo?._id,
+        hospitalType: body?.hospitalType?.value
       }).save();
 
       let user = await UserModel({
@@ -665,7 +666,7 @@ const setUserType = async (body) => {
   }
 };
 
-const getAllHospitals = async (body, user) => {
+const getAllHospitals = async ( body ) => {
   try {
 
     let specialization = body?.filter?.specialization
@@ -675,6 +676,7 @@ const getAllHospitals = async (body, user) => {
     let organization = await OrganizationModel.find(
       {
         organizationType: "Hospital",
+        hospitalType: body.hospitalType || 'pvt',
         'billing.isPaid': true,
 
         ...( specialization

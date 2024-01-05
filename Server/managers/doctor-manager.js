@@ -733,12 +733,9 @@ const createDepartment = async (body, userInfo, file) => {
 const getDepartments = async (body, user) => {
   try {
     let query = {
-      hospitalId:
-        user.userType === "HL" ? user.organizationId : body?.organizationId,
+      hospitalId: user.userType === "HL" ? user.organizationId : body?.organizationId,
       userType: "DP",
     };
-
-    if (["SA", 'AD'].includes(user.userType)) query = { userType: "DP" };
 
     let organizations = await UserModel.find(query).populate("organizationId").sort({ createdAt: -1 });
     return Success({ organizations });
