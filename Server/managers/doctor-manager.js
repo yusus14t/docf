@@ -139,9 +139,12 @@ const getAllDoctors = async (body, user) => {
     let query = {};
 
     if (user?.userType === "MR") query["createdBy"] = user?._id;
+
     else if (["CL", "DP"].includes(user?.userType)) {
       query["organizationId"] = user.organizationId;
+
     } else if (user?.userType === "HL") {
+
       let departmentIds = await UserModel.find(
         { hospitalId: user.organizationId, primary: true },
         { organizationId: 1 }
@@ -149,20 +152,20 @@ const getAllDoctors = async (body, user) => {
 
       departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
       query["organizationId"] = { $in: departmentIds };
+
     } else if (user && !["SA", 'AD'].includes(user.userType)) {
-             query["createdBy"] = user._id;
-           }
+      query["createdBy"] = user._id;
+    }
 
     if (body?.source === "doctor-page") {
       let paidDepartmentIds = await OrganizationModel.find(
         {
           "billing.isPaid": true,
           organizationType: { $in: ["Clinic", "Department"] },
-        },
-        { _id: 1 }
+        }, { _id: 1 }
       );
-      paidDepartmentIds = paidDepartmentIds.map((id) => ObjectId(id._id));
 
+      paidDepartmentIds = paidDepartmentIds.map((id) => ObjectId(id._id));
       query["organizationId"] = { $in: paidDepartmentIds };
     }
 
@@ -173,11 +176,28 @@ const getAllDoctors = async (body, user) => {
           isActive: true,
           primary: false,
           ...query,
+
           ...(body?.filter?.specialization
             ? { "specialization.name": body?.filter?.specialization }
             : {}),
+
+          ...(body?.search ? {
+            name: {
+              $regex: body.search,
+              $options: 'i'
+            }
+          } : {}),
+  
+          ...( body?.filter?.city ? {
+            address: {
+              $regex: body.filter.city,
+              $options: 'i'
+            }
+          } : {} ),
+
         },
       },
+
       {
         $lookup: {
           from: "organizations",
@@ -713,12 +733,9 @@ const createDepartment = async (body, userInfo, file) => {
 const getDepartments = async (body, user) => {
   try {
     let query = {
-      hospitalId:
-        user.userType === "HL" ? user.organizationId : body?.organizationId,
+      hospitalId: user.userType === "HL" ? user.organizationId : body?.organizationId,
       userType: "DP",
     };
-
-    if (["SA", 'AD'].includes(user.userType)) query = { userType: "DP" };
 
     let organizations = await UserModel.find(query).populate("organizationId").sort({ createdAt: -1 });
     return Success({ organizations });

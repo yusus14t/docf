@@ -64,7 +64,6 @@ function Clinics({ source }) {
         </h3>
       </div>
 
-      {/* <Banner2 title={'Clinic List'} /> */}
 
       <div
         style={{ background: "#f1f5fc" }}
@@ -75,7 +74,6 @@ function Clinics({ source }) {
           <div className="row mt-2 mb-2">
             <div className="col-12">
               <div className="row ">
-                {/* <ClinicListCard clinics={clinics} /> */}
                 {clinics.length > 0 &&
                   clinics
                     .filter(

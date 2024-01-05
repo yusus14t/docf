@@ -7,7 +7,6 @@ import { userInfo } from "../constants/utils";
 import Privacy from "../components/webcomponents/Privacy";
 import Terms from "../components/webcomponents/Terms";
 import NotFound from "../components/webcomponents/NotFound";
-import NoData from "../components/webcomponents/NoData";
 import Payment_Success from "../components/common-components/Payment_Success";
 import Payment_Failed from "../components/common-components/Payment_Failed";
 import PricingTable from '../components/common-components/PricingTable'
@@ -21,7 +20,6 @@ const Home = lazy(() => import( "../components/webcomponents/Home.js"))
 const About = lazy(() => import("../components/webcomponents/About.js"))
 const Contact = lazy(() => import('../components/webcomponents/Contact'))
 const DepartmentSignUp = lazy(() => import('../components/authentication/DepartmentSignUp'))
-const AfterSignup = lazy(() => import('../components/process/AfterSignup'))
 const Gynae = lazy(() => import("../components/webcomponents/Gynae"))
 const Detail = lazy(() => import("../components/webcomponents/doctor/Detail"))
 const HospitalDetails = lazy(() => import("../components/webcomponents/Hospital/HospitalDetails"))
@@ -42,8 +40,8 @@ const COMMON_ROUTE = [
   { path: "/clinic-detail/:id", element: <ClinicDetail /> },
   { path: "/clinics", element: <AddHead seoContent={SEO.CLINICS}><Clinics /></AddHead> },
   { path: "/contact", element: <AddHead seoContent={SEO.CONTACT}><Contact /></AddHead> },
-  { path: "/hospitals", element: <AddHead seoContent={SEO.HOSPITALS}><Hospitals /></AddHead> },
-  { path: "/after", element: <AfterSignup /> },
+  { path: "/private-hospitals", element: <AddHead seoContent={SEO.HOSPITALS}><Hospitals hospitalType={'pvt'} /></AddHead> },
+  { path: "/government-hospitals", element: <AddHead seoContent={SEO.HOSPITALS}><Hospitals hospitalType={'gov'} /></AddHead> },
   { path: "/gynae", element: <AddHead seoContent={SEO.GYNAECLOGIST}><Gynae /></AddHead> },
   { path: "/hospital-detail/:id", element: <HospitalDetails /> },
   { path: "/department-detail/:id", element: <ClinicDetail /> },
@@ -65,7 +63,6 @@ const COMMON_ROUTE = [
       <LogIn />
     ),
   },
-  { path: "/jjjj", element: <NoData /> },
   { path: "/*", element: <NotFound /> },
 ];
 

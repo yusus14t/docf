@@ -7,16 +7,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getFullPath } from "../../../constants/utils";
 import { NUMBER_TO_DAY } from '../../../constants/constant';
-const HospitalGrid = ({source}) => {
+
+
+export default ({ source, hospitalType }) => {
+
   const [ hospitals, setHospitals] = useState([]);
 
   useEffect(() => {
     getHospitals()
-  }, [])
+  }, [ hospitalType,])
 
   const getHospitals = async () => {
     try {
-      let { data } = await axiosInstance.get('/hospitals')
+      let { data } = await axiosInstance.get('/hospitals', { params: { hospitalType }})
       setHospitals(data?.organization)
     } catch(error){ console.error(error) }
   }
@@ -124,4 +127,3 @@ const HospitalGrid = ({source}) => {
   );
 }
 
-export default HospitalGrid
