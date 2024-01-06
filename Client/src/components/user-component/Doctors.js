@@ -8,6 +8,7 @@ import useToasty from '../../hooks/toasty';
 import DoctorRegistration from "../common-components/registration/DoctorRegistration";
 import ImgUpload from "../common-components/Imgupload";
 import Select from "react-select";
+import { DAYS } from "../../constants/constant";
 
 
 const DoctorsList = () => {
@@ -15,26 +16,27 @@ const DoctorsList = () => {
     const [doctorModal, setDoctorModal] = useState(false);
     const [doctors, setDoctors] = useState([]);
     const [editData, setEditData] = useState({})
-    const [searchInput, setSearchInput] = useState('');
     const toasty = useToasty();
-    const { register, handleSubmit, reset, formState:{ errors }, control} = useForm({ onChange: true })
+    const { register, handleSubmit, reset, formState:{ errors }, control, setError, getValues, setValue } = useForm({ onChange: true })
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const [ selectedImage, setSelectedImage ] = useState(null)
     const [specialization, setSpecialization] = useState([])
-
-
-
+    const [ days, setDays ] = useState(DAYS)
+    const [ timing, setTiming ] = useState([]);
+    const [ isTiming, setIsTiming ] = useState(false)
+    
     useEffect(() => {
         getDoctors()
-    }, [searchInput,])
-
-    useEffect(() => {
         getClinicSpecialization()
     }, [])
 
+    useEffect(() => {
+        setTiming(editData.timing)
+    }, [ editModal ])
+
     const getDoctors = async () => {
         try {
-            let { data } = await axiosInstance.get('/doctor/allDoctors', {params: { source: 'dashboard', searchInput }, ...getAuthHeader()})
+            let { data } = await axiosInstance.get('/doctor/allDoctors', {params: { source: 'dashboard' }, ...getAuthHeader()})
             setDoctors(data.doctors)
         } catch (error) { console.log(error) }
     }
@@ -55,6 +57,8 @@ const DoctorsList = () => {
 
     const Submit = async ( values ) => {
         try{
+            values['timing'] = timing
+
             let formData = new FormData()
             formData.append('data', JSON.stringify(values))
             formData.append('image', selectedImage)
@@ -64,6 +68,10 @@ const DoctorsList = () => {
                 if( doctor._id === data?.doctor?._id ) doctor = data?.doctor
                 return doctor
             }))
+
+            setTiming([])
+            setDays(DAYS)
+
             reset({})
             setEditModal(false)
             toasty.success(data?.message)
@@ -72,6 +80,34 @@ const DoctorsList = () => {
             toasty.error(error?.message)
         }
     }
+
+    const handleTime = () => {
+        let time = getValues('timing')
+    
+        if( !time?.day ) setError('timing.day', { message: 'Day is required'})
+        if( !time?.open ) setError('timing.open', { message: 'Open time is required'})
+        if( !time?.close ) setError('timing.close', { message: 'Close time is required'})
+    
+        
+        // let day = timing.find( t => t.day === time.day )
+        // if( !day && time?.day && time?.open && time?.close ){
+        //     setTiming([ ...timing, JSON.parse(JSON.stringify(time)) ])
+        //     setDays( old => old.filter( d => d.value !== time.day ))
+        //     setValue('timing', { day: '', open: '', close: ''})
+        // }
+
+        let day = timing.find( t => t.day === time.day )
+        if( !day ){
+            setTiming([ ...timing, JSON.parse(JSON.stringify(time)) ])
+            setDays( old => old.filter( d => d.value !== time.day ))
+            setValue('timing', { day: '', open: '', close: ''})
+        }
+    }
+    
+      const handleEditOrDelete = ( time ) => {
+        setTiming( old => old.filter( t => t.day !== time.day ))
+        setDays( old => ([ DAYS.find( d => d.value === time.day ), ...old].sort((a, b) => a.value - b.value )))
+      }   
 
     return (
         <>
@@ -100,7 +136,7 @@ const DoctorsList = () => {
                                                     <span style={{ marginBottom: "50%" }} class="badge badge-outline-danger">{doctor.isActive ? 'Active' : 'Inactive'}</span>
                                                 </div>
                                                 <div style={{ marginLeft: "15px" }} className="float-last">
-                                                    <FontAwesomeIcon className="cursor-pointer" onClick={() => {setEditData(doctor); reset(doctor); setEditModal(true);}} icon={faEdit}></FontAwesomeIcon>
+                                                    <FontAwesomeIcon className="cursor-pointer" onClick={() => {setEditData(doctor); reset({ ...doctor, timing: {} }); setEditModal(true);}} icon={faEdit}></FontAwesomeIcon>
                                                     <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => handleDelete(doctor)} icon={faTrash}></FontAwesomeIcon>
                                                 </div>
                                             </div>
@@ -122,11 +158,11 @@ const DoctorsList = () => {
                 <Modal
                     isOpen={editModal}
                     setIsOpen={setEditModal}
-                    title={` Edit ${ editData.name }`}
+                    title={` Edit ${editData.name}`}
                     closeButton={false}
                     submitButton={false}
                 >
-                    <div> 
+                    <div>
                         <ImgUpload source={"doctor"} file={(image) => setSelectedImage(image)} editImage={getFullPath(editData.photo)} />
                     </div>
                     <form onSubmit={handleSubmit(Submit)} id="test">
@@ -162,8 +198,8 @@ const DoctorsList = () => {
                                     className={`form-control ${errors?.phone ? 'border-danger' : ''}`}
                                     placeholder="xxxx-xxx-xxx"
                                     onInput={(e) => {
-                                        if(Number(e.target.value) && String(e.target.value).length < 10) e.target.value = e.target.value
-                                        else if(Number(e.target.value)) e.target.value = e.target.value.slice(0,10)
+                                        if (Number(e.target.value) && String(e.target.value).length < 10) e.target.value = e.target.value
+                                        else if (Number(e.target.value)) e.target.value = e.target.value.slice(0, 10)
                                         else e.target.value = ''
                                     }}
                                     {...register('phone', {
@@ -231,6 +267,75 @@ const DoctorsList = () => {
                                 />
                             </div>
                         </div>
+
+                        <div className="px-2">
+                            <div className="alert alert-danger border-0  p-2 mb-2 mt-4">
+                                <div className="d-flex justify-content-around">
+                                    <div>Day</div>
+                                    <div>Open</div>
+                                    <div>Close</div>
+                                    <div>Action</div>
+                                </div>
+                            </div>
+
+                            {timing?.length > 0 &&
+                                timing.map(time => <div className="alert alert-secondary border-0 p-2">
+                                    <div className="d-flex justify-content-around">
+                                        <div>{time.day}</div>
+                                        <div>{time.open}</div>
+                                        <div>{time.close}</div>
+                                        <div>
+                                            {/* <FontAwesomeIcon className=' mx-3 cursor-pointer' icon={faTrash} onClick={() => handleDeleteTime(time)} /> */}
+
+                                            <FontAwesomeIcon
+                                                className="cursor-pointer"
+                                                icon={faTrash}
+                                                onClick={() =>
+                                                    handleEditOrDelete(time)
+                                                }
+                                            ></FontAwesomeIcon>
+                                        </div>
+                                    </div>
+                                </div>)}
+                        </div>
+
+                        {days?.length > 0  && <div className="row px-2">
+                            <div className="col-md-12 mb-3">
+                                <label className=''>Timming</label>
+                                <div className='row' style={{ paddingRight: 0 }}>
+                                    <div className="col">
+                                        <label htmlFor="">Days</label>
+                                        <select name="days"
+                                            className={`form-control ${errors?.timing?.day ? 'border-danger' : ''}`}
+                                            {...register('timing.day')} >
+                                            {days?.map((day) => <option value={day.value} >{day.day}</option>)}
+                                        </select>
+                                    </div>
+                                    <div className='col '>
+                                        <label htmlFor="#open">Open</label>
+                                        <input type="time"
+                                            id='open'
+                                            className={`form-control ${errors?.timing?.open ? 'border-danger' : ''}`}
+                                            placeholder="morning 10am to 12pm"
+                                            {...register('timing.open')}
+                                        />
+                                    </div>
+                                    <div className='col '>
+                                        <label className=''>Close</label>
+                                        <input type="time"
+                                            className={`form-control ${errors?.timing?.close ? 'border-danger' : ''}`}
+                                            placeholder="morning 10am to 12pm"
+                                            {...register('timing.close')}
+                                        />
+                                    </div>
+                                    <div className=''>
+                                        <button type='button' style={{ minWidth: "60px" }} className='btn btn-1 btn-primary mt-4 p-1 px-1 shadow-none' onClick={() => handleTime()}> Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>}
+                        
+
                         <div className="modal-footer">
                             <button type="button" className="btn btn-light" onClick={() => setEditModal(false)}>Cancel</button>
                             <button type="submit" className="btn btn-primary shadow-none">Save</button>
