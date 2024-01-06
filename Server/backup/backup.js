@@ -17,7 +17,7 @@ const path = require('path');
 const fs = require('fs')
 
 console.log('start cron job')
-const cronSchedule = cron.schedule('* * * * *', function () {
+const cronSchedule = cron.schedule('0 * * * *', function () {
 
     // 0 * * * * for every hour
 

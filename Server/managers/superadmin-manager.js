@@ -432,7 +432,7 @@ const sendPLanMessage = async (body ) => {
 
 const setPaymentOption =  async ( body, user ) => {
     try {
-        //
+        await OrganizationModel.updateOne({ _id: body._id }, { paymentOption: body.paymentOption })
         return Success({});
     } catch ( error ) { 
         console.log(error)

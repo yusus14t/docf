@@ -4,26 +4,36 @@ import { Link, useLocation } from 'react-router-dom';
 import { MODULES, userRoutes } from '../constants/constant';
 import { Logout, axiosInstance, getAuthHeader, getFullPath } from '../constants/utils';
 import Modal from '../components/common-components/Modal';
+import Select from 'react-select';
+import useToasty from '../hooks/toasty'
 
 function Sidebar({ isOpen, setIsOpen, mobileView }) {
     const location = useLocation();
+    const toasty = useToasty();
+
     const pathname = location.pathname.split("/")
     const userInfo = JSON.parse(localStorage.getItem('user'))
     const [activeNav, setActiveNav] = useState(null)
     const [ expirePlanModal, setExpirePlanModal ] = useState(false)
+    const [ messageModal, setMessageModal ] = useState(false)
     const [ isChecked, setIsChecked ] = useState(userInfo.organizationId?.bookingStatus || false)
     const planMessageRef = useRef(null)
+    const messageRef = useRef(null)
     const [ organizations, setOrganizations ] = useState([])
+    const [patients, setPatients] = useState([])
+
+    const [ messageObj, setMessageObj ] = useState({ message: null, patients: [] })
 
     useEffect(() => {
         setActiveNav(pathname[2])
     }, [pathname,])
 
     useEffect(() => {
-        if( expirePlanModal ){
-            getExpireOrganizations()
-        }
-    }, [ expirePlanModal ])
+
+        if( expirePlanModal ) getExpireOrganizations()
+        else if( messageModal ) getPatients()
+
+    }, [ expirePlanModal, messageModal ])
 
     const bookingStatus = async ( status ) => {
         try{
@@ -44,6 +54,26 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
             await axiosInstance.post('/super-admin/plan-message', { mesage: planMessageRef.current.value, phones: organizations.map( org => org?.phone ) }, getAuthHeader())
             setExpirePlanModal(false)
         }catch(error){ console.log(error) }
+    }
+
+    const sendPatientMessage = async () => {
+        try{
+            if ( !messageObj.message || !messageObj.patients?.length  ) return
+            
+            await axiosInstance.post('/doctor/send-message', messageObj, getAuthHeader())
+            toasty.success('Message Send Successfully')
+
+        }catch(err){ 
+            console.log(err) 
+            toasty.error('Oops! Message Not Sent')
+        }
+    }
+
+    const getPatients = async () => {
+        try{
+            let { data } = await axiosInstance.get('/doctor/patients', { params: { isToday: true }, ...getAuthHeader() })
+            setPatients( data.patients )
+        }catch(err){ console.log(err) }
     }
 
     return (
@@ -72,15 +102,21 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
 
                 <ul className="accordion ms-main-aside fs-14 overflow-auto">
                     {MODULES.filter((m) => m.access.includes(userInfo?.userType)).map((module, key) => <li className={`menu-item ${activeNav === module.id && 'nav-link-active'}`} onClick={() => { mobileView && setIsOpen(false) }} key={key}>
-                        <Link to={`/${pathname[1]}${module.pathname}`} className="has-chevron"  >
+                        <Link to={`/${pathname[1]}${module.pathname}`} className=""  >
                             <span>{module.title}</span>
                         </Link>
                     </li>)}
-                    <li className={`menu-item cursor-pointer ${activeNav === 'plan-expire' && 'nav-link-active'}`} onClick={() => { (mobileView && setIsOpen(false));  setExpirePlanModal(true)  }}>
-                        <a className="has-chevron"  >
+                    { ["SA", "AD"].includes(userInfo.userType) && <li className={`menu-item cursor-pointer ${activeNav === 'plan-expire' && 'nav-link-active'}`} onClick={() => { (mobileView && setIsOpen(false));  setExpirePlanModal(true)  }}>
+                        <a className=""  >
                             <span>Plan Expire</span>
                         </a>
-                    </li>
+                    </li>}
+
+                    { [ "CL", "DP" ].includes(userInfo.userType) && <li className={`menu-item cursor-pointer ${activeNav === 'plan-expire' && 'nav-link-active'}`} onClick={() => { (mobileView && setIsOpen(false));  setMessageModal(true)  }}>
+                        <a className=""  >
+                            <span>Send Message</span>
+                        </a>
+                    </li>}
                     
                 </ul>
                 
@@ -106,7 +142,34 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
 
                 <div className='mt-3'  >
                     <textarea className='w-100 rounded p-2' ref={planMessageRef}>Your Doctortime subscription is expiring soon. Renew now to continue uninterrupted access to our valuable healthcare services and appointments</textarea>
-                    <button className='btn btn-primary  shadow-none' onClick={() => sendPlanMessage()}>Send Message</button>
+                    <button className='btn btn-primary  shadow-none mt-4' onClick={() => sendPlanMessage()}>Send Message</button>
+                </div> 
+            </Modal>}
+
+
+            { messageModal && <Modal
+                isOpen={messageModal}
+                setIsOpen={setMessageModal}
+                title='Send Message'
+                closeButton={false}
+                submitButton={false}
+            >
+                <div className='mt-3'  >
+                    <textarea className='w-100 rounded p-2' onBlur={( e ) => setMessageObj({ ...messageObj, message: e.target.value })} rows={5} placeholder='Write Message...'></textarea>
+
+                    <div className='my-3'>
+                        <Select
+                            isMulti={true}
+                            options={patients}
+                            getOptionLabel={({ name }) => name }
+                            getOptionValue={({ phone }) => phone }
+                            className={`form-control p-0`}
+                            classNamePrefix="select"
+                            placeholder="Select Patients"
+                            onChange={(e) => setMessageObj({ ...messageObj, patients: e })}
+                        />
+                    </div>
+                    <button className='btn btn-primary  shadow-none mt-4' onClick={() => sendPatientMessage()}>Send Message</button>
                 </div> 
             </Modal>}
         </>

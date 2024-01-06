@@ -25,6 +25,7 @@ export const MODULES = [
     {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'AD' ]},
     {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT', 'AD']},
     {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT', 'AD']},
+    {id: 'message', title: 'Message', pathname: '/message', access: ['PT']},
 ]
 
 export const PRIORITY = [
