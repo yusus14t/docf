@@ -786,12 +786,17 @@ const patients = async (body, user) => {
       );
       departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
     }
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
     let patients = await AppointmentModel.aggregate([
       {
         $match: {
           departmentId: {
             $in: departmentIds,
+          },
+          createdAt: {
+            $gte: sevenDaysAgo, // Filter appointments created in the last seven days
           },
         },
       },
