@@ -98,8 +98,6 @@ const editDoctor = async (body, user, file) => {
   try {
     body = JSON.parse(body?.data);
 
-    console.log( '><><><><', body )
-
     let userObj = {
       name: body?.name,
       email: body?.email,
@@ -109,6 +107,7 @@ const editDoctor = async (body, user, file) => {
       experience: body?.experience,
       aboutme: body?.aboutme,
       photo: body?.photo,
+      timing: body?.timing
     };
 
     if (body?.source !== "organization")
@@ -221,6 +220,7 @@ const getAllDoctors = async (body, user) => {
           address: 1,
           experience: 1,
           qualification: 1,
+          timing: 1
         },
       
       },
@@ -565,16 +565,17 @@ const createDoctor = async (body, user, image) => {
       if (image?.filename) await uploadToBucket(image.filename);
 
       doctor = await UserModel({
+        ...body,
         userType: "DR",
-        name: body?.name,
-        email: body?.email,
-        phone: body?.phone,
-        qualification: body?.qualification,
-        experience: body?.experience,
-        address: body?.address,
-        aboutme: body?.aboutme,
-        organizationId: body?.organizationId,
-        specialization: body?.specialization,
+        // name: body?.name,
+        // email: body?.email,
+        // phone: body?.phone,
+        // qualification: body?.qualification,
+        // experience: body?.experience,
+        // address: body?.address,
+        // aboutme: body?.aboutme,
+        // organizationId: body?.organizationId,
+        // specialization: body?.specialization,
         createdBy: user._id,
         photo: image?.filename,
         isActive: true,
