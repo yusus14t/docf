@@ -1,36 +1,38 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
+import OutsideWrapper from "./OutsideWrapper";
+import { Link } from "react-router-dom";
 
-
-export const Item = ({ children, ...rest }) => {
-    return(
-        <li class="dropdown-menu-header cursor-pointer dropdown-menu-active px-2 py-1" {...rest} >
+export const Item = ({ children, isActive, onClick = () => {}, to = null,  ...props }) => {
+    return (
+        !to ? <div className={`custom-dropdown-item cursor-pointer text-start ${isActive && 'custom-dropdown-item-active'}`}  {...props}  onClick={() => { onClick();
+            document.getElementById('dropdown-toogle').click()
+        }} >
             {children}
-        </li>
+        </div>
+
+        :
+        <Link to={to} className={`custom-dropdown-item cursor-pointer text-start d-flex ${isActive && 'custom-dropdown-item-active'}`}  {...props}  onClick={() => { onClick();
+            document.getElementById('dropdown-toogle').click()
+        }} >
+            {children}
+        </Link>
     )
 }
 
-export const Dropdown = ({ toggle, children }) => {
+export const Dropdown = ({ toggle, children, text = "Dropdown" }) => {
     const [isOpen, setIsOpen] = useState(false)
-    const wrapperRef = useRef(null)
 
-    const handleOutside = (event) => {
-        if(!wrapperRef.current.contains(event.target)){
-            setIsOpen(false)
-        }
-    }
-
-    useEffect(() => {
-        if(isOpen)  window.addEventListener('mousedown', handleOutside)
-        return() => window.removeEventListener('mousedown', handleOutside)
-    })
-    return(
-        <>  
-            <div className="dropdown" onClick={() => setIsOpen(!isOpen)} ref={wrapperRef}>
-                {toggle}
-                <ul class={`dropdown-menu dropdown-menu-end user-dropdown pb-0 ${ isOpen && 'show' }`} aria-labelledby="userDropdown" data-bs-popper="none" style={{ top: '3rem'}}>
+    return (
+        <OutsideWrapper callback={() => setIsOpen(false)}>
+            <div className="position-relative">
+                <div id="dropdown-toogle" onClick={() => setIsOpen(!isOpen)}>
+                    {toggle}
+                </div>
+                <div className={`custom-dropdown ${!isOpen && 'd-none'}`} style={{ width: 'max-content'}}>
+                    <p className="m-2 text-muted">{text}</p>
                     {children}
-                </ul>
+                </div>
             </div>
-        </>
+        </OutsideWrapper>
     )
 }

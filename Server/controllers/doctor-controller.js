@@ -95,7 +95,7 @@ const deleteDepartment = async ( req, res ) => {
 }
 
 const patients = async ( req, res ) => {
-    DoctorManager.patients( req.body, req.user )
+    DoctorManager.patients( req.query, req.user )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
@@ -130,6 +130,12 @@ const onlineBookingStatus = async ( req, res ) => {
     .catch( err => res.status(500).send(err.data) )
 }
 
+const sendMessage = async ( req, res ) => {
+    DoctorManager.sendMessage( req.body, req.user )
+    .then( result => res.status(result.code).send(result) )
+    .catch( err => res.status(500).send(err.data) )
+}
+
 module.exports = {
     getAppointments,
     editDoctor,
@@ -153,4 +159,5 @@ module.exports = {
     getClinics,
     anonymousAppointment,
     onlineBookingStatus,
+    sendMessage,
 }

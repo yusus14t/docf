@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { axiosInstance, convertTo12HourFormat } from '../../../constants/utils'
+import { axiosInstance, convertTo12HourFormat, truncate } from '../../../constants/utils'
 
 import { Link } from "react-router-dom";
 import NO_PHOTO from "../../../assets.app/images/no_images/no_hospital.jpg";
@@ -7,16 +7,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { getFullPath } from "../../../constants/utils";
 import { NUMBER_TO_DAY } from '../../../constants/constant';
-const HospitalGrid = ({source}) => {
+
+
+export default ({ source, hospitalType }) => {
+
   const [ hospitals, setHospitals] = useState([]);
 
   useEffect(() => {
     getHospitals()
-  }, [])
+  }, [ hospitalType,])
 
   const getHospitals = async () => {
     try {
-      let { data } = await axiosInstance.get('/hospitals')
+      let { data } = await axiosInstance.get('/hospitals', { params: { hospitalType }})
       setHospitals(data?.organization)
     } catch(error){ console.error(error) }
   }
@@ -63,7 +66,7 @@ const HospitalGrid = ({source}) => {
                       key={key}
                     >
                       <div className="hospitalCard ">
-                        <span className=" hospital-title">{hospital.name}</span>
+                        <span className=" hospital-title">{truncate(hospital.name, 28)}</span>
                         <div className="hospitalCard-background-img">
                           <img
                             className="hospitalCard-background-img"
@@ -124,4 +127,3 @@ const HospitalGrid = ({source}) => {
   );
 }
 
-export default HospitalGrid

@@ -1,3 +1,7 @@
+import doctorimg from '../assets.app/images/no_images/no_doctor.png'
+import clinicimg from '../assets.app/images/no_images/no_clinic.jpg'
+import hospitalimg from '../assets.app/images/no_images/no_hospital.jpg'
+import noimg from '../assets.app/images/no-photo.png'
 
 
 export const userRoutes = {
@@ -11,20 +15,21 @@ export const userRoutes = {
 } 
 
 export const MODULES = [
-    {id: 'dashboard', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR', 'AD']},
+    {id: '', title: 'Dashboard', pathname: '/', access: ['CL', 'DP', 'HL', 'PT', 'SA', 'MR', 'AD']},
     {id: 'patients', title: 'patient', pathname: '/patients', access: ['CL', 'DP', 'HL', 'SA' ]},
     {id: 'appointment', title: 'Appointment', pathname: '/appointment', access: [ ]},
-    {id: 'departments', title: 'Departments', pathname: '/departments', access: ['HL', 'SA', 'AD']},
+    {id: 'departments', title: 'Departments', pathname: '/departments', access: ['HL']},
     {id: 'clinic-registration', title: 'Clinics Registration', pathname: '/clinic-registration', access: [ 'MR']},
     {id: 'hospital-registration', title: 'Hospital Registration', pathname: '/hospital-registration', access: [ 'MR']},
     {id: 'clinics', title: 'Clinics', pathname: '/clinics', access: ['SA', 'MR','AD']},
-    {id: 'hospitals', title: 'Hospitals', pathname: '/hospitals', access: ['MR']},
+    {id: 'hospitals', title: 'Hospitals', pathname: '/hospitals', access: ['MR', 'SA', 'AD']},
     {id: 'doctors', title: 'Doctors', pathname: '/doctors', access: ['SA', 'HL', 'CL', 'DP', 'MR', 'AD']},
     {id: 'mr', title: 'MR', pathname: '/mr', access: ['SA', 'AD']},
     {id: 'contacts', title: 'Contacts', pathname: '/contacts', access: ['SA', 'AD']},
     {id: 'setting', title: 'Setting', pathname: '/setting', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'AD' ]},
     {id: 'notification', title: 'Notification', pathname: '/notification', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT', 'AD']},
     {id: 'support', title: 'Support', pathname: '/support', access: ['CL', 'DP', 'HL', 'SA', 'MR', 'PT', 'AD']},
+    {id: 'message', title: 'Message', pathname: '/message', access: ['PT']},
 ]
 
 export const PRIORITY = [
@@ -32,6 +37,11 @@ export const PRIORITY = [
     { label: 'Medium', value: 'medium' },
     { label: 'High', value: 'high' },
 ]
+export const DOCTOR_DEFAUL_IMG = doctorimg
+export const CLINIC_DEFAUL_IMG = clinicimg
+export const HOSPITAL_DEFAUL_IMG = hospitalimg
+export const NO_PHOTO = noimg
+
 
 export const DAYS = [
     { id:0, value: 'MON', day: 'Monday' },
@@ -46,7 +56,8 @@ export const DAYS = [
 export const WEB_MENU_ITEMS = [
          { id: "home", name: "Home", path: "/" },
          { id: "gynae", name: "Gynecologist", path: "/gynae" },
-         { id: "hospitals", name: "Hospitals", path: "/hospitals" },
+         { id: "hospitals", name: "Hospitals", isDropdown: true, },
+        //  { id: "gov-hospitals", name: "Government Hospitals", path: "/government-hospitals" },
          { id: "clinics", name: "Clinics", path: "/clinics" },
          { id: "doctors", name: "Doctors", path: "/doctors" },
          { id: "radiologist", name: "Radiologist", path: "/radiologist" },
@@ -138,6 +149,8 @@ export const PLAN = {
     halfYear: 'halfYear',
     year: 'year',
 }
+
+
 
 export const SETTING_TABS = [
     { name: 'Website', id: 'WEBSITE', access: ['SA', 'AD']},

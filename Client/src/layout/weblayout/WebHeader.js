@@ -27,18 +27,22 @@ const WebHeader = () => {
             <img className="logo" src={logo} alt="logo" />
           </Link>
         </div>
-
-        <div className="menu_item">
-          <ul className="ms-nav-list ms-inline mb-0" id="ms-nav-options">
+        <section className="menu_item">
+          <div className="ms-nav-list ms-inline mb-0">
             {
-              WEB_MENU_ITEMS.map( item => (
-                <li className="ms-nav-item  ms-d-none" key={item.id}>
-                  <NavLink to={item.path} className="text-white" data-bs-toggle="modal" >{item.name}</NavLink>
-                </li>
+              WEB_MENU_ITEMS.map(item => (
+                !item.isDropdown
+                  ? <NavLink to={item.path} className="text-white mx-2" data-bs-toggle="modal" >{item.name}</NavLink>
+                  : <Dropdown
+                      toggle={<div className="text-light cursor-pointer">{item.name}</div>}
+                    >
+                      <Item> <Link to={'/private-hospitals'} className="text-dark m-0 p-0" >Private Hospitals</Link> </Item>
+                      <Item> <Link to={'/government-hospitals'} className="text-dark m-0 p-0" >Government Hospitals</Link> </Item>
+                    </Dropdown>
               ))
-            } 
-          </ul>
-        </div>
+            }
+          </div>
+        </section>
         {isLogin ? (
           <div className="ms-nav-item ms-nav-user dropdown d-profile cursor-pointer">
             <Dropdown
@@ -49,21 +53,14 @@ const WebHeader = () => {
                   alt="people"
                 />
               }
+              text={`Welcome, ${ userInfo?.fullName || userInfo?.organizationId?.name || ""}`}
             >
-              <li className="dropdown-menu-header">
-                <h6 className="dropdown-header ms-inline m-0">
-                  <span className="text-disabled">Welcome, { userInfo?.fullName || userInfo?.organizationId?.name}</span>
-                </h6>
-              </li>
               <li className="dropdown-divider"></li>
 
-            {userInfo && <> 
-                <Link className="fs-14" to={userRoutes[userInfo.userType]?.path}>
-                  <li className="dropdown-menu-header cursor-pointer dropdown-menu-active px-3 py-1">
-                    <span>Dashboard</span> 
-                  </li>
-                </Link>
-                <Item onClick={() => Logout()}><span className="fs-14 p-2"><i className="flaticon-user"></i>Logout</span></Item>
+            {userInfo && <>
+              <Item to={userRoutes[userInfo.userType]?.path}>Dashboard
+              </Item>
+              <Item onClick={() => Logout()}>Logout</Item>
             </>}
           </Dropdown>
         </div>)

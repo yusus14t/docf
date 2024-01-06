@@ -113,6 +113,7 @@ const createHospital = async (body, userInfo) => {
         name: body?.name,
         email: body?.email,
         createdBy: userInfo?._id,
+        hospitalType: body?.hospitalType?.value
       }).save();
 
       let user = await UserModel({
@@ -315,7 +316,7 @@ const signUp = async (body, user) => {
       }).save();
     }
 
-    // console.log("----------> OTP ", otp);
+    console.log("----------> OTP ", otp);
 
     let response = { message: "otp Sent" };
     if (process.env.ENVIRONMENT !== "development") {
@@ -514,7 +515,7 @@ const clinicDetails = async (body) => {
 
 
     detail = JSON.parse(JSON.stringify(detail[0]));
-    let doctor = await UserModel.find({ organizationId: body._id, userType: 'DR'}, { name: 1, address: 1, photo: 1, specialization: 1, organizationId: 1  })
+    let doctor = await UserModel.find({ organizationId: body._id, userType: 'DR'}, { name: 1, address: 1, photo: 1, specialization: 1, organizationId: 1, timing: 1 })
     detail['doctors'] = doctor
 
     let hospital = await UserModel.findOne({ organizationId: body._id, userType: 'DP' }, { hospitalId: 1 })
@@ -665,7 +666,7 @@ const setUserType = async (body) => {
   }
 };
 
-const getAllHospitals = async (body, user) => {
+const getAllHospitals = async ( body ) => {
   try {
 
     let specialization = body?.filter?.specialization
@@ -675,6 +676,7 @@ const getAllHospitals = async (body, user) => {
     let organization = await OrganizationModel.find(
       {
         organizationType: "Hospital",
+        hospitalType: body.hospitalType || 'pvt',
         'billing.isPaid': true,
 
         ...( specialization

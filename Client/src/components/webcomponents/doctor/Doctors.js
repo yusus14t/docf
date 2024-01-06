@@ -1,30 +1,37 @@
 import React, { useEffect, useState } from "react";
 // import store from '../../redux/Store';
-import { axiosInstance, getAuthHeader, getFullPath } from "../../../constants/utils";
+import {
+  axiosInstance,
+  getAuthHeader,
+  getFullPath,
+  truncate,
+} from "../../../constants/utils";
 import nopic from "../../../assets.app/images/no_images/no_doctor.png";
-import { Navigate, Link } from "react-router-dom"
+import { Navigate, Link } from "react-router-dom";
 
 function DoctorsList({ source, filter }) {
   const [doctors, setDoctors] = useState([]);
-  
 
   useEffect(() => {
     getAllDoctors();
   }, []);
 
   const getAllDoctors = async () => {
-    try{
-      let { data } = await axiosInstance.get("/all-doctors", {params: { filter, source: 'doctor-page' }, ...getAuthHeader() });
+    try {
+      let { data } = await axiosInstance.get("/all-doctors", {
+        params: { filter, source: "doctor-page" },
+        ...getAuthHeader(),
+      });
       setDoctors(data?.doctors);
-    } catch(error){ 
-      console.error(error)
+    } catch (error) {
+      console.error(error);
     }
   };
-const handle = ()=>{
-  Navigate("/patient-login", {
-       state: { redirectTo: window.location.pathname },
-       })
-}
+  const handle = () => {
+    Navigate("/patient-login", {
+      state: { redirectTo: window.location.pathname },
+    });
+  };
   return (
     <div>
       <div className="box d-flex align-items-center">
@@ -67,16 +74,27 @@ const handle = ()=>{
                               </div>
 
                               <div className="dr-details">
-                                <h2 className="DRNAME">{doctor?.name}</h2>
+                                <h2 className="DRNAME">
+                                  {truncate(doctor?.name, 10)}
+                                </h2>
                                 <p className="mb-1 dr-spelialization">
-                                  {doctor?.specialization?.name ||
-                                    (doctor?.specialization?.length ? doctor?.specialization[0]?.name : '-')}
+                                  {/* {doctor?.specialization?.name ||
+                                    (doctor?.specialization?.length ? doctor?.specialization[0]?.name : '-')} */}
+                                  {truncate(
+                                    doctor?.specialization?.name ||
+                                      (doctor?.specialization?.length
+                                        ? doctor?.specialization[0]?.name
+                                        : "-"),
+                                    18
+                                  )}
                                 </p>
                                 <p className="mb-1 experience-dr">
-                                  Eperience :{ doctor?.experience || '-'}
+                                  Eperience :{doctor?.experience || "-"}
                                 </p>
-                                <p className="dr-qualifiction mb-1">Qualification {doctor?.qualification || '-'}</p>
-                                <p className="dr-address">{doctor?.address || '-'}</p>
+                                <p className="dr-qualifiction mb-1">Qualification {truncate(doctor?.qualification || '-' ,15 )}</p>
+                                <p className="dr-address">
+                                  {truncate(doctor?.address || "-", 50)}
+                                </p>
                               </div>
                             </div>
                           </Link>
@@ -91,7 +109,5 @@ const handle = ()=>{
     </div>
   );
 }
-
-
 
 export default DoctorsList;

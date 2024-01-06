@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import DoctorRegistration from '../common-components/registration/DoctorRegistration';
 import ClinicRegistartion2 from '../common-components/registration/ClinicRegistration2';
-import DealRegistration from '../common-components/registration/DealRegistration';
 import DepartmentRegistration from '../common-components/registration/DepartmentRegistration';
 import useToasty from '../../hooks/toasty';
-import { NumberFormat, axiosInstance, getAuthHeader, userInfo } from '../../constants/utils';
-import { useForm } from 'react-hook-form';
+import { NumberFormat, axiosInstance, getAuthHeader } from '../../constants/utils';
+import { Controller, useForm } from 'react-hook-form';
+import Select from 'react-select';
+
 
 const HospitalRegistartion = () => {
   const [tab, setTab] = useState("STEP1")
   const [organization, setOrganization] = useState({})
   const RID = JSON.parse(localStorage.getItem('RID')) || null
 
-  const { register, handleSubmit, formState: { errors }, reset, } = useForm({ onChange: true })
+  const { register, handleSubmit, formState: { errors }, reset, control } = useForm({ onChange: true })
   const toasty = useToasty()
 
   useEffect(() => {
@@ -142,6 +143,28 @@ const HospitalRegistartion = () => {
                         />
                       </div>
                     </div>
+
+                    <div className="col-sm-12 col-lg-6 mb-3">
+                        <label >Hospital Type</label>
+                        <div className="">
+                            <Controller
+                                control={control}
+                                name="hospitalType"
+                                rules={{ required: 'Hospital Type must be select' }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        isMulti={false}
+                                        options={[{ label: 'Private Hospital', value: 'pvt' }, { label: 'Government Hospital', value: 'gov'} ]}
+                                        className={`form-control p-0 ${errors.hospitalType ? 'border-danger' : ''}`}
+                                        classNamePrefix="select"
+                                    />
+                                )}
+                            />
+                        </div>
+                    </div>
+
+
                   </div>
                 </div>
                 <button className='btn btn-primary btn-md shadow-none' type='submit'>Save</button>

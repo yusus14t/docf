@@ -54,6 +54,7 @@ router.post('/payment', jwt_verify, commonController.payment);
 router.get('/plans', superAdminController.plans );
 router.get('/notice/:id', commonController.getNotice)
 router.get("/services", commonController.getServices)
+router.post('/website/:id', superAdminController.contactInfo );
 
 
 // stream: Event Driven  

@@ -151,6 +151,12 @@ const sendPLanMessage = async (req, res) => {
 
 }
 
+const setPaymentOption = async (req, res) => {
+    superAdminManager.setPaymentOption(req.body, req.user)
+        .then( result  => res.status(200).send(result) )
+        .catch(err => res.status(500).send(err.data))
+}
+
 module.exports = {
   getProfile,
   analytics,
@@ -176,4 +182,5 @@ module.exports = {
   deletePlan,
   getExpireOrganizations,
   sendPLanMessage,
+  setPaymentOption,
 };

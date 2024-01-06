@@ -55,6 +55,8 @@ const organizationSchema = new Schema({
     },
     createdBy: { type: Schema.Types.ObjectId },
     bookingStatus: { type: Boolean }, 
+    paymentOption: { type: Boolean, default: true }, 
+    hospitalType: { type: String, enum: [ 'gov', 'pvt' ], default: "pvt" }
 },{ timestamps:  true })
 
 module.exports = model('organization', organizationSchema)

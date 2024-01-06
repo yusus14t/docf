@@ -8,6 +8,7 @@ export const getAuthHeader = () => {
 // axios instance 
 export const axiosInstance = axios.create({
     baseURL:  `${ process.env.REACT_APP_SERVER_URL }/api`,
+    // baseURL:  `http://localhost:5000/api`,
     headers: {
         'Access-Control-Allow-Origin': '*',
         'auth-token': getAuthHeader()['headers']['auth-token'],
@@ -69,9 +70,22 @@ export const convertTo12HourFormat = (time24) => {
     const hours12 = parseInt(hours) % 12 || 12;
 
     return `${hours12}:${minutes} ${period}`;
-}
+  }
+
+export const truncate = (str,length)=>{
+    if(str?.length <= length) return str
+    return str?.substring(0,length) + "..."
+    }
 
 export const Logout = () => {
     localStorage.clear()
     window.location.replace('/login')
+}
+
+export const debounce = (func, timeout = 300) => {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
 }

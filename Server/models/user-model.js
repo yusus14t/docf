@@ -28,6 +28,21 @@ const userSchema = new Schema(
       isVerified: { type: Boolean, default: false },
     },
     createdBy: { type: Schema.Types.ObjectId },
+    timing: [
+      { 
+          day: { type: String },
+          open: { type: String },
+          close: { type: String },
+          morning: {
+              open: { type: String },
+              close: { type: String },
+          },
+          evening: {
+              open: { type: String },
+              close: { type: String },
+          },
+      }
+    ],
   },
   { timestamps: true }
 );
