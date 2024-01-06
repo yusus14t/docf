@@ -83,7 +83,7 @@ const hospitals = async ( body ) => {
         let today = new Date()
         today.setHours(0, 0, 0, 0)
 
-        let hospitals = await OrganizationModel.find({ organizationType: 'Hospital', ...( !!body.istoday ? { createdAt: { $gte: today } } : {} ) }, { name: 1, email: 1, photo: 1, phone: 1, registration: 1, fee: 1, adderss: 1, specialization: 1 })
+        let hospitals = await OrganizationModel.find({ organizationType: 'Hospital', ...( !!body.istoday ? { createdAt: { $gte: today } } : {} ) }, { name: 1, email: 1, photo: 1, phone: 1, registration: 1, fee: 1, adderss: 1, specialization: 1, paymentOption:1 })
         return Success({ hospitals });
     } catch ( error ) { 
         console.log(error)
@@ -419,15 +419,26 @@ const getExpireOrganizations = async ( params ) => {
 
 const sendPLanMessage = async (body ) => {
     try {
-        for( let phone of body.phones ){
-            await smsService(body.message, phone)
-        }
+        body.message = body.message + '\n-Doctor Time'
+        await smsService(body.message, String(body.phones))
+        
         return Success({});
     } catch ( error ) { 
         console.log(error)
         return Error()
     }
 }
+
+const setPaymentOption =  async ( body, user ) => {
+    try {
+        await OrganizationModel.updateOne({ _id: body._id }, { paymentOption: body.paymentOption })
+        return Success({});
+    } catch ( error ) { 
+        console.log(error)
+        return Error()
+    }
+}
+
 
 
 module.exports = {
@@ -455,4 +466,5 @@ module.exports = {
   deletePlan,
   getExpireOrganizations,
   sendPLanMessage,
+  setPaymentOption
 };

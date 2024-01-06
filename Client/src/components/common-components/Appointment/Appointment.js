@@ -3,7 +3,7 @@ import Modal from '../Modal';
 import { Controller, useForm } from 'react-hook-form';
 import Select from "react-select"
 import useToasty from '../../../hooks/toasty';
-import { axiosInstance, getAuthHeader, NumberFormat } from '../../../constants/utils';
+import { axiosInstance, debounce, getAuthHeader, NumberFormat } from '../../../constants/utils';
 import { useParams } from 'react-router-dom';
 
 const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => { } }) => {
@@ -37,7 +37,7 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
         }
     }
 
-    const saveAppointment = async (formData) => {
+    const saveAppointment = debounce(async (formData) => {
         try {
             if (!formData?.phone && !selected) {
                 setCardError('Card Must be select')
@@ -70,15 +70,15 @@ const Appointment = ({ isOpen, setIsOpen, departmentId = null, refresh = () => {
             toasty.error(error?.message)
             console.log(error)
         }
-    }
+    }, 600) 
 
-    const addAnonymous = async () => {
+    const addAnonymous = debounce(  async () => {
         try{
             await axiosInstance.post('/doctor/anonymous-appointment');
             refresh()
             setIsOpen(false)
         } catch(error){ console.error(error) }
-    }
+    }, 600)
 
     return (
         <Modal

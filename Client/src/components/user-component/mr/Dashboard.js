@@ -2,12 +2,10 @@ import React, {  useEffect, useState } from 'react';
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 
 import { Link } from 'react-router-dom';
-import { LineChart, DoughnutChart } from '../../common-components/Chart';
+import { DoughnutChart } from '../../common-components/Chart';
 import { axiosInstance, formatPhone, getAuthHeader, getFullPath } from '../../../constants/utils'
 
 const Dashbaord = () => {
-    const [isWeekChart, setIsWeekChart] = useState(true) 
-    const [chartData, setChartData] = useState({})
     const [hospitals, setHospitals] = useState({})
     const [clinics, setClinics] = useState({})
     const [ organizationChartData,setOrganizationChartData ] = useState([])
@@ -21,7 +19,6 @@ const Dashbaord = () => {
 
     useEffect(() => {
         getOrganizationAnalyitcs()
-        changeFilter('clinics')
         getHospitals()
         getClinics()
         getAnalytics()
@@ -56,37 +53,6 @@ const Dashbaord = () => {
         }catch(error){ console.error(error) }
     }
 
-    const changeFilter = (value) => {
-        let data = {
-            week: [],
-            month: []
-        }
-        if(value === 'clinics') {
-            data = {
-                week:  ['2', '5', '1', '2', '3', '7', '9'],
-                month: ['3', '1', '6', '9', '3', '6', '8','3','4','2','6', '2']
-            }
-        }
-        else if( value === 'hospitals') {
-            data = {
-                week:  ['4', '3', '5', '3', '7', '8', '9'],
-                month: ['6', '3', '7', '8', '4', '2', '6','3','9','5','8', '4']
-            }
-        }
-        else if( value === 'visits') {
-            data = {
-                week:  ['1', '2', '3', '4', '3', '2', '3'],
-                month: ['1', '2', '3', '4', '3', '2', '3','3','7','4','8', '4']
-            }
-        }
-        else if( value === 'doctors') {
-            data = {
-                week:  ['6', '3', '6', '4', '8', '3', '6'],
-                month: ['5', '2', '4', '7', '8', '9', '6','5','4','2','4', '4']
-            }
-        }
-        setChartData(data)
-    } 
 
     return (
         <div className='ms-content-wrapper '>
@@ -167,7 +133,7 @@ const Dashbaord = () => {
                         </div>
                         <div class="d-flex justify-content-around align-items-center ">
                             <div className='text-center' style={{ height:'20rem', width:'20rem' }}>
-                                <DoughnutChart filterType={isWeekChart ? 'week' : 'month' } labelName={'Patient'} chartData={organizationChartData} />
+                                <DoughnutChart filterType={'week'} labelName={'Patient'} chartData={organizationChartData} />
                             </div>
                         </div>
                     </div>

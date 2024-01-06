@@ -6,10 +6,11 @@ import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons'
 import ImgUpload from '../Imgupload';
 import Select from "react-select";
 import useToasty from '../../../hooks/toasty';
+import { DAYS } from '../../../constants/constant';
 
 
 const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModal = () => {}, refresh = () => {} }) => {
-  const { register, handleSubmit, reset, formState: { errors }, control, watch } = useForm({ onChange: true })
+  const { register, handleSubmit, reset, formState: { errors }, control, watch, setError, getValues, setValue } = useForm({ onChange: true })
 
   const [doctors, setDoctors] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null)
@@ -17,6 +18,8 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
   const [specialization, setSpecialization] = useState([])
   const [departments, setDepartments] = useState([]);
   const RID = JSON.parse(localStorage.getItem('RID'))
+  const [ days, setDays ] = useState(DAYS)
+  const [ timing, setTiming ] = useState([]);
 
   const toasty = useToasty()
 
@@ -77,6 +80,8 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
         values['tab'] = tab
       }
       
+      values['timing'] = timing
+
       let formData = new FormData()
       formData.append('data', JSON.stringify(values))
       formData.append('image', selectedImage)
@@ -111,6 +116,9 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
         refresh()
       }
 
+      setTiming([])
+      setDays(DAYS)
+
       setEditImage(null)
       reset({ name: null, email: null, qualification: null, experience: null, specialization: null, address: null, phone: null })
       toasty.success(response?.data?.message)
@@ -132,23 +140,35 @@ const DoctorRegistration = ({ tab, setTab, organization = {}, source='', setModa
     }
   }
 
-  const handleNext = () => {
-    if( !doctors.length ) {
-      toasty.error('Atleast one doctor created')
-      return
-    }
+  const Finish = () => {
+    localStorage.removeItem("RID");
+    window.location.reload();
+  };
 
-    setTab('FINAL')
-  }
-const Finish = () => {
-  localStorage.removeItem("RID");
-  window.location.reload();
-};
   const handleEdit = (doctor) => {
     setEditImage(getFullPath(doctor?.photo))
     reset(doctor)
   }
 
+  const handleTime = () => {
+    let time = getValues('timing')
+
+    if( !time?.day ) setError('timing.day', { message: 'Day is required'})
+    if( !time?.open ) setError('timing.open', { message: 'Open time is required'})
+    if( !time?.close ) setError('timing.close', { message: 'Close time is required'})
+
+    let day = timing.find( t => t.day === time.day )
+    if( !day && time?.day && time?.open && time?.close ){
+        setTiming([ ...timing, JSON.parse(JSON.stringify(time)) ])
+        setDays( old => old.filter( d => d.value !== time.day ))
+        setValue('timing', { day: '', open: '', close: ''})
+    }
+  }
+
+  const handleDeleteTime = (time) => {
+    setTiming( old => old.filter( t => t.day !== time.day ))
+    setDays( old => ([ DAYS.find( d => d.value === time.day ), ...old].sort((a, b) => a.value - b.value )))
+  }   
 
   return (
     <div className='row'>
@@ -302,9 +322,72 @@ const Finish = () => {
                 />
               </div>
             </div>
+            
+            <div className="px-2">
+              <div className="alert alert-danger border-0  p-2 mb-2 mt-4">
+                <div className="d-flex justify-content-around">
+                  <div>Day</div>
+                  <div>Open</div>
+                  <div>Close</div>
+                  <div>Action</div>
+                </div>
+              </div>
+
+              {timing?.length > 0 &&
+                timing.map(time => <div className="alert alert-secondary border-0 p-2">
+                  <div className="d-flex justify-content-around">
+                    <div>{time.day}</div>
+                    <div>{time.open}</div>
+                    <div>{time.close}</div>
+                    <div>
+                      <FontAwesomeIcon className=' mx-3 cursor-pointer' icon={faTrash} onClick={() => handleDeleteTime(time)} />
+                    </div>
+                  </div>
+                </div>)}
+            </div>
+
+            {days?.length > 0 && <div className="row px-2">
+              <div className="col-md-12 mb-3">
+                <label className=''>Timming</label>
+                <div className='row' style={{ paddingRight: 0 }}>
+                  <div className="col">
+                    <label htmlFor="">Days</label>
+                    <select name="days"
+                      className={`form-control ${errors?.timing?.day ? 'border-danger' : ''}`}
+                      {...register('timing.day')} >
+                      {days.map((day) => <option value={day.value} >{day.day}</option>)}
+                    </select>
+                  </div>
+                  <div className='col '>
+                    <label htmlFor="#open">Open</label>
+                    <input type="time"
+                      id='open'
+                      className={`form-control ${errors?.timing?.open ? 'border-danger' : ''}`}
+                      placeholder="morning 10am to 12pm"
+                      {...register('timing.open')}
+                    />
+                  </div>
+                  <div className='col '>
+                    <label className=''>Close</label>
+                    <input type="time"
+                      className={`form-control ${errors?.timing?.close ? 'border-danger' : ''}`}
+                      placeholder="morning 10am to 12pm"
+                      {...register('timing.close')}
+                    />
+                  </div>
+                  <div className=''>
+                    <button type='button' style={{ minWidth: "60px" }} className='btn btn-1 btn-primary mt-4 p-1 px-1 shadow-none' onClick={() => handleTime()}> Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>}
+            
+
+
+            
             <div className="actions btn-submit mb-2">
               <button type="submit" className="btn btn-primary shadow-none mx-2" >Save Doctor</button>
-                          <button onClick={Finish} className="btn btn-primary btn-md">Finish</button>
+              { source !== "modal" && <button onClick={Finish} className="btn btn-primary btn-md">Finish</button>}
 
             </div>
           </div>

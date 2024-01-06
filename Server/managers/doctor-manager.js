@@ -1,11 +1,6 @@
 const AppointmentModel = require("../models/appointment-model");
 const SettingModel = require("../models/setting-model");
-const {
-  Success,
-  Error,
-  uploadToBucket,
-  Payment,
-} = require("../constants/utils");
+const { Success, Error, uploadToBucket, Payment, smsService } = require("../constants/utils");
 const UserModel = require("../models/user-model");
 const ObjectId = require("mongoose").Types.ObjectId;
 const OrganizationModel = require("../models/organization-model");
@@ -103,8 +98,6 @@ const editDoctor = async (body, user, file) => {
   try {
     body = JSON.parse(body?.data);
 
-    console.log( '><><><><', body )
-
     let userObj = {
       name: body?.name,
       email: body?.email,
@@ -114,6 +107,7 @@ const editDoctor = async (body, user, file) => {
       experience: body?.experience,
       aboutme: body?.aboutme,
       photo: body?.photo,
+      timing: body?.timing
     };
 
     if (body?.source !== "organization")
@@ -139,9 +133,12 @@ const getAllDoctors = async (body, user) => {
     let query = {};
 
     if (user?.userType === "MR") query["createdBy"] = user?._id;
+
     else if (["CL", "DP"].includes(user?.userType)) {
       query["organizationId"] = user.organizationId;
+
     } else if (user?.userType === "HL") {
+
       let departmentIds = await UserModel.find(
         { hospitalId: user.organizationId, primary: true },
         { organizationId: 1 }
@@ -149,20 +146,20 @@ const getAllDoctors = async (body, user) => {
 
       departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
       query["organizationId"] = { $in: departmentIds };
+
     } else if (user && !["SA", 'AD'].includes(user.userType)) {
-             query["createdBy"] = user._id;
-           }
+      query["createdBy"] = user._id;
+    }
 
     if (body?.source === "doctor-page") {
       let paidDepartmentIds = await OrganizationModel.find(
         {
           "billing.isPaid": true,
           organizationType: { $in: ["Clinic", "Department"] },
-        },
-        { _id: 1 }
+        }, { _id: 1 }
       );
-      paidDepartmentIds = paidDepartmentIds.map((id) => ObjectId(id._id));
 
+      paidDepartmentIds = paidDepartmentIds.map((id) => ObjectId(id._id));
       query["organizationId"] = { $in: paidDepartmentIds };
     }
 
@@ -173,11 +170,28 @@ const getAllDoctors = async (body, user) => {
           isActive: true,
           primary: false,
           ...query,
+
           ...(body?.filter?.specialization
             ? { "specialization.name": body?.filter?.specialization }
             : {}),
+
+          ...(body?.search ? {
+            name: {
+              $regex: body.search,
+              $options: 'i'
+            }
+          } : {}),
+  
+          ...( body?.filter?.city ? {
+            address: {
+              $regex: body.filter.city,
+              $options: 'i'
+            }
+          } : {} ),
+
         },
       },
+
       {
         $lookup: {
           from: "organizations",
@@ -206,6 +220,7 @@ const getAllDoctors = async (body, user) => {
           address: 1,
           experience: 1,
           qualification: 1,
+          timing: 1
         },
       
       },
@@ -246,36 +261,26 @@ const addAppointment = async (body, user) => {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    if (user.userType !== "PT") {
-      let lastAppointment = await AppointmentModel.findOne(
-        {
-          departmentId: ObjectId(body.department.organizationId),
-          createdAt: { $gte: today },
-          isPaid: true,
-        },
-        { token: 1 }
-      ).sort({ token: -1 });
+    // if (user.userType !== "PT") {
 
-      token = lastAppointment?.token ? ++lastAppointment.token : 1;
-    }
+    let lastAppointment = await AppointmentModel.findOne(
+      {
+        departmentId: ObjectId(body.department.organizationId),
+        createdAt: { $gte: today },
+        isPaid: true,
+      },  { token: 1 }
+    ).sort({ token: -1 });
+    
+    token = lastAppointment?.token ? ++lastAppointment.token : 1;
+    // }
 
     let patient = await UserModel.findOne(
       { phone: body.phone, userType: "PT" },
       { name: 1, userType: 1, phone: 1, address: 1 }
     );
 
-    if (!patient)
-      patient = await UserModel({
-        ...body,
-        userType: "PT",
-        primary: true,
-      }).save();
-    else if (body?.isAnother)
-      patient = await UserModel({
-        ...body,
-        userType: "PT",
-        primary: false,
-      }).save();
+    if (!patient)  patient = await UserModel({ ...body,  userType: "PT",  primary: true }).save();
+    else if (body?.isAnother) patient = await UserModel({ ...body, userType: "PT", primary: false }).save();
 
     let appointment = await AppointmentModel.findOne({
       userId: patient._id,
@@ -286,13 +291,14 @@ const addAppointment = async (body, user) => {
 
     if (!appointment) {
       appointment = await AppointmentModel({
-        token,
+        token: user.userType === "PT" ? null : token,
         userId: patient._id,
         departmentId: body.department.organizationId,
         createdBy: user._id,
         created: user._id,
         isPaid: user.userType === "PT" ? false : true,
       }).save();
+
     } else {
       return Error({ message: "Already in your waiting list." });
     }
@@ -300,7 +306,7 @@ const addAppointment = async (body, user) => {
     let Obj = {
       _id: appointment._id,
       departmentId: appointment.departmentId,
-      token,
+      token: appointment.token,
       user: {
         _id: patient._id,
         name: patient.name,
@@ -310,39 +316,44 @@ const addAppointment = async (body, user) => {
     };
 
     if (user.userType === "PT") {
+
       let redirectUrl = null;
       let patientPrice = await SettingModel.findOne(
         { id: "PAYMENT", "data.organization": "patient" },
         { data: 1 }
       );
 
+      let organization = await OrganizationModel.findOne({ _id: appointment.departmentId }, { organizationType: 1, hospitalId: 1, paymentOption: 1 })
+      if (organization.organizationType === "Department") {
+        let depart = await UserModel.findOne({ organizationId: organization._id }, { hospitalId: 1 })
+        organization = await OrganizationModel.findOne({ _id: depart.hospitalId }, { paymentOption: 1 })
+      }
+
+
+      if (!organization.paymentOption) {
+        await AppointmentModel.updateOne({ _id: appointment._id }, { isPaid: true, token })
+        Obj.token = token
+        
+        eventEmitter.emit("new-appointment", { data: Obj });
+        return Success({ message: "Appointment addedd successfully" });
+      }
+
       let txnId = new Date().getTime()
-      let payment = new Payment(
-        // appointment._id,
-        txnId,
-        patientPrice.data.get("price")
-      );
+      let payment = new Payment(txnId, patientPrice.data.get("price"));
 
       let { data: paymentData } = await payment.create_payment();
-      await transactionModel({ id : txnId, appointmentId: appointment._id }).save()
-      if (paymentData?.success)
-        redirectUrl = paymentData.data.instrumentResponse.redirectInfo.url;
+      await transactionModel({ id: txnId, appointmentId: appointment._id }).save()
 
-      return Success({
-        message: "Appointment successfully created",
-        appointment: null,
-        redirectUrl,
-      });
+      if (paymentData?.success) redirectUrl = paymentData.data.instrumentResponse.redirectInfo.url;
+
+      return Success({  message: "Appointment successfully created", appointment: null,  redirectUrl });
+
     } else {
-      eventEmitter.emit("new-appointment", {
-        event: "new-appointment",
-        data: Obj,
-      });
-      return Success({
-        message: "Appointment successfully created",
-        appointment: Obj,
-      });
+      eventEmitter.emit("new-appointment", { event: "new-appointment", data: Obj });
+      return Success({ message: "Appointment successfully created",  appointment: Obj });
     }
+
+
   } catch (error) {
     console.log(error);
     return Error();
@@ -554,16 +565,17 @@ const createDoctor = async (body, user, image) => {
       if (image?.filename) await uploadToBucket(image.filename);
 
       doctor = await UserModel({
+        ...body,
         userType: "DR",
-        name: body?.name,
-        email: body?.email,
-        phone: body?.phone,
-        qualification: body?.qualification,
-        experience: body?.experience,
-        address: body?.address,
-        aboutme: body?.aboutme,
-        organizationId: body?.organizationId,
-        specialization: body?.specialization,
+        // name: body?.name,
+        // email: body?.email,
+        // phone: body?.phone,
+        // qualification: body?.qualification,
+        // experience: body?.experience,
+        // address: body?.address,
+        // aboutme: body?.aboutme,
+        // organizationId: body?.organizationId,
+        // specialization: body?.specialization,
         createdBy: user._id,
         photo: image?.filename,
         isActive: true,
@@ -713,12 +725,9 @@ const createDepartment = async (body, userInfo, file) => {
 const getDepartments = async (body, user) => {
   try {
     let query = {
-      hospitalId:
-        user.userType === "HL" ? user.organizationId : body?.organizationId,
+      hospitalId: user.userType === "HL" ? user.organizationId : body?.organizationId,
       userType: "DP",
     };
-
-    if (["SA", 'AD'].includes(user.userType)) query = { userType: "DP" };
 
     let organizations = await UserModel.find(query).populate("organizationId").sort({ createdAt: -1 });
     return Success({ organizations });
@@ -769,6 +778,13 @@ const patients = async (body, user) => {
       );
       departmentIds = departmentIds.map((d) => ObjectId(d.organizationId));
     }
+ 
+    let today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    let past7day = new Date()
+  
+    past7day.setDate( past7day.getDate() - 7 )
 
     let patients = await AppointmentModel.aggregate([
       {
@@ -776,6 +792,10 @@ const patients = async (body, user) => {
           departmentId: {
             $in: departmentIds,
           },
+
+          createdAt: {
+            $gte: body?.isToday ? today : past7day
+          }
         },
       },
       {
@@ -796,6 +816,11 @@ const patients = async (body, user) => {
       },
       { $unwind: "$user" },
       {
+        $sort: {
+          createdAt : -1
+        }
+      },
+      {
         $project: {
           name: "$user.name",
           age: "$user.age",
@@ -804,6 +829,7 @@ const patients = async (body, user) => {
           address: "$user.address",
           createdAt: { $first: "$createdAt" },
         },
+       
       },
     ]);
     return Success({ patients });
@@ -944,6 +970,19 @@ const onlineBookingStatus = async (body, user) => {
   }
 };
 
+const sendMessage = async (body, user) => {
+  try {
+    const numbers = body?.patients?.map(({ phone }) => phone )
+    body.message = body.message + '\n-Doctor Time'
+
+    await smsService( body?.message, String(numbers) )
+    return Success({ message: "Message Sent" });
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getAppointments,
   editDoctor,
@@ -967,4 +1006,5 @@ module.exports = {
   getClinics,
   anonymousAppointment,
   onlineBookingStatus,
+  sendMessage,
 };

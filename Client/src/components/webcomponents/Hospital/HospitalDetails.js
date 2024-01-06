@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import background from "../../../assets.app/img/user-profile-bg-1920x400.jpg";
+import background from "../../../assets.app/images/no_images/no-banner.jpg";
 import DepartmentCard from "./DepartmentCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
@@ -55,7 +55,6 @@ const HospitalDetails = () => {
         <img className="hopsiptal-banner-img" src={hospital?.photo ? getFullPath(hospital?.photo) : background} alt="" />
       </div>
       <div className="p-4">
-          {/* <DepartmentCard /> */}
           <div className="row">
             <div className="col-md-8">
               {departments.length > 0 && <DepartmentCard departments={departments} />}

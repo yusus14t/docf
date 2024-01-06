@@ -957,12 +957,12 @@ input::-webkit-inner-spin-button {
   /* background-color: #00bf63c7; */
 
   /* background-color: lightblue; */
-  background-color: #0076d7;
+  /* background-color: #0076d7; */
+  background-color: #053d42;
   /* border-radius: 6px; */
 }
 .clinic-detail-img-container {
   position: relative;
-  top: 130px;
   margin-left: 40px;
 }
 .clinic-detail-img {
@@ -1002,12 +1002,12 @@ input::-webkit-inner-spin-button {
   padding: 15px;
 }
 .current-clicnic-token {
-  width: 135px;
-  height: 100px;
+  width: fit-content;
+  height: fit-content;
   color: white;
   border-radius: 12px;
   background-color: #0076d7;
-  margin: 5% 0 200px 48% !important;
+  /* margin: 5% 0 200px 48% !important; */
 }
 .bookappoint {
   z-index: 999;
@@ -1148,7 +1148,7 @@ input::-webkit-inner-spin-button {
   white-space: wrap;
   width: 190px;
   width: 200px;
-  text-align: justify;
+  /* text-align: justify; */
   font-weight: bold;
 }
 .hospital-address:hover {

@@ -1,59 +1,75 @@
-import background from "../../assets.app/img/user-profile-bg-1920x400.jpg";
-import { axiosInstance, convertTo12HourFormat, formatPhone, getAuthHeader, getFullPath } from "../../constants/utils";
+import background from "../../assets.app/images/no_images/no-banner.jpg";
+import {
+  axiosInstance,
+  convertTo12HourFormat,
+  formatPhone,
+  getAuthHeader,
+  getFullPath,
+} from "../../constants/utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
 import events from "../../events";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarPlus, faEnvelope, faMapMarker,  faPhone, } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarPlus,
+  faEnvelope,
+  faMapMarker,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 import { FULLDAY } from "../../constants/constant";
-
+import DoctorCard from "../card/DoctorCard";
 
 function Detail() {
   const params = useParams();
   const [clinicDetail, setClinicDetail] = useState({});
   const [waitingList, setWaitingList] = useState([]);
   const [unreachedList, setUnreachedList] = useState([]);
-  const [token, setToken] = useState('00')
+  const [token, setToken] = useState("00");
   const [isOpen, setIsOpen] = useState(false);
-  const [timing, setTiming] = useState([])
-  const [ isBookingStatus, setIsBookingStatus ] = useState(false)
+  const [timing, setTiming] = useState([]);
+  const [isBookingStatus, setIsBookingStatus] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("user"));
-  const [notices, setNotices] = useState([])
+  const [notices, setNotices] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
 
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     getWaitingList();
     getClinicDetail();
     getNotices();
     getUnreachedList();
 
-    events.addEventListener('re-appointment', ( event ) => reAppointmentHandler( JSON.parse(event.data) )) 
-    events.addEventListener('new-appointment', ( event ) => newAppointmentHandler( JSON.parse(event.data) ))
-    events.addEventListener('status', ( event ) => statusEventHandler( JSON.parse(event.data) )) 
-    events.addEventListener('booking-status', ( event ) => bookingEventHandler( JSON.parse(event.data) )) 
-
+    events.addEventListener("re-appointment", (event) =>
+      reAppointmentHandler(JSON.parse(event.data))
+    );
+    events.addEventListener("new-appointment", (event) =>
+      newAppointmentHandler(JSON.parse(event.data))
+    );
+    events.addEventListener("status", (event) =>
+      statusEventHandler(JSON.parse(event.data))
+    );
+    events.addEventListener("booking-status", (event) =>
+      bookingEventHandler(JSON.parse(event.data))
+    );
   }, []);
 
-  let newAppointmentHandler = ( event ) => {
-    getWaitingList()
-  }
+  let newAppointmentHandler = (event) => {
+    getWaitingList();
+  };
 
-  let reAppointmentHandler = ( event ) => {
-  }
-  
-  const statusEventHandler = ( event ) => {
-    getClinicDetail()
-    getWaitingList()
-    getUnreachedList()
-  }
+  let reAppointmentHandler = (event) => {};
 
-  const bookingEventHandler = ( status ) => {
-    setIsBookingStatus( status.bookingStatus )
-  }
+  const statusEventHandler = (event) => {
+    getClinicDetail();
+    getWaitingList();
+    getUnreachedList();
+  };
 
+  const bookingEventHandler = (status) => {
+    setIsBookingStatus(status.bookingStatus);
+  };
 
   const getClinicDetail = async () => {
     try {
@@ -61,17 +77,15 @@ function Detail() {
         params: { _id: params.id },
         ...getAuthHeader(),
       });
-      let detail = data?.detail
+      let detail = data?.detail;
       setClinicDetail(detail);
-      setTiming(detail?.timing)
-      let token = '00'
-      token = detail?.token < 10  ? 
-              `0${detail?.token}` : 
-              detail?.token || '000'
+      setTiming(detail?.timing);
+      let token = "00";
+      token = detail?.token < 10 ? `0${detail?.token}` : detail?.token || "000";
 
-      setToken( token )
+      setToken(token);
 
-      setIsBookingStatus( data.detail?.bookingStatus )
+      setIsBookingStatus(data.detail?.bookingStatus);
     } catch (error) {
       console.error(error);
     }
@@ -79,9 +93,12 @@ function Detail() {
 
   const getWaitingList = async () => {
     try {
-      let { data } = await axiosInstance.get(`/waiting-list/${params.id}`, getAuthHeader());
+      let { data } = await axiosInstance.get(
+        `/waiting-list/${params.id}`,
+        getAuthHeader()
+      );
 
-      setWaitingList(data?.appointment)
+      setWaitingList(data?.appointment);
     } catch (error) {
       console.error(error);
     }
@@ -107,47 +124,50 @@ function Detail() {
     setIsOpen(true);
   };
 
-
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
   const getNotices = async () => {
     try {
-      let { data } = await axiosInstance.get(`/notice/${params.id}`)
-      setNotices(data?.notices)
-    } catch (error) { console.error(error) }
-  }
+      let { data } = await axiosInstance.get(`/notice/${params.id}`);
+      setNotices(data?.notices);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const getTiming = ( short, full, source ) => {
-    let day = timing.find( time => time.day === short )
+  const getTiming = (short, full, source) => {
+    let day = timing.find((time) => time.day === short);
 
-    if( source === 'Clinic'  ){
-      return(
+    if (source === "Clinic") {
+      return (
         <tr>
-          <td>{ full }</td>
-          <td>{ convertTo12HourFormat(day?.morning?.open) }</td>
-          <td>{ convertTo12HourFormat(day?.morning?.close) }</td>
-          <td>{ convertTo12HourFormat(day?.evening?.open) }</td>
-          <td>{ convertTo12HourFormat(day?.evening?.close) }</td>
+          <td>{full}</td>
+          <td>{convertTo12HourFormat(day?.morning?.open)}</td>
+          <td>{convertTo12HourFormat(day?.morning?.close)}</td>
+          <td>{convertTo12HourFormat(day?.evening?.open)}</td>
+          <td>{convertTo12HourFormat(day?.evening?.close)}</td>
         </tr>
-      )
+      );
     } else {
       return (
         <tr>
-          <td>{ full }</td>
-          <td>{ convertTo12HourFormat(day?.open) }</td>
-          <td>{ convertTo12HourFormat(day?.close) }</td>
+          <td>{full}</td>
+          <td>{convertTo12HourFormat(day?.open)}</td>
+          <td>{convertTo12HourFormat(day?.close)}</td>
         </tr>
-      )
-
+      );
     }
-  }
+  };
+
+
+  
 
   return (
     <>
       <div className="">
         <div className="box"></div>
-        <div
+        {/* <div
           className="clinicbanner"
           style={{
             backgroundImage: `url(${
@@ -165,19 +185,10 @@ function Detail() {
 
           <div className="d-flex flex-row  clinic-detail-img-container ">
             <div className="d-flex flex-row  justify-content-between  ">
-              {/* <img
-                className="clinic-detail-img"
-                src={
-                  clinicDetail?.doctors
-                    ? getFullPath(clinicDetail?.doctors[0]?.photo)
-                    : NO_PHOTO
-                }
-                alt=""
-              /> */}
+              
               <div className="mt-5 clinic-detail-mobile">
                 <h4 className="text-light clinic-detail-drName rounded mt-4">
-                  {/* {clinicDetail?.doctor?.name}
-                    {clinicDetail?.name} */}
+                 
                   {clinicDetail.doctor?.name}
                 </h4>
                 {clinicDetail.organizationType !== "Clinic" && (
@@ -197,7 +208,6 @@ function Detail() {
                 </h6>
                 {clinicDetail?.room && (
                   <h4 className="text-light clinic-detail-drName rounded">
-                    {/* {clinicDetail?.doctor?.name} */}
                     Room No: {clinicDetail?.room}
                   </h4>
                 )}
@@ -210,6 +220,74 @@ function Detail() {
               <h1 style={{ position: "absolute", left: "15%", top: "15%" }}>
                 {token}
               </h1>
+            </div>
+          </div>
+        </div> */}
+
+        <div className="row mx-0 p-0">
+          <div className="col-lg-6 col-sm-12 col-md-12">
+            <div style={{ width: "100%", height: "300px" }}>
+              <img
+                className="w-100 h-100 rounded"
+                src={
+                  clinicDetail?.photo
+                    ? getFullPath(clinicDetail?.photo)
+                    : background
+                }
+              />
+            </div>
+          </div>
+          <div
+            style={{ height: "300px", border: "5px solid #053d42" }}
+            className="col-lg-6 p-0 bg-light  rounded"
+          >
+            <div style={{ width: "100%", padding: "0" }}>
+              <h4 className="clinic-detail-name ">
+                {clinicDetail?.hospital?.name || clinicDetail.name}
+              </h4>
+              {/* <h6
+                style={{ display: "inline-block" }}
+                className="text-light clinic-detail-drName rounded"
+              >
+                {clinicDetail?.specialization?.map((spe) => spe.name) ||
+                  "Specialization"}
+              </h6> */}
+            </div>
+            <div className="d-flex flex-row mt-5 justify-content-between mx-2">
+              <div className="d-flex flex-row  justify-content-between  ">
+                <div className="clinic-detail-mobile">
+                  {/* <h4 className="text-light clinic-detail-drName rounded mt-4">
+                    
+                      {clinicDetail.doctor?.name}
+                    </h4> */}
+                  {clinicDetail.organizationType !== "Clinic" && (
+                    <>
+                      <h4 className="text-light clinic-detail-drName rounded">
+                        Dept. {clinicDetail.name}{" "}
+                      </h4>
+                    </>
+                  )}
+
+                  <h6
+                    style={{ display: "inline-block" }}
+                    className="text-light clinic-detail-drName rounded"
+                  >
+                    {clinicDetail?.specialization?.map((spe) => spe.name) ||
+                      "Specialization"}
+                  </h6>
+                  {clinicDetail?.room && (
+                    <h4 className="text-light clinic-detail-drName rounded">
+                      Room No: {clinicDetail?.room}
+                    </h4>
+                  )}
+                </div>
+              </div>
+              <div
+                className="current-clicnic-token ml-5 d-flex flex-row"
+                style={{ position: "relative" }}
+              >
+                <h1 className="px-2">{token}</h1>
+              </div>
             </div>
           </div>
         </div>
@@ -235,26 +313,26 @@ function Detail() {
             <div className="col-md-6 ">
               <div className="wating-area-clinic">
                 <div className="d-flex justify-content-center waitinglistContainer">
-                  <span className="text-center bg-success p-2">
+                  <div className="text-center bg-success p-2">
                     <button
                       onClick={() => handleTabClick(0)}
-                      className={`btn position-inline p-2 btn-primary waitinglist  ${
+                      className={`rounded position-inline p-2 btn-primary waitinglist  ${
                         activeTab === 0 ? "activeList" : ""
                       }`}
                     >
                       Waiting List
                     </button>
-                  </span>
-                  <span className="text-center bg-success p-2">
+                  </div>
+                  <div className="text-center bg-success p-2">
                     <button
                       onClick={() => handleTabClick(1)}
-                      className={`btn position-inline p-2 btn-primary waitinglist ${
+                      className={`rounded position-inline p-2 btn-primary waitinglist ${
                         activeTab === 1 ? "activeList" : ""
                       }`}
                     >
                       Unreached List
                     </button>
-                  </span>
+                  </div>
                 </div>
                 {activeTab === 0 && (
                   <div className="token-list-container  rounded ">
@@ -355,6 +433,11 @@ function Detail() {
                   </div>
                 )}
               </div>
+              {/* doctors list */}
+              {clinicDetail?.doctors?.length > 0 && <section>
+                <h5>Doctors</h5>
+               <div className="row">{clinicDetail?.doctors?.map((doc)=><DoctorCard doctor={doc}/>)}</div>
+                </section>}
             </div>
 
             {/* INFO CARD */}
@@ -428,6 +511,8 @@ function Detail() {
               </div>
             </div>
           </div>
+
+          
 
           {/* CONTACT CARD */}
           <div className="contact-details-clinic pt-3">

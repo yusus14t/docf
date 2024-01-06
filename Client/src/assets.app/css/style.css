@@ -1023,7 +1023,7 @@ button > .material-icons{
   width: 100%;
   border-radius: 0;
   /* background:#112C2F; */
-  background: #305f1c;
+  background: #112c2f;
   border-bottom: 1px solid rgba(0, 0, 0, .1);
   padding: 0 30px;
   z-index: 900;
@@ -1088,19 +1088,13 @@ body:not(.ms-aside-left-open) .ms-aside-toggler .ms-toggler-bar {
   vertical-align: middle;
 }
 .active{
-  background-color: yellow;
-  padding: 10px 3px 10px 3px;
   border-radius: 6px;
-  background-color: #093c;
+  background-color: #9dffb1;
+  color: #000 !important;
 }
-.menu_item a{
-  padding:  1.1rem 15px;
-}
-.menu_item  a:hover {
-  border-radius: 6px;
-  padding:  1.1rem 15px;
 
-  background-color: #093c;
+.menu_item a{
+  padding:  0.6rem 1rem;
 }
 
 .ms-navbar li.ms-nav-item .ms-user-img {
@@ -9050,4 +9044,32 @@ body:not(.ms-settings-open) .ms-settings-toggle:hover {
     max-width: 1000px;
     margin: auto;
   }
+}
+
+
+.custom-dropdown {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  background: #fff;
+  min-width: 10rem;
+  max-width: 13rem;
+  padding: 10px 5px;
+  border-radius: 6px;
+  box-shadow: 0px 8px 30px 0px rgba(0, 0, 0, 0.17);
+  max-height: 20rem;
+  overflow: auto;
+}
+.custom-dropdown-item {
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  color: #000;
+}
+.custom-dropdown-item:hover {
+  background: #e4e4e4;
+}
+
+.custom-dropdown-item-active {
+  background: #e4e4e4;
 }

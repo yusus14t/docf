@@ -25,7 +25,9 @@ function WebFooter() {
 
           <div style={{ padding: "10px 30px" }} className="col-sm-3">
             <Link to="/contact">
-              <h6 className="text-light">Contact</h6>
+              <h6 className="text-light">Contact Us</h6>
+              <p className='text-light mb-0'>+91 9528820782</p>
+              <p className='text-light mb-1'>+91 </p>
             </Link>
             <Link to="/about">
               <h6 className="text-light">About Us</h6>

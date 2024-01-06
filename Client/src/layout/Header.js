@@ -9,7 +9,7 @@ import useNotification from '../hooks/Notification';
 import { Link } from "react-router-dom";
 import { userRoutes } from "../constants/constant";
 import Modal from "../components/common-components/Modal";
-import { axiosInstance, getAuthHeader } from "../constants/utils";
+import { Logout, axiosInstance, getAuthHeader } from "../constants/utils";
 import useToasty from "../hooks/toasty";
 
 
@@ -47,11 +47,6 @@ const Header = () => {
         if( ['CL', 'HL', 'DP'].includes(userInfo.userType))
         getNotices()
     }, [isCustomMessage])
-
-    const Logout = () => {
-        localStorage.clear()
-        window.location.replace('/login')
-    }
 
     const getNotifications = async () => {
         try { 
@@ -129,11 +124,8 @@ const Header = () => {
                         <div className="text-white" >
                         <Dropdown
                             toggle={<> <FontAwesomeIcon className="Header-icon cursor-pointer" icon={faBell} />{ unseenNotificationCount > 0 && <span class="badge rounded-pill badge-outline-light bell-badge ">{unseenNotificationCount}</span>} </>}
+                            text="Notifications"
                         >
-                            <li className="dropdown-menu-header">
-                                <h6 className="dropdown-header ms-inline m-0"><span className="text-disabled">Notifications</span></h6>
-                            </li>
-                            <li className="dropdown-divider m-0 fs-12"></li>
                             <Link to={`${getUserPath()}/notification`}>
                             
                             {notifications.length ? 
@@ -148,18 +140,11 @@ const Header = () => {
                                             </div>
                                         </div>
                                     </Item>
-                                ) : <Item><span>No Data</span></Item>
+                                ) : <span className="mx-2 text-dark">No Data</span>
 
                             }
                             </Link>
-                            <li className="dropdown-divider m-0 fs-12"></li>
 
-                            <Link to={`${getUserPath()}/notification`} className=" dropdown-menu-header">
-                                {/* <li className=""> */}
-                                    <h6 className="dropdown-header ms-inline m-0 fs-12"><span className="text-disabled">View All </span></h6>
-                                {/* </li> */}
-                            </Link>
-    
                         </Dropdown>
                         </div>
                     </li>

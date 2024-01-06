@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosInstance, getFullPath } from "../../../constants/utils";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../common-components/Modal";
 import NO_PHOTO from '../../../assets.app/images/no-photo.png';
 
