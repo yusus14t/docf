@@ -121,13 +121,11 @@ const Gynae = () => {
         </div>
         <div className="p-2">
           <div
-            className="hero-banner"
-            style={{
-              backgroundImage: `url(${findImage(WEBSITE_IMAGE.GYNAE_BANNER)})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          ></div>
+            className="w-100"
+          >
+            <img className="w-100 h-00" scr={findImage(WEBSITE_IMAGE.GYNAE_BANNER)}/>
+
+          </div>
         </div>
         {/*------services-------  */}
         <div className="gynae-services ">
@@ -230,18 +228,13 @@ const Gynae = () => {
         </div>
         <div className="p-2">
           <div
-            className="hero-banner"
-            style={{
-              backgroundImage: `url(${findImage(
-                WEBSITE_IMAGE.GYNAE_BOTTOM_BANNER
-              )})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
+            className="w-100 h-100"
+            
           >
-            <span className="btn btn-primary  gynae-button-hero">
+            <img className="w-100 h-100" src={findImage(WEBSITE_IMAGE.GYNAE_BOTTOM_BANNER)}/>
+            {/* <span className="btn btn-primary  gynae-button-hero">
               <Link className="text-light">Test Now</Link>
-            </span>
+            </span> */}
           </div>
         </div>
         {/* <h3>Our Partners</h3> */}

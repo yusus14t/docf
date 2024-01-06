@@ -1,4 +1,4 @@
-import background from "../../assets.app/img/user-profile-bg-1920x400.jpg";
+import background from "../../assets.app/images/no_images/no-banner.jpg";
 import {
   axiosInstance,
   convertTo12HourFormat,
@@ -18,6 +18,7 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { FULLDAY } from "../../constants/constant";
+import DoctorCard from "../card/DoctorCard";
 
 function Detail() {
   const params = useParams();
@@ -226,13 +227,17 @@ function Detail() {
               <img
                 className="w-100 h-100 rounded"
                 src={
-                  //  clinicDetail?.photo ? getFullPath(clinicDetail?.photo) :
-                  background
+                  clinicDetail?.photo
+                    ? getFullPath(clinicDetail?.photo)
+                    : background
                 }
               />
             </div>
           </div>
-          <div style={{height:"300px"}} className="col-lg-6 p-0 bg-light rounded">
+          <div
+            style={{ height: "300px", border: "5px solid #053d42" }}
+            className="col-lg-6 p-0 bg-light  rounded"
+          >
             <div style={{ width: "100%", padding: "0" }}>
               <h4 className="clinic-detail-name ">
                 {clinicDetail?.hospital?.name || clinicDetail.name}
@@ -278,9 +283,7 @@ function Detail() {
                 className="current-clicnic-token ml-5 d-flex flex-row"
                 style={{ position: "relative" }}
               >
-                <h1 className="px-2">
-                  {token}
-                </h1>
+                <h1 className="px-2">{token}</h1>
               </div>
             </div>
           </div>
@@ -427,6 +430,11 @@ function Detail() {
                   </div>
                 )}
               </div>
+              {/* doctors list */}
+              {clinicDetail?.doctors?.length > 0 && <section>
+                <h5>Doctors</h5>
+               <div className="row">{clinicDetail?.doctors?.map((doc)=><DoctorCard doctor={doc}/>)}</div>
+                </section>}
             </div>
 
             {/* INFO CARD */}
@@ -500,6 +508,8 @@ function Detail() {
               </div>
             </div>
           </div>
+
+          
 
           {/* CONTACT CARD */}
           <div className="contact-details-clinic pt-3">

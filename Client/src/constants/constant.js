@@ -1,3 +1,7 @@
+import doctorimg from '../assets.app/images/no_images/no_doctor.png'
+import clinicimg from '../assets.app/images/no_images/no_clinic.jpg'
+import hospitalimg from '../assets.app/images/no_images/no_hospital.jpg'
+import noimg from '../assets.app/images/no-photo.png'
 
 
 export const userRoutes = {
@@ -33,6 +37,11 @@ export const PRIORITY = [
     { label: 'Medium', value: 'medium' },
     { label: 'High', value: 'high' },
 ]
+export const DOCTOR_DEFAUL_IMG = doctorimg
+export const CLINIC_DEFAUL_IMG = clinicimg
+export const HOSPITAL_DEFAUL_IMG = hospitalimg
+export const NO_PHOTO = noimg
+
 
 export const DAYS = [
     { id:0, value: 'MON', day: 'Monday' },
@@ -140,6 +149,8 @@ export const PLAN = {
     halfYear: 'halfYear',
     year: 'year',
 }
+
+
 
 export const SETTING_TABS = [
     { name: 'Website', id: 'WEBSITE', access: ['SA', 'AD']},

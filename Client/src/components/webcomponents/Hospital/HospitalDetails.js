@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import background from "../../../assets.app/img/user-profile-bg-1920x400.jpg";
+import background from "../../../assets.app/images/no_images/no-banner.jpg";
 import DepartmentCard from "./DepartmentCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";

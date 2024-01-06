@@ -6,6 +6,7 @@ import { getFullPath, getImages } from "../../constants/utils";
 import { useEffect, useState } from "react";
 import { WEBSITE_IMAGE } from "../../constants/constant";
 
+
 function Home() {
   const [ images, setImages ] = useState([])
 
@@ -27,17 +28,16 @@ function Home() {
       <div className="box"></div>
       {/* hero section */}
       <div
-        className=" hero-container"
+        className=""
         style={{
-          background: `url(${findImage(WEBSITE_IMAGE.HOME_BANNER)})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
+          
           display: "flex",
           alignItems: "center",
+          justifyContent:'center'
         }}
       >
-        <div className="container hero-content ">
-          <div className="">
+        <div className=" w-100 ">
+          {/* <div className="">
             <h1 style={{ fontWeight: "bolder" }}>
               Get Expert <span> </span>
               <span className="text-success">
@@ -47,7 +47,9 @@ function Home() {
             <h4 className="hjj">
               Our Partners provide best Medical Treament and advice
             </h4>
-          </div>
+          </div> */}
+          <img className="w-100" src={findImage(WEBSITE_IMAGE.HOME_BANNER)} />
+
         </div>
       </div>
       <div className="mobie">
