@@ -1,6 +1,6 @@
 const AppointmentModel = require("../models/appointment-model");
 const SettingModel = require("../models/setting-model");
-const { Success, Error, uploadToBucket, Payment } = require("../constants/utils");
+const { Success, Error, uploadToBucket, Payment, smsService } = require("../constants/utils");
 const UserModel = require("../models/user-model");
 const ObjectId = require("mongoose").Types.ObjectId;
 const OrganizationModel = require("../models/organization-model");
@@ -815,6 +815,11 @@ const patients = async (body, user) => {
       },
       { $unwind: "$user" },
       {
+        $sort: {
+          createdAt : -1
+        }
+      },
+      {
         $project: {
           name: "$user.name",
           age: "$user.age",
@@ -823,6 +828,7 @@ const patients = async (body, user) => {
           address: "$user.address",
           createdAt: { $first: "$createdAt" },
         },
+       
       },
     ]);
     return Success({ patients });
@@ -965,7 +971,10 @@ const onlineBookingStatus = async (body, user) => {
 
 const sendMessage = async (body, user) => {
   try {
+    const numbers = body?.patients?.map(({ phone }) => phone )
+    body.message = body.message + '\n-Doctor Time'
 
+    await smsService( body?.message, String(numbers) )
     return Success({ message: "Message Sent" });
 
   } catch (error) {

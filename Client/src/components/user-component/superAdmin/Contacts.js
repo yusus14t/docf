@@ -26,7 +26,7 @@ const Contacts = () => {
                 </div>
                 <div class="ms-panel-body p-0" >
                     <div class="table-responsive scrollbar-deep-purple ">
-                        <div style={{ position: "absolute", width: "99%", zIndex: "9" }} className="row mx-0 ms-panel-header ">
+                        <div style={{ position: "absolute", width: "99%", zIndex: "2" }} className="row mx-0 ms-panel-header ">
                             <div className="col text-center ">
                                 <span className="text-light ml-4">S.No</span>
                             </div>

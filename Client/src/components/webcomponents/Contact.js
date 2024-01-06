@@ -26,8 +26,9 @@ const Contact = () => {
 
   const saveContactQuery = async () => {
     try{
-      await axiosInstance.post('/super-admin/website/CONTACT_QUERY', query, getAuthHeader())
+      await axiosInstance.post('/website/CONTACT_QUERY', query, getAuthHeader())
       toasty.success('Message Sent.')
+      setQuery({})
     } catch(error){ console.error(error) }
   }
 
@@ -121,6 +122,7 @@ const Contact = () => {
                 type="text"
                 placeholder="Enter Name"
                 className="form-control"
+                value={query.name}
                 onChange={(e) => setQuery({ ...query, name: e.target.value })}
               />
             </div>
@@ -131,6 +133,7 @@ const Contact = () => {
                 placeholder="Enter mobile number"
                 className="form-control"
                 maxLength={10}
+                value={query.mobile}
                 onChange={(e) => setQuery({ ...query, mobile: e.target.value })}
               />
             </div>
@@ -142,15 +145,19 @@ const Contact = () => {
                 type="text"
                 placeholder="Enter topic here"
                 className="form-control"
+                value={query.topic}
+
                 onChange={(e) => setQuery({ ...query, topic: e.target.value })}
               />
             </div>
             <div className="col-sm-6">
               <label htmlFor="">Email Address (optional)</label>
               <input
-                type="text"
+                type="email"
                 placeholder="Enter Email address "
                 className="form-control"
+                value={query.email}
+
                 onChange={(e) => setQuery({ ...query, email: e.target.value })}
               />
             </div>
@@ -163,6 +170,7 @@ const Contact = () => {
               cols="30"
               rows="10"
               placeholder="write your message here"
+              value={query.message}
               onChange={(e) => setQuery({ ...query, message: e.target.value })}
             ></textarea>
           </div>

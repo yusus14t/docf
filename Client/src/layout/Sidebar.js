@@ -6,6 +6,7 @@ import { Logout, axiosInstance, getAuthHeader, getFullPath } from '../constants/
 import Modal from '../components/common-components/Modal';
 import Select from 'react-select';
 import useToasty from '../hooks/toasty'
+import OutsideWrapper from '../components/common-components/OutsideWrapper'
 
 function Sidebar({ isOpen, setIsOpen, mobileView }) {
     const location = useLocation();
@@ -18,7 +19,6 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
     const [ messageModal, setMessageModal ] = useState(false)
     const [ isChecked, setIsChecked ] = useState(userInfo.organizationId?.bookingStatus || false)
     const planMessageRef = useRef(null)
-    const messageRef = useRef(null)
     const [ organizations, setOrganizations ] = useState([])
     const [patients, setPatients] = useState([])
 
@@ -44,7 +44,6 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
     const getExpireOrganizations = async () => {
         try{
             let { data } =  await axiosInstance.get('/super-admin/expire-organizations', getAuthHeader())
-            console.log('getExpireOrganizations', data)
             setOrganizations( data.organizations )
         }catch(error){ console.log(error) }
     }
@@ -78,24 +77,25 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
 
     return (
         <>
-            <aside className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ${!isOpen ? 'ms-aside-left' : ''} `} style={{ paddingBottom: '6rem' }}>
+            <OutsideWrapper callback={() => {mobileView && setIsOpen(false)}} className={`side-nav fixed ms-aside-scrollable ms-aside ps ps--active-y ${!isOpen ? 'ms-aside-left' : ''} `} style={{ paddingBottom: '6rem' }}>
                 <div className="logo-sn ms-d-block-lg">
                     <div className="d-flex flex-row justify-content-around align-items-baseline sidebar-image">
                         <div className="">
-                            <a href="/" className="text-center "> <img className="profile-image" src={ userInfo.photo || userInfo?.organizationId?.photo ? getFullPath(userInfo.photo || userInfo?.organizationId?.photo) : NO_PHOTO} alt="logo" /></a>
+                            <a href="/" className="text-center "> <img className="profile-image" src={userInfo.photo || userInfo?.organizationId?.photo ? getFullPath(userInfo.photo || userInfo?.organizationId?.photo) : NO_PHOTO} alt="logo" /></a>
                         </div>
                         <div className="">
                             <h5 className="text-center text-white mt-2">{['SA', 'MR', 'PT', 'AD'].includes(userInfo.userType) ? userInfo?.name : userInfo?.organizationId?.name}</h5>
                             <h6 className="text-center text-white mb-3">{userInfo?.userType !== 'DR' ? userRoutes[userInfo?.userType].title : userInfo?.organizationId?.organizationType?.toUpperCase()}</h6>
                         </div>
-                        
+
                     </div>
-                    
+
                 </div>
-            { ['CL', 'DP'].includes(userInfo.userType) &&  <div className='d-flex justify-content-around my-3'>
+
+                {['CL', 'DP'].includes(userInfo.userType) && <div className='d-flex justify-content-around my-3'>
                     <h5 className='text-light'>Online Booking </h5>
                     <label class="ms-switch">
-                        <input type="checkbox" checked={isChecked} onChange={(e) => {bookingStatus(e.target.checked); setIsChecked(e.target.checked)}} />
+                        <input type="checkbox" checked={isChecked} onChange={(e) => { bookingStatus(e.target.checked); setIsChecked(e.target.checked) }} />
                         <span class="ms-switch-slider round"></span>
                     </label>
                 </div>}
@@ -106,23 +106,23 @@ function Sidebar({ isOpen, setIsOpen, mobileView }) {
                             <span>{module.title}</span>
                         </Link>
                     </li>)}
-                    { ["SA", "AD"].includes(userInfo.userType) && <li className={`menu-item cursor-pointer ${activeNav === 'plan-expire' && 'nav-link-active'}`} onClick={() => { (mobileView && setIsOpen(false));  setExpirePlanModal(true)  }}>
+                    {["SA", "AD"].includes(userInfo.userType) && <li className={`menu-item cursor-pointer ${activeNav === 'plan-expire' && 'nav-link-active'}`} onClick={() => { (mobileView && setIsOpen(false)); setExpirePlanModal(true) }}>
                         <a className=""  >
                             <span>Plan Expire</span>
                         </a>
                     </li>}
 
-                    { [ "CL", "DP" ].includes(userInfo.userType) && <li className={`menu-item cursor-pointer ${activeNav === 'plan-expire' && 'nav-link-active'}`} onClick={() => { (mobileView && setIsOpen(false));  setMessageModal(true)  }}>
+                    {["CL", "DP"].includes(userInfo.userType) && <li className={`menu-item cursor-pointer ${activeNav === 'plan-expire' && 'nav-link-active'}`} onClick={() => { (mobileView && setIsOpen(false)); setMessageModal(true) }}>
                         <a className=""  >
                             <span>Send Message</span>
                         </a>
                     </li>}
-                    
+
                 </ul>
-                
+
                 <button className="btn  btn-dark btn-md" onClick={() => Logout()}>Logout</button>
-                
-            </aside>
+            </OutsideWrapper>
+            
             { expirePlanModal && <Modal
                 isOpen={expirePlanModal}
                 setIsOpen={setExpirePlanModal}
