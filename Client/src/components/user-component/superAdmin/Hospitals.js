@@ -7,9 +7,8 @@ import NO_PHOTO from '../../../assets.app/images/no-photo.png';
 import { Dropdown, Item } from "../../common-components/Dropdown";
 import { MenuIcon } from "../../common-components/icons";
 
-const Clinics = () => {
-    const [departments, setDepartments] = useState([])
-    const [deleteModal, setDeleteModal] = useState(false)
+export default () => {
+    const [deleteModal, setDeleteModal] = useState(false)   
     const [hospital, setHospital] = useState({})
     const [hospitals, setHospitals] = useState([])
     const [ paymentModal, setPaymentModal ] = useState(false)
@@ -39,7 +38,7 @@ const Clinics = () => {
     const setPaymentOption = async ( value ) => {
         try{
             setHospital({ ...hospital, paymentOption:  value })
-            await axiosInstance.post('/super-admin/payment-option', { paymentOption: value },  getAuthHeader())
+            await axiosInstance.post('/super-admin/payment-option', { _id: hospital._id,  paymentOption: value },  getAuthHeader())
         }catch(error){}
     }
 
@@ -116,4 +115,3 @@ const Clinics = () => {
         </div>
     )
 }
-export default Clinics;

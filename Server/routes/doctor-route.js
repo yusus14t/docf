@@ -26,4 +26,6 @@ router.get('/hospital-specialization', DoctorController.hospitalSpecialization)
 router.post('/anonymous-appointment', DoctorController.anonymousAppointment)
 router.post('/booking-status', DoctorController.onlineBookingStatus )
 
+router.post('/send-message', DoctorController.sendMessage)
+
 module.exports = router;

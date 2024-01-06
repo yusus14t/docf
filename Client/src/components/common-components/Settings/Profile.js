@@ -228,7 +228,7 @@ const Profile = ({ source, setIsOpen = () => {}, refresh = () => {} }) => {
                             </div>
                         </div>
                     </div>
-                    { ['HL', 'CL'].includes(userInfo.userType) && <div className="alert alert-danger border-0 p-2">
+                    { ['HL', 'CL', "DP"].includes(userInfo.userType) && <div className="alert alert-danger border-0 p-2">
                         <div className="d-flex justify-content-around">
                             { userInfo?.organizationId?.organizationType === 'Clinic' 
                             ? 
@@ -250,7 +250,7 @@ const Profile = ({ source, setIsOpen = () => {}, refresh = () => {} }) => {
                             }
                         </div>
                     </div>}
-                    {timing?.length > 0 && ['HL', 'CL'].includes(userInfo.userType) &&
+                    {timing?.length > 0 && ['HL', 'CL', "DP"].includes(userInfo.userType) &&
                         timing.map((time) => (
                             <div className="alert alert-secondary border-0 p-2">
                                 <div className="d-flex justify-content-around">
@@ -276,7 +276,7 @@ const Profile = ({ source, setIsOpen = () => {}, refresh = () => {} }) => {
                         ))
                     }
 
-                    {[ 'HL', 'CL' ].includes(userInfo.userType) && isTiming && <div className="row mb-3" style={{ paddingRight: 0 }}>
+                    {[ 'HL', 'CL', "DP" ].includes(userInfo.userType) && isTiming && <div className="row mb-3" style={{ paddingRight: 0 }}>
                       
                         {userInfo?.organizationId?.organizationType === 'Clinic' ? <div className="row">
                             <div className="col-6">

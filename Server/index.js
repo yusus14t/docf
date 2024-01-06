@@ -9,7 +9,10 @@ const bodyParser = require('body-parser');
 require('./connection/db.connection')
 
 // Backup System 
-if( process.env.ENVIRONMENT === 'production' )  require('./backup/backup');
+if( process.env.ENVIRONMENT === 'production' ) {
+  require('./SMSService');
+  require('./backup/backup');
+}
 
 
 process.setMaxListeners(0);

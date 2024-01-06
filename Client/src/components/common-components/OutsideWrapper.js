@@ -1,6 +1,6 @@
 import {  useEffect, useRef } from "react"
 
-export default ({ callback = () => {}, children }) => {
+export default ({ callback = () => {}, children, ...props }) => {
     const wrapperRef = useRef(null)
 
     useEffect(() => {
@@ -15,7 +15,7 @@ export default ({ callback = () => {}, children }) => {
     }
 
     return(
-        <div ref={wrapperRef} style={{ display: 'inline-flex'}}>
+        <div ref={wrapperRef} style={{ display: 'inline-flex'}} { ...props } >
             {children}
         </div>
     )

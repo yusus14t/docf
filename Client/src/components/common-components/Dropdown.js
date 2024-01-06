@@ -9,6 +9,7 @@ export const Item = ({ children, isActive, onClick = () => {}, to = null,  ...pr
         }} >
             {children}
         </div>
+
         :
         <Link to={to} className={`custom-dropdown-item cursor-pointer text-start d-flex ${isActive && 'custom-dropdown-item-active'}`}  {...props}  onClick={() => { onClick();
             document.getElementById('dropdown-toogle').click()

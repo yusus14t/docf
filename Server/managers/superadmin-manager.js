@@ -420,9 +420,9 @@ const getExpireOrganizations = async ( params ) => {
 
 const sendPLanMessage = async (body ) => {
     try {
-        for( let phone of body.phones ){
-            await smsService(body.message, phone)
-        }
+        body.message = body.message + '\n-Doctor Time'
+        await smsService(body.message, String(body.phones))
+        
         return Success({});
     } catch ( error ) { 
         console.log(error)
@@ -432,7 +432,7 @@ const sendPLanMessage = async (body ) => {
 
 const setPaymentOption =  async ( body, user ) => {
     try {
-        //
+        await OrganizationModel.updateOne({ _id: body._id }, { paymentOption: body.paymentOption })
         return Success({});
     } catch ( error ) { 
         console.log(error)
