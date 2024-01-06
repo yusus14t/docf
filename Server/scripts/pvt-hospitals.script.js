@@ -1,7 +1,7 @@
 
 require('../connection/db.connection');
 const OrganizationModel = require('../models/organization-model');
-
+const ObjectId = require('mongoose').Types.ObjectId
 
 ( async () => {
     console.log('Start Script......')
