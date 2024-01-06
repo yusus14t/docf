@@ -160,6 +160,9 @@ function Detail() {
     }
   };
 
+
+  
+
   return (
     <>
       <div className="">

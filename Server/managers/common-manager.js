@@ -515,7 +515,7 @@ const clinicDetails = async (body) => {
 
 
     detail = JSON.parse(JSON.stringify(detail[0]));
-    let doctor = await UserModel.find({ organizationId: body._id, userType: 'DR'}, { name: 1, address: 1, photo: 1, specialization: 1, organizationId: 1  })
+    let doctor = await UserModel.find({ organizationId: body._id, userType: 'DR'}, { name: 1, address: 1, photo: 1, specialization: 1, organizationId: 1, timing: 1 })
     detail['doctors'] = doctor
 
     let hospital = await UserModel.findOne({ organizationId: body._id, userType: 'DP' }, { hospitalId: 1 })

@@ -1,14 +1,24 @@
 import Clinics from "./Clinics";
 import Hospitals from "./Hospital/Hospitals";
-import Slider from "./Specializations/Slider";
 import DoctorsList from "./doctor/Doctors";
 import { getFullPath, getImages } from "../../constants/utils";
 import { useEffect, useState } from "react";
 import { WEBSITE_IMAGE } from "../../constants/constant";
+import SpecializationSlider from "../sliders/SpecializationSlider";
+
 
 
 function Home() {
   const [ images, setImages ] = useState([])
+  const device = window.screen.availWidth > 500 
+    ?  window.screen.availWidth > 800 ? 'lg' : 'md'
+    : 'sm'
+
+  const views = {
+    "lg" : 6,
+    "md" : 4,
+    "sm" : 2
+  }
 
   useEffect(() => {
     initailizer()
@@ -52,8 +62,9 @@ function Home() {
 
         </div>
       </div>
-      <div className="mobie">
-        <Slider />
+      <div className="mobie px-3">
+        <SpecializationSlider view={views[device]}/>
+        {/* <Slider /> */}
       </div>
 
       {/* <Clinics style={{ margin: "0" }} /> */}
