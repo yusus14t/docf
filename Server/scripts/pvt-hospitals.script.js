@@ -11,6 +11,8 @@ const OrganizationModel = require('../models/organization-model');
     await OrganizationModel.updateMany({ organizationType: 'Hospital' }, { $set: { hospitalType: 'pvt' } })
     await OrganizationModel.updateMany({ }, { $set: { paymentOption: true } })
 
+    await OrganizationModel.updateOne({ _id: ObjectId('654bc57f7879a9d12e8d990b') }, { $set: { hospitalType: 'gov' } })
+
     console.log('End Script......')
     process.exit()
 })()
