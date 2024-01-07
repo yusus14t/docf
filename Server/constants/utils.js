@@ -26,8 +26,8 @@ const randomOtp = () => ~~(1000 + Math.random() * 9000)
 
 const smsService = async (sms, phone) => {
   let payload = {
-    "route": "q",
-    // "route": "v3",
+    // "route": "q",
+    "route": "v3",
     "sender_id": "FTWSMS",
     "message": sms,
     "language": "english",
