@@ -6,7 +6,7 @@ import {
   getAuthHeader,
   getFullPath,
 } from "../../constants/utils";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Appointment from "../common-components/Appointment/Appointment";
 import events from "../../events";
@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarPlus,
   faEnvelope,
+  faLock,
   faMapMarker,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
@@ -32,6 +33,7 @@ function Detail() {
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [notices, setNotices] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
+  const jwt_token = JSON.parse(localStorage.getItem("token"));
 
   const navigate = useNavigate();
 
@@ -160,9 +162,6 @@ function Detail() {
     }
   };
 
-
-  
-
   return (
     <>
       <div className="">
@@ -286,7 +285,7 @@ function Detail() {
                 className="current-clicnic-token ml-5 d-flex flex-row"
                 style={{ position: "relative" }}
               >
-                <h1 className="px-2">{token}</h1>
+                <h1 className="px-2">{ jwt_token ? token : <FontAwesomeIcon className="text-muted " icon={faLock} />}</h1>
               </div>
             </div>
           </div>
@@ -334,54 +333,75 @@ function Detail() {
                     </button>
                   </div>
                 </div>
-                {activeTab === 0 && (
-                  <div className="token-list-container  rounded ">
-                    {waitingList?.length ? (
-                      <ul className={`token-list $`}>
-                        {waitingList.map((list, key) => (
-                          <li className=" p-2" key={key}>
-                            <div className="mt-auto">
-                              <div
-                                className={`token-list-item d-flex flex-row justify-content-around ${
-                                  list?.token == parseInt(token)
-                                    ? "token-list-active"
-                                    : ""
-                                }`}
-                              >
-                                <div
-                                  className={`token ${
-                                    list?.token == parseInt(token)
-                                      ? "token-active"
-                                      : ""
-                                  }`}
-                                >
-                                  <h4 className="token-list-number">
-                                    {list?.token}
-                                  </h4>
+                {jwt_token ? (
+                  <>
+                    {activeTab === 0 && (
+                      <div className="token-list-container  rounded ">
+                        {waitingList?.length ? (
+                          <ul className={`token-list $`}>
+                            {waitingList.map((list, key) => (
+                              <li className=" p-2" key={key}>
+                                <div className="mt-auto">
+                                  <div
+                                    className={`token-list-item d-flex flex-row justify-content-around ${
+                                      list?.token == parseInt(token)
+                                        ? "token-list-active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <div
+                                      className={`token ${
+                                        list?.token == parseInt(token)
+                                          ? "token-active"
+                                          : ""
+                                      }`}
+                                    >
+                                      <h4 className="token-list-number">
+                                        {list?.token}
+                                      </h4>
+                                    </div>
+                                    <div className="token-list-detail">
+                                      <h4 className="list-patient-name mb-1">
+                                        {list?.name}
+                                      </h4>
+                                      <p className="mb-0 list-mobile-no">
+                                        Mobile Number : +91{" "}
+                                        {list?.phone
+                                          ? `xxx-xxx-${list?.phone.slice(-4)}`
+                                          : "----------"}
+                                      </p>
+                                      <p className="mb-0 list-address">
+                                        Address : {list?.address}
+                                      </p>
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="token-list-detail">
-                                  <h4 className="list-patient-name mb-1">
-                                    {list?.name}
-                                  </h4>
-                                  <p className="mb-0 list-mobile-no">
-                                    Mobile Number : +91{" "}
-                                    {list?.phone
-                                      ? `xxx-xxx-${list?.phone.slice(-4)}`
-                                      : "----------"}
-                                  </p>
-                                  <p className="mb-0 list-address">
-                                    Address : {list?.address}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <span>No Data</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <span>No Data</span>
+                        )}
+                      </div>
                     )}
-                  </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="d-flex justify-content-center align-items-center flex-column h-100">
+                      <h4 className="text-muted">
+                        <FontAwesomeIcon icon={faLock} /> Not Authenticated
+                      </h4>
+                      <p className="my-2">
+                        Login first to check all the appointments.{" "}
+                      </p>
+                      <Link
+                        to={"/login"}
+                        className="bg-primary text-light rounded w-50 m-3 py-2 text-center"
+                      >
+                        LogIn
+                      </Link>
+                    </div>
+                  </>
                 )}
                 {activeTab === 1 && (
                   <div className="token-list-container ">
@@ -434,10 +454,16 @@ function Detail() {
                 )}
               </div>
               {/* doctors list */}
-              {clinicDetail?.doctors?.length > 0 && <section>
-                <h5>Doctors</h5>
-               <div className="row">{clinicDetail?.doctors?.map((doc)=><DoctorCard doctor={doc}/>)}</div>
-                </section>}
+              {clinicDetail?.doctors?.length > 0 && (
+                <section>
+                  <h5>Doctors</h5>
+                  <div className="row">
+                    {clinicDetail?.doctors?.map((doc) => (
+                      <DoctorCard doctor={doc} />
+                    ))}
+                  </div>
+                </section>
+              )}
             </div>
 
             {/* INFO CARD */}
@@ -511,8 +537,6 @@ function Detail() {
               </div>
             </div>
           </div>
-
-          
 
           {/* CONTACT CARD */}
           <div className="contact-details-clinic pt-3">
