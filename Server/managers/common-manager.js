@@ -23,11 +23,11 @@ const sessionInfo = async (request, user) => {
     if ( ["DP", "CL", "HL"].includes(info.userType) &&  !info?.organizationId?.qrCode ) {
       let link = "https://doctortime.in";
       if (info.userType === "HL")
-        link += `/hospital/${info.organizationId._id}`;
+        link += `/hospital-detail/${info.organizationId._id}`;
       else if (info.userType === "CL")
         link += `/clinic-detail/${info.organizationId._id}`;
       else if (info.userType === "DP")
-        link += `/department/${info.organizationId._id}`;
+        link += `/department-detail/${info.organizationId._id}`;
 
       // genrate qr code
       const filename = `${info.organizationId._id}.png`;
