@@ -26,14 +26,14 @@ const cronSchedule = cron.schedule('0 8 * * *', async function () {
             }
         }, { name: 1, phone: 1, billing: 1 })
 
-        const pre_message = 'Your Doctortime subscription is expiring soon. Renew now to continue uninterrupted access to our valuable healthcare services and appointments'
-        const post_message = 'Your Doctortime subscription is expired. Renew now to continue uninterrupted access to our valuable healthcare services and appointments'
+        const pre_message = 'Your Doctortime subscription is expiring soon. Renew now to continue uninterrupted access to our valuable healthcare services and appointments '
+        const post_message = 'Your Doctortime subscription is expired. Renew now to continue uninterrupted access to our valuable healthcare services and appointments '
         
         for( let organization of organizations ){
             let check = new Date(organization.billing.expire) < new Date()
-            let response = await smsService( check ? post_message : pre_message , '8273237781')
+            let response = await smsService( check ? post_message + organization.name : pre_message   + organization.name , '6397596898')
             
-            console.log('organizations', check ? "post": "pre", response?.message)
+            console.log('sms sent ', response?.message)
         }
 
         cronSchedule.stop()

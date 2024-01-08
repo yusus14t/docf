@@ -7,8 +7,7 @@ module.exports.specialization = {
       name: "Pulnomologist (LUNGS)",
       // nickname: "(LUNGS)",
       image: "https://pvdhealth.in/uploads/spe_img/punomo.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/PUMONOLOGIST.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/PUMONOLOGIST.jpg",
       description: `Pulmonology, a medical speciality devoted to the study and treatment of disorders affecting the respiratory system, is vital to the health and well-being of people all over the world. Any disturbance in the lungs' ability to perform their essential functions of exchanging oxygen and removing carbon dioxide might have a negative impact on one's general health. In the fight against respiratory disorders, pulmonologists are vital medical specialists as they are capable of recognising and treating a variety of respiratory ailments.
                     The diagnosis and treatment of lung cancer, asthma, pneumonia, chronic obstructive pulmonary disease (COPD), and sleep disorders like sleep apnoea are only a few of the conditions covered by the speciality of pulmonology. These experts have an in-depth understanding of the intricate anatomy and physiology of the respiratory system, which enables them to recognise and efficiently treat respiratory diseases.
                     One of the primary responsibilities of pulmonologists is the diagnosis and treatment of lung conditions. Pulmonologists can determine the underlying cause of a patient's respiratory symptoms by a mix of physical examinations, medical history reviews, and diagnostic testing like spirometry, chest X-rays, and computed tomography (CT) scans. They collaborate closely with patients to create individualised treatment regimens after a diagnosis is made, which may involve medication, dietary changes, pulmonary rehabilitation, or surgery.
@@ -19,8 +18,7 @@ module.exports.specialization = {
       name: "Hepatologist (Liver)",
       // nickname: "(Liver)",
       image: "https://pvdhealth.in/uploads/spe_img/hepatologist.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/HEPATOLOGIST.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/HEPATOLOGIST.jpg",
       description: `Hepatology, a department of medicine dedicated to the study and treatment of liver diseases, is a science that continues to enhance our understanding of the liver's complex organ. The liver is incredibly important for metabolism, detoxification, and immunological function, which helps to maintain our general health and well-being. Hepatologists devote countless hours to the diagnosis, treatment, and prevention of many liver disorders, greatly advancing medical knowledge.
         To provide complete care for patients with liver problems, hepatologists use a multidisciplinary approach, working in conjunction with gastroenterologists, radiologists, surgeons, and other experts. Hepatologists treat a wide range of diseases and illnesses, from cirrhosis and liver cancer to viral hepatitis and alcoholic liver disease.
         Additionally, liver transplantation, a life-saving treatment for patients with chronic liver disease, has advanced significantly. They are essential in the patient selection process as well as in pre-transplant assessment and post-transplant care, assuring the greatest outcomes for those in need of this difficult operation.
@@ -33,8 +31,7 @@ module.exports.specialization = {
       name: "Nephrologist (Kidney)",
       // nickname: "(Kidney)",
       image: "https://pvdhealth.in/uploads/spe_img/nep.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/NEPHROLOGIST.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/NEPHROLOGIST.jpg",
       description: `Hepatology, a department of medicine dedicated to the study and treatment of liver diseases, is a science that continues to enhance our understanding of the liver's complex organ. The liver is incredibly important for metabolism, detoxification, and immunological function, which helps to maintain our general health and well-being. Hepatologists devote countless hours to the diagnosis, treatment, and prevention of many liver disorders, greatly advancing medical knowledge.
       To provide complete care for patients with liver problems, hepatologists use a multidisciplinary approach, working in conjunction with gastroenterologists, radiologists, surgeons, and other experts. Hepatologists treat a wide range of diseases and illnesses, from cirrhosis and liver cancer to viral hepatitis and alcoholic liver disease.
       Additionally, liver transplantation, a life-saving treatment for patients with chronic liver disease, has advanced significantly. They are essential in the patient selection process as well as in pre-transplant assessment and post-transplant care, assuring the greatest outcomes for those in need of this difficult operation.
@@ -47,8 +44,7 @@ module.exports.specialization = {
       name: "Dermatologist (Skin)",
       // nickname: "(Skin)",
       image: "https://pvdhealth.in/uploads/spe_img/derma.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/DERMATALOGIST.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/DERMATALOGIST.jpg",
       description: `Dermatology is a medical speciality that studies and treats skin, hair, and nails. It is a fascinating toimage that is essential to advancing general well-being. Dermatologists are skilled in identifying and treating a wide range of skin issues, shielding us from dangerous diseases, and enhancing our natural attractiveness because they have a thorough understanding of the anatomy and physiology of the skin.
       Acne, eczema, psoriasis, skin cancer, and issues associated with ageing are among the many conditions treated by dermatologists. Dermatologists use their knowledge to evaluate, diagnose, and carry out unique treatment regimens to address various problems. To improve accuracy and efficacy in diagnosis and treatment, they use cutting-edge technology including Dermoscopy and laser therapy.
       Although dermatology has a significant impact on how we look, its significance goes far beyond aesthetics. Our skin serves as a barrier, protecting us from viruses, the environment, and damaging ultraviolet (UV) radiation. Dermatologists put in a lot of effort to find and handle skin cancers like melanoma, basal cell carcinoma, and squamous cell carcinoma, making sure that they are treated early for better outcomes.
@@ -60,8 +56,7 @@ module.exports.specialization = {
       name: "Endocrinologist (Diabetes)",
       // nickname: "(Diabetes)",
       image: "https://pvdhealth.in/uploads/spe_img/endo.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/1.ENDOCRINOLOGIST.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/1.ENDOCRINOLOGIST.jpg",
       description: `A fascinating area of medicine that digs into the complexities of the endocrine system is endocrinology, the study of hormones and their impact on the body. Understanding hormones released by numerous glands, their control, and their effects on general health are the main goals of this field of study. In order to ensure that the human body is operating properly, endocrinologists are crucial in the diagnosis and treatment of illnesses related to hormones.
 The pituitary, thyroid, adrenal, and pancreatic are just a few of the numerous glands that make and release hormones into the bloodstream as part of the endocrine system. Numerous physiological functions, such as growth and development, metabolism, reproduction, and mood regulation, are coordinated by these chemical messengers.
 Endocrine disorders can manifest in a multitude of ways, from subtle imbalances to significant disruptions in bodily functions. Conditions such as diabetes, thyroid disorders, adrenal insufficiency, and hormonal imbalances can have far-reaching effects on an individual's health and well-being. Endocrinologists employ a range of diagnostic tools, including blood tests and imaging techniques, to assess hormone levels and identify underlying causes.
@@ -74,8 +69,7 @@ The fascinating field of endocrinology explains the complex relationships betwee
       name: "Urologist (Urinary System)",
       // nickname: "Urinary System",
       image: "https://pvdhealth.in/uploads/spe_img/uro.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/UROLOGY.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/UROLOGY.jpg",
       description: `Urologists are doctors who specialise in the diagnosis and treatment of conditions affecting the male reproductive system and urinary tract system. They have experience treating a variety of illnesses, including as infertility, prostate cancer, kidney stones, and urinary tract infections. The specialty of urology has made incredible strides in recent years, enabling urologists to deliver state-of-the-art care and enhance patients' quality of life.
 When it comes to surgical advancements, urologists are at the forefront, using minimally invasive methods that lessen patient discomfort and hasten recovery. The area has seen a revolution thanks to laparoscoimage and robotic-assisted operations, which have made procedures like prostatectomies and nephrectomies precise and effective. These developments have greatly decreased hospital stays and postoperative problems, which is advantageous to patients everywhere.
 The diagnosis and treatment of numerous urologic cancers, including prostate, bladder, kidney, and testicular cancer, depend heavily on urologists. Urologists now use genetic testing to customise treatment approaches based on the molecular profiles of specific patients thanks to the development of precision medicine. With less needless intervention and better treatment outcomes, this personalised strategy raises patient survival rates and their general wellbeing.
@@ -88,8 +82,7 @@ Urologists play a vital role in the healthcare ecosystem, addressing a wide rang
       name: "General Physician (Common Doctor)",
       // nickname: "(Common Doctor)",
       image: "https://pvdhealth.in/uploads/spe_img/general.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/GENERALPHYSICIAN.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/GENERALPHYSICIAN.jpg",
       description: `General physicians, also known as primary care physicians or family doctors, play a crucial role in the healthcare system. They are the front line of defence for individuals seeking medical care, providing comprehensive and continuous care to patients of all ages and backgrounds. They provide primary care services, such as routine check-ups, vaccinations, preventive screenings, and health counselling. These doctors serve as the first point of contact for patients, addressing a broad spectrum of health concerns and coordinating specialized care when necessary.
                     The continuity of treatment is made possible by the long-term connections that general practitioners develop with their patients. They are better able to offer individualised care and preventive care when they are aware of a patient's medical history, family dynamics, and lifestyle issues. They manage and organise specialist recommendations, serving as gatekeepers for the healthcare system. 
                     General practitioners can refer patients to the right specialists for additional examination and treatment since they have a thorough understanding of the many medical specialisations. Patients are guaranteed an excellent and affordable healthcare experience because to this. One of the main responsibilities of general practitioners is to educate their patients on healthy lifestyle choices and risk factors in order to promote health and prevent disease.
@@ -100,8 +93,7 @@ Urologists play a vital role in the healthcare ecosystem, addressing a wide rang
       name: "Radiologist (Ultrasound, MRI & X-RAy)",
       // nickname: "",
       image: "https://pvdhealth.in/uploads/spe_img/radio.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/radiology.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/radiology.jpg",
       description: `Radiology, a specialized branch of medicine dedicated to the interpretation of medical imaging, relies on the expertise and skill of radiologists. These medical professionals possess a profound understanding of imaging techniques and play a critical role in diagnosing and treating a wide range of conditions. In this article, we explore the invaluable contributions of radiologists and shed light on their pivotal role in achieving precision diagnosis and treatment.
 the essential players in understanding the complex subtleties of medical imaging. They have a thorough understanding of human anatomy and are qualified to spot even the slightest anomalies or irregularities in images obtained via X-rays, CT scans, MRIs, and other imaging modalities. Radiologists offer crucial insights that support proper diagnosis and help doctors create successful treatment regimens through their astute analysis and interpretation of the images they are responsible for reading.
 Radiology is a field that continuously evolves with technological advancements. Radiologists embrace cutting-edge imaging techniques and technologies, harnessing their power to enhance diagnostic accuracy and treatment precision. They play a pivotal role in ensuring patient safety and quality assurance in imaging procedures. They develop and implement protocols to minimize radiation exposure while maintaining optimal image quality. 
@@ -113,8 +105,7 @@ Radiologists are the guiding light in the realm of radiology, illuminating the p
       name: "Orthophedic (Knee & Hip)",
       // nickname: "(Knee & Hip)",
       image: "https://pvdhealth.in/uploads/spe_img/ortha.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/ORTHOPEDIC.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/ORTHOPEDIC.jpg",
       description: `Orthopaedics, a specialized branch of medicine, focuses on the diagnosis, treatment, and prevention of conditions affecting the musculoskeletal system. With its primary goal of restoring functionality and alleviating pain, orthopaedics plays a crucial role in improving the quality of life for individuals of all ages. By employing a combination of surgical and non-surgical interventions, orthopaedic specialists tackle a wide range of issues, including fractures, joint disorders, spinal conditions, and sports injuries.
 Orthopaedic care includes a number of sub-disciplines, including child orthopaedics, sports medicine, and orthopaedic surgery. Orthopaedic surgeons are adept in carrying out complex treatments to treat spinal abnormalities, replace joints, fix fractures, and mend torn ligaments or tendons. These experts can improve surgical precision, speed up recovery, and lessen post-operative problems by using cutting-edge technologies like robotic surgery.
 Non-surgical methods are a vital component of orthopaedic care in addition to surgical ones. To regain mobility and functionality, physical therapy, exercise plans, and rehabilitation programmes are essential. Orthopaedic doctors also use injections, drugs, and orthotics to treat pain and speed up recovery. 
@@ -126,8 +117,7 @@ In order to increase mobility, reduce pain, and enhance the overall quality of l
       name: "Paediatrician (Child's Doctor)",
       // nickname: "(Child's Doctor)",
       image: "https://pvdhealth.in/uploads/spe_img/pedi.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/PEDIATRICIAN.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/PEDIATRICIAN.jpg",
       description: `Paediatricians are medical professionals who specialize in the care of infants, children, and adolescents.  They undergo extensive training in child health, including medical conditions that are unique to babies, children, and adolescents. Paediatricians can diagnose and treat a wide range of health conditions in children, from minor illnesses to more serious conditions that require specialized care.
 Paediatricians also provide immunizations to protect children against diseases such as measles, mumps, rubella, and chickenpox. They may also order tests, such as blood tests or X-rays, to diagnose and treat various health conditions in children. In addition to providing medical care, paediatricians also educate parents and caregivers about child health and development. They may provide advice on toimages such as nutrition, sleep, safety, and behaviour management.
 Regular visits to a paediatrician are important for several reasons. First, they allow paediatricians to monitor a child's growth and development, and ensure that they are meeting important developmental milestones. This is important because early intervention is key when it comes to addressing developmental delays or other health concerns. Secondly, paediatricians also allow for the early detection of health problems. Paediatricians can identify and treat health conditions such as asthma, allergies, and diabetes before they become more serious. Additionally, paediatricians can provide guidance on how to prevent common childhood illnesses, such as colds and flu. Newborn care is an important aspect of paediatric care. Paediatricians play a critical role in ensuring that newborns are healthy and developing properly.
@@ -139,8 +129,7 @@ Paediatricians can diagnose and treat a wide range of health conditions in child
       name: "Rheumatologist (Joint Pain)",
       // nickname: "(Joint Pain)",
       image: "https://pvdhealth.in/uploads/spe_img/rhea.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/RHEUMATALOGY.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/RHEUMATALOGY.jpg",
       icon2:
         "https://catimage.net/images/2023/08/24/RHEUMATALOGY-JOINT-PAIN.jpg",
       description: `Rheumatology is a medical specialty that focuses on the diagnosis and treatment of diseases that affect the musculoskeletal system, particularly the joints, muscles, bones, and connective tissues. Rheumatic conditions affect people of all ages. Conditions such as rheumatoid arthritis, osteoarthritis, lupus, gout, and fibromyalgia can cause chronic pain, impaired mobility, and a reduced quality of life. Rheumatologists are experts in this field, they possess specialized knowledge to identify and manage these conditions effectively. Their expertise enables early intervention, prevents disease progression, and minimizes long-term complications. 
@@ -154,8 +143,7 @@ Advances in rheumatology research continue to shape the field, leading to improv
       name: "Cardiologist (Heart)",
       // nickname: "(Heart)",
       image: "https://pvdhealth.in/uploads/spe_img/cardio.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/CARDIOLOGIST.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/CARDIOLOGIST.jpg",
       icon2: "https://catimage.net/images/2023/08/24/CARDIOLOGIST.jpg",
       description: `Cardiology is a field of medicine that focuses on understanding, identifying, and treating cardiac conditions that are essential to preserving cardiovascular health. Cardiologists are the trained specialists at the centre of this area. These specialised doctors constitute a vital part of healthcare in our contemporary society because they have the training and experience necessary to prevent, identify, and treat heart disease.
 Cardiologists are tools in safeguarding heart health through their skilled responsibilities. They are trained professionals to assess patients’ cardiovascular health, conduct comprehensive examinations, and utilise various diagnostic tools such as electrocardiograms (ECGs), echocardiograms, and stress tests.  They can identify heart diseases, determine their severity by meticulously evaluating these results, and develop personalised plans.
@@ -169,8 +157,7 @@ To ensure the well-being of people with cardiovascular issues, cardiology and th
       name: "Neurologist (Brain)",
       // nickname: "(Brain)",
       image: "https://pvdhealth.in/uploads/spe_img/neu.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/1.NEUROLOGIST%20.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/1.NEUROLOGIST%20.jpg",
       description: `Neurology is the branch of medicine dedicated to studying the complex workings of the nervous system which holds the key to understanding the complexities of the human brain. The fascinating field that roots in the structure, functioning, and disorders of the nervous system, highlighting the enigmatic workings of the nervous system. With breakthroughs in research and technological advancements, neurology continues to unravel the mysteries of the brain, structuring the way for innovative treatments and improving the lives of patients. 
 The central processing unit of the body is the nervous system, which is made up of the brain, spinal cord, and a huge network of nerves. Neurologists study how this complex system works and interacts, focusing on how nerve cells, or neurons, send and process information through electrical and chemical signals. We can now understand intricate processes like vision, locomotion, memory, and cognition thanks to this investigation.
 Neurologists play an important role in the diagnosis and treatment of a wide spectrum of neurological illnesses. Neurology is the study of numerous disorders that affect brain function, ranging from common conditions like migraines and epilepsy to more serious conditions like Alzheimer's disease and Parkinson's disease. Neurologists can view the anatomy of the brain and spot anomalies that lead to neurological symptoms using cutting-edge imaging methods like MRI and CT scans. These discoveries aid in the development of focused treatment plans that include medicine, surgery, and rehabilitation techniques and enhance patient results.
@@ -182,8 +169,7 @@ The advances in neurology pave the way for a future where neurological disorders
       name: "Gynecologist (Woman's Health)",
       // nickname: "(Woman's Health)",
       image: "https://pvdhealth.in/uploads/spe_img/gynae.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/1.gynaclogist.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/1.gynaclogist.jpg",
       description: `A medical speciality devoted to providing comprehensive care for women's reproductive health is Gynaecology. Gynaecologists play a vital role in the diagnosis and treatment of a variety of diseases that affect the female reproductive system. Gynaecologists offer indispensable medical knowledge and support to women throughout their lives, from menstruation issues to pregnancy-related care and gynaecological cancers.
       Menstrual health is one of the main areas on which gynaecologists concentrate. They offer appropriate medical measures and individualized treatment programmes to assist women in managing irregular periods, heavy bleeding, and excruciating cramps. Gynaecologists help their patients feel physically comfortable and emotionally well-adjusted by addressing menstrual issues.
       Moreover, gynaecologists are also indulged in the field of contraception by offering guidance on various birth control methods (contraceptives) to suit individual needs and lifestyles. Educating women about different alternatives, including birth control pills, patches, injections, implants, and intrauterine devices (IUDs). This results in informed decision-making about contraception and family planning. 
@@ -198,8 +184,7 @@ The advances in neurology pave the way for a future where neurological disorders
       name: "Oncologist (Cancer)",
       // nickname: "(Cancer)",
       image: "https://pvdhealth.in/uploads/spe_img/ono.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/ONCOLOGIST.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/ONCOLOGIST.jpg",
       description: `Oncology is the branch of medicine that deals with the diagnosis and treatment of cancer. Significant advances in understanding cancer biology and creating cutting-edge treatment methods have been accomplished. These developments have improved cancer patients' quality of life as well as their chances of survival.
 The development of precision medicine is one of oncology's greatest accomplishments. Oncologists can customise treatment approaches to target particular molecular abnormalities causing the growth of cancer by studying the genetic makeup of tumours. Tyrosine kinase inhibitors and immunotherapies are two examples of targeted medicines that have proven to be very effective in treating different forms of cancer. These therapies spare healthy tissues while also attacking cancer cells directly, reducing adverse effects.
 Oncology has undergone a revolution thanks to immunotherapy. It uses the immune system of the body to identify and eliminate cancer cells. Immune checkpoint inhibitors and CAR-T cell therapy, in particular, have demonstrated tremendous effectiveness in the treatment of previously incurable malignancies. These treatments have prolonged the lives of many patients and given them fresh hope by reprogramming immune cells or disabling the defences that keep cancer cells from being attacked by the immune system.
@@ -212,8 +197,7 @@ We can expect even more novel and individualised methods to tackle this terrible
       name: "Ophthalmologist (Eyes)",
       // nickname: "(Eyes)",
       image: "https://pvdhealth.in/uploads/spe_img/optha.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/1.OPTHALMOLOGIST.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/1.OPTHALMOLOGIST.jpg",
       description: `Ophthalmology is the area of medicine devoted to the study and treatment of eye conditions, and it is essential for maintaining and improving our priceless sense of sight. Ophthalmologists are redefining how we identify, treat, and prevent eye problems thanks to ongoing advances in technology and research, opening the door to better vision and a higher standard of living.
 The introduction of laser eye surgery is one of the biggest advances in ophthalmology. LASIK (Laser-Assisted in Situ Keratomileusis) is one of the procedures that has changed millions of people's lives. LASIK corrects refractive defects such myopia (near sightedness), hyperopia (farsightedness), and astigmatism by reshaping the cornea. Patients can finally say goodbye to their glasses and contact lenses and benefit from convenience and visual independence.
 The therapy of age-related macular degeneration (AMD), the main cause of blindness in the elderly, is another area that is advancing quickly. Vascular endothelial growth factor (VEGF) therapy has completely changed how wet AMD is treated. Ophthalmologists can prevent the development of aberrant blood vessels in the eye by injecting a medicine into it, lowering the chance of permanent vision loss and maintaining visual function.
@@ -226,8 +210,7 @@ The field of ophthalmology promises a brighter future where visual impairments a
       name: "Psychiatrist (Depression)",
       // nickname: "Depression",
       image: "https://pvdhealth.in/uploads/spe_img/pschy.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/PHYCHIATRISSTS.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/PHYCHIATRISSTS.jpg",
       description: `Psychiatry, the branch of medicine dedicated to detecting and treating mental diseases, relies not only on the competence of psychiatrists but also on the vital contributions of psychologists. Psychologists play a significant role in delivering complete care through their special grasp of human behaviour and psychological processes, whereas psychiatrists focus on the medical elements of mental health. The importance of psychologists in psychiatry is examined in this article, with a focus on their contributions to diagnosis, treatment, and study.
           Through their specialised knowledge and skills psychologists perform the assessment process in psychiatry. By employing various psychological tests, interviews, counselling sessions and observations they evaluate the patient’s cognitive, emotional, and behavioural functioning. These comprehensive assessments provide valuable insights into the patient’s treatment, contributing to the formulation of treatment plans tailored to individual needs.
           Psychologists play a significant role in treating patients with mental health issues. They assist patients control their symptoms, create coping mechanisms, and enhance overall wellbeing by using evidence-based treatment approaches such dialectical behaviour therapy, psychoanalysis, and cognitive-behavioural therapy. Psychologists and psychiatrists frequently collaborate, providing a holistic strategy that includes psychotherapy and medication management for the best results.
@@ -238,10 +221,8 @@ The field of ophthalmology promises a brighter future where visual impairments a
       id: "IMMUNOLOGIST",
       name: "Immunologist (Immunity System)",
       // nickname: "(Liver)",
-      image:
-        "https://pvdhealth.in/uploads/specialization_img/immunologist.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/immunology.jpg",
+      image: "https://pvdhealth.in/uploads/specialization_img/immunologist.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/immunology.jpg",
       description: `Immunologists are medical experts who research and comprehend the immune system, the body's natural defence against viruses and diseases. Their area of expertise is in deciphering the workings of this complicated biological system and creating plans to avoid, detect, and treat immunological problems. Immunologists are essential to preserving public health in a time of newly developing diseases and international health risks. Immunologists contribute to the creation of cutting-edge medicines and treatments for a variety of immunological illnesses by understanding the underlying mechanisms.
 Another crucial component of an immunologist's job is identifying and treating immunological diseases. To diagnose illnesses like allergies, autoimmune diseases, immunodeficiencies, and hypersensitive reactions, they use a variety of diagnostic procedures and laboratory testing. Immunologists provide individualised treatment programmes to effectively manage these conditions once a diagnosis has been made, with the goal of enhancing patients' quality of life and overall health outcomes.
 Additionally important to developing vaccine techniques are immunologists. They aid in the creation and assessment of vaccines, assuring their security, effectiveness, and sustained immune response. Immunologists improve immunisation tactics and aid in the prevention of infectious diseases by comprehending the immunological systems that vaccines trigger.
@@ -255,8 +236,7 @@ Immunologists are the defenders of our health, striving to understand and harnes
       name: "Gastroenterologist (Acidity & Gas)",
       // nickname: "Stomach",
       image: "https://pvdhealth.in/uploads/spe_img/gastro.jpg",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/gastroenterologist.jpg",
+      icon: "https://pvdhealth.in/uploads/specialization_img/gastroenterologist.jpg",
       description: `Gastroenterology is a branch of medicine that focuses on identifying, treating, and preventing conditions that impact the digestive system. The field covers a broad spectrum of disorders, from simple conditions like Crohn's disease and gastritis to sophisticated ones like liver cirrhosis and acid reflux. An essential part of maintaining and regaining the digestive system's health, which is essential for general well-being, is played by gastroenterologists.
                     The diagnosis and treatment of diseases of the oesophagus, stomach, small intestine, colon, rectum, pancreas, gallbladder, liver, and biliary system are the specialities of gastroenterologists. They evaluate the gastrointestinal tract using a variety of diagnostic methods, such as endoscopy, colonoscopy, and imaging tests, to provide a precise diagnosis.
                     A wide variety of conditions are encountered by gastroenterologists. Among the most common conditions are peptic ulcers, inflammatory bowel disease (IBD), gastroesophageal reflux disease (GERD), and irritable bowel syndrome (IBS). Abdominal pain, diarrhoea, constipation, and bloating are just a few of the symptoms that these disorders might produce. In order to treat these disorders, gastroenterologists use both medicinal and surgical procedures with the goals of symptom relief, healing promotion, and quality of life enhancement.
@@ -267,8 +247,7 @@ Immunologists are the defenders of our health, striving to understand and harnes
     {
       id: "HOMEOPATHY",
       name: "Homeopathy",
-      icon:
-        "https://pvdhealth.in/uploads/specialization_img/homeopathy.png",
+      icon: "https://pvdhealth.in/uploads/specialization_img/homeopathy.png",
       image: "https://pvdhealth.in/uploads/specialization_img/2.png",
       description: `Homeopathy is a holistic system of alternative medicine that has been practiced for over two centuries, founded by the German physician Samuel Hahnemann in the late 18th century. It is based on the principle of "like cures like," which means that a substance that causes symptoms in a healthy person can be used in a highly diluted form to treat similar symptoms in a sick individual. This concept is known as the Law of Similars.
 One of the core principles of homeopathy is the use of highly diluted remedies. Homeopathic remedies are prepared through a process called potentization, which involves serial dilution and succussion (vigorous shaking). The more a remedy is diluted and succussed, the more potent it becomes in homeopathic terms. This process is believed to enhance the healing properties of the substance while minimizing any potential side effects.
@@ -278,8 +257,71 @@ Homeopathy is often chosen as an alternative or complementary therapy, especiall
 In conclusion, homeopathy is a holistic system of alternative medicine rooted in the principle of "like cures like" and the use of highly diluted remedies. While its efficacy remains a toimage of debate, its popularity persists among those seeking a gentle and individualized approach to healing that considers the whole person, not just their physical symptoms.`,
     },
     {
+      id: "DENTAL",
+      name: "Dental",
+      icon: "https://pvdhealth.in/uploads/specialization_img/dantel%201.png",
+      description: `Dental clinic proprietors are aware that it might be difficult
+      to attract new patients because dental work is sometimes
+      expensive for patients.Composing content for online
+      publications like social media or the blog itself is a crucial
+      component of any dental marketing plan.Since a large
+      portion of individuals look for dental clinics online, writing
+      and publishing interesting articles is one technique to
+      pique readers&#39; interest.Let&#39;s examine why this is so crucial
+      and investigate what details these articles ought to have in
+      order to attract readers.`,
+    },
+    {
+      id: "ENT",
+      name: "ENT",
+      icon: "https://pvdhealth.in/uploads/specialization_img/ENT.png",
+      image: "https://pvdhealth.in/uploads/specialization_img/ENT.png",
+      description: `Otolaryngology is a branch of medicine that treats
+      conditions pertaining to the nose, throat, and
+      ears.Because experts in both medicine and surgery are
+      involved, it is also known as otolaryngology—head and
+      neck surgery.An ENT, or ear, nose, and throat physician, is
+      another term for an otolaryngologist.Since doctors
+      discovered that the head and neck had a number of
+      interrelated systems in the 19th century, this field of
+      medicine has existed.Physicians eventually created a
+      medical specialty by developing methods and instruments
+      for diagnosing and treating issues related to the head and
+      neck.The American Academy of Otolaryngology claims
+      that this is the oldest medical specialty in the country.
+      Unlike many other medical professionals,
+      otolaryngologists are trained to operate on the delicate
+      and intricate tissues of the head and neck, performing a
+      wide range of surgical procedures.`,
+    },
+    {
       id: "CTSCAN",
       name: "CTscan",
+      icon: "https://pvdhealth.in/uploads/specialization_img/ct%20scan%20images.jpg",
+      image: "https://pvdhealth.in/uploads/specialization_img/ct%20scan%20images.jpg",
+      description: `Computed Tomography, or CT scan, is a sophisticated imaging technique that combines X-rays from multiple angles to create detailed cross-sectional images of the body. This three-dimensional visualization enables physicians to examine internal structures with remarkable clarity, making CT scans instrumental in diagnosing conditions such as trauma, tumors, and vascular diseases. The speed and accuracy of CT scans make them vital in emergency situations, guiding medical interventions and surgical planning. As technology evolves, CT imaging continues to advance, offering improved resolution, reduced scan times, and enhanced capabilities for detecting subtle abnormalities in various anatomical regions.`,
+    },
+    {
+      id: "MRI",
+      name: "MRI",
+      icon:"uploads/specialization_img/mri image.jpg",
+      image:"uploads/specialization_img/mri image.jpg",
+      description:`Magnetic Resonance Imaging, or MRI, employs powerful magnets and radiofrequency pulses to create detailed images of internal body structures. This non-invasive technique is particularly effective for visualizing soft tissues such as the brain, spinal cord, and joints. By utilizing the magnetic properties of hydrogen atoms, MRI provides high-resolution images, aiding in the diagnosis of conditions like tumors, joint disorders, and neurological abnormalities. Its capacity to capture intricate details without radiation exposure makes MRI a valuable tool for medical professionals seeking comprehensive insights into a patient's health.`
+    },
+    {
+      id: "ULTRASOUND",
+      name: "Ultrasound",
+      icon:"https://pvdhealth.in/uploads/specialization_img/ultrasound%20logo.png",
+      image:"https://pvdhealth.in/uploads/specialization_img/ultrasound%20logo.png",
+      description:`Ultrasound imaging, or sonography, is a non-invasive diagnostic technique that utilizes high-frequency sound waves to create real-time images of internal organs and tissues. Commonly associated with obstetrics for monitoring pregnancies, ultrasound is versatile and widely used across medical specialties. It aids in evaluating abdominal organs, blood vessels, and the musculoskeletal system, providing valuable insights without exposing patients to ionizing radiation. With its portability and real-time capabilities, ultrasound is crucial for guiding procedures, diagnosing conditions such as gallstones and vascular issues, and monitoring fetal development. Ongoing technological advancements continue to enhance the resolution and applicability of ultrasound in diverse medical settings.`
+    },
+    {
+      id: "XRAY",
+      name: "XRay",
+      icon:"https://pvdhealth.in/uploads/specialization_img/x-ray%20image.jpg",
+      image:"https://pvdhealth.in/uploads/specialization_img/x-ray%20image.jpg",
+
+      description:`X-ray imaging is a widely used medical diagnostic tool that utilizes ionizing radiation to produce images of the body's internal structures. Primarily employed for visualizing bones and detecting abnormalities in the chest, abdomen, and extremities, X-rays are invaluable in diagnosing fractures, infections, and tumors. Despite its radiation exposure, X-ray technology remains pivotal in emergency medicine and routine examinations due to its speed and accessibility. Continuous advancements in digital imaging have enhanced the precision of X-rays, contributing to quicker diagnoses and more effective treatment plans for patients across various medical disciplines.`
     },
     {
       id: "ECHO",
@@ -293,22 +335,12 @@ In conclusion, homeopathy is a holistic system of alternative medicine rooted in
       id: "ENDOSCOPY",
       name: "Endoscopy",
     },
-    {
-      id: "MRI",
-      name: "MRI",
-    },
+    
     {
       id: "NICU",
       name: "NICU",
     },
-    {
-      id: "ULTRASOUND",
-      name: "Ultrasound",
-    },
-    {
-      id: "XRAY",
-      name: "XRay",
-    },
+   
   ],
   store: async () => {
     await specializationModel.deleteMany({});

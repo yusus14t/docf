@@ -224,7 +224,7 @@ function Detail() {
         </div> */}
 
         <div className="row mx-0 p-0">
-          <div className="col-lg-6 col-sm-12 col-md-12">
+          <div className="col-lg-6 col-sm-12 col-md-12 my-2">
             <div style={{ width: "100%", height: "300px" }}>
               <img
                 className="w-100 h-100 rounded"
@@ -237,55 +237,58 @@ function Detail() {
             </div>
           </div>
           <div
-            style={{ height: "300px", border: "5px solid #053d42" }}
-            className="col-lg-6 p-0 bg-light  rounded"
+            
+            className="col-lg-6 bg-light my-2"
           >
-            <div style={{ width: "100%", padding: "0" }}>
-              <h4 className="clinic-detail-name ">
-                {clinicDetail?.hospital?.name || clinicDetail.name}
-              </h4>
-              {/* <h6
-                style={{ display: "inline-block" }}
-                className="text-light clinic-detail-drName rounded"
-              >
-                {clinicDetail?.specialization?.map((spe) => spe.name) ||
-                  "Specialization"}
-              </h6> */}
-            </div>
-            <div className="d-flex flex-row mt-5 justify-content-between mx-2">
-              <div className="d-flex flex-row  justify-content-between  ">
-                <div className="clinic-detail-mobile">
-                  {/* <h4 className="text-light clinic-detail-drName rounded mt-4">
-                    
-                      {clinicDetail.doctor?.name}
-                    </h4> */}
-                  {clinicDetail.organizationType !== "Clinic" && (
-                    <>
-                      <h4 className="text-light clinic-detail-drName rounded">
-                        Dept. {clinicDetail.name}{" "}
-                      </h4>
-                    </>
-                  )}
-
-                  <h6
-                    style={{ display: "inline-block" }}
-                    className="text-light clinic-detail-drName rounded"
-                  >
-                    {clinicDetail?.specialization?.map((spe) => spe.name) ||
-                      "Specialization"}
-                  </h6>
-                  {clinicDetail?.room && (
-                    <h4 className="text-light clinic-detail-drName rounded">
-                      Room No: {clinicDetail?.room}
-                    </h4>
-                  )}
-                </div>
+            <div className="rounded" style={{ border: "5px solid #053d42", height: '300px'  }}>
+              <div className=" ">
+                <h4 className="clinic-detail-name ">
+                  {clinicDetail?.hospital?.name || clinicDetail.name}
+                </h4>
+                {/* <h6
+                  style={{ display: "inline-block" }}
+                  className="text-light clinic-detail-drName rounded"
+                >
+                  {clinicDetail?.specialization?.map((spe) => spe.name) ||
+                    "Specialization"}
+                </h6> */}
               </div>
-              <div
-                className="current-clicnic-token ml-5 d-flex flex-row"
-                style={{ position: "relative" }}
-              >
-                <h1 className="px-2">{ jwt_token ? token : <FontAwesomeIcon className="text-muted " icon={faLock} />}</h1>
+              <div className="d-flex  align-items-center justify-content-between mx-2 " style={{ height: 'calc(100% - 50px)'}}>
+                <div className="d-flex flex-row  justify-content-between  ">
+                  <div className="clinic-detail-mobile">
+                    {/* <h4 className="text-light clinic-detail-drName rounded mt-4">
+                      
+                        {clinicDetail.doctor?.name}
+                      </h4> */}
+                    {clinicDetail.organizationType !== "Clinic" && (
+                      <>
+                        <h4 className="text-light clinic-detail-drName rounded">
+                          Dept. {clinicDetail.name}{" "}
+                        </h4>
+                      </>
+                    )}
+                    <div>
+                      {clinicDetail?.specialization?.map((spe) => 
+                        <h6 className=" text-light clinic-detail-drName rounded " >
+                        {spe.name}
+                      </h6>
+                      ) ||
+                        "Specialization"}
+                    </div>
+                    
+                    {clinicDetail?.room && (
+                      <h4 className="text-light clinic-detail-drName rounded">
+                        Room No: {clinicDetail?.room}
+                      </h4>
+                    )}
+                  </div>
+                </div>
+                <div
+                  className="current-clicnic-token ml-5 d-flex flex-row"
+                  style={{ position: "relative" }}
+                >
+                  <h1 className="px-2">{ jwt_token ? token : <FontAwesomeIcon className="text-muted " icon={faLock} />}</h1>
+                </div>
               </div>
             </div>
           </div>
@@ -306,26 +309,26 @@ function Detail() {
           </div>
         )}
 
-        <div className="container-fluid">
-          <div className="row clinic-details-row mt-5 mx-0">
+        <div className="">
+          <div className="row clinic-details-row mt-3 mx-0">
             {/* WAITING LIST */}
             <div className="col-md-6 ">
               <div className="wating-area-clinic">
-                <div className="d-flex justify-content-center waitinglistContainer">
-                  <div className="text-center bg-success p-2">
+                <div className="d-flex justify-content-around waitinglistContainer bg-success">
+                  <div className="text-center p-2">
                     <button
                       onClick={() => handleTabClick(0)}
-                      className={`rounded position-inline p-2 btn-primary waitinglist  ${
+                      className={`rounded position-inline p-2 btn-primary   ${
                         activeTab === 0 ? "activeList" : ""
                       }`}
                     >
                       Waiting List
                     </button>
                   </div>
-                  <div className="text-center bg-success p-2">
+                  <div className="text-center  p-2">
                     <button
                       onClick={() => handleTabClick(1)}
-                      className={`rounded position-inline p-2 btn-primary waitinglist ${
+                      className={`rounded position-inline p-2 btn-primary  ${
                         activeTab === 1 ? "activeList" : ""
                       }`}
                     >

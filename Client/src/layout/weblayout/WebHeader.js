@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import NO_PHOTO from '../../assets.app/images/no-photo.png'
 import logo from '../../assets.app/img/logo/logo.jpg'
@@ -8,6 +8,7 @@ import { WEB_MENU_ITEMS, userRoutes } from "../../constants/constant";
 import { getFullPath, Logout } from "../../constants/utils";
 
 const WebHeader = () => {
+  const toggleRef = useRef(null)
   const userInfo = JSON.parse(localStorage.getItem('user'))
   const [isLogin] = useState(Boolean(userInfo))
   const [isSideBbarOpen, setIsSidebarOpen] = useState(false);
@@ -15,7 +16,7 @@ const WebHeader = () => {
 
   return (
     <>
-      <WebSidebar isOpen={isSideBbarOpen} setIsOpen={setIsSidebarOpen} />
+      <WebSidebar isOpen={isSideBbarOpen} setIsOpen={setIsSidebarOpen} ref={toggleRef} />
       <nav className="navbar ms-navbar">
         <div className="ms-aside-toggler ms-toggler ps-0">
           <span className="ms-toggler-bar bg-white"></span>
@@ -67,7 +68,7 @@ const WebHeader = () => {
           :
          <Link to={"/login"} className="login_button">Login/Signup</Link>
         }
-        <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" data-bs-toggle="slideDown" data-bs-target="#ms-nav-options" onClick={() => { setIsSidebarOpen(!isSideBbarOpen) }}>
+        <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" id="navToggler" onClick={() => { setIsSidebarOpen(!isSideBbarOpen) }}>
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>
           <span className="ms-toggler-bar bg-white"></span>

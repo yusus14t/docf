@@ -1,4 +1,4 @@
-import {  useEffect, useRef } from "react"
+import {  forwardRef, useEffect, useRef } from "react"
 
 export default ({ callback = () => {}, children, ...props }) => {
     const wrapperRef = useRef(null)
@@ -9,7 +9,8 @@ export default ({ callback = () => {}, children, ...props }) => {
     }, [])
 
     const handleOutside = (event) => {
-        if(!wrapperRef.current.contains(event.target)){
+        const toggler = document.getElementById('navToggler')
+        if(!wrapperRef.current.contains(event.target) && !toggler?.contains(event.target) ){
             callback()   
         }
     }

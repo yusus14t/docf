@@ -50,7 +50,7 @@ const Clinics = ({ source }) => {
                 <div className="overflow">
                     <div className="row mx-2">
                         {clinics?.length > 0 && clinics.map((clinic, index) => (
-                            <div key={index} className="col-lg-4 col-md-3  col-sm-6">
+                            <div key={index} className="col-lg-4 col-sm-6">
                                 <div className="ms-card">
                                     <div className="ms-card-body">
                                         <div className="media mb-0 fs-14">

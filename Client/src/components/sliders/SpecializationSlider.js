@@ -42,7 +42,7 @@ export default function SpecializationSlider({ view = 1}) {
         modules={[Pagination,Autoplay]}
         className="mySwiper"
       >
-        {specializations.map((specialisation, key )=> <SwiperSlide key={key}>
+        {specializations.filter((specialization, index)=> index <= 25).map((specialisation, key ,)=> <SwiperSlide key={key}>
           <Link to={`/specialization/${specialisation?.id}`}>
           <div className='spicialization-card'>
             <div className='specialization-icon'>

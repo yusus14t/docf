@@ -122,7 +122,7 @@ const DoctorsList = () => {
                 </div>
                 <div className="row">
                     {doctors.length > 0 && doctors.map((doctor, index) => (
-                        <div key={index} className="col-lg-4 col-md-3  col-sm-6">
+                        <div key={index} className="col-lg-4 col-md-6  col-sm-6">
                             <div className="ms-card">
                                 <div className="ms-card-body">
                                     <div className="media mb-0 fs-14">

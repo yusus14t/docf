@@ -25,7 +25,7 @@ const cronSchedule = cron.schedule('0 */2 * * *', function () {
     // Name Format  db_{ day }_{ month }_{ year }_{ hour } db_12_11_2023_13
     
     let date = new Date()
-    const backupName = `db_${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}_${ date.getHours()}_${ date.getMinutes() }_${ date.getSeconds()}.gz`
+    const backupName = `db_${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}_${ date.getHours()}.gz`
     
     exec( `mongodump --db AcadTech  --gzip --archive > ${__dirname}/${ backupName }`, async (error, stdout, stderr) => {
         if( error ){

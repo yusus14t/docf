@@ -51,7 +51,7 @@ export default () => {
             </div>
             <div className="row">
                 { hospitals?.length > 0 && hospitals.map((hospital, index) => (
-                    <div key={index} className="col-lg-4 col-md-3  col-sm-6">
+                    <div key={index} className="col-lg-4 col-sm-6">
                         <div className="ms-card">
                             <div className="ms-card-body" style={{ borderLeft: '5px solid #112c2f'}}>
                                 <div className="media mb-0 fs-14 justify-content-start">

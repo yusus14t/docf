@@ -16,7 +16,7 @@
     height: 75px;
   } */
   .waitinglistContainer{
-  margin-top: 112px;
+  /* margin-top: 112px; */
   position: relative;
 }
   .mini-menu{
@@ -406,7 +406,7 @@
     width: 90px;
     font-size: 16px;
     text-align: center;
-    margin: 40px 0 0 35% !important;
+    margin: 40px 0 0 0 !important;
   }
   .current-clicnic-token h1 {
     /* margin: 7px !important; */
@@ -440,7 +440,7 @@
     font-size: medium;
     margin-left: 5px;
     width: 100px;
-    font-size: 10px;
+    font-size: 15px;
   }
   .fixed,
   .side-nav.fixed {
@@ -454,7 +454,7 @@
     width: 80px;
   }
   .clinic-detail-name {
-    margin-top: 10px;
+    /* margin-top: 10px; */
   }
   .footer-poster {
     /* width: 100%; */
@@ -810,7 +810,7 @@
   }
   .current-clicnic-token {
     height: 60px;
-    width: 60px;
+    /* width: 60px; */
     font-size: 16px;
     margin: 40px 0 0 90px;
   }

@@ -131,6 +131,7 @@ const Contact = () => {
               <input
                 type="text"
                 placeholder="Enter mobile number"
+                minLength={10}
                 className="form-control"
                 maxLength={10}
                 value={query.mobile}

@@ -7,7 +7,7 @@ const Layout = () => {
             <main className="body-content">
                 <Header />
                 <div className='main-content'>
-                    <div id="main-content" className="ml255 mt80 " style={{ width: '100%',  }}>
+                    <div className="ml255 mt80 " style={{ width: '100%',  }}>
                        <Outlet /> 
                     </div> 
                 </div>

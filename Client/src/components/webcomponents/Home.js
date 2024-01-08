@@ -62,7 +62,7 @@ function Home() {
 
         </div>
       </div>
-      <div className="mobie px-3">
+      <div className="mobie container px-3">
         <SpecializationSlider view={views[device]}/>
         {/* <Slider /> */}
       </div>
