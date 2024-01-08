@@ -304,8 +304,8 @@ In conclusion, homeopathy is a holistic system of alternative medicine rooted in
     {
       id: "MRI",
       name: "MRI",
-      icon:"uploads/specialization_img/mri image.jpg",
-      image:"uploads/specialization_img/mri image.jpg",
+      icon:"https://pvdhealth.in/uploads/specialization_img/mri%20image.jpg",
+      image:"https://pvdhealth.in/uploads/specialization_img/mri%20image.jpg",
       description:`Magnetic Resonance Imaging, or MRI, employs powerful magnets and radiofrequency pulses to create detailed images of internal body structures. This non-invasive technique is particularly effective for visualizing soft tissues such as the brain, spinal cord, and joints. By utilizing the magnetic properties of hydrogen atoms, MRI provides high-resolution images, aiding in the diagnosis of conditions like tumors, joint disorders, and neurological abnormalities. Its capacity to capture intricate details without radiation exposure makes MRI a valuable tool for medical professionals seeking comprehensive insights into a patient's health.`
     },
     {
