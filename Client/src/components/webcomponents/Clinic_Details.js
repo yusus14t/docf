@@ -336,7 +336,7 @@ function Detail() {
                     </button>
                   </div>
                 </div>
-                {jwt_token ? (
+                {/* {jwt_token ? (
                   <>
                     {activeTab === 0 && (
                       <div className="token-list-container  rounded ">
@@ -383,8 +383,8 @@ function Detail() {
                             ))}
                           </ul>
                         ) : (
-                          <span>No Data</span>
-                        )}
+                          <span>No Appointment</span>
+                        ) }
                       </div>
                     )}
                   </>
@@ -454,7 +454,120 @@ function Detail() {
                       <span>No Data</span>
                     )}
                   </div>
-                )}
+                )} */}
+
+                {jwt_token ? 
+                  <>
+                    { activeTab === 0 
+                      ? ( <div className="token-list-container  rounded ">
+                          {waitingList?.length 
+                          ? (
+                          <ul className={`token-list $`}>
+                            {waitingList.map((list, key) => (
+                              <li className=" p-2" key={key}>
+                                <div className="mt-auto">
+                                  <div
+                                    className={`token-list-item d-flex flex-row justify-content-start ${
+                                      list?.token == parseInt(token)
+                                        ? "token-list-active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <div
+                                      className={`token mx-2 ${
+                                        list?.token == parseInt(token)
+                                          ? "token-active"
+                                          : ""
+                                      }`}
+                                    >
+                                      <h4 className="token-list-number">
+                                        {list?.token}
+                                      </h4>
+                                    </div>
+                                    <div className="token-list-detail">
+                                      <h4 className="list-patient-name mb-1">
+                                        {list?.name}
+                                      </h4>
+                                      <p className="mb-0 list-mobile-no">
+                                        Mobile Number : +91{" "}
+                                        {list?.phone
+                                          ? `xxx-xxx-${list?.phone.slice(-4)}`
+                                          : "----------"}
+                                      </p>
+                                      <p className="mb-0 list-address">
+                                        Address : {list?.address}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                            ) 
+                          :  <span>No Appointment</span>
+                         }
+                      </div>
+                      ) 
+                    :  
+                      <div className="token-list-container  rounded ">
+                        {unreachedList?.length 
+                          ? ( <ul className={`token-list $`}>
+                            {unreachedList.map((list, key) => (
+                              <li className=" p-2" key={key}>
+                                <div className="mt-auto">
+                                  <div
+                                    className={`token-list-item d-flex flex-row justify-content-start ${
+                                      list?.token == parseInt(token)
+                                        ? "token-list-active"
+                                        : ""
+                                    }`}
+                                  >
+                                    <div
+                                      className={`token mx-2 ${
+                                        list?.token == parseInt(token)
+                                          ? "token-active"
+                                          : ""
+                                      }`}
+                                    >
+                                      <h4 className="token-list-number">
+                                        {list?.token}
+                                      </h4>
+                                    </div>
+                                    <div className="token-list-detail">
+                                      <h4 className="list-patient-name mb-1">
+                                        {list?.name}
+                                      </h4>
+                                      <p className="mb-0 list-mobile-no">
+                                        Mobile Number : +91{" "}
+                                        {list?.phone
+                                          ? `xxx-xxx-${list?.phone.slice(-4)}`
+                                          : "----------"}
+                                      </p>
+                                      <p className="mb-0 list-address">
+                                        Address : {list?.address}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            ))}
+                            </ul>) 
+                          : <span>No Appointment </span>}
+                      </div>
+                  }
+
+                  </>
+                :   
+                <div className="d-flex justify-content-center align-items-center flex-column h-100">
+                    <h4 className="text-muted">
+                      <FontAwesomeIcon icon={faLock} /> Not Authenticated
+                    </h4>
+                    <p className="my-2">Login first to check all the appointments. </p>
+                    <Link to={'/login'} className="bg-primary text-light rounded w-50 m-3 py-2 text-center">
+                        LogIn
+                    </Link>
+                </div>
+                }
               </div>
               {/* doctors list */}
               {clinicDetail?.doctors?.length > 0 && (
@@ -542,10 +655,10 @@ function Detail() {
           </div>
 
           {/* CONTACT CARD */}
-          <div className="contact-details-clinic pt-3">
+          <div className="contact-details-clinic pt-3 flex-wrap">
             <div className="sigma_info style-26 d-flex">
               <div className="sigma_info-title">
-                <span className="sigma_info-icon clinic-address-icon-container">
+                <span className="sigma_info-icon clinic-address-icon-container me-2">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faMapMarker}
@@ -555,7 +668,7 @@ function Detail() {
               <div className="sigma_info-description">
                 <div className="clinic-footer-address">
                   <p>Our Address</p>
-                  <p className="secondary-color">
+                  <p className="secondary-color text-balance fs-12">
                     <b>{clinicDetail?.address}</b>
                   </p>
                 </div>
@@ -563,7 +676,7 @@ function Detail() {
             </div>
             <div className="sigma_info style-26 d-flex">
               <div className="sigma_info-title d-flex">
-                <span className="sigma_info-icon clinic-address-icon-container">
+                <span className="sigma_info-icon clinic-address-icon-container me-2">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faPhone}
@@ -573,14 +686,14 @@ function Detail() {
               </div>
               <div className="sigma_info-description">
                 <p>Call Us</p>
-                <p className="secondary-color">
+                <p className="secondary-color fs-12">
                   <b>{formatPhone(clinicDetail?.phone)}</b>
                 </p>
               </div>
             </div>
             <div className="sigma_info style-26 d-flex">
               <div className="sigma_info-title">
-                <span className="sigma_info-icon clinic-address-icon-container">
+                <span className="sigma_info-icon clinic-address-icon-container me-2">
                   <FontAwesomeIcon
                     className="clinic-address-icon"
                     icon={faEnvelope}
@@ -589,7 +702,7 @@ function Detail() {
               </div>
               <div className="sigma_info-description">
                 <p>Our Mail</p>
-                <p className="secondary-color">
+                <p className="secondary-color text-balance fs-12">
                   <b>{clinicDetail?.email}</b>
                 </p>
               </div>

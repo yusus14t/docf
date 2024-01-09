@@ -13,6 +13,16 @@
   background-color: #00bf63 !important;
   /* font-size: 28px; */
 }
+/* .focus-non:focus-visible{
+  border: none !important;
+} */
+.focus-non:focus{
+  border: none;
+}
+.dynaWith{
+  width: 60vw;
+  max-width: 500px;
+}
 
 .waitinglist{
   z-index: 1;
@@ -919,7 +929,7 @@ input::-webkit-inner-spin-button {
 
 /* Maain content it must not be change */
 .inner-content-height {
-  height: 83dvh;
+  /* height: 83dvh; */
 }
 /* .dr-address {
   width: 187px;

@@ -67,7 +67,7 @@ const Search = () => {
         style={{ position: "fixed", zIndex: "800" }}
         className="seacrh-bar-container w-100 "
       >
-        <ul className="d-flex flex-row justify-content-center seacrh-ul pt-2">
+        {/* <ul className="d-flex flex-row justify-content-center seacrh-ul pt-2">
           <li>
             <img
               className="cursor-pointer"
@@ -103,7 +103,43 @@ const Search = () => {
               )}
             </div>
           </li>
-        </ul>
+        </ul> */}
+        <section className="d-flex flex-row justify-content-center align-items-center mx-2 my-1">
+          <div>
+            <img
+              className="cursor-pointer"
+              style={{ width: "30px", height: "35px", marginRight: "10px" }}
+              src={filterImage}
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              alt="filter"
+            />
+          </div>
+          <div className="" style={{ backgroundColor: '#e3e3e3'}}>
+            <input
+              placeholder="Doctors, Clinics and Hospitals etc"
+              className="focus-non px-3 py-2 dynaWith "
+              style={{ backgroundColor: '#e3e3e3', border: 'none', }}
+              ref={inputRef}
+              type="text"
+              onClick={() => setIsOpenSearch(true)}
+              onChange={(e) => {
+                if (!e.target.value) setSearchData([]);
+                setFilter({ ...filter, search: e.target.value });
+              }}
+            />
+            {isOpenSearch && (
+                <FontAwesomeIcon
+                  className="search-ico mx-2"
+                  icon={faXmark}
+                  onClick={() => {
+                    setIsOpenSearch(false);
+                    setIsFilterOpen(false);
+                    inputRef.current.value = null;
+                  }}
+                />
+              )}
+          </div>
+        </section>
         {isFilterOpen && (
           <div className="w-100 " style={{ background: "#fff", }}>
             <div className="d-flex justify-content-around align-item-center search-mobile">
@@ -213,23 +249,19 @@ const Search = () => {
                                 <div class="div">
                                   <span
                                     class="badge badge-outline-danger"
-                                    style={{ marginBottom: "50%" }}
+                                    // style={{ marginBottom: "50%" }}
                                   >
-                                    {clinic?.userType
-                                      ? "Doctor"
-                                      : clinic?.organizationType}
+                                    {clinic?.type}
                                   </span>
                                 </div>
                               </div>
-                              <p class="fs-12 my-1 text-disabled">
+                              {/* <p class="fs-12 my-1 text-disabled">
                                 {clinic?.email}
-                              </p>
-                              <h6 class="mt-0">
-                                <span class="fs-14">
-                                  <i class="fas fa-map-marker-alt"></i>
-                                </span>
+                              </p> */}
+                              <p class="mt-0 fs-12">
+                                
                                 {clinic?.address || "-"}
-                              </h6>
+                              </p>
                             </div>
                           </div>
                         </div>

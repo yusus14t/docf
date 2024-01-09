@@ -9074,3 +9074,7 @@ body:not(.ms-settings-open) .ms-settings-toggle:hover {
 .custom-dropdown-item-active {
   background: #e4e4e4;
 }
+
+.text-balance {
+  text-wrap: balance !important;
+}

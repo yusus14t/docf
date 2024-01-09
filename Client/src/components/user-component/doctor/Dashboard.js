@@ -170,7 +170,7 @@ const Dashbaord = () => {
                                 <h6>Today Appointments</h6>
                             </div>
                             <div className="">
-                                <button className=" btn btn-info btn-md" onClick={() => setIsModalOpen(true)} >Add Appointment</button>
+                                <button className=" px-3 rounded btn-info btn-md" onClick={() => setIsModalOpen(true)} >+</button>
                             </div>
                         </div>
                         <div class="ms-panel-body p-0 h20 overflow-scroll">
