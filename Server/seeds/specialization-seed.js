@@ -260,6 +260,7 @@ In conclusion, homeopathy is a holistic system of alternative medicine rooted in
       id: "DENTAL",
       name: "Dental",
       icon: "https://pvdhealth.in/uploads/specialization_img/dantel%201.png",
+      image: "https://pvdhealth.in/uploads/specialization_img/dantel%201.png",
       description: `Dental clinic proprietors are aware that it might be difficult
       to attract new patients because dental work is sometimes
       expensive for patients.Composing content for online
