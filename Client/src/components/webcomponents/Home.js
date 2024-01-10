@@ -36,8 +36,8 @@ function Home() {
       <div className="box"></div>
 
       <div className=" d-flex justify-content-center align-items-center" >
-        <div className=" w-100 ">
-          <img className="w-100" src={findImage(WEBSITE_IMAGE.HOME_BANNER)} />
+        <div style={{height:"60vw", maxHeight:"400px"}} className=" w-100 ">
+          <img className="w-100 h-100" src={findImage(WEBSITE_IMAGE.HOME_BANNER)} />
         </div>
       </div>
 

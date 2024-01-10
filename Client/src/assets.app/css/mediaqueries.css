@@ -919,7 +919,7 @@
   }
   .Dr-container{
     width: 340px;
-    height: 250px;
+    /* height: 250px; */
   }
   .department-card-image {
     width: 105px;
@@ -1061,6 +1061,9 @@
   }
   .DRNAME {
     font-size: 1.2rem;
+    text-wrap: nowrap;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .fixed,
   .side-nav.fixed {

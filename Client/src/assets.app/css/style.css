@@ -8709,6 +8709,11 @@ body:not(.ms-settings-open) .ms-settings-toggle:hover {
   overflow-x: hidden;
 }
 
+.truncate1{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .events.in {
   -webkit-animation: fadeIn .3s ease both;
   -moz-animation: fadeIn .3s ease both;

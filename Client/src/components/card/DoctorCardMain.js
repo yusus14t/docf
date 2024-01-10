@@ -43,9 +43,9 @@ export default ({ limit = null, filter }) => {
                             />
                         </div>
 
-                        <div className="dr-details">
+                        <div className="dr-details truncate1">
                             <h2 className="DRNAME">
-                                {truncate(doctor?.name, 10)}
+                                {doctor?.name}
                             </h2>
                             <p className="mb-1 dr-spelialization">
                                 {truncate(
