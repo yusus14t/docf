@@ -164,7 +164,7 @@ const getAllDoctors = async (body, user) => {
     }
 
 
-    let doctors = await UserModel.aggregate([
+    let aggregate = [
       {
         $match: {
           userType: "DR",
@@ -182,19 +182,16 @@ const getAllDoctors = async (body, user) => {
               $options: 'i'
             }
           } : {}),
-  
-          ...( body?.filter?.city ? {
+
+          ...(body?.filter?.city ? {
             address: {
               $regex: body.filter.city,
               $options: 'i'
             }
-          } : {} ),
+          } : {}),
 
         },
       },
-
-      ( body?.limit ? { $limit:  parseInt(body.limit) } : {} ),
-      
       {
         $lookup: {
           from: "organizations",
@@ -225,15 +222,21 @@ const getAllDoctors = async (body, user) => {
           qualification: 1,
           timing: 1
         },
-      
+
       },
       {
         $sort: {
           createdAt: -1
-      }
-    },
+        }
+      },
 
-    ]);
+    ]
+
+    if( body?.limit ) aggregate.push({ $limit:  parseInt(body.limit) }) 
+
+    let doctors = await UserModel.aggregate(aggregate);
+
+
 
     return Success({ doctors });
   } catch (error) {

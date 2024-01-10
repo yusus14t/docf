@@ -381,7 +381,8 @@ const getAllClinics = async (body) => {
     let specialization = body?.filter?.specialization
 
     let specializationCond =  typeof(specialization) === 'string' ? [specialization] : specialization 
-    let clinics = await OrganizationModel.aggregate([
+
+    let aggregate = [
       {
         $match: {
         'billing.isPaid': true,
@@ -417,8 +418,6 @@ const getAllClinics = async (body) => {
 
         }
       },
-      ( body?.limit ? { $limit: parseInt( body.limit )} : {}),
-
       {
         $lookup: {
           from: 'users',
@@ -452,7 +451,11 @@ const getAllClinics = async (body) => {
         },
 
       }
-    ])
+    ]
+
+    if( body?.limit ) aggregate.push({ $limit: parseInt( body.limit )})
+
+    let clinics = await OrganizationModel.aggregate(aggregate)
 
 
     return Success({ clinics });0
