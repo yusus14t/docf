@@ -1,12 +1,10 @@
-import Clinics from "./Clinics";
-import Hospitals from "./Hospital/Hospitals";
-import DoctorsList from "./doctor/Doctors";
 import { getFullPath, getImages } from "../../constants/utils";
 import { useEffect, useState } from "react";
 import { WEBSITE_IMAGE } from "../../constants/constant";
 import SpecializationSlider from "../sliders/SpecializationSlider";
-
-
+import DoctorCardMain from "../card/DoctorCardMain";
+import ClinicCard from "../card/ClinicCard";
+import HospitalCard from "../card/HospitalCard";
 
 function Home() {
   const [ images, setImages ] = useState([])
@@ -36,52 +34,41 @@ function Home() {
   return (
     <>
       <div className="box"></div>
-      {/* hero section */}
-      <div
-        className=""
-        style={{
-          
-          display: "flex",
-          alignItems: "center",
-          justifyContent:'center'
-        }}
-      >
-        <div className=" w-100 ">
-          {/* <div className="">
-            <h1 style={{ fontWeight: "bolder" }}>
-              Get Expert <span> </span>
-              <span className="text-success">
-                Medical <br /> Consultation
-              </span>
-            </h1>
-            <h4 className="hjj">
-              Our Partners provide best Medical Treament and advice
-            </h4>
-          </div> */}
-          <img className="w-100" src={findImage(WEBSITE_IMAGE.HOME_BANNER)} />
 
+      <div className=" d-flex justify-content-center align-items-center" >
+        <div className=" w-100 ">
+          <img className="w-100" src={findImage(WEBSITE_IMAGE.HOME_BANNER)} />
         </div>
       </div>
+
       <div className="mobie container px-3">
         <SpecializationSlider view={views[device]}/>
-        {/* <Slider /> */}
       </div>
+      
+      <h4 className="my-4 text-center bg-light py-2">Doctors</h4>
+      <section className="container">
+          <div className="row">
+            <DoctorCardMain limit={9} />
+          </div>
+      </section>
 
-      {/* <Clinics style={{ margin: "0" }} /> */}
-      <div className="">
-        <div className="">
-          <DoctorsList source={"homepage"} />
-        </div>
+      <h4 className="my-4 text-center bg-light py-2">Clinics</h4>
+      <section className="container">
+          <div className="row">
+            <ClinicCard limit={6} />
+          </div>
+      </section>
 
-        <Clinics source={"homepage"} />
 
-        <Hospitals source={"homepage"} />
-      </div>
+      <h4 className="my-4 text-center bg-light py-2">Hospitals</h4>
+      <section className="container">
+          <div className="row">
+            <HospitalCard limit={6} />
+          </div>
+      </section>
 
+      <h4 className="my-4 text-center bg-light py-2">Why Choose Us</h4>
       <div className="container">
-        <h3 className="text-center underline">
-          <span className="under">Why Choose Us</span>
-        </h3>
         <div className="row mt-2">
           <div className="col-sm-6">
             <div className="col-5 advantages d-flex align-items-center px-3">

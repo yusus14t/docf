@@ -166,63 +166,155 @@ export const SETTING_TABS = [
 
 
 export const SEO = {
-         HOMEPAGE: {
-           description: `At Doctortime, we are dedicated to simplifying the complex world of hospital management. Our software is designed to empower healthcare professionals and administrators by providing powerful tools to streamline operations, enhance patient care, and optimize administrative tasks.
-                         With years of experience in the healthcare industry, we understand the unique challenges faced by hospitals, clinics and medical facilities. Our team of experts has worked diligently to create a comprehensive solution that addresses these challenges head-on.`,
-           keyword: "doctortime, docotr time, timedoctor, time doctor",
-         },
-         GYNAECLOGIST: {
-           description: `A medical specialty called gynecology focuses on issues related to women&amp;#39;s
-                            health, such as the development, diagnosis, prevention, and treatment of
-                            illnesses that are specific to the female reproductive system. Obstetrics is the
-                            medical specialty that deals with caring for pregnant women and their unborn
-                            children before, during, and after the birth (Cunningham et al., 2010).
-                            Obstetrics and gynecology both focus on the health of the female
-                            reproductive system. Over the course of their lives, women go through a
-                            variety of reproductive development-related events, including menarche,
-                            menstruation, pregnancy, maternity, and menopause.`,
-           keyword: "gynaeclogist , doctortime, docotr time, timedoctor",
-         },
-         HOSPITALS: {
-           description: `A hospital is a place of healthcare where patients can receive specialist
-                        medical and nursing treatment as well as medicinal supplies. The most
-                        popular type of hospital is a general hospital, which typically has an
-                        emergency room to deal with urgent health issues including victims of fires
-                        and accidents as well as medical emergencies. Hospitals have had to pay
-                        more attention to this issue since the standard of Doctortime healthcare has
-                        come under increased scrutiny globally.`,
-           keyword: "hospitals , doctortime, docotr time, timedoctor",
-         },
-         CLINICS: {
-           description: `a clinic is a formalized medical facility that provides outpatient diagnostic,
-                            therapeutic, or preventive services. Frequently, the phrase refers to a whole
-                            medical teaching facility, which includes the hospital and any outpatient
-                            services. A clinic&amp;#39;s medical services might or might not be associated with a
-                            hospital. The word &amp;quot;clinic&amp;quot; can refer to all of a general clinic&amp;#39;s operations or
-                            just one specific area of expertise, such as the psychiatric, neurological, or
-                            surgical clinics. When associated with a hospital, the total activity is often
-                            referred to as the outpatient department, and the various subdivisions may be
-                            called clinics.`,
-           keyword: "clinics , doctortime, docotr time, timedoctor",
-         },
-         DOCTORS: {
-           description: `In order to identify, manage, and treat illnesses and injuries, doctors consult
-                        with patients and others who are caring for them. Of course, certain
-                        responsibilities will differ based on the branch of medicine you plan to
-                        practice, but many of the fundamental responsibilities are common to all
-                        doctors.`,
-           keyword: "doctors , doctortime, docotr time, timedoctor",
-         },
-         HOMEOPATHY: {
-           description: `Homeopathy is generally based on two main principles: that a substance that causes symptoms in a healthy person can be used in diluted form to treat symptoms and illnesses, a principle known as “like-cures-like”`,
-           keyword: "homeopathy, doctortime, docotr time, timedoctor",
-         },
-         RADIOLOGIST: {
-           description: `Elevate your radiology services with top-notch expertise. Our board-certified radiologists deliver accurate diagnoses, using cutting-edge technology. We prioritize patient care, offering convenient appointments and rapid report turnaround times. Trust us for your medical imaging needs. Your health is our priority. Contact us today for comprehensive radiology solutions.`,
-           keyword: "radiologist, xray, ct scan , doctortime, docotr time",
-         },
-         CONTACT: {
-           description: `Fell free to contact us`,
-           keyword: "contact, constacts us,doctortime, docotr time",
-         },
-       };
+  HOMEPAGE: {
+    description: `At Doctortime, we are dedicated to simplifying the complex world of hospital management. Our software is designed to empower healthcare professionals and administrators by providing powerful tools to streamline operations, enhance patient care, and optimize administrative tasks.
+                  With years of experience in the healthcare industry, we understand the unique challenges faced by hospitals, clinics and medical facilities. Our team of experts has worked diligently to create a comprehensive solution that addresses these challenges head-on.`,
+    keyword: "doctortime, docotr time, timedoctor, time doctor",
+  },
+  GYNAECLOGIST: {
+    description: `A medical specialty called gynecology focuses on issues related to women&amp;#39;s
+                    health, such as the development, diagnosis, prevention, and treatment of
+                    illnesses that are specific to the female reproductive system. Obstetrics is the
+                    medical specialty that deals with caring for pregnant women and their unborn
+                    children before, during, and after the birth (Cunningham et al., 2010).
+                    Obstetrics and gynecology both focus on the health of the female
+                    reproductive system. Over the course of their lives, women go through a
+                    variety of reproductive development-related events, including menarche,
+                    menstruation, pregnancy, maternity, and menopause.`,
+    keyword: "gynaeclogist , doctortime, docotr time, timedoctor",
+  },
+  HOSPITALS: {
+    description: `A hospital is a place of healthcare where patients can receive specialist
+                medical and nursing treatment as well as medicinal supplies. The most
+                popular type of hospital is a general hospital, which typically has an
+                emergency room to deal with urgent health issues including victims of fires
+                and accidents as well as medical emergencies. Hospitals have had to pay
+                more attention to this issue since the standard of Doctortime healthcare has
+                come under increased scrutiny globally.`,
+    keyword: "hospitals , doctortime, docotr time, timedoctor",
+  },
+  CLINICS: {
+    description: `a clinic is a formalized medical facility that provides outpatient diagnostic,
+                    therapeutic, or preventive services. Frequently, the phrase refers to a whole
+                    medical teaching facility, which includes the hospital and any outpatient
+                    services. A clinic&amp;#39;s medical services might or might not be associated with a
+                    hospital. The word &amp;quot;clinic&amp;quot; can refer to all of a general clinic&amp;#39;s operations or
+                    just one specific area of expertise, such as the psychiatric, neurological, or
+                    surgical clinics. When associated with a hospital, the total activity is often
+                    referred to as the outpatient department, and the various subdivisions may be
+                    called clinics.`,
+    keyword: "clinics , doctortime, docotr time, timedoctor",
+  },
+  DOCTORS: {
+    description: `In order to identify, manage, and treat illnesses and injuries, doctors consult
+                with patients and others who are caring for them. Of course, certain
+                responsibilities will differ based on the branch of medicine you plan to
+                practice, but many of the fundamental responsibilities are common to all
+                doctors.`,
+    keyword: "doctors , doctortime, docotr time, timedoctor",
+  },
+  HOMEOPATHY: {
+    description: `Homeopathy is generally based on two main principles: that a substance that causes symptoms in a healthy person can be used in diluted form to treat symptoms and illnesses, a principle known as “like-cures-like”`,
+    keyword: "homeopathy, doctortime, docotr time, timedoctor",
+  },
+  RADIOLOGIST: {
+    description: `Elevate your radiology services with top-notch expertise. Our board-certified radiologists deliver accurate diagnoses, using cutting-edge technology. We prioritize patient care, offering convenient appointments and rapid report turnaround times. Trust us for your medical imaging needs. Your health is our priority. Contact us today for comprehensive radiology solutions.`,
+    keyword: "radiologist, xray, ct scan , doctortime, docotr time",
+  },
+  CONTACT: {
+    description: `Fell free to contact us`,
+    keyword: "contact, constacts us,doctortime, docotr time",
+  },
+};
+
+export const GYNAE_SERVICES = {
+  surrogacy: {
+    title: 'Surrogacy',
+    description: `Surrogacy is a complex and sensitive topic that raises many
+      ethical and legal questions. While it can be a viable option for
+      those who cannot conceive or carry a pregnancy, it is important to
+      fully understand the process before pursuing it. There are two
+      types of surrogacy: traditional and gestational. Traditional
+      surrogacy involves using the surrogate's egg, making her the
+      biological mother of the child. Gestational surrogacy involves
+      using an embryo created through IVF using the intended parents' or
+      donors' egg and sperm, with no genetic connection between the
+      surrogate and the child. It is crucial to work with a reputable
+      surrogacy agency and legal counsel to ensure that all parties
+      involved have their rights protected and that the process is
+      carried out ethically and responsibly. Surrogacy laws vary by
+      country, so it is important to research the legal implications of
+      surrogacy in your area before pursuing this option. While
+      surrogacy can be a complicated and emotional process, it can also
+      be a rewarding way to start or grow a family.`
+  },
+  testtube: {
+    title: 'Test Tube',
+    description: `Test tube baby, also known as in vitro fertilization (IVF), is a
+      fertility treatment where eggs are removed from a woman's ovaries
+      and combined with sperm in a laboratory culture dish. The
+      fertilized eggs, or embryos, are then transferred back into the
+      woman's uterus for implantation and pregnancy. IVF is typically
+      recommended for couples who have been trying to conceive for a
+      year or more without success, or for women with certain medical
+      conditions that make natural conception difficult or impossible.
+      It is also an option for same-sex couples or single individuals
+      who want to have a biological child. Despite some controversy
+      surrounding IVF, it has helped millions of couples worldwide to
+      achieve their dream of having a child. The success rates of IVF
+      have improved over the years, thanks to advancements in technology
+      and medical research. However, it is important to note that IVF is
+      not always successful and can be a costly and emotionally
+      challenging process. It is important for couples considering IVF
+      to weigh the pros and cons carefully and to consult with their
+      healthcare provider to determine if it is the right option for
+      them.`
+  },
+  ivf: {
+    title: 'IVF',
+    description: `In vitro fertilization (IVF) is a type of assisted reproductive
+      technology (ART) that helps couples who are struggling with
+      infertility to conceive a child. IVF involves the removal of eggs
+      from a woman's ovaries and fertilizing them with sperm in a
+      laboratory dish. The fertilized eggs are then implanted back into
+      the woman's uterus where they can grow and develop into a baby.
+      IVF can be a complex and expensive process, but it has helped many
+      couples to conceive who may not have been able to do so otherwise.
+      Some common reasons for using IVF include blocked or damaged
+      fallopian tubes, male factor infertility, ovulation disorders, and
+      unexplained infertility. There are also different types of IVF
+      procedures, such as traditional IVF, intracytoplasmic sperm
+      injection (ICSI), and preimplantation genetic testing (PGT), which
+      may be recommended depending on the couple's specific situation.
+      It's important to discuss all options with a fertility specialist
+      to determine the best course of action for individual
+      circumstances.`
+  },
+  gynaecology_process:  {
+    title: 'Gynaecology Process',
+    description: ` A gynecologist plays a crucial role in the care of pregnant women.
+      The process of caring for a pregnant woman usually involves
+      several steps. Firstly, the gynecologist will conduct a thorough
+      medical history and physical examination of the woman. This helps
+      to identify any pre-existing health conditions that may affect the
+      pregnancy. The gynecologist will also perform routine tests, such
+      as blood tests and ultrasounds, to monitor the health of the
+      mother and the developing fetus. Once the pregnancy progresses,
+      the gynecologist will monitor the growth and development of the
+      fetus. This involves regular check-ups to ensure that the baby is
+      developing normally and that there are no complications. The
+      gynecologist will also provide advice on proper nutrition,
+      exercise, and other lifestyle factors that can affect the health
+      of the mother and baby. As the due date approaches, the
+      gynecologist will provide guidance on labor and delivery. This
+      includes discussing pain management options, monitoring the
+      progress of labor, and ensuring that both mother and baby are safe
+      and healthy. The gynecologist will also be present during the
+      delivery to ensure that everything goes smoothly. Overall, the
+      process of caring for a pregnant woman involves a comprehensive
+      approach that focuses on the health and well-being of both the
+      mother and the developing fetus. The gynecologist plays a critical
+      role in this process, providing expert medical care and guidance
+      every step of the way.`
+  }
+}

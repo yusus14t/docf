@@ -13,7 +13,8 @@ const DepartmentCard = ({ departments }) => {
                   <div className="d-flex align-items-center">
                     <div className="image">
                       <img
-                        src={ department?.organizationId?.doctor?.doctorPhoto ? getFullPath(department?.organizationId?.doctor?.doctorPhoto) : NO_PHOTO}
+                        src={ department?.organizationId?.photo ? getFullPath(department?.organizationId?.photo) : NO_PHOTO}
+                        // src={ department?.organizationId?.doctor?.doctorPhoto ? getFullPath(department?.organizationId?.doctor?.doctorPhoto) : NO_PHOTO}
                         className="rounded department-card-image"
                         alt=""
                       />

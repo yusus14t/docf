@@ -697,7 +697,7 @@ input::-webkit-inner-spin-button {
   border: solid 3px #0076d7;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  height: 180px;
+  /* height: 180px; */
   border-radius: 6px;
 }
 .dr-address {

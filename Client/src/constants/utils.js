@@ -42,8 +42,9 @@ export const NumberFormat = ( e ) =>  {
 }
 
 export const getFullPath = (filename) => {
-    if( process.env.REACT_APP_ENVIRONMENT === 'production' )  return `${process.env.REACT_APP_BUCKET_URL}/${ filename }`
-    else return `${ process.env.REACT_APP_SERVER_URL }/images/${ filename }`
+    // if( process.env.REACT_APP_ENVIRONMENT === 'production' )  return `${process.env.REACT_APP_BUCKET_URL}/${ filename }`
+    return `${process.env.REACT_APP_BUCKET_URL}/${ filename }`
+    // else return `${ process.env.REACT_APP_SERVER_URL }/images/${ filename }`
 }
 
 export const userInfo = localStorage.getItem('user') != 'undefined' ? JSON.parse(localStorage.getItem('user')) : {}

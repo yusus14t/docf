@@ -163,6 +163,7 @@ const getAllDoctors = async (body, user) => {
       query["organizationId"] = { $in: paidDepartmentIds };
     }
 
+
     let doctors = await UserModel.aggregate([
       {
         $match: {
@@ -192,6 +193,8 @@ const getAllDoctors = async (body, user) => {
         },
       },
 
+      ( body?.limit ? { $limit:  parseInt(body.limit) } : {} ),
+      
       {
         $lookup: {
           from: "organizations",

@@ -417,6 +417,8 @@ const getAllClinics = async (body) => {
 
         }
       },
+      ( body?.limit ? { $limit: parseInt( body.limit )} : {}),
+
       {
         $lookup: {
           from: 'users',
@@ -706,8 +708,7 @@ const getAllHospitals = async ( body ) => {
             $options: 'i'
           }
         } : {} ),
-        
-      });
+      }).limit( body?.limit || null);
 
     return Success({ organization });
   } catch (error) {
