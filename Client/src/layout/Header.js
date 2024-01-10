@@ -152,7 +152,7 @@ const Header = () => {
                         <button className="btn  btn-light btn-md" onClick={() => Logout()}>Logout</button>
                     </li>
                 </ul>
-                <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" onClick={() => setIsSidebarOpen((old) => !old)}>
+                <div className="ms-toggler ms-d-block-sm pe-0 ms-nav-toggler" id="navToggler" onClick={() => setIsSidebarOpen((old) => !old)}>
                     <span className="ms-toggler-bar bg-white"></span>
                     <span className="ms-toggler-bar bg-white"></span>
                     <span className="ms-toggler-bar bg-white"></span>

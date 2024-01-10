@@ -10,8 +10,8 @@ import Settings from '../components/common-components/Settings/Settings';
 
 
 const MR = [
-    { path: "/mr", element: <Navigate to={'/mr/dashboard'} /> },
-    { path: "/mr/dashboard", element: <Dashboard /> },
+    // { path: "/mr", element: <Navigate to={'/mr/dashboard'} /> },
+    { path: "/mr", element: <Dashboard /> },
     { path: "/mr/profile", element: <div> Profile </div> },
     { path: "/mr/user", element: <h1>user</h1> },
     { path: "/mr/clinic-registration", element: <ClinicRegistration /> },

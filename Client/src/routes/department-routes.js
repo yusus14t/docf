@@ -8,8 +8,7 @@ import AppointmentList from "../components/common-components/Appointment/Appoint
 import Settings from "../components/common-components/Settings/Settings";
 
 const DEPARTMENT = [
-  { path: "/department", element: <Navigate to={"/department/dashboard"} /> },
-  { path: "/department/dashboard", element: <Dashbaord /> },
+  { path: "/department", element: <Dashbaord /> },
   { path: "/department/profile", element: <h1>Profile</h1> },
   { path: "/department/patients", element: <Patients /> },
   { path: "/department/appointment", element: <AppointmentList /> },
@@ -17,7 +16,7 @@ const DEPARTMENT = [
   { path: "/department/doctors", element: <Doctors /> },
   { path: "/department/support", element: <Support /> },
   { path: "/department/setting", element: <Settings /> },
-  { path: "/department/*", element: <Navigate to={"/department/dashboard"} /> },
+  { path: "/department/*", element: <Navigate to={"/department"} /> },
 ];
 
 export default DEPARTMENT;

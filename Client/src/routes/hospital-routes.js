@@ -10,8 +10,8 @@ import Doctors from "../components/user-component/Doctors";
 
 
 const HOSPITAL = [
-  { path: "/hospital", element: <Navigate to={"/hospital/dashboard"} /> },
-  { path: "/hospital/dashboard", element: <Dashbaord /> },
+  // { path: "/hospital", element: <Navigate to={"/hospital/dashboard"} /> },
+  { path: "/hospital", element: <Dashbaord /> },
   { path: "/hospital/patients", element: <Patients /> },
   { path: "/hospital/appointment", element: <AppointmentList /> },
   { path: "/hospital/doctors", element: <Doctors /> },
@@ -19,7 +19,7 @@ const HOSPITAL = [
   { path: "/hospital/notification", element: <Notification />, onExpire: true },
   { path: "/hospital/support", element: <Support />, onExpire: true },
   { path: "/hospital/setting", element: <Settings />, onExpire: true },
-  { path: "/hospital/*", element: <Navigate to={"/hospital/dashboard"} /> },
+  { path: "/hospital/*", element: <Navigate to={"/hospital"} /> },
 ];
 
 export default HOSPITAL;

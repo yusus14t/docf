@@ -88,13 +88,6 @@ const DoctorsList = () => {
         if( !time?.open ) setError('timing.open', { message: 'Open time is required'})
         if( !time?.close ) setError('timing.close', { message: 'Close time is required'})
     
-        
-        // let day = timing.find( t => t.day === time.day )
-        // if( !day && time?.day && time?.open && time?.close ){
-        //     setTiming([ ...timing, JSON.parse(JSON.stringify(time)) ])
-        //     setDays( old => old.filter( d => d.value !== time.day ))
-        //     setValue('timing', { day: '', open: '', close: ''})
-        // }
 
         let day = timing.find( t => t.day === time.day )
         if( !day ){
@@ -127,17 +120,17 @@ const DoctorsList = () => {
                                 <div className="ms-card-body">
                                     <div className="media mb-0 fs-14">
                                         <div className="me-2 align-self-center">
-                                            <img src={getFullPath(doctor.photo  )} className="ms-img-round" alt="people" />
+                                            <img src={getFullPath(doctor.photo  )} className="ms-img-round" alt="Img" />
                                         </div>
                                         <div className="media-body">
                                             <h6>{doctor?.name}</h6>
-                                            <div className="float-end d-flex-colum justify-content-between">
+                                            <div className="float-end d-flex-colum justify-content-start">
                                                 <div className="div">
                                                     <span style={{ marginBottom: "50%" }} class="badge badge-outline-danger">{doctor.isActive ? 'Active' : 'Inactive'}</span>
                                                 </div>
                                                 <div style={{ marginLeft: "15px" }} className="float-last">
                                                     <FontAwesomeIcon className="cursor-pointer" onClick={() => {setEditData(doctor); reset({ ...doctor, timing: {} }); setEditModal(true);}} icon={faEdit}></FontAwesomeIcon>
-                                                    <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => handleDelete(doctor)} icon={faTrash}></FontAwesomeIcon>
+                                                    { userInfo.userType !== "DP" && <FontAwesomeIcon style={{ marginLeft: "8px" }} className="cursor-pointer" onClick={() => handleDelete(doctor)} icon={faTrash}></FontAwesomeIcon>}
                                                 </div>
                                             </div>
                                             <p className="fs-12 my-1 text-disabled ">{doctor?.specialization?.name || '-'}</p>
