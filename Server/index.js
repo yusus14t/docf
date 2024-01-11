@@ -4,6 +4,7 @@ const app = express();
 const routes = require('./routes/index');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { smsService } = require('./constants/utils');
 
 // Database Connection 
 require('./connection/db.connection')
