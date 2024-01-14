@@ -7,11 +7,12 @@ import twitter from "../../assets.app/img/icons/icons8-twitter-100.png";
 import location from "../../assets.app/img/icons/location.png";
 import { axiosInstance, formatPhone, getAuthHeader } from "../../constants/utils";
 import useToasty from "../../hooks/toasty";
+import {useForm} from 'react-hook-form'
 
 const Contact = () => {
   const [ contact, setContact ] = useState({})
   const toasty = useToasty()
-  const [ query, setQuery ] = useState({ name: null, mobile: null, topic: null, email: null, message: null })
+  const { register, handleSubmit, reset } = useForm({ onChange: true });
 
   useEffect(() => { 
     getContact()
@@ -24,18 +25,16 @@ const Contact = () => {
     } catch(error){ console.error(error) }
   }
 
-  const saveContactQuery = async () => {
+  const saveContactQuery = async ( data ) => {
     try{
-      await axiosInstance.post('/website/CONTACT_QUERY', query, getAuthHeader())
+      await axiosInstance.post('/website/CONTACT_QUERY', data, getAuthHeader())
       toasty.success('Message Sent.')
-      setQuery({})
+      reset({})
     } catch(error){ console.error(error) }
   }
 
   return (
-    <div className="container ">
-      <div className="box"></div>
-
+    <div className="container mt-5 pt-3">
       <h3 className="text-center">Get in Touch</h3>
       <div className="row ">
         <div className="col-sm-6 contact-box-right">
@@ -114,78 +113,90 @@ const Contact = () => {
             </li>
           </ul>
         </div>
-        <div className="col-sm-6 mt-4">
-          <div className="row">
-            <div className="col-sm-6">
-              <label htmlFor="">Name</label>
-              <input
-                type="text"
-                placeholder="Enter Name"
-                className="form-control"
-                value={query.name}
-                onChange={(e) => setQuery({ ...query, name: e.target.value })}
-              />
-            </div>
-            <div className="col-sm-6">
-              <label htmlFor="">Mobile Number</label>
-              <input
-                type="text"
-                placeholder="Enter mobile number"
-                minLength={10}
-                className="form-control"
-                maxLength={10}
-                value={query.mobile}
-                onChange={(e) => setQuery({ ...query, mobile: e.target.value })}
-              />
-            </div>
-          </div>
-          <div className="row mt-3">
-            <div className="col-sm-6">
-              <label htmlFor="">Topic</label>
-              <input
-                type="text"
-                placeholder="Enter topic here"
-                className="form-control"
-                value={query.topic}
+          <div className="col-sm-6 mt-4">
+          <form onSubmit={handleSubmit(saveContactQuery)} >
+            <div className="row">
+              <div className="col-sm-6">
+                <label htmlFor="">Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter Name"
+                  className="form-control"
 
-                onChange={(e) => setQuery({ ...query, topic: e.target.value })}
-              />
-            </div>
-            <div className="col-sm-6">
-              <label htmlFor="">Email Address (optional)</label>
-              <input
-                type="email"
-                placeholder="Enter Email address "
-                className="form-control"
-                value={query.email}
+                  {...register('name', {
+                    required: true
+                  })}
+                />
+              </div>
+              <div className="col-sm-6">
+                <label htmlFor="">Mobile Number</label>
+                <input
+                  type="text"
+                  placeholder="Enter mobile number"
+                  className="form-control"
 
-                onChange={(e) => setQuery({ ...query, email: e.target.value })}
-              />
+                  {...register('mobile', {
+                    required: true,
+                    minLength: 10,
+                    maxLength: 10
+                  })}
+
+                />
+              </div>
             </div>
-          </div>
-          <div className="row p-3">
-            <textarea
-              name=""
-              className="form-control"
-              id=""
-              cols="30"
-              rows="10"
-              placeholder="write your message here"
-              value={query.message}
-              onChange={(e) => setQuery({ ...query, message: e.target.value })}
-            ></textarea>
-          </div>
-          <div className="row ">
-            <div className="col-6">
-              <button
-                className=" btn-primary shadow-none btn mx-1"
-                onClick={() => saveContactQuery()}
-              >
-                Send Message
-              </button>
+            <div className="row mt-3">
+              <div className="col-sm-6">
+                <label htmlFor="">Topic</label>
+                <input
+                  type="text"
+                  placeholder="Enter topic here"
+                  className="form-control"
+                    
+                  {...register('topic', {
+                    required: true,
+                  })}
+                />
+              </div>
+              <div className="col-sm-6">
+                <label htmlFor="">Email Address (optional)</label>
+                <input
+                  type="email"
+                  placeholder="Enter Email address "
+                  className="form-control"
+                  
+                  {...register('email', {
+                    required: true,
+                  })}
+                  
+                />
+              </div>
             </div>
+            <div className="row p-3">
+              <textarea
+                name=""
+                className="form-control"
+                id=""
+                cols="30"
+                rows="10"
+                placeholder="write your message here"
+                {...register('message', {
+                  required: true,
+                })}
+              ></textarea>
+            </div>
+            <div className="row ">
+              <div className="col-6">
+                <button
+                  type="submit"
+                  className=" btn-primary shadow-none btn mx-1"
+                  // onClick={() => saveContactQuery()}
+                >
+                  Send Message
+                </button>
+              </div>
+            </div>
+          </form>
           </div>
-        </div>
       </div>
     </div>
   );

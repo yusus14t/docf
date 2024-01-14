@@ -17,16 +17,12 @@ const Ultrasound = () => {
   const [images, setImages] = useState([]);
   const [specialization, setSpecialization] = useState(null)
  
-
-
-useEffect(()=>{
-getAllClinics()
-},[specialization])
+  useEffect(()=>{
+  getAllClinics()
+  },[specialization])
 
   useEffect(() => {
     initailizer();
-
-
     getAllClinics();
   }, []);
 
@@ -53,12 +49,7 @@ getAllClinics()
 
   return (
     <>
-      <div className="box bg-light"></div>
-      <div
-        
-        className=" mini-menu  w-100 bg-light  "
-      >
-        {console.log("clini", clinics)}
+      <div className="d-flex justify-content-center mini-menu  w-100 mt-5 pt-3">
         <ul className="d-flex mb-0 p-2 overflow-auto">
           {RADIOLOGIST_DEPARTMENT.map(({ id, name }) => (
             <li
@@ -92,7 +83,6 @@ getAllClinics()
           {clinics?.length > 0 &&
             clinics.map((clinic, key) => (
               <div className="col-lg-4 col-md-6  mcard" key={key}>
-                {console.log(clinic)}
                 <Link
                   to={
                     clinic.organizationType === "Clinic"
@@ -100,10 +90,7 @@ getAllClinics()
                       : `/department-detail/${clinic._id}`
                   }
                 >
-                  <div
-                    style={{ background: "#edede9", border: "none" }}
-                    className="Dr-container mb-3 d-flex p-3"
-                  >
+                  <div style={{ background: "#edede9", border: "none" }} className="Dr-container mb-3 d-flex p-3" >
                     <div className="ml-3">
                       <img
                         className="dr-profile-img"

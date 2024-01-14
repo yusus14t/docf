@@ -37,8 +37,7 @@ const Gynae = () => {
 
   return (
     <>
-      <div className="box"></div>
-      <div className=" ">
+      <div className=" mt-5">
         <div className="">
           <Carousel
             dynamicHeight={500}
