@@ -1,6 +1,7 @@
 const UserModel = require("../models/user-model")
-const { Success, uploadToBucket } = require("../constants/utils")
+const { Success, uploadToBucket, Errors } = require("../constants/utils")
 const organizationModel = require("../models/organization-model")
+const { Error } = require("../constants/utils")
 const ObjectId = require('mongoose').Types.ObjectId
 
 const editProfile = async ( body, user, file ) => {
@@ -20,8 +21,8 @@ const editProfile = async ( body, user, file ) => {
         console.log("11111111111");
         let hospital = await UserModel.findOne({ phone: detail?.phone, _id: { $ne: user._id } })
 
-        console.log("222222222");
-        if( hospital ) return({ message: 'Phone already used.'})
+        console.log("edit profile hospital", hospital);
+        if( hospital ) return Error({ message: 'Phone already used.'})
         
         let obj = {
             fee: detail?.fee ? parseInt(detail?.fee) : 0,
