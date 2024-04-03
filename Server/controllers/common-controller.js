@@ -215,7 +215,7 @@ const phonepayStatus = async ( req, res ) => {
 
 const payment = async ( req, res ) => {
     console.log('>>>>>>>> req', req.header('origin'))
-    commonManager.payment( req.body, req.user, req.origin )
+    commonManager.payment( req.body, req.user, req.header('origin') )
     .then( result => res.status(result.code).send(result) )
     .catch( err => res.status(500).send(err.data) )
 }
