@@ -120,7 +120,7 @@ class Payment {
     let MERCHANT_KEY = process.env.MERCHANT_KEY_WEB
     let MERCHANT_ID = process.env.MERCHANT_ID_WEB
 
-    if( hostname === "pvdhealth.in" ){
+    if( hostname === "https://pvdhealth.com" ){
       MERCHANT_KEY = process.env.MERCHANT_KEY_APP
       MERCHANT_ID = process.env.MERCHANT_ID_APP
     }
