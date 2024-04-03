@@ -1058,9 +1058,8 @@ const phonepayStatus = async ( body, res ) => {
   }
 };
 
-const payment = async ( body, user ) => {
+const payment = async ( body, user, hostname ) => {
   try {
-    console.log(body)
     let amount = 0
 
     if( body.type === 'appointment' ){
@@ -1080,8 +1079,8 @@ const payment = async ( body, user ) => {
       
       let txnId = new Date().getTime()
       let payment =  new Payment( txnId, amount ) 
-      let { data: paymentData } = await payment.create_payment()
-      console.log()
+      let { data: paymentData } = await payment.create_payment( hostname )
+
       if( paymentData?.success ){
         await TransactionModel.create({ id: txnId, appointmentId: body._id });
         redirectUrl =  paymentData.data.instrumentResponse.redirectInfo.url 

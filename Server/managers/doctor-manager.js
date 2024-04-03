@@ -261,7 +261,7 @@ const deleteDoctor = async (body, user) => {
   }
 };
 
-const addAppointment = async (body, user) => {
+const addAppointment = async (body, user, hostname ) => {
   try {
     let token;
     let today = new Date();
@@ -347,7 +347,7 @@ const addAppointment = async (body, user) => {
       let txnId = new Date().getTime()
       let payment = new Payment(txnId, patientPrice.data.get("price"));
 
-      let { data: paymentData } = await payment.create_payment();
+      let { data: paymentData } = await payment.create_payment( hostname );
       await transactionModel({ id: txnId, appointmentId: appointment._id }).save()
 
       if (paymentData?.success) redirectUrl = paymentData.data.instrumentResponse.redirectInfo.url;

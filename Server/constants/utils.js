@@ -115,7 +115,13 @@ class Payment {
     this.txnId = txnId
   }
   
-  create_checksum = () => {
+  create_checksum = ( hostname ) => {
+    console.log('hostname', hostname )
+    let MERCHANT_KEY = process.env.MERCHANT_KEY_WEB
+    
+    if( hostname === "pvdhealth.in" ){
+      MERCHANT_KEY = process.env.MERCHANT_KEY_APP
+    }
 
     const orderData = {
       "merchantId": process.env.MERCHANT_ID,
@@ -130,18 +136,19 @@ class Payment {
         "type": "PAY_PAGE"
       }
     };
+
     const b64Data = Buffer.from(JSON.stringify(orderData)).toString('base64')
     const checksum = crypto.createHash('sha256')
-    .update(b64Data + '/pg/v1/pay' + process.env.MERCHANT_KEY)
+    .update(b64Data + '/pg/v1/pay' + MERCHANT_KEY)
     .digest('hex') + '###'+ process.env.KEY_INDEX
   
     return { b64Data, checksum }
   }
 
 
-  create_payment = async function () {
+  create_payment = async function ( hostname ) {
     try {
-      let { b64Data, checksum } = this.create_checksum()
+      let { b64Data, checksum } = this.create_checksum( hostname )
       let check = await axios.post(process.env.URL, { request: b64Data }, { headers: { accept: 'application/json', 'Content-Type': 'application/json', 'X-VERIFY': checksum }} )
       return check
     }catch( error ){ return error }  
