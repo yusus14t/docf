@@ -118,9 +118,11 @@ class Payment {
   create_checksum = ( hostname ) => {
     console.log('hostname', hostname )
     let MERCHANT_KEY = process.env.MERCHANT_KEY_WEB
-    
+    let MERCHANT_ID = process.env.MERCHANT_ID_WEB
+
     if( hostname === "pvdhealth.in" ){
       MERCHANT_KEY = process.env.MERCHANT_KEY_APP
+      MERCHANT_ID = process.env.MERCHANT_ID_APP
     }
 
     const orderData = {
