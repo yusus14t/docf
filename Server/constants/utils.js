@@ -126,7 +126,7 @@ class Payment {
     }
 
     const orderData = {
-      "merchantId": process.env.MERCHANT_ID,
+      "merchantId": MERCHANT_ID,
       "merchantTransactionId": String(this.txnId),
       "merchantUserId": new Date().getTime(),
       "amount": this.amount*100,
