@@ -14,7 +14,7 @@ module.exports.EventHandler = (req, res) => {
 };
 
 const sendResponse = (data, event) => {
-    console.log('Responses', responses.length, responses[0] )
+    console.log('Responses', responses.length )
     for (let response of responses) {
         response.write(`event: ${event}\n`);
         response.write(`data: ${JSON.stringify(data)}`);
