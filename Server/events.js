@@ -11,10 +11,10 @@ module.exports.EventHandler = (req, res) => {
         "Access-Control-Allow-Origin": "*"
     });
     responses.push(res)
+    console.log('Responses ===================================>>>>>>>>>>', responses.length )
 };
 
 const sendResponse = (data, event) => {
-    console.log('Responses', responses.length )
     for (let response of responses) {
         response.write(`event: ${event}\n`);
         response.write(`data: ${JSON.stringify(data)}`);
