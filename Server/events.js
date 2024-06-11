@@ -10,8 +10,18 @@ module.exports.EventHandler = (req, res) => {
         "Cache-Control": "no-cache",
         "Access-Control-Allow-Origin": "*"
     });
+
     responses.push(res)
-    console.log('Responses ===================================>>>>>>>>>>', responses.length )
+
+    try{
+        req?.on('close', () => {
+            console.log('===========================>>>>>>>>> Request Close')
+            res?.end()
+        })
+    } catch(error) { console.log('===================>>>>>>>>> Error',  error ) }
+    finally {
+        console.log('Responses ===================================>>>>>>>>>>', responses.length )
+    }
 };
 
 const sendResponse = (data, event) => {
