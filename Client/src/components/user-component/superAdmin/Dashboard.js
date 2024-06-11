@@ -10,7 +10,7 @@ const Dashbaord = () => {
     const [ hospitals, setHospitals ] = useState([])
     const [ clinics, setClinics ] = useState([])
     const [ patients, setPatients ] = useState([])
-    const [ traffic, setTraffic ] = useState({})
+    const [ traffic, setTraffic ] = useState(0)
 
     useEffect(() => {
         analytics()
@@ -18,9 +18,9 @@ const Dashbaord = () => {
         getClinics()
         getPatients()
 
-        events.addEventListener("traffic", ({ data }) =>
-            setTraffic( JSON.parse( data )?.data?.traffic )
-        );
+        events.addEventListener("traffic", ( event ) => {
+            setTraffic( JSON.parse( event.data )?.data?.traffic )
+        });
 
     },[])
 
