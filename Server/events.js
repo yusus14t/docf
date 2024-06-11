@@ -14,14 +14,17 @@ module.exports.EventHandler = (req, res) => {
     responses.push(res)
 
     try{
-        req?.on('close', ( closeData ) => {
-            console.log('===========================>>>>>>>>> Request Close', responses.includes(res))
+        req?.on('close', ( ) => {
+            console.log('Responses ==========================if()=========>>>>>>>>>> Before ', responses.length )
+            if(responses.includes(res)){
+                responses = responses.filter( resp => resp != res )
+                console.log('Responses ==========================if()=========>>>>>>>>>> After', responses.length )
+            }
+            
             res?.end()
         })
     } catch(error) { console.log('===================>>>>>>>>> Error',  error ) }
-    finally {
-        console.log('Responses ===================================>>>>>>>>>>', responses.length )
-    }
+
 };
 
 const sendResponse = (data, event) => {
