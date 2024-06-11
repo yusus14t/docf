@@ -15,7 +15,7 @@ module.exports.EventHandler = (req, res) => {
 
     try{
         req?.on('close', ( closeData ) => {
-            console.log('===========================>>>>>>>>> Request Close', closeData)
+            console.log('===========================>>>>>>>>> Request Close', responses.includes(res))
             res?.end()
         })
     } catch(error) { console.log('===================>>>>>>>>> Error',  error ) }
