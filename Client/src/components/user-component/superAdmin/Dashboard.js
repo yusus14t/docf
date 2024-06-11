@@ -22,11 +22,6 @@ const Dashbaord = () => {
             setTraffic( JSON.parse( data )?.data?.traffic )
         );
 
-        return (() => {
-            events.addEventListener("traffic", ({ data }) =>
-                setTraffic( JSON.parse( data )?.data?.traffic )
-            )
-        })
     },[])
 
 
