@@ -1,10 +1,12 @@
 const { EventEmitter } = require("events");
 const eventEmitter = new EventEmitter();
 var responses = []
+var adminRequest;
 
 module.exports.eventEmitter = eventEmitter
 
 module.exports.EventHandler = (req, res) => {
+
     res.writeHead(200, {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
@@ -13,13 +15,26 @@ module.exports.EventHandler = (req, res) => {
 
     responses.push(res)
 
+    eventEmitter.emit("traffic", {
+        event: "traffic",
+        data: {
+            traffic: responses.length
+        }
+    })
+    
     try{
         req?.on('close', ( ) => {
-            console.log('Responses ==========================if()=========>>>>>>>>>> Before ', responses.length )
+
             if(responses.includes(res)){
                 responses = responses.filter( resp => resp != res )
-                console.log('Responses ==========================if()=========>>>>>>>>>> After', responses.length )
             }
+
+            eventEmitter.emit("traffic", {
+                event: "traffic",
+                data: {
+                    traffic: responses.length
+                }
+            })
             
             res?.end()
         })
@@ -55,5 +70,10 @@ eventEmitter.on("status", (data) =>
 eventEmitter.on("booking-status", (data) =>
     sendResponse(data, "booking-status")
 );
+
+eventEmitter.on("traffic", (data) => {
+    console.log('>>>>>>>>>>>>>>')
+    sendResponse(data, "traffic")
+});
 
 

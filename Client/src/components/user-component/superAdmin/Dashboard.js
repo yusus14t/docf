@@ -2,24 +2,31 @@ import React, { useEffect, useState } from 'react';
 import NO_PHOTO from "../../../assets.app/images/no-photo.png";
 import toasty from '../../../hooks/toasty'
 import { axiosInstance, formatPhone, getAuthHeader, getFullPath, userInfo } from '../../../constants/utils';
-import { DoughnutChart, LineChart } from '../../common-components/Chart';
+import { DoughnutChart } from '../../common-components/Chart';
+import events from '../../../events';
 
 const Dashbaord = () => {
     const [ analyticsData, setAnalyticsData ] = useState({});
     const [ hospitals, setHospitals ] = useState([])
     const [ clinics, setClinics ] = useState([])
     const [ patients, setPatients ] = useState([])
-
-    const [ data, setData ] = useState({
-        week: ['6', '3', '6', '4', '8', '3', '6'],
-        month: ['5', '2', '4', '7', '8', '9', '6', '5', '4', '2', '4', '4']
-    })
+    const [ traffic, setTraffic ] = useState({})
 
     useEffect(() => {
         analytics()
         getHospitals()
         getClinics()
         getPatients()
+
+        events.addEventListener("traffic", ({ data }) =>
+            setTraffic( JSON.parse( data )?.data?.traffic )
+        );
+
+        return (() => {
+            events.addEventListener("traffic", ({ data }) =>
+                setTraffic( JSON.parse( data )?.data?.traffic )
+            )
+        })
     },[])
 
 
@@ -58,9 +65,8 @@ const Dashbaord = () => {
     return (
         <div className='ms-content-wrapper'>
             <div class="ms-panel-header ms-panel-custome d-flex justify-space-between mb-2">
-                <div>
-                    <h6>Dashboard</h6>
-                </div>
+                <h6>Dashboard</h6>
+                <h6>Live Traffic: { traffic }</h6>
             </div>
             <div className='row'>
                 <div className="col-xl-3 col-md-6 col-sm-6">
@@ -144,24 +150,8 @@ const Dashbaord = () => {
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6 col-sm-12 mb-4">
-                    <div class="ms-panel h-100">
-                        <div class="ms-panel-header">
-                            <div>
-                                <h6>Status</h6>
-                            </div>
-                        </div>
-                        <div class="ms-panel-body ">
-                            <div className='h5'>
-                                Appointment Status
-                            </div>
-                            <div className='text-center' style={{ height: '14rem', width: '14rem' }}>
-                                { <DoughnutChart labelName={'Patient'} chartData={[]} />}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-md-6 h-100 mb-4">
+            
+                <div class="col-xl-9 col-md-6 h-100 mb-4">
                     <div class="ms-panel ms-panel-fh ms-widget">
                         <div class="ms-panel-header ms-panel-custome d-flex justify-space-between">
                             <div>
