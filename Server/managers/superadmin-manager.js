@@ -108,7 +108,7 @@ const patients = async ( body ) => {
     try {
         let today = new Date()
         today.setHours(0, 0, 0, 0)
-        let patients = await UserModel.find({ userType: 'PT', ...( !!body.istoday ? { createdAt: { $gte: today } } : {} )  }).sort({ createdAt: -1 }).limit(10)
+        let patients = await UserModel.find({ userType: 'PT',  createdAt: { $gte: today }  }).sort({ createdAt: -1 })
         return Success({ patients });
     } catch ( error ) { 
         console.log(error)
